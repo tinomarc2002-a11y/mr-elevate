@@ -1,0 +1,20 @@
+# Lokale Vorschau-Konfig
+.claude/
+
+# Original-/Zwischendateien (nicht fürs Web nötig)
+Mr Neu.png
+ChatGPT Image*.png
+logo_full.png
+
+# System
+Thumbs.db
+.DS_Store
+
+# Build-Artefakt (ZIP für manuellen Upload)
+deploy.zip
+
+# Bild-Original (Web-Version: hero-dresden.jpg)
+Hero Dresden.avif
+
+# Fremder Ordner, nicht Teil der Seite
+ads/

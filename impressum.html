@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Impressum — MR Elevate</title>
+<meta name="robots" content="noindex" />
+<link rel="stylesheet" href="fonts.css" />
+<style>
+:root{
+  --bg:#08090a; --bg-card:#111315; --line:#1d2024; --line-strong:#2a2e33;
+  --fg:#f4f6f7; --fg-muted:#9aa1a8; --fg-dim:#646a70; --accent:#c6ff3a;
+  --font-display:'Space Grotesk',system-ui,sans-serif; --font-body:'Inter',system-ui,sans-serif;
+}
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+body{ font-family:var(--font-body); background:var(--bg); color:var(--fg); line-height:1.7; -webkit-font-smoothing:antialiased; }
+.wrap{ max-width:760px; margin-inline:auto; padding:clamp(40px,8vw,90px) 24px 80px; }
+a{ color:var(--accent); text-decoration:none; }
+a:hover{ text-decoration:underline; }
+.back{ display:inline-flex; align-items:center; gap:8px; color:var(--fg-muted); font-size:.92rem; margin-bottom:40px; }
+.back:hover{ color:var(--fg); text-decoration:none; }
+.brand{ display:flex; align-items:center; gap:12px; margin-bottom:34px; }
+.brand img{ height:40px; width:auto; filter:drop-shadow(0 4px 12px rgba(0,0,0,.55)); }
+.brand b{ font-family:var(--font-display); font-weight:700; font-size:1.15rem; }
+.brand .we{ color:var(--accent); }
+h1{ font-family:var(--font-display); font-weight:700; font-size:clamp(2rem,5vw,2.8rem); letter-spacing:-.02em; margin-bottom:30px; }
+h2{ font-family:var(--font-display); font-weight:600; font-size:1.25rem; margin:36px 0 12px; }
+p{ color:var(--fg-muted); margin-bottom:14px; }
+p strong{ color:var(--fg); font-weight:600; }
+.todo{ display:inline-block; background:rgba(198,255,58,.1); border:1px dashed var(--accent); color:var(--accent);
+  border-radius:6px; padding:1px 8px; font-family:var(--font-display); font-size:.82rem; }
+.card{ background:var(--bg-card); border:1px solid var(--line-strong); border-radius:14px; padding:26px 28px; margin-bottom:22px; }
+hr{ border:none; border-top:1px solid var(--line); margin:36px 0; }
+.note{ font-size:.85rem; color:var(--fg-dim); margin-top:40px; }
+footer{ border-top:1px solid var(--line); margin-top:60px; padding-top:24px; font-size:.85rem; color:var(--fg-dim); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← Zurück zur Startseite</a>
+
+  <div class="brand">
+    <img src="logo.png" alt="MR Elevate Logo" />
+    <b>MR <span class="we">Elevate</span></b>
+  </div>
+
+  <h1>Impressum</h1>
+
+  <!-- =====================================================================
+       HINWEIS: Bitte alle <span class="todo">[…]</span>-Felder mit den echten
+       Daten füllen. Inhalt entspricht den Pflichtangaben nach § 5 DDG (ehem.
+       § 5 TMG) und § 18 Abs. 2 MStV. Im Zweifel rechtlich prüfen lassen.
+       ===================================================================== -->
+
+  <div class="card">
+    <h2 style="margin-top:0">Angaben gemäß § 5 DDG</h2>
+    <p><strong>MR Elevate</strong> – Marc Richter<br/>
+    Einzelunternehmen<br/>
+    Briesnitzer Höhe 24<br/>
+    01157 Dresden, Deutschland</p>
+
+    <h2>Vertreten durch</h2>
+    <p>Marc Richter</p>
+
+    <h2>Kontakt</h2>
+    <p>
+      Telefon: <a href="tel:+4915510657637">0155 1065 7637</a><br/>
+      E-Mail: <a href="mailto:info@mr-elevate.de">info@mr-elevate.de</a>
+    </p>
+
+    <h2>Redaktionell verantwortlich (§ 18 Abs. 2 MStV)</h2>
+    <p>Marc Richter, Anschrift wie oben</p>
+  </div>
+
+  <h2>Streitschlichtung</h2>
+  <p>Die Europäische Kommission stellt eine Plattform zur Online-Streitbeilegung (OS) bereit:
+  <a href="https://ec.europa.eu/consumers/odr/" target="_blank" rel="noopener">https://ec.europa.eu/consumers/odr/</a>.
+  Unsere E-Mail-Adresse findest du oben im Impressum.</p>
+  <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren vor einer
+  Verbraucherschlichtungsstelle teilzunehmen.</p>
+
+  <hr/>
+  <p class="note">Stand: Juni 2026. Angaben aus dem bestehenden Impressum übernommen. Bitte nur die
+  E-Mail-Adresse bestätigen – beim Crawl war sie ausgeblendet, daher angenommen: info@mr-elevate.de.</p>
+
+  <footer>© 2026 MR Elevate · Marc Richter · Dresden · <a href="datenschutz.html">Datenschutz</a></footer>
+</div>
+</body>
+</html>
