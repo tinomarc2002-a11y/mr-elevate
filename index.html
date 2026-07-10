@@ -117,16 +117,21 @@ h1,h2,h3,h4{ font-family:var(--font-display); font-weight:600; line-height:1.05;
 .container{ width:100%; max-width:var(--maxw); margin-inline:auto; padding-inline:24px; }
 section{ position:relative; }
 
-/* fluid type */
-.h-hero{ font-size:clamp(2.6rem,7vw,5.4rem); font-weight:700; }
-.h-sec{  font-size:clamp(2rem,4.4vw,3.4rem); }
+/* fluid type — editorial scale */
+.h-hero{ font-size:clamp(2.9rem,8vw,6.6rem); font-weight:700; line-height:.98; letter-spacing:-.03em; }
+.h-sec{  font-size:clamp(2.1rem,5vw,3.9rem); letter-spacing:-.025em; }
 .eyebrow{
-  display:inline-flex; align-items:center; gap:8px;
-  font-family:var(--font-display); font-size:.8rem; font-weight:500;
-  letter-spacing:.18em; text-transform:uppercase; color:var(--accent);
-  margin-bottom:20px;
+  display:flex; align-items:center; gap:16px;
+  font-family:var(--font-display); font-size:.76rem; font-weight:600;
+  letter-spacing:.22em; text-transform:uppercase; color:var(--fg-dim);
+  margin-bottom:28px;
 }
-.eyebrow::before{ content:""; width:28px; height:1px; background:var(--accent); display:inline-block; }
+.eyebrow i{ font-style:normal; color:var(--accent); letter-spacing:.06em; }
+.eyebrow::after{ content:""; flex:1; height:1px; background:var(--line); }
+.sec-head.center .eyebrow{ justify-content:center; }
+.sec-head.center .eyebrow::after{ display:none; }
+.quiz-modal-head .eyebrow{ display:inline-flex; }
+.quiz-modal-head .eyebrow::after{ display:none; }
 .lead{ color:var(--fg-muted); font-size:clamp(1rem,1.4vw,1.18rem); max-width:60ch; }
 
 /* =================================================================
@@ -140,19 +145,8 @@ section{ position:relative; }
   will-change:transform;
 }
 .btn:active{ transform:scale(.97); }
-.btn-primary{
-  background:var(--accent); color:var(--accent-ink);
-  box-shadow:0 0 0 0 var(--accent-glow); overflow:hidden;
-}
-.btn-primary:hover{ box-shadow:0 14px 40px -8px var(--accent-glow); transform:translateY(-2px); }
-/* 21st.dev-style gloss sweep on hover */
-.btn-primary::after{
-  content:""; position:absolute; top:0; left:-130%; width:55%; height:100%;
-  background:linear-gradient(100deg,transparent,rgba(255,255,255,.55),transparent);
-  transform:skewX(-18deg); pointer-events:none;
-}
-.btn-primary:hover::after{ animation:shine .85s var(--ease); }
-@keyframes shine{ to{ left:150%; } }
+.btn-primary{ background:var(--accent); color:var(--accent-ink); }
+.btn-primary:hover{ background:#d4ff66; transform:translateY(-2px); }
 .btn-ghost{ background:rgba(255,255,255,.04); color:var(--fg); border:1px solid var(--line-strong); }
 .btn-ghost:hover{ background:rgba(255,255,255,.08); border-color:var(--fg-dim); transform:translateY(-2px); }
 .btn .arrow{ transition:transform var(--t); }
@@ -198,16 +192,6 @@ section{ position:relative; }
    AMBIENT GLOW BACKDROP
    ================================================================= */
 .glow{ position:absolute; border-radius:50%; filter:blur(90px); opacity:.5; pointer-events:none; z-index:0; }
-
-/* SPOTLIGHT CARDS (cursor-following glow — vanilla port of 21st.dev SpotlightCard) */
-.prob-card,.proc-step,.price-card{ position:relative; }
-.prob-card::after,.proc-step::after,.price-card::after{
-  content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:0;
-  background:radial-gradient(340px circle at var(--mx,50%) var(--my,-30%), rgba(198,255,58,.14), transparent 62%);
-  opacity:0; transition:opacity .4s var(--ease);
-}
-.prob-card:hover::after,.proc-step:hover::after,.price-card:hover::after{ opacity:1; }
-.prob-card > *,.proc-step > *,.price-card > *{ position:relative; z-index:1; }
 
 /* =================================================================
    HERO
@@ -359,21 +343,18 @@ section{ position:relative; }
 /* =================================================================
    PROBLEM SECTION
    ================================================================= */
-.prob-grid{ display:grid; grid-template-columns:1.35fr 1fr; grid-auto-rows:1fr; gap:18px; }
-.prob-card{
-  background:rgba(20,22,24,.5); backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
-  border:1px solid rgba(255,255,255,.08); border-radius:var(--radius);
-  padding:30px; transition:border-color var(--t), transform var(--t), box-shadow var(--t);
-}
-.prob-card:hover{ border-color:var(--line-strong); transform:translateY(-4px); }
-.prob-card:first-child{ grid-row:span 2; display:flex; flex-direction:column; justify-content:center; }
-.prob-card:first-child .prob-num{ font-size:5.4rem; }
-.prob-card:first-child h3{ font-size:1.7rem; }
-.prob-card:first-child p{ font-size:1.05rem; max-width:34ch; }
-.prob-card .pico{ width:46px; height:46px; border-radius:12px; background:rgba(255,255,255,.05); color:var(--fg-muted); display:grid; place-items:center; margin-bottom:20px; }
-.prob-card h3{ font-size:1.2rem; margin-bottom:10px; }
-.prob-card p{ color:var(--fg-muted); font-size:.95rem; }
-@media(max-width:860px){ .prob-grid{ grid-template-columns:1fr; } .prob-card:first-child{ grid-row:auto; } }
+/* Editoriale Problem-Liste: Nummer + Text, Hairline-Trenner, Hover-Shift */
+.prob-list{ border-top:1px solid var(--line); }
+.prob-row{ display:grid; grid-template-columns:120px 1fr; gap:28px; align-items:start;
+  padding:36px 0; border-bottom:1px solid var(--line);
+  transition:padding-left .35s var(--ease), background .35s var(--ease); }
+.prob-row:hover{ padding-left:22px; background:rgba(255,255,255,.015); }
+.prob-row .pnum{ font-family:var(--font-display); font-weight:700; font-size:1.05rem;
+  letter-spacing:.14em; color:var(--fg-dim); padding-top:10px; transition:color .3s var(--ease); }
+.prob-row:hover .pnum{ color:var(--accent); }
+.prob-row h3{ font-size:clamp(1.35rem,2.6vw,1.9rem); margin-bottom:10px; letter-spacing:-.015em; }
+.prob-row p{ color:var(--fg-muted); max-width:58ch; font-size:1rem; }
+@media(max-width:640px){ .prob-row{ grid-template-columns:52px 1fr; gap:16px; } }
 
 /* =================================================================
    SOLUTION SECTION
@@ -409,13 +390,14 @@ section{ position:relative; }
    PRICING / MODELL COMPARISON
    ================================================================= */
 .price-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
-.price-card{ border:1px solid var(--line); border-radius:var(--radius); padding:34px; background:var(--bg-card); position:relative; transition:transform var(--t), border-color var(--t); }
-.price-card.classic{ opacity:.92; }
+.price-card{ border:1px solid var(--line); border-radius:var(--radius); padding:38px 34px; background:var(--bg-card); position:relative; overflow:hidden; transition:border-color var(--t); }
 .price-card.classic h3{ color:var(--fg-muted); }
-.price-card.featured{ border-color:var(--accent); background:linear-gradient(180deg,rgba(198,255,58,.06),var(--bg-card)); box-shadow:0 30px 70px -40px var(--accent-glow); }
-.price-card.featured:hover{ transform:translateY(-6px); }
-.price-tag{ position:absolute; top:-13px; right:26px; background:var(--accent); color:var(--accent-ink); font-family:var(--font-display); font-weight:600; font-size:.78rem; padding:6px 14px; border-radius:100px; }
-.price-card h3{ font-size:1.35rem; margin-bottom:6px; }
+.price-card.featured{ border-color:var(--line-strong); }
+.price-card.featured::before{ content:""; position:absolute; inset:0 0 auto 0; height:3px; background:var(--accent); }
+.price-card:hover{ border-color:var(--line-strong); }
+.price-tag{ display:inline-block; font-family:var(--font-display); font-weight:600; font-size:.74rem;
+  letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
+.price-card h3{ font-size:clamp(1.35rem,2.2vw,1.7rem); margin-bottom:6px; letter-spacing:-.015em; }
 .price-card .ptype{ color:var(--fg-dim); font-size:.9rem; margin-bottom:24px; }
 .price-list{ list-style:none; display:grid; gap:14px; }
 .price-list li{ display:flex; gap:12px; font-size:.95rem; color:var(--fg-muted); }
@@ -425,31 +407,16 @@ section{ position:relative; }
 .price-list li.yes{ color:var(--fg); }
 .price-card .btn{ width:100%; margin-top:28px; }
 
-/* ════════ SECTION ENHANCEMENTS (21st.dev-inspired, Vanilla-Ports) ════════ */
+/* ════════ EDITORIALE VARIANTEN ════════ */
 
-/* — PROBLEM: dezente Geister-Nummer, neutraler Hover — */
-.prob-card{ overflow:hidden; }
-.prob-card .prob-num{ position:absolute; top:12px; right:18px; font-family:var(--font-display);
-  font-weight:800; font-size:3.6rem; line-height:1; color:rgba(255,255,255,.05); pointer-events:none;
-  transition:color .4s var(--ease); }
-.prob-card:hover .prob-num{ color:rgba(255,255,255,.09); }
+/* — SYSTEM: sol-points als Hairline-Liste — */
+.sol-points{ border-top:1px solid var(--line); gap:0; margin-top:22px; }
+.sol-point{ position:relative; border:0; border-bottom:1px solid var(--line); border-radius:0;
+  background:transparent; padding:22px 0; }
+.sol-point:hover{ border-color:var(--line); }
+.sol-point .num{ width:auto; font-size:.95rem; letter-spacing:.1em; color:var(--accent); padding-top:3px; }
 
-/* — SYSTEM: sol-points als leuchtende Timeline — */
-.sol-point{ position:relative; }
-.sol-point .num{ width:36px; height:36px; border-radius:50%; display:grid; place-items:center;
-  background:var(--bg-elev); border:1px solid rgba(198,255,58,.5); box-shadow:0 0 18px -4px var(--accent-glow);
-  transition:background .3s var(--ease), color .3s var(--ease), box-shadow .3s var(--ease); }
-.sol-point:hover .num{ background:var(--accent); color:var(--accent-ink); box-shadow:0 0 26px -2px var(--accent-glow); }
-.sol-point:not(:last-child)::before{ content:""; position:absolute; left:37px; top:56px; bottom:-18px;
-  width:2px; background:linear-gradient(180deg,rgba(198,255,58,.45),rgba(198,255,58,.08)); z-index:0; }
-
-/* — MODELL: VS-Badge + gestaffeltes Aufdecken der Listenpunkte — */
-.price-grid{ position:relative; }
-.vs-badge{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); z-index:6;
-  width:54px; height:54px; border-radius:50%; display:grid; place-items:center; background:var(--bg);
-  border:1px solid var(--accent); color:var(--accent); font-family:var(--font-display); font-weight:800;
-  font-size:.95rem; letter-spacing:.04em; box-shadow:0 0 30px var(--accent-glow); }
-@media(max-width:860px){ .vs-badge{ display:none; } }
+/* — MODELL: gestaffeltes Aufdecken der Listenpunkte — */
 .price-card .price-list li{ opacity:0; transform:translateX(-10px); }
 .price-card.in .price-list li{ animation:liIn .45s var(--ease) forwards; }
 .price-card.in .price-list li:nth-child(1){ animation-delay:.12s }
@@ -459,91 +426,8 @@ section{ position:relative; }
 @keyframes liIn{ to{ opacity:1; transform:none; } }
 @media(prefers-reduced-motion:reduce){
   .price-card .price-list li{ opacity:1 !important; transform:none !important; animation:none !important; }
-  .prob-card:hover .pico{ animation:none; }
 }
-
-/* — PROBLEM: Parallax-Geisternummer (sanfter 3D-Effekt) — */
-.prob-card .prob-num{ transition:transform .25s var(--ease), color .4s var(--ease); will-change:transform; }
-
-
-/* — MODELL: Head-to-Head mit Gewinner-Effekt — */
-.price-grid{ perspective:1400px; }
-.price-card{ transition:transform .25s var(--ease), border-color var(--t), box-shadow .4s var(--ease), filter .45s var(--ease), opacity .45s var(--ease); }
-.price-grid:has(.price-card.featured:hover) .price-card.classic{ opacity:.5; filter:grayscale(.55); }
-.price-grid:has(.price-card.classic:hover) .price-card.featured{ box-shadow:0 30px 70px -40px var(--accent-glow); }
-.price-card.featured:hover{ box-shadow:0 44px 100px -34px var(--accent-glow); }
 @media(max-width:860px){ .price-grid{ grid-template-columns:1fr; } }
-
-/* =================================================================
-   PROCESS / STEPS
-   ================================================================= */
-.proc-grid{ display:grid; grid-template-columns:repeat(5,1fr); gap:18px; }
-.proc-step{ position:relative; padding:28px 22px; border:1px solid var(--line); border-radius:var(--radius); background:var(--bg-card); transition:border-color var(--t), transform var(--t); }
-.proc-step:hover{ border-color:var(--accent); transform:translateY(-5px); }
-.proc-step .pnum{ font-family:var(--font-display); font-size:.8rem; font-weight:600; color:var(--accent-ink); background:var(--accent); width:30px; height:30px; border-radius:8px; display:grid; place-items:center; margin-bottom:18px; }
-.proc-step .picon{ color:var(--accent); margin-bottom:14px; }
-.proc-step h4{ font-size:1.05rem; margin-bottom:8px; }
-.proc-step p{ font-size:.88rem; color:var(--fg-muted); }
-@media(max-width:1000px){ .proc-grid{ grid-template-columns:repeat(2,1fr); } }
-@media(max-width:520px){ .proc-grid{ grid-template-columns:1fr; } }
-
-/* ---- Orbital Process Timeline (Vanilla-Port der Radial-Orbital-Timeline) ---- */
-.orbital{ position:relative; }
-.orbital-stage{ position:relative; width:100%; height:600px; max-width:760px; margin:0 auto;
-  display:flex; align-items:center; justify-content:center; }
-.orbital-center{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-  width:64px; height:64px; border-radius:50%; z-index:5; display:grid; place-items:center;
-  background:radial-gradient(circle at 32% 30%, var(--accent), var(--accent-deep) 82%);
-  box-shadow:0 0 44px rgba(198,255,58,.4); }
-.orbital-core{ width:28px; height:28px; border-radius:50%; background:rgba(255,255,255,.85); }
-.orbital-center::before,.orbital-center::after{ content:""; position:absolute; border-radius:50%;
-  border:1px solid rgba(198,255,58,.4); animation:orbitalPing 2.6s cubic-bezier(0,0,.2,1) infinite; }
-.orbital-center::before{ inset:-9px; }
-.orbital-center::after{ inset:-19px; animation-delay:.7s; border-color:rgba(198,255,58,.22); }
-@keyframes orbitalPing{ 0%{transform:scale(.85);opacity:.7} 80%,100%{transform:scale(1.5);opacity:0} }
-.orbital-ring{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
-  width:400px; height:400px; border-radius:50%; border:1px solid var(--line-strong); pointer-events:none; }
-.onode{ position:absolute; left:50%; top:50%; width:46px;
-  transition:opacity .7s var(--ease), transform .7s var(--ease); cursor:pointer; }
-.onode-dot{ width:46px; height:46px; border-radius:50%; border:2px solid var(--line-strong);
-  background:var(--bg-card); color:var(--fg); display:grid; place-items:center; cursor:pointer;
-  transition:background .3s var(--ease), border-color .3s var(--ease), transform .3s var(--ease), box-shadow .3s var(--ease);
-  position:relative; z-index:1; padding:0; }
-.onode-dot svg{ width:18px; height:18px; }
-.onode:hover .onode-dot{ border-color:var(--accent); }
-.onode.open .onode-dot{ background:var(--accent); color:var(--accent-ink);
-  border-color:var(--accent); transform:scale(1.3); box-shadow:0 0 30px rgba(198,255,58,.5); }
-.onode-label{ position:absolute; top:54px; left:50%; transform:translateX(-50%); white-space:nowrap;
-  font-family:var(--font-display); font-weight:600; font-size:.84rem; letter-spacing:.03em;
-  color:var(--fg-muted); transition:color .3s var(--ease), transform .3s var(--ease); pointer-events:none; }
-.onode.open .onode-label{ color:var(--fg); transform:translateX(-50%) scale(1.08); }
-.onode-card{ position:absolute; top:88px; left:50%; transform:translateX(-50%) translateY(8px);
-  width:250px; background:var(--bg-card); border:1px solid var(--line-strong); border-radius:14px;
-  padding:16px 18px; opacity:0; pointer-events:none; z-index:10;
-  transition:opacity .35s var(--ease), transform .35s var(--ease); box-shadow:0 24px 60px rgba(0,0,0,.55); }
-.onode.open .onode-card{ opacity:1; pointer-events:auto; transform:translateX(-50%) translateY(0); }
-.onode-card .oc-step{ font-size:.68rem; letter-spacing:.12em; text-transform:uppercase; color:var(--accent); font-weight:700; }
-.onode-card h4{ font-size:1rem; margin:6px 0 8px; }
-.onode-card p{ font-size:.86rem; color:var(--fg-muted); line-height:1.5; }
-.oc-bar{ margin-top:13px; height:4px; border-radius:3px; background:var(--line); overflow:hidden; }
-.oc-bar i{ display:block; height:100%; background:linear-gradient(90deg,var(--accent),var(--accent-deep)); }
-.orbital-hint{ text-align:center; color:var(--fg-dim); font-size:.82rem; margin-top:14px; }
-@media(prefers-reduced-motion:reduce){ .orbital-center::before,.orbital-center::after{ animation:none; } }
-/* Mobile fallback: saubere vertikale Liste */
-@media(max-width:767px){
-  .orbital-stage{ height:auto; display:block; max-width:480px; }
-  .orbital-center,.orbital-ring,.orbital-hint{ display:none; }
-  .onode{ position:static; width:auto; transform:none !important; opacity:1 !important;
-    display:grid; grid-template-columns:46px 1fr; gap:16px; align-items:start;
-    padding:18px 0; border-bottom:1px solid var(--line); cursor:default; }
-  .onode:last-child{ border-bottom:none; }
-  .onode-label{ position:static; transform:none !important; color:var(--fg); display:block;
-    font-size:1.05rem; margin-bottom:4px; }
-  .onode-card{ position:static; transform:none !important; opacity:1 !important; pointer-events:auto;
-    width:auto; padding:0; background:transparent; border:none; box-shadow:none; }
-  .onode-card .oc-step{ display:none; }
-  .onode-card h4{ display:none; }
-}
 
 /* =================================================================
    FOUNDER
@@ -611,17 +495,12 @@ section{ position:relative; }
 /* =================================================================
    FINAL CTA
    ================================================================= */
-.final{ text-align:center; position:relative; overflow:hidden; }
-.final-card{
-  position:relative; border:1px solid var(--accent); border-radius:24px; overflow:hidden;
-  padding:clamp(48px,8vw,90px) 30px;
-  background:linear-gradient(160deg,rgba(198,255,58,.08),var(--bg-card) 60%);
-}
-.final-card::before{ content:""; position:absolute; inset:0; background:radial-gradient(60% 100% at 50% 0%,var(--accent-glow),transparent 70%); opacity:.35; }
-.final h2{ position:relative; margin-bottom:20px; }
-.final p{ position:relative; color:var(--fg-muted); max-width:50ch; margin:0 auto 36px; font-size:1.1rem; }
-.final-actions{ position:relative; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
-.final .note{ position:relative; margin-top:22px; font-size:.85rem; color:var(--fg-dim); }
+.final{ text-align:center; position:relative; }
+.final-card{ position:relative; padding:clamp(40px,7vw,80px) 0; }
+.final h2{ font-size:clamp(2.6rem,6.5vw,5.2rem); letter-spacing:-.03em; line-height:1; margin-bottom:24px; }
+.final p{ color:var(--fg-muted); max-width:50ch; margin:0 auto 40px; font-size:1.1rem; }
+.final-actions{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
+.final .note{ margin-top:24px; font-size:.85rem; color:var(--fg-dim); }
 
 /* =================================================================
    FOOTER
@@ -659,12 +538,15 @@ section{ position:relative; }
 .brand-elevate{ font-family:var(--font-display); font-weight:600; font-size:.66rem;
   letter-spacing:.42em; text-transform:uppercase; color:var(--accent); padding-left:.42em; }
 
-/* Hero: word-by-word reveal + shimmer + tagline */
-.hero-title{ margin-bottom:18px; }
-.hero-title .word{ display:inline-block; opacity:0; transform:translateY(46px) rotate(3deg); filter:blur(10px);
-  animation:wordIn .9s var(--ease) forwards; }
+/* Hero: maskierter Zeilen-Reveal + Outline-Akzentwort */
+.hero-title{ margin-bottom:22px; }
+.hero-title .hl{ display:block; overflow:hidden; padding-bottom:.08em; margin-bottom:-.08em; }
+.hero-title .hl-in{ display:inline-block; transform:translateY(112%); animation:lineUp .85s var(--ease) .12s forwards; }
+.hero-title .hl:nth-child(2) .hl-in{ animation-delay:.26s; }
+@keyframes lineUp{ to{ transform:none; } }
 @keyframes wordIn{ to{ opacity:1; transform:none; filter:blur(0); } }
-.shimmer{ color:var(--accent); }
+.hero-title .outline{ font-style:normal; color:transparent; -webkit-text-stroke:1.5px var(--accent); }
+@supports not (-webkit-text-stroke:1px #000){ .hero-title .outline{ color:var(--accent); } }
 .hero-tagline{ font-family:var(--font-display); font-weight:500;
   font-size:clamp(1.1rem,2.4vw,1.5rem); line-height:1.45; color:var(--fg); margin-bottom:30px;
   opacity:0; transform:translateY(20px); animation:wordIn .8s var(--ease) .55s forwards; }
@@ -675,8 +557,46 @@ section{ position:relative; }
 .hero-tagline .tg-arrow svg{ animation:arrowFloat 2.4s var(--ease) infinite; }
 @keyframes arrowFloat{ 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(2px,-2px); } }
 
-/* Constellation canvas */
-.constellation{ position:absolute; inset:0; width:100%; height:100%; z-index:1; pointer-events:none; opacity:.32; }
+/* ── Marquee-Band (Agentur-Klassiker, reine CSS-Animation) ── */
+.marquee{ overflow:hidden; border-bottom:1px solid var(--line); padding:20px 0; background:var(--bg); }
+.marquee-track{ display:flex; width:max-content; animation:marq 30s linear infinite; }
+.marquee-track > span{ display:flex; align-items:center; white-space:nowrap;
+  font-family:var(--font-display); font-weight:600; font-size:.95rem;
+  letter-spacing:.18em; text-transform:uppercase; color:var(--fg-muted); }
+.marquee-track em{ font-style:normal; color:var(--accent); margin:0 28px; font-size:.8rem; }
+@keyframes marq{ to{ transform:translateX(-50%); } }
+
+/* ── Custom Cursor-Dot (nur Desktop-Maus) ── */
+.cursor-dot{ position:fixed; top:0; left:0; width:10px; height:10px; border-radius:50%;
+  background:var(--accent); pointer-events:none; z-index:600; opacity:0;
+  transform:translate(-50%,-50%); mix-blend-mode:difference;
+  transition:width .25s var(--ease), height .25s var(--ease), opacity .3s var(--ease); }
+.cursor-dot.on{ opacity:1; }
+.cursor-dot.grow{ width:38px; height:38px; }
+@media(pointer:coarse){ .cursor-dot{ display:none; } }
+
+/* ── Prozess: editoriale Steps mit Outline-Ziffern ── */
+.steps{ display:grid; grid-template-columns:repeat(5,1fr); border-top:1px solid var(--line); }
+.step{ position:relative; padding:34px 22px 10px 24px; border-right:1px solid var(--line); }
+.step:last-child{ border-right:0; }
+.step .snum{ display:block; font-family:var(--font-display); font-weight:700; line-height:1;
+  font-size:clamp(2.6rem,4vw,3.6rem); color:transparent; -webkit-text-stroke:1px var(--line-strong);
+  transition:-webkit-text-stroke-color .3s var(--ease); }
+.step:hover .snum{ -webkit-text-stroke-color:var(--accent); }
+@supports not (-webkit-text-stroke:1px #000){ .step .snum{ color:var(--fg-dim); } }
+.step h4{ margin:18px 0 8px; font-size:1.06rem; }
+.step p{ color:var(--fg-muted); font-size:.9rem; line-height:1.55; }
+@media(max-width:1000px){ .steps{ grid-template-columns:1fr 1fr; }
+  .step{ border-bottom:1px solid var(--line); } .step:nth-child(2n){ border-right:0; } }
+@media(max-width:560px){ .steps{ grid-template-columns:1fr; }
+  .step{ border-right:0; padding-inline:0; } }
+
+/* ── Footer: riesige Outline-Wortmarke ── */
+.footer-wordmark{ font-family:var(--font-display); font-weight:700; line-height:.92;
+  letter-spacing:-.02em; font-size:clamp(3rem,11vw,9.5rem); white-space:nowrap;
+  color:transparent; -webkit-text-stroke:1px var(--line-strong);
+  user-select:none; margin:16px 0 44px; }
+@supports not (-webkit-text-stroke:1px #000){ .footer-wordmark{ color:var(--line-strong); } }
 
 /* Reveal variants */
 .reveal.blur{ filter:blur(14px); }
@@ -684,16 +604,12 @@ section{ position:relative; }
 .reveal.scale{ transform:translateY(34px) scale(.94); }
 .reveal.scale.in{ transform:none; }
 
-/* 3D tilt */
-[data-tilt],.prob-card,.proc-step{ transform-style:preserve-3d; transition:transform .25s var(--ease); will-change:transform; }
-.founder-photo[data-tilt]{ transition:transform .3s var(--ease); }
 
 @media (prefers-reduced-motion:reduce){
-  .hero-title .word,.hero-tagline{ opacity:1 !important; transform:none !important; filter:none !important; animation:none !important; }
+  .hero-title .hl-in,.hero-tagline{ opacity:1 !important; transform:none !important; filter:none !important; animation:none !important; }
   .hero-tagline .tg-arrow svg{ animation:none !important; }
-  .constellation{ display:none; }
+  .marquee-track{ animation:none !important; }
 }
-@media (max-width:760px){ .constellation{ opacity:.35; } }
 
 /* =================================================================
    QUIZ MODAL (Popup)
@@ -746,8 +662,9 @@ section{ position:relative; }
 
 <body>
 
-<!-- Motion layer: scroll progress + grain texture -->
+<!-- Motion layer -->
 <div class="scroll-progress" id="scrollProgress"></div>
+<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
 
 <!-- ============================================================= -->
 <!-- NAVBAR                                                         -->
@@ -801,22 +718,11 @@ section{ position:relative; }
     </video>
   </div>
 
-  <!-- Animiertes Konstellations-Netz (Canvas) -->
-  <canvas class="constellation" id="constellation" aria-hidden="true"></canvas>
-
   <div class="container hero-inner">
     <!-- CONVERSION-CRITICAL: Hero-Headline (Wort-für-Wort-Reveal) -->
     <h1 class="h-hero hero-title">
-      <span class="word" style="animation-delay:.10s">Dein</span>
-      <span class="word" style="animation-delay:.20s">Produkt</span>
-      <span class="word" style="animation-delay:.30s">ist</span>
-      <span class="word" style="animation-delay:.40s">genial.</span>
-      <br>
-      <span class="word" style="animation-delay:.52s">Zeit,</span>
-      <span class="word" style="animation-delay:.62s">dass</span>
-      <span class="word" style="animation-delay:.72s">es</span>
-      <span class="word" style="animation-delay:.82s">alle</span>
-      <span class="word shimmer" style="animation-delay:.92s">sehen.</span>
+      <span class="hl"><span class="hl-in">Dein Produkt ist genial.</span></span>
+      <span class="hl"><span class="hl-in">Zeit, dass es <em class="outline">alle sehen.</em></span></span>
     </h1>
 
     <!-- CONVERSION-CRITICAL: Positionierung -->
@@ -845,6 +751,14 @@ section{ position:relative; }
   </div>
 </header>
 
+<!-- Marquee-Band -->
+<div class="marquee" aria-hidden="true">
+  <div class="marquee-track">
+    <span>Planbar wachsen<em>✦</em>Erfolgsbasiert<em>✦</em>Aus Dresden für ganz Deutschland<em>✦</em>Keine Knebelverträge<em>✦</em>Messbare Ergebnisse<em>✦</em></span>
+    <span>Planbar wachsen<em>✦</em>Erfolgsbasiert<em>✦</em>Aus Dresden für ganz Deutschland<em>✦</em>Keine Knebelverträge<em>✦</em>Messbare Ergebnisse<em>✦</em></span>
+  </div>
+</div>
+
 <!-- Quiz-Funnel ist jetzt ein Popup/Modal (siehe Ende des <body>),
      öffnet sich bei jedem Klick auf einen [data-quiz-cta]-Button. -->
 
@@ -854,28 +768,31 @@ section{ position:relative; }
 <section class="sec-pad" id="problem">
   <div class="container">
     <div class="sec-head reveal">
-      <span class="eyebrow">Das Problem</span>
+      <span class="eyebrow"><i>01</i>Das Problem</span>
       <h2 class="h-sec">Du willst Neukunden – nicht das Risiko.</h2>
       <p class="lead">Du kennst das Spiel: vierstellige Setup-Gebühr, fetter Monatsretainer, schicke Reportings voller Zahlen, die keinen Umsatz machen. Und am Monatsende? Trotzdem Funkstille im Posteingang.</p>
     </div>
-    <div class="prob-grid">
-      <div class="prob-card reveal d1">
-        <span class="prob-num" aria-hidden="true">01</span>
-        <div class="pico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg></div>
-        <h3>Hohe Vorkosten</h3>
-        <p>Vierstellige Setup-Pauschalen und fette Retainer – fällig, lange bevor auch nur eine Anfrage reinkommt.</p>
+    <div class="prob-list">
+      <div class="prob-row reveal d1">
+        <span class="pnum">/01</span>
+        <div>
+          <h3>Hohe Vorkosten</h3>
+          <p>Vierstellige Setup-Pauschalen und fette Retainer – fällig, lange bevor auch nur eine Anfrage reinkommt.</p>
+        </div>
       </div>
-      <div class="prob-card reveal d2">
-        <span class="prob-num" aria-hidden="true">02</span>
-        <div class="pico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2v4m0 12v4M2 12h4m12 0h4m-2.3-7.7-2.8 2.8M7.1 16.9l-2.8 2.8m0-15.4 2.8 2.8m9.8 9.8 2.8 2.8"/></svg></div>
-        <h3>Null Planbarkeit</h3>
-        <p>Mal kommen Anfragen, mal Funkstille. Wachstum lässt sich so nicht steuern und schon gar nicht kalkulieren.</p>
+      <div class="prob-row reveal d2">
+        <span class="pnum">/02</span>
+        <div>
+          <h3>Null Planbarkeit</h3>
+          <p>Mal kommen Anfragen, mal Funkstille. Wachstum lässt sich so nicht steuern und schon gar nicht kalkulieren.</p>
+        </div>
       </div>
-      <div class="prob-card reveal d3">
-        <span class="prob-num" aria-hidden="true">03</span>
-        <div class="pico"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 6 6 18M6 6l12 12"/></svg></div>
-        <h3>Agentur-Interessen</h3>
-        <p>Klassische Agenturen verdienen, ob du Ergebnisse bekommst oder nicht. Dein Erfolg ist für sie zweitrangig.</p>
+      <div class="prob-row reveal d3">
+        <span class="pnum">/03</span>
+        <div>
+          <h3>Agentur-Interessen</h3>
+          <p>Klassische Agenturen verdienen, ob du Ergebnisse bekommst oder nicht. Dein Erfolg ist für sie zweitrangig.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -889,7 +806,7 @@ section{ position:relative; }
     <div class="sol-grid">
       <div>
         <div class="sec-head reveal" style="margin-bottom:24px;">
-          <span class="eyebrow">Unser System</span>
+          <span class="eyebrow"><i>02</i>Unser System</span>
           <h2 class="h-sec">Ein Akquise-Motor, der erst zählt, wenn er liefert.</h2>
           <p class="lead">MR Elevate baut, betreibt und optimiert deinen kompletten Akquise-Funnel – Setup, Kampagnen, Tracking, Optimierung. Eine kleine Setup-Gebühr zum Start, danach ist unsere Vergütung an deine Ergebnisse gekoppelt.</p>
         </div>
@@ -913,13 +830,12 @@ section{ position:relative; }
 <section class="sec-pad" id="modell">
   <div class="container">
     <div class="sec-head center reveal">
-      <span class="eyebrow">Das Modell</span>
+      <span class="eyebrow"><i>03</i>Das Modell</span>
       <h2 class="h-sec">Klassische Agentur vs. <span class="accent">MR Elevate</span></h2>
       <p class="lead" style="margin-inline:auto;">Gleicher Anspruch an Ergebnisse. Komplett anderes Risiko. Schau dir an, wer den Kopf hinhält.</p>
     </div>
     <div class="price-grid">
-      <span class="vs-badge" aria-hidden="true">VS</span>
-      <div class="price-card classic reveal d1" data-tilt>
+      <div class="price-card classic reveal d1">
         <h3>Klassische Agentur</h3>
         <p class="ptype">Du zahlst — Ergebnis ungewiss</p>
         <ul class="price-list">
@@ -929,7 +845,7 @@ section{ position:relative; }
           <li class="no"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg> Risiko liegt vollständig bei dir</li>
         </ul>
       </div>
-      <div class="price-card featured reveal d2" data-tilt>
+      <div class="price-card featured reveal d2">
         <span class="price-tag">Erfolgsbasiert</span>
         <h3>MR Elevate</h3>
         <p class="ptype">Du zahlst — wenn es liefert</p>
@@ -953,81 +869,36 @@ section{ position:relative; }
 <section class="sec-pad" id="prozess" style="background:var(--bg-elev);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
   <div class="container">
     <div class="sec-head reveal">
-      <span class="eyebrow">So arbeiten wir zusammen</span>
+      <span class="eyebrow"><i>04</i>So arbeiten wir zusammen</span>
       <h2 class="h-sec">Von der Analyse bis zur Skalierung</h2>
       <p class="lead">Ein klarer, transparenter Ablauf – damit du zu jedem Zeitpunkt weißt, woran wir arbeiten und warum.</p>
     </div>
-    <div class="orbital reveal d1" id="orbital">
-      <div class="orbital-stage" id="orbitalStage">
-        <div class="orbital-center" aria-hidden="true"><span class="orbital-core"></span></div>
-        <div class="orbital-ring" aria-hidden="true"></div>
-
-        <div class="onode" data-step="0">
-          <button class="onode-dot" aria-label="Schritt 1: Analyse"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/></svg></button>
-          <div class="onode-body">
-            <span class="onode-label">Analyse</span>
-            <div class="onode-card">
-              <span class="oc-step">Schritt 1 / 5</span>
-              <h4>Analyse</h4>
-              <p>Wir prüfen Angebot, Zielgruppe und Potenzial – ehrlich und ohne Schönrederei.</p>
-              <div class="oc-bar" aria-hidden="true"><i style="width:20%"></i></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="onode" data-step="1">
-          <button class="onode-dot" aria-label="Schritt 2: Strategie"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20h9M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg></button>
-          <div class="onode-body">
-            <span class="onode-label">Strategie</span>
-            <div class="onode-card">
-              <span class="oc-step">Schritt 2 / 5</span>
-              <h4>Strategie</h4>
-              <p>Funnel-Konzept, Botschaft und Kanäle – passgenau auf dein Geschäftsmodell.</p>
-              <div class="oc-bar" aria-hidden="true"><i style="width:40%"></i></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="onode" data-step="2">
-          <button class="onode-dot" aria-label="Schritt 3: Setup"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14.7 6.3a4 4 0 0 0-5.7 5.7l-5 5 2 2 5-5a4 4 0 0 0 5.7-5.7L13 11l-2-2 3.7-2.7Z"/></svg></button>
-          <div class="onode-body">
-            <span class="onode-label">Setup</span>
-            <div class="onode-card">
-              <span class="oc-step">Schritt 3 / 5</span>
-              <h4>Setup</h4>
-              <p>Wir bauen Landingpages, Tracking und Kampagnen – startklar und sauber gemessen.</p>
-              <div class="oc-bar" aria-hidden="true"><i style="width:60%"></i></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="onode" data-step="3">
-          <button class="onode-dot" aria-label="Schritt 4: Testphase"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18M7 14l4-4 3 3 5-6"/></svg></button>
-          <div class="onode-body">
-            <span class="onode-label">Testphase</span>
-            <div class="onode-card">
-              <span class="oc-step">Schritt 4 / 5</span>
-              <h4>Testphase</h4>
-              <p>Kontrolliertes Anlaufen, schnelle Lernschleifen, klare Zahlen statt Bauchgefühl.</p>
-              <div class="oc-bar" aria-hidden="true"><i style="width:80%"></i></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="onode" data-step="4">
-          <button class="onode-dot" aria-label="Schritt 5: Skalierung"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m3 17 6-6 4 4 8-8M21 7v6h-6"/></svg></button>
-          <div class="onode-body">
-            <span class="onode-label">Skalierung</span>
-            <div class="onode-card">
-              <span class="oc-step">Schritt 5 / 5</span>
-              <h4>Skalierung</h4>
-              <p>Was funktioniert, wird hochgefahren – planbar mehr Anfragen, Monat für Monat.</p>
-              <div class="oc-bar" aria-hidden="true"><i style="width:100%"></i></div>
-            </div>
-          </div>
-        </div>
+    <div class="steps">
+      <div class="step reveal d1">
+        <span class="snum">01</span>
+        <h4>Analyse</h4>
+        <p>Wir prüfen Angebot, Zielgruppe und Potenzial – ehrlich und ohne Schönrederei.</p>
       </div>
-      <p class="orbital-hint">Auf einen Schritt klicken für Details</p>
+      <div class="step reveal d1">
+        <span class="snum">02</span>
+        <h4>Strategie</h4>
+        <p>Funnel-Konzept, Botschaft und Kanäle – passgenau auf dein Geschäftsmodell.</p>
+      </div>
+      <div class="step reveal d2">
+        <span class="snum">03</span>
+        <h4>Setup</h4>
+        <p>Wir bauen Landingpages, Tracking und Kampagnen – startklar und sauber gemessen.</p>
+      </div>
+      <div class="step reveal d3">
+        <span class="snum">04</span>
+        <h4>Testphase</h4>
+        <p>Kontrolliertes Anlaufen, schnelle Lernschleifen, klare Zahlen statt Bauchgefühl.</p>
+      </div>
+      <div class="step reveal d4">
+        <span class="snum">05</span>
+        <h4>Skalierung</h4>
+        <p>Was funktioniert, wird hochgefahren – planbar mehr Anfragen, Monat für Monat.</p>
+      </div>
     </div>
   </div>
 </section>
@@ -1038,13 +909,13 @@ section{ position:relative; }
 <section class="sec-pad" id="founder">
   <div class="container">
     <div class="founder">
-      <div class="founder-photo reveal" data-tilt>
+      <div class="founder-photo reveal">
         <img src="founder.jpg" alt="Marc Richter, Gründer von MR Elevate" width="760" height="949" loading="lazy" />
         <div class="founder-tag"><b>Marc Richter</b><span>Gründer</span></div>
       </div>
       <div>
         <div class="sec-head reveal d1" style="margin-bottom:0;">
-          <span class="eyebrow">Der Mensch dahinter</span>
+          <span class="eyebrow"><i>05</i>Der Mensch dahinter</span>
           <p class="founder-quote">„Ich verdiene erst, wenn du Ergebnisse siehst. <span class="accent">Alles andere wäre für mich keine Partnerschaft.</span>“</p>
         </div>
         <p class="reveal d2">Ich bin Marc Richter und habe <b>MR Elevate</b> 2025 in Dresden gegründet – mit einer unbequemen Überzeugung: Eine Agentur sollte am Umsatz gemessen werden, den sie bringt. Nicht an Klicks, nicht an Reichweite, nicht an hübschen Folien.</p>
@@ -1079,7 +950,7 @@ section{ position:relative; }
 <section class="sec-pad" id="faq" style="background:var(--bg-elev);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
   <div class="container">
     <div class="sec-head center reveal">
-      <span class="eyebrow">FAQ</span>
+      <span class="eyebrow"><i>06</i>FAQ</span>
       <h2 class="h-sec">Die wichtigsten Fragen, ehrlich beantwortet</h2>
     </div>
     <div class="faq-wrap reveal d1" id="faq-list">
@@ -1140,6 +1011,7 @@ section{ position:relative; }
         </div>
       </div>
     </div>
+    <div class="footer-wordmark" aria-hidden="true">MR&nbsp;ELEVATE</div>
     <div class="footer-bottom">
       <span>© 2026 MR Elevate · Marc Richter · Dresden</span>
       <span>Gebaut für planbares Wachstum.</span>
@@ -1284,17 +1156,7 @@ section{ position:relative; }
     }, {passive:true});
   }
 
-  /* ---------- Spotlight cards (cursor-following glow) ---------- */
-  if(window.matchMedia('(pointer:fine)').matches){
-    document.querySelectorAll('.prob-card,.proc-step,.price-card').forEach(function(card){
-      card.addEventListener('mousemove', function(ev){
-        var r = card.getBoundingClientRect();
-        card.style.setProperty('--mx', (ev.clientX - r.left) + 'px');
-        card.style.setProperty('--my', (ev.clientY - r.top) + 'px');
-      }, {passive:true});
-    });
-  }
-
+  
   var fine = window.matchMedia('(pointer:fine)').matches;
 
   /* ---------- Scroll progress bar ---------- */
@@ -1304,6 +1166,22 @@ section{ position:relative; }
     sp.style.width = (max > 0 ? (h.scrollTop / max * 100) : 0) + '%';
   };
   updPg(); window.addEventListener('scroll', updPg, {passive:true}); window.addEventListener('resize', updPg);
+
+  /* ---------- Custom Cursor-Dot ---------- */
+  (function(){
+    var dot = document.getElementById('cursorDot');
+    if(!dot || !fine || reduce) return;
+    var x=0,y=0,shown=false;
+    document.addEventListener('mousemove', function(e){
+      x=e.clientX; y=e.clientY;
+      dot.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)';
+      if(!shown){ dot.classList.add('on'); shown=true; }
+      var t=e.target.closest('a,button,[data-cursor]');
+      dot.classList.toggle('grow', !!t);
+    }, {passive:true});
+    document.addEventListener('mouseleave', function(){ dot.classList.remove('on'); shown=false; });
+    document.addEventListener('mouseenter', function(){ dot.classList.add('on'); shown=true; });
+  })();
 
   /* ---------- Magnetic buttons ---------- */
   if(fine && !reduce){
@@ -1316,58 +1194,9 @@ section{ position:relative; }
     });
   }
 
-  /* ---------- 3D tilt ---------- */
-  if(fine && !reduce){
-    document.querySelectorAll('[data-tilt],.prob-card,.proc-step').forEach(function(el){
-      el.addEventListener('mousemove', function(e){
-        var r=el.getBoundingClientRect(), px=(e.clientX-r.left)/r.width-.5, py=(e.clientY-r.top)/r.height-.5, m=7;
-        el.style.transform='perspective(900px) rotateY('+(px*m)+'deg) rotateX('+(-py*m)+'deg) translateY(-4px)';
-      });
-      el.addEventListener('mouseleave', function(){ el.style.transform=''; });
-    });
-  }
-
-  /* ---------- Parallax-Geisternummern (Problem-Bento) ---------- */
-  if(fine && !reduce){
-    document.querySelectorAll('.prob-card').forEach(function(card){
-      var num = card.querySelector('.prob-num');
-      if(!num) return;
-      card.addEventListener('mousemove', function(e){
-        var r=card.getBoundingClientRect();
-        var x=(e.clientX-r.left)/r.width-.5, y=(e.clientY-r.top)/r.height-.5;
-        num.style.transform='translate('+(x*-20)+'px,'+(y*-20)+'px) scale(1.08)';
-      }, {passive:true});
-      card.addEventListener('mouseleave', function(){ num.style.transform=''; });
-    });
-  }
-
-  /* ---------- Hero constellation network (canvas) ---------- */
-  (function(){
-    var cv = document.getElementById('constellation'); if(!cv || reduce) return;
-    var ctx = cv.getContext('2d'), hero = document.getElementById('hero');
-    var W=0,H=0,DPR=1,pts=[],raf=null,running=false;
-    function size(){ DPR=Math.min(window.devicePixelRatio||1,2); var r=hero.getBoundingClientRect();
-      W=r.width; H=r.height; cv.width=W*DPR; cv.height=H*DPR; ctx.setTransform(DPR,0,0,DPR,0,0);
-      var n=Math.min(Math.floor(W*H/16000),90); pts=[];
-      for(var i=0;i<n;i++) pts.push({x:Math.random()*W,y:Math.random()*H,vx:(Math.random()-.5)*.35,vy:(Math.random()-.5)*.35});
-    }
-    function render(){
-      ctx.clearRect(0,0,W,H);
-      for(var i=0;i<pts.length;i++){ var p=pts[i]; p.x+=p.vx; p.y+=p.vy;
-        if(p.x<0||p.x>W)p.vx*=-1; if(p.y<0||p.y>H)p.vy*=-1;
-        ctx.beginPath(); ctx.arc(p.x,p.y,1.4,0,6.283); ctx.fillStyle='rgba(198,255,58,.55)'; ctx.fill();
-        for(var j=i+1;j<pts.length;j++){ var q=pts[j],dx=p.x-q.x,dy=p.y-q.y,d=dx*dx+dy*dy;
-          if(d<14000){ ctx.globalAlpha=(1-d/14000)*.22; ctx.beginPath(); ctx.moveTo(p.x,p.y); ctx.lineTo(q.x,q.y);
-            ctx.strokeStyle='#c6ff3a'; ctx.lineWidth=1; ctx.stroke(); ctx.globalAlpha=1; } }
-      }
-    }
-    function loop(){ if(!running) return; render(); raf=requestAnimationFrame(loop); }
-    function start(){ if(running) return; running=true; loop(); }
-    function stop(){ running=false; if(raf) cancelAnimationFrame(raf); raf=null; }
-    size();
-    new IntersectionObserver(function(es){ es.forEach(function(e){ e.isIntersecting ? start() : stop(); }); },{threshold:0}).observe(hero);
-    window.addEventListener('resize', size);
-  })();
+  
+  
+  
 
   /* =============================================================
      FAQ  (data-driven accordion)
@@ -1617,83 +1446,7 @@ section{ position:relative; }
     if(e.key === 'Escape' && quizModal && !quizModal.hidden){ closeQuizModal(); }
   });
 
-  /* ---------- Orbital Process Timeline ---------- */
-  (function(){
-    var stage = document.getElementById('orbitalStage');
-    if(!stage) return;
-    var nodes = Array.prototype.slice.call(stage.querySelectorAll('.onode'));
-    var total = nodes.length;
-    if(!total) return;
-    var R = 190, rotation = 0, auto = true, rafId = null;
-    var desktop = window.matchMedia('(min-width:768px)');
-
-    function position(){
-      for(var i=0;i<total;i++){
-        var node = nodes[i];
-        var angle = ((i/total)*360 + rotation) % 360;
-        var rad = angle*Math.PI/180;
-        var x = R*Math.cos(rad), y = R*Math.sin(rad);
-        node.style.transform = 'translate(calc(-50% + '+x.toFixed(1)+'px), calc(-50% + '+y.toFixed(1)+'px))';
-        if(node.classList.contains('open')){
-          node.style.zIndex = 200; node.style.opacity = 1;
-        } else {
-          node.style.zIndex = Math.round(100 + 50*Math.cos(rad));
-          node.style.opacity = Math.max(.5, Math.min(1, .5 + .5*((1+Math.sin(rad))/2))).toFixed(2);
-        }
-      }
-    }
-    function loop(){
-      if(auto){ rotation = (rotation + 0.22) % 360; position(); }
-      rafId = requestAnimationFrame(loop);
-    }
-    function closeAll(){ nodes.forEach(function(n){ n.classList.remove('open'); }); auto = true; }
-    function openNode(i){
-      var already = nodes[i].classList.contains('open');
-      closeAll();
-      if(already) return;
-      nodes[i].classList.add('open');
-      auto = false;
-      var target = (i/total)*360;
-      rotation = (((270 - target) % 360) + 360) % 360;
-      position();
-    }
-
-    nodes.forEach(function(node, i){
-      node.addEventListener('click', function(e){
-        if(!desktop.matches) return;
-        e.stopPropagation();
-        openNode(i);
-      });
-    });
-    document.addEventListener('click', function(e){
-      if(!desktop.matches) return;
-      if(!stage.contains(e.target)) closeAll();
-    });
-
-    function start(){
-      if(rafId || !desktop.matches) return;
-      if(reduce){ auto = false; position(); return; }
-      position(); loop();
-    }
-    function stop(){ if(rafId){ cancelAnimationFrame(rafId); rafId = null; } }
-
-    if('IntersectionObserver' in window){
-      new IntersectionObserver(function(entries){
-        entries.forEach(function(en){ en.isIntersecting ? start() : stop(); });
-      }, {threshold:0.05}).observe(stage);
-    } else { start(); }
-
-    var rt;
-    window.addEventListener('resize', function(){
-      clearTimeout(rt);
-      rt = setTimeout(function(){
-        if(!desktop.matches){
-          stop();
-          nodes.forEach(function(n){ n.classList.remove('open'); n.style.transform=''; n.style.opacity=''; n.style.zIndex=''; });
-        } else { start(); }
-      }, 200);
-    }, {passive:true});
-  })();
+  
 })();
 </script>
 </body>
