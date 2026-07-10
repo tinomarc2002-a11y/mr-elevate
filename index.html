@@ -34,8 +34,6 @@
   --accent-ink:    #0a0d00;   /* text on accent */
   --accent-glow:   rgba(198,255,58,.35);
 
-  --violet:        #7c5cff;   /* secondary depth accent for glows only */
-
   --radius:        16px;
   --radius-sm:     10px;
   --maxw:          1180px;
@@ -158,15 +156,6 @@ section{ position:relative; }
    ================================================================= */
 .glow{ position:absolute; border-radius:50%; filter:blur(90px); opacity:.5; pointer-events:none; z-index:0; }
 
-/* AURORA (21st.dev-inspired animated gradient backdrop) */
-.aurora{ position:absolute; inset:0; z-index:0; overflow:hidden; pointer-events:none; }
-.aurora b{ position:absolute; border-radius:50%; filter:blur(80px); will-change:transform; display:block; }
-.aurora .a1{ width:48vw; height:48vw; background:var(--violet); opacity:.34; top:-14%; left:-8%; animation:aurora1 24s var(--ease) infinite; }
-.aurora .a2{ width:42vw; height:42vw; background:var(--accent); opacity:.16; top:6%; right:-12%; animation:aurora2 28s var(--ease) infinite; }
-.aurora .a3{ width:38vw; height:38vw; background:#2f6bff; opacity:.16; bottom:-22%; left:28%; animation:aurora1 32s var(--ease) infinite reverse; }
-@keyframes aurora1{ 0%,100%{transform:translate(0,0) scale(1);} 33%{transform:translate(9%,-7%) scale(1.18);} 66%{transform:translate(-7%,9%) scale(.88);} }
-@keyframes aurora2{ 0%,100%{transform:translate(0,0) scale(1);} 50%{transform:translate(-11%,7%) scale(1.12);} }
-
 /* SPOTLIGHT CARDS (cursor-following glow — vanilla port of 21st.dev SpotlightCard) */
 .prob-card,.proc-step,.price-card{ position:relative; }
 .prob-card::after,.proc-step::after,.price-card::after{
@@ -235,8 +224,9 @@ section{ position:relative; }
 .reveal.d3{ transition-delay:.24s; } .reveal.d4{ transition-delay:.32s; }
 @media (prefers-reduced-motion:reduce){
   .reveal{ opacity:1 !important; transform:none !important; transition:none; }
-  .pulse,.scroll-cue .mouse::after,.aurora b,.btn-primary::after{ animation:none !important; }
+  .pulse,.scroll-cue .mouse::after,.btn-primary::after{ animation:none !important; }
 }
+
 
 /* =================================================================
    QUIZ FUNNEL
@@ -333,12 +323,11 @@ section{ position:relative; }
   padding:30px; transition:border-color var(--t), transform var(--t), box-shadow var(--t);
 }
 .prob-card:hover{ border-color:var(--line-strong); transform:translateY(-4px); }
-.prob-card:first-child{ grid-row:span 2; display:flex; flex-direction:column; justify-content:center;
-  background:radial-gradient(120% 100% at 0% 0%, rgba(255,107,107,.08), rgba(20,22,24,.5) 55%); }
+.prob-card:first-child{ grid-row:span 2; display:flex; flex-direction:column; justify-content:center; }
 .prob-card:first-child .prob-num{ font-size:5.4rem; }
 .prob-card:first-child h3{ font-size:1.7rem; }
 .prob-card:first-child p{ font-size:1.05rem; max-width:34ch; }
-.prob-card .pico{ width:46px; height:46px; border-radius:12px; background:rgba(255,107,107,.1); color:#ff6b6b; display:grid; place-items:center; margin-bottom:20px; }
+.prob-card .pico{ width:46px; height:46px; border-radius:12px; background:rgba(255,255,255,.05); color:var(--fg-muted); display:grid; place-items:center; margin-bottom:20px; }
 .prob-card h3{ font-size:1.2rem; margin-bottom:10px; }
 .prob-card p{ color:var(--fg-muted); font-size:.95rem; }
 @media(max-width:860px){ .prob-grid{ grid-template-columns:1fr; } .prob-card:first-child{ grid-row:auto; } }
@@ -363,13 +352,15 @@ section{ position:relative; }
 .sol-visual.has-photo::after{ content:""; position:absolute; inset:0; z-index:1;
   background:linear-gradient(180deg, rgba(8,9,10,.30) 0%, rgba(8,9,10,.45) 55%, rgba(8,9,10,.88) 100%); }
 .sol-visual.has-photo > *{ position:relative; z-index:2; }
-.stat-row{ display:flex; align-items:baseline; gap:10px; }
-.stat-big{ font-family:var(--font-display); font-weight:700; font-size:clamp(2.6rem,6vw,4rem); color:var(--accent); line-height:1; }
-.stat-row small{ color:var(--fg-muted); font-size:.95rem; }
-.mini-bars{ display:flex; align-items:flex-end; gap:10px; height:120px; margin-top:auto; }
-.mini-bars i{ flex:1; background:linear-gradient(180deg,var(--accent),var(--accent-deep)); border-radius:6px 6px 0 0; opacity:.85; transform-origin:bottom; animation:grow 1.2s var(--ease) both; }
-@keyframes grow{ from{ transform:scaleY(0); } to{ transform:scaleY(1); } }
 @media(max-width:860px){ .sol-grid{ grid-template-columns:1fr; } .sol-visual{ min-height:340px; } }
+
+/* — SYSTEM: Akquise-Motor-Illustration (dunkler Render, blendet nahtlos) — */
+.sol-engine{ background:#0a0a0a; padding:0; min-height:0; aspect-ratio:3/2;
+  align-items:center; justify-content:center; overflow:hidden; }
+.sol-engine img{ width:100%; height:100%; object-fit:cover; object-position:center; }
+.sol-engine .vlabel{ position:absolute; left:20px; bottom:18px; z-index:2;
+  padding:7px 14px; border-radius:100px; background:rgba(8,9,10,.6);
+  border:1px solid rgba(198,255,58,.25); backdrop-filter:blur(6px); color:var(--fg); }
 
 /* =================================================================
    PRICING / MODELL COMPARISON
@@ -393,18 +384,12 @@ section{ position:relative; }
 
 /* ════════ SECTION ENHANCEMENTS (21st.dev-inspired, Vanilla-Ports) ════════ */
 
-/* — PROBLEM: Warnkarten mit Geister-Nummer, rotem Glow & Top-Akzent — */
+/* — PROBLEM: dezente Geister-Nummer, neutraler Hover — */
 .prob-card{ overflow:hidden; }
 .prob-card .prob-num{ position:absolute; top:12px; right:18px; font-family:var(--font-display);
-  font-weight:800; font-size:3.6rem; line-height:1; color:rgba(255,107,107,.07); pointer-events:none;
-  transition:color .4s var(--ease), transform .4s var(--ease); }
-.prob-card:hover .prob-num{ color:rgba(255,107,107,.16); transform:scale(1.06); }
-.prob-card::after{ background:radial-gradient(340px circle at var(--mx,50%) var(--my,-30%), rgba(255,107,107,.16), transparent 62%); }
-.prob-card::before{ content:""; position:absolute; left:0; top:0; height:3px; width:0;
-  background:linear-gradient(90deg,#ff6b6b,transparent); transition:width .55s var(--ease); z-index:2; }
-.prob-card:hover::before{ width:100%; }
-.prob-card:hover .pico{ animation:probPulse 1.3s var(--ease); }
-@keyframes probPulse{ 0%{box-shadow:0 0 0 0 rgba(255,107,107,.45)} 100%{box-shadow:0 0 0 16px rgba(255,107,107,0)} }
+  font-weight:800; font-size:3.6rem; line-height:1; color:rgba(255,255,255,.05); pointer-events:none;
+  transition:color .4s var(--ease); }
+.prob-card:hover .prob-num{ color:rgba(255,255,255,.09); }
 
 /* — SYSTEM: sol-points als leuchtende Timeline — */
 .sol-point{ position:relative; }
@@ -444,10 +429,6 @@ section{ position:relative; }
 .price-grid:has(.price-card.featured:hover) .price-card.classic{ opacity:.5; filter:grayscale(.55); }
 .price-grid:has(.price-card.classic:hover) .price-card.featured{ box-shadow:0 30px 70px -40px var(--accent-glow); }
 .price-card.featured:hover{ box-shadow:0 44px 100px -34px var(--accent-glow); }
-.vs-badge{ animation:vsPulse 2.4s var(--ease) infinite; }
-@keyframes vsPulse{ 0%,100%{ box-shadow:0 0 24px var(--accent-glow); }
-  50%{ box-shadow:0 0 46px var(--accent-glow); transform:translate(-50%,-50%) scale(1.09); } }
-@media(prefers-reduced-motion:reduce){ .vs-badge{ animation:none; } }
 @media(max-width:860px){ .price-grid{ grid-template-columns:1fr; } }
 
 /* =================================================================
@@ -469,7 +450,7 @@ section{ position:relative; }
   display:flex; align-items:center; justify-content:center; }
 .orbital-center{ position:absolute; left:50%; top:50%; transform:translate(-50%,-50%);
   width:64px; height:64px; border-radius:50%; z-index:5; display:grid; place-items:center;
-  background:radial-gradient(circle at 32% 30%, var(--accent), var(--violet) 82%);
+  background:radial-gradient(circle at 32% 30%, var(--accent), var(--accent-deep) 82%);
   box-shadow:0 0 44px rgba(198,255,58,.4); }
 .orbital-core{ width:28px; height:28px; border-radius:50%; background:rgba(255,255,255,.85); }
 .orbital-center::before,.orbital-center::after{ content:""; position:absolute; border-radius:50%;
@@ -502,7 +483,7 @@ section{ position:relative; }
 .onode-card h4{ font-size:1rem; margin:6px 0 8px; }
 .onode-card p{ font-size:.86rem; color:var(--fg-muted); line-height:1.5; }
 .oc-bar{ margin-top:13px; height:4px; border-radius:3px; background:var(--line); overflow:hidden; }
-.oc-bar i{ display:block; height:100%; background:linear-gradient(90deg,var(--accent),var(--violet)); }
+.oc-bar i{ display:block; height:100%; background:linear-gradient(90deg,var(--accent),var(--accent-deep)); }
 .orbital-hint{ text-align:center; color:var(--fg-dim); font-size:.82rem; margin-top:14px; }
 @media(prefers-reduced-motion:reduce){ .orbital-center::before,.orbital-center::after{ animation:none; } }
 /* Mobile fallback: saubere vertikale Liste */
@@ -562,7 +543,7 @@ section{ position:relative; }
 .fd-btn{ display:inline-flex; align-items:center; gap:8px; padding:11px 18px; border-radius:10px;
   font-family:var(--font-display); font-weight:600; font-size:.92rem; transition:transform var(--t),background var(--t),border-color var(--t); }
 .fd-btn svg{ flex-shrink:0; }
-.fd-wa{ background:var(--accent); color:#0a0b0c; }
+.fd-wa{ background:var(--accent); color:var(--accent-ink); }
 .fd-wa:hover{ transform:translateY(-2px); }
 .fd-mail{ background:transparent; color:var(--fg); border:1px solid var(--line-strong); }
 .fd-mail:hover{ transform:translateY(-2px); border-color:var(--accent); }
@@ -591,9 +572,9 @@ section{ position:relative; }
 .final-card{
   position:relative; border:1px solid var(--accent); border-radius:24px; overflow:hidden;
   padding:clamp(48px,8vw,90px) 30px;
-  background:linear-gradient(160deg,rgba(198,255,58,.1),rgba(124,92,255,.06) 60%,var(--bg-card));
+  background:linear-gradient(160deg,rgba(198,255,58,.08),var(--bg-card) 60%);
 }
-.final-card::before{ content:""; position:absolute; inset:0; background:radial-gradient(60% 100% at 50% 0%,var(--accent-glow),transparent 70%); opacity:.5; }
+.final-card::before{ content:""; position:absolute; inset:0; background:radial-gradient(60% 100% at 50% 0%,var(--accent-glow),transparent 70%); opacity:.35; }
 .final h2{ position:relative; margin-bottom:20px; }
 .final p{ position:relative; color:var(--fg-muted); max-width:50ch; margin:0 auto 36px; font-size:1.1rem; }
 .final-actions{ position:relative; display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
@@ -627,10 +608,6 @@ section{ position:relative; }
 .scroll-progress{ position:fixed; top:0; left:0; height:3px; width:0; z-index:200;
   background:linear-gradient(90deg,var(--accent-deep),var(--accent)); box-shadow:0 0 14px var(--accent-glow); }
 
-/* Film grain overlay */
-.grain{ position:fixed; inset:0; z-index:190; pointer-events:none; opacity:.05; mix-blend-mode:overlay;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-
 /* Brand lockup (Logo + kleines "Elevate") */
 .brand-stack{ display:inline-flex; flex-direction:column; align-items:center; gap:3px; line-height:1; }
 .brand-logo{ height:46px; width:auto; display:block;
@@ -644,10 +621,7 @@ section{ position:relative; }
 .hero-title .word{ display:inline-block; opacity:0; transform:translateY(46px) rotate(3deg); filter:blur(10px);
   animation:wordIn .9s var(--ease) forwards; }
 @keyframes wordIn{ to{ opacity:1; transform:none; filter:blur(0); } }
-.shimmer{ background:linear-gradient(100deg,var(--accent) 25%,#f3ffc4 45%,var(--accent) 65%);
-  background-size:220% 100%; -webkit-background-clip:text; background-clip:text; color:transparent;
-  animation:shimmer 3.2s linear infinite; }
-@keyframes shimmer{ to{ background-position:-220% 0; } }
+.shimmer{ color:var(--accent); }
 .hero-tagline{ font-family:var(--font-display); font-weight:500;
   font-size:clamp(1.1rem,2.4vw,1.5rem); line-height:1.45; color:var(--fg); margin-bottom:30px;
   opacity:0; transform:translateY(20px); animation:wordIn .8s var(--ease) .55s forwards; }
@@ -671,20 +645,9 @@ section{ position:relative; }
 [data-tilt],.prob-card,.proc-step{ transform-style:preserve-3d; transition:transform .25s var(--ease); will-change:transform; }
 .founder-photo[data-tilt]{ transition:transform .3s var(--ease); }
 
-/* Animated conic glow border */
-@property --ang{ syntax:'<angle>'; initial-value:0deg; inherits:false; }
-.glow-border{ position:relative; isolation:isolate; }
-.glow-border::after{ content:""; position:absolute; inset:-1.5px; border-radius:inherit; z-index:-1; padding:1.5px;
-  background:conic-gradient(from var(--ang), transparent 0%, var(--accent) 12%, transparent 28%, transparent 100%);
-  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor; mask-composite:exclude;
-  animation:spinAng 5s linear infinite; opacity:.9; }
-@keyframes spinAng{ to{ --ang:360deg; } }
-
 @media (prefers-reduced-motion:reduce){
   .hero-title .word,.hero-tagline{ opacity:1 !important; transform:none !important; filter:none !important; animation:none !important; }
-  .shimmer{ animation:none; }
-  .glow-border::after,.hero-tagline .tg-arrow svg{ animation:none !important; }
+  .hero-tagline .tg-arrow svg{ animation:none !important; }
   .constellation{ display:none; }
 }
 @media (max-width:760px){ .constellation{ opacity:.35; } }
@@ -742,7 +705,6 @@ section{ position:relative; }
 
 <!-- Motion layer: scroll progress + grain texture -->
 <div class="scroll-progress" id="scrollProgress"></div>
-<div class="grain" aria-hidden="true"></div>
 
 <!-- ============================================================= -->
 <!-- NAVBAR                                                         -->
@@ -895,9 +857,8 @@ section{ position:relative; }
           <div class="sol-point reveal d4"><span class="num">04</span><div><h4>Erfolgsbasierte Deal-Struktur</h4><p>Du trägst Werbekosten plus erfolgsabhängige Vergütung. Unser Verdienst ist an dein Ergebnis gekoppelt.</p></div></div>
         </div>
       </div>
-      <div class="sol-visual has-photo reveal d2">
-        <img class="sol-photo" src="power-social-media.jpg" alt="Social Media als Wachstumshebel für planbare Neukundengewinnung" loading="lazy" />
-        <span class="vlabel">Social Media als Wachstumshebel</span>
+      <div class="sol-visual sol-engine reveal d2">
+        <img src="akquise-motor.png" alt="Der Akquise-Motor von MR Elevate: Analyse, Wachstum, Kampagnen und Technik fließen in einen Motor, der planbar neue Kunden ausgibt" loading="lazy" />
       </div>
     </div>
   </div>
@@ -925,7 +886,7 @@ section{ position:relative; }
           <li class="no"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg> Risiko liegt vollständig bei dir</li>
         </ul>
       </div>
-      <div class="price-card featured reveal d2 glow-border" data-tilt>
+      <div class="price-card featured reveal d2" data-tilt>
         <span class="price-tag">Erfolgsbasiert</span>
         <h3>MR Elevate</h3>
         <p class="ptype">Du zahlst — wenn es liefert</p>
@@ -1089,7 +1050,7 @@ section{ position:relative; }
 <!-- ============================================================= -->
 <section class="sec-pad final" id="final">
   <div class="container">
-    <div class="final-card reveal glow-border">
+    <div class="final-card reveal">
       <h2 class="h-sec">Lass uns prüfen, ob es passt.</h2>
       <p>Kostenloses Analysegespräch. Du erfährst ehrlich, ob planbare, erfolgsbasierte Neukundengewinnung für dein Geschäft funktioniert – ohne Risiko, ohne Verpflichtung, ohne Verkaufsmasche.</p>
       <div class="final-actions">
