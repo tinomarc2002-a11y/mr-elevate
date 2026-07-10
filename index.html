@@ -557,15 +557,6 @@ section{ position:relative; }
 .hero-tagline .tg-arrow svg{ animation:arrowFloat 2.4s var(--ease) infinite; }
 @keyframes arrowFloat{ 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(2px,-2px); } }
 
-/* ── Marquee-Band (Agentur-Klassiker, reine CSS-Animation) ── */
-.marquee{ overflow:hidden; border-bottom:1px solid var(--line); padding:20px 0; background:var(--bg); }
-.marquee-track{ display:flex; width:max-content; animation:marq 30s linear infinite; }
-.marquee-track > span{ display:flex; align-items:center; white-space:nowrap;
-  font-family:var(--font-display); font-weight:600; font-size:.95rem;
-  letter-spacing:.18em; text-transform:uppercase; color:var(--fg-muted); }
-.marquee-track em{ font-style:normal; color:var(--accent); margin:0 28px; font-size:.8rem; }
-@keyframes marq{ to{ transform:translateX(-50%); } }
-
 /* ── Custom Cursor-Dot (nur Desktop-Maus) ── */
 .cursor-dot{ position:fixed; top:0; left:0; width:10px; height:10px; border-radius:50%;
   background:var(--accent); pointer-events:none; z-index:600; opacity:0;
@@ -608,7 +599,6 @@ section{ position:relative; }
 @media (prefers-reduced-motion:reduce){
   .hero-title .hl-in,.hero-tagline{ opacity:1 !important; transform:none !important; filter:none !important; animation:none !important; }
   .hero-tagline .tg-arrow svg{ animation:none !important; }
-  .marquee-track{ animation:none !important; }
 }
 
 /* =================================================================
@@ -750,14 +740,6 @@ section{ position:relative; }
     <div class="scroll-cue reveal in d3"><span class="mouse"></span> Scrollen</div>
   </div>
 </header>
-
-<!-- Marquee-Band -->
-<div class="marquee" aria-hidden="true">
-  <div class="marquee-track">
-    <span>Planbar wachsen<em>✦</em>Erfolgsbasiert<em>✦</em>Aus Dresden für ganz Deutschland<em>✦</em>Keine Knebelverträge<em>✦</em>Messbare Ergebnisse<em>✦</em></span>
-    <span>Planbar wachsen<em>✦</em>Erfolgsbasiert<em>✦</em>Aus Dresden für ganz Deutschland<em>✦</em>Keine Knebelverträge<em>✦</em>Messbare Ergebnisse<em>✦</em></span>
-  </div>
-</div>
 
 <!-- Quiz-Funnel ist jetzt ein Popup/Modal (siehe Ende des <body>),
      öffnet sich bei jedem Klick auf einen [data-quiz-cta]-Button. -->
