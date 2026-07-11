@@ -1,0 +1,8 @@
+*.pdf -text
+*.png -text
+*.jpg -text
+*.jpeg -text
+*.avif -text
+*.mp4 -text
+*.woff2 -text
+*.ico -text

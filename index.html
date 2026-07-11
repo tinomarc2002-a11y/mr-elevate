@@ -413,6 +413,17 @@ section{ position:relative; }
 .prob-row p{ color:var(--fg-muted); max-width:58ch; font-size:1rem; }
 @media(max-width:640px){ .prob-row{ grid-template-columns:52px 1fr; gap:16px; } }
 
+.freebie-nudge{ display:flex; align-items:center; justify-content:space-between; gap:20px;
+  margin-top:8px; padding:22px 26px; border:1px solid var(--line-strong); border-radius:var(--radius);
+  background:rgba(198,255,58,.03); transition:border-color var(--t), background var(--t); }
+.freebie-nudge:hover{ border-color:var(--accent); background:rgba(198,255,58,.06); }
+.fn-text{ font-size:.96rem; color:var(--fg-muted); }
+.fn-text b{ color:var(--fg); }
+.fn-arrow{ flex-shrink:0; width:38px; height:38px; border-radius:50%; display:grid; place-items:center;
+  border:1px solid var(--line-strong); color:var(--accent); transition:transform var(--t), border-color var(--t); }
+.freebie-nudge:hover .fn-arrow{ transform:translateX(4px); border-color:var(--accent); }
+@media(max-width:640px){ .freebie-nudge{ flex-direction:column; align-items:flex-start; } }
+
 /* =================================================================
    SOLUTION SECTION
    ================================================================= */
@@ -882,6 +893,15 @@ section{ position:relative; }
         </div>
       </div>
     </div>
+
+    <a href="checkliste.html" class="freebie-nudge reveal">
+      <span class="fn-text">
+        <b>Bevor du dich entscheidest:</b> Mach den kostenlosen 12-Punkte-Check – 2 Minuten, kein Verkaufsgespräch.
+      </span>
+      <span class="fn-arrow" aria-hidden="true">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </span>
+    </a>
   </div>
 </section>
 
@@ -1163,6 +1183,7 @@ section{ position:relative; }
           <a href="#modell">Das Modell</a>
           <a href="#prozess">Ablauf</a>
           <a href="#faq">FAQ</a>
+          <a href="checkliste.html">Kostenloser Check</a>
         </div>
         <div class="footer-col">
           <h5>Rechtliches</h5>
