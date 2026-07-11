@@ -50,6 +50,56 @@
 }
 </script>
 
+<!-- Strukturierte Daten: FAQ (muss 1:1 mit dem faqs-Array im Script am Seitenende übereinstimmen) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Trage ich wirklich kein Agentur-Risiko?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Korrekt. Außer einer kleinen Setup-Gebühr fällt für unsere Leistung nur dann eine Vergütung an, wenn tatsächlich Ergebnisse entstehen. Du trägst die Werbekosten (die fließen direkt an die Plattformen) und eine erfolgsabhängige Vergütung – kein klassischer Retainer ohne Gegenwert." }
+    },
+    {
+      "@type": "Question",
+      "name": "Was genau kostet mich die Zusammenarbeit?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Eine kleine, faire Setup-Gebühr zu Beginn deckt den Aufbau von Funnel, Tracking und Kampagnen. Danach zahlst du ausschließlich deine Werbekosten plus eine erfolgsabhängige Vergütung. Die genaue Struktur besprechen wir transparent im Erstgespräch." }
+    },
+    {
+      "@type": "Question",
+      "name": "Gibt es eine Mindestlaufzeit oder lange Bindung?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Nein. Wir setzen auf Ergebnisse statt auf Knebelverträge. Wenn das System für dich liefert, bleibst du, weil es sich rechnet – nicht, weil ein Vertrag dich zwingt." }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie hoch sollte mein Werbebudget sein?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Das hängt von Branche, Region und Zielen ab. Wichtig ist ein Budget, mit dem wir sauber testen und dann skalieren können. Im Analysegespräch geben wir dir eine ehrliche Einschätzung – auch, wenn der richtige Zeitpunkt noch nicht gekommen ist." }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie ist der Funnel aufgebaut?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Typisch: zielgerichtete Anzeigen → überzeugende Landingpage → Qualifizierung der Anfrage → Übergabe an dich. Jeder Schritt wird gemessen, sodass wir genau sehen, wo Anfragen entstehen und wo wir optimieren." }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie und wie oft bekomme ich Reporting?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Du erhältst transparente Einblicke in die relevanten Zahlen – Anfragen, Kosten pro Anfrage und Entwicklung. Kein Zahlen-Nebel, sondern die Kennzahlen, die für dein Geschäft zählen." }
+    },
+    {
+      "@type": "Question",
+      "name": "Für welche Unternehmen funktioniert das?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Besonders gut für Dienstleister, lokale Unternehmen und High-Ticket-Anbieter mit klarem Angebot und ausreichender Marge, um erfolgsbasiert zu arbeiten. Im kostenlosen Analysegespräch finden wir gemeinsam heraus, ob du dazugehörst." }
+    },
+    {
+      "@type": "Question",
+      "name": "Wie schnell sehe ich erste Ergebnisse?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Nach dem Setup folgt eine kurze Testphase, in der wir Kampagnen kontrolliert anlaufen lassen. Erste qualifizierte Anfragen sind oft innerhalb der ersten Wochen realistisch – verlässliche Aussagen treffen wir aber lieber auf Basis deiner konkreten Ausgangslage." }
+    }
+  ]
+}
+</script>
+
 <!-- ============================================================= -->
 <!--  FONTS  (Space Grotesk = Display / Inter = Body)              -->
 <!-- ============================================================= -->
@@ -244,6 +294,13 @@ section{ position:relative; }
 .sec-head{ max-width:680px; margin-bottom:60px; }
 .sec-head.center{ margin-inline:auto; text-align:center; }
 .sec-head p{ margin-top:20px; }
+.fact-cite{ margin-top:14px !important; font-size:.88rem !important; color:var(--fg-dim) !important;
+  max-width:60ch; line-height:1.6; }
+.fact-cite strong{ color:var(--fg-muted); font-weight:600; }
+.fc-ref{ display:inline-flex; align-items:center; justify-content:center; width:15px; height:15px;
+  margin-left:3px; border-radius:50%; border:1px solid var(--line-strong); color:var(--fg-dim) !important;
+  font-size:.62rem; vertical-align:super; text-decoration:none !important; transition:border-color var(--t-fast), color var(--t-fast); }
+.fc-ref:hover{ border-color:var(--accent); color:var(--accent) !important; }
 
 .reveal{ opacity:0; transform:translateY(34px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
 .reveal.in{ opacity:1; transform:none; }
@@ -378,13 +435,20 @@ section{ position:relative; }
 .sol-visual.has-photo > *{ position:relative; z-index:2; }
 @media(max-width:860px){ .sol-grid{ grid-template-columns:1fr; } .sol-visual{ min-height:340px; } }
 
-/* — SYSTEM: Akquise-Motor-Illustration (dunkler Render, blendet nahtlos) — */
-.sol-engine{ background:#0a0a0a; padding:0; min-height:0; aspect-ratio:3/2;
+/* — SYSTEM: reduziertes Funnel-Diagramm (Linien-Stil, kein KI-Rendering) — */
+.sol-engine{ background:#0a0a0a; padding:36px; min-height:0; aspect-ratio:3/2;
   align-items:center; justify-content:center; overflow:hidden; }
-.sol-engine img{ width:100%; height:100%; object-fit:cover; object-position:center; }
-.sol-engine .vlabel{ position:absolute; left:20px; bottom:18px; z-index:2;
-  padding:7px 14px; border-radius:100px; background:rgba(8,9,10,.6);
-  border:1px solid rgba(198,255,58,.25); backdrop-filter:blur(6px); color:var(--fg); }
+.funnel-diagram{ width:100%; height:100%; }
+.fd-line{ stroke:var(--line-strong); stroke-width:1; }
+.fd-dot{ fill:var(--accent); }
+.fd-label{ fill:var(--fg-dim); font-family:var(--font-display); font-size:12px;
+  letter-spacing:.04em; text-anchor:middle; }
+.fd-funnel{ fill:rgba(198,255,58,.05); stroke:var(--accent); stroke-width:1.4; stroke-linejoin:round; }
+.fd-neck{ stroke:var(--accent); stroke-width:1.4; }
+.fd-arrow{ fill:none; stroke:var(--accent); stroke-width:1.4; stroke-linecap:round; stroke-linejoin:round; }
+.fd-out-dot{ fill:var(--accent); }
+.fd-out-label{ fill:var(--fg); font-family:var(--font-display); font-weight:600; font-size:15px;
+  letter-spacing:.02em; text-anchor:middle; }
 
 /* =================================================================
    PRICING / MODELL COMPARISON
@@ -428,6 +492,19 @@ section{ position:relative; }
   .price-card .price-list li{ opacity:1 !important; transform:none !important; animation:none !important; }
 }
 @media(max-width:860px){ .price-grid{ grid-template-columns:1fr; } }
+
+/* — Transparenz: Ablauf der Abrechnung (Vertrauens-Baustein statt vager Werbesprache) — */
+.pay-flow{ margin-top:56px; padding-top:36px; border-top:1px solid var(--line); }
+.pay-flow-label{ display:block; font-family:var(--font-display); font-weight:600; font-size:.78rem;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--fg-dim); margin-bottom:26px; }
+.pay-flow-steps{ display:grid; grid-template-columns:repeat(4,1fr); gap:28px; }
+.pf-step .pfnum{ display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px;
+  border-radius:50%; border:1px solid var(--accent); color:var(--accent);
+  font-family:var(--font-display); font-weight:700; font-size:.82rem; margin-bottom:14px; }
+.pf-step h4{ font-size:1rem; margin-bottom:6px; }
+.pf-step p{ color:var(--fg-muted); font-size:.88rem; line-height:1.55; }
+@media(max-width:860px){ .pay-flow-steps{ grid-template-columns:1fr 1fr; } }
+@media(max-width:520px){ .pay-flow-steps{ grid-template-columns:1fr; } }
 
 /* =================================================================
    FOUNDER
@@ -476,6 +553,20 @@ section{ position:relative; }
 .fd-mail:hover{ transform:translateY(-2px); border-color:var(--accent); }
 @media(max-width:520px){ .fd-actions{ width:100%; } .fd-btn{ flex:1; justify-content:center; } }
 
+/* Standort-Karte (Zwei-Klick-Lösung: Google Maps lädt erst nach Klick) */
+.founder-map{ margin-top:16px; border:1px solid var(--line-strong); border-radius:var(--radius);
+  background:var(--bg-card); overflow:hidden; }
+.fm-info{ display:flex; align-items:center; gap:14px; padding:18px 20px; }
+.fm-pin{ flex-shrink:0; width:38px; height:38px; border-radius:50%; background:rgba(198,255,58,.08);
+  color:var(--accent); display:grid; place-items:center; }
+.fm-info b{ font-family:var(--font-display); font-size:.98rem; display:block; }
+.fm-info span{ font-size:.85rem; color:var(--fg-muted); }
+.fm-load{ display:block; width:100%; padding:13px; font-family:var(--font-display); font-weight:600;
+  font-size:.85rem; color:var(--accent); border-top:1px solid var(--line); background:rgba(198,255,58,.03);
+  transition:background var(--t-fast); }
+.fm-load:hover{ background:rgba(198,255,58,.07); }
+.founder-map iframe{ display:block; width:100%; height:230px; border:0; filter:grayscale(.2) contrast(1.05); }
+
 /* =================================================================
    FAQ
    ================================================================= */
@@ -505,6 +596,15 @@ section{ position:relative; }
 /* =================================================================
    FOOTER
    ================================================================= */
+.quellen{ padding:36px 0; border-top:1px solid var(--line); }
+.quellen-label{ display:block; font-family:var(--font-display); font-weight:600; font-size:.72rem;
+  letter-spacing:.14em; text-transform:uppercase; color:var(--fg-dim); margin-bottom:12px; }
+.quellen-list{ list-style:none; counter-reset:q; display:flex; flex-direction:column; gap:6px; }
+.quellen-list li{ counter-increment:q; font-size:.8rem; color:var(--fg-dim); }
+.quellen-list li::before{ content:counter(q) ". "; color:var(--fg-dim); }
+.quellen-list a{ color:var(--fg-dim); text-decoration:underline; text-underline-offset:2px; transition:color var(--t-fast); }
+.quellen-list a:hover{ color:var(--accent); }
+
 .footer{ border-top:1px solid var(--line); padding:60px 0 40px; }
 .footer-top{ display:flex; justify-content:space-between; gap:40px; flex-wrap:wrap; margin-bottom:44px; }
 .footer-brand{ max-width:320px; }
@@ -539,6 +639,9 @@ section{ position:relative; }
   letter-spacing:.42em; text-transform:uppercase; color:var(--accent); padding-left:.42em; }
 
 /* Hero: maskierter Zeilen-Reveal + Outline-Akzentwort */
+.hero-kicker{ display:inline-block; font-family:var(--font-display); font-weight:600; font-size:.82rem;
+  letter-spacing:.16em; text-transform:uppercase; color:var(--accent); margin-bottom:18px;
+  text-shadow:0 2px 14px rgba(0,0,0,.5); }
 .hero-title{ margin-bottom:22px; }
 .hero-title .hl{ display:block; overflow:hidden; padding-bottom:.08em; margin-bottom:-.08em; }
 .hero-title .hl-in{ display:inline-block; transform:translateY(112%); animation:lineUp .85s var(--ease) .12s forwards; }
@@ -709,6 +812,7 @@ section{ position:relative; }
   </div>
 
   <div class="container hero-inner">
+    <span class="hero-kicker reveal in">Planbare Neukundengewinnung aus Dresden</span>
     <!-- CONVERSION-CRITICAL: Hero-Headline (Wort-für-Wort-Reveal) -->
     <h1 class="h-hero hero-title">
       <span class="hl"><span class="hl-in">Dein Produkt ist genial.</span></span>
@@ -753,6 +857,7 @@ section{ position:relative; }
       <span class="eyebrow"><i>01</i>Das Problem</span>
       <h2 class="h-sec">Du willst Neukunden – nicht das Risiko.</h2>
       <p class="lead">Du kennst das Spiel: vierstellige Setup-Gebühr, fetter Monatsretainer, schicke Reportings voller Zahlen, die keinen Umsatz machen. Und am Monatsende? Trotzdem Funkstille im Posteingang.</p>
+      <p class="fact-cite">Neukundengewinnung ist für <strong>91&nbsp;% der deutschen Unternehmen</strong> die wichtigste Marketing-Priorität<a href="#quellen" class="fc-ref">1</a> – die wenigsten haben dafür ein planbares System.</p>
     </div>
     <div class="prob-list">
       <div class="prob-row reveal d1">
@@ -791,6 +896,7 @@ section{ position:relative; }
           <span class="eyebrow"><i>02</i>Unser System</span>
           <h2 class="h-sec">Ein Akquise-Motor, der erst zählt, wenn er liefert.</h2>
           <p class="lead">MR Elevate baut, betreibt und optimiert deinen kompletten Akquise-Funnel – Setup, Kampagnen, Tracking, Optimierung. Eine kleine Setup-Gebühr zum Start, danach ist unsere Vergütung an deine Ergebnisse gekoppelt.</p>
+          <p class="fact-cite">2024 flossen bereits <strong>30,9&nbsp;Mrd.&nbsp;€</strong> in digitales Marketing in Deutschland – ein Plus von 20&nbsp;% in nur zwei Jahren.<a href="#quellen" class="fc-ref">2</a> Allein auf Facebook sind wöchentlich rund <strong>21,6&nbsp;Millionen Menschen</strong> in Deutschland aktiv.<a href="#quellen" class="fc-ref">3</a></p>
         </div>
         <div class="sol-points">
           <div class="sol-point reveal d1"><span class="num">01</span><div><h4>Performance-Setup</h4><p>Funnel, Landingpages, Tracking und Anzeigen – komplett aufgesetzt und auf deine Zielgruppe geschärft.</p></div></div>
@@ -800,7 +906,27 @@ section{ position:relative; }
         </div>
       </div>
       <div class="sol-visual sol-engine reveal d2">
-        <img src="akquise-motor.jpg" alt="Der Akquise-Motor von MR Elevate: Analyse, Wachstum, Kampagnen und Technik fließen in einen Motor, der planbar neue Kunden ausgibt" width="1536" height="1024" loading="lazy" />
+        <svg class="funnel-diagram" viewBox="0 0 600 400" role="img" aria-label="Diagramm: Anzeigen, Landingpage, Formular und Tracking laufen in einem Funnel zusammen und erzeugen qualifizierte Anfragen">
+          <g class="fd-inputs">
+            <line x1="90" y1="58" x2="90" y2="110" class="fd-line" />
+            <line x1="230" y1="58" x2="230" y2="110" class="fd-line" />
+            <line x1="370" y1="58" x2="370" y2="110" class="fd-line" />
+            <line x1="510" y1="58" x2="510" y2="110" class="fd-line" />
+            <circle cx="90" cy="52" r="5" class="fd-dot" />
+            <circle cx="230" cy="52" r="5" class="fd-dot" />
+            <circle cx="370" cy="52" r="5" class="fd-dot" />
+            <circle cx="510" cy="52" r="5" class="fd-dot" />
+            <text x="90" y="34" class="fd-label">Anzeigen</text>
+            <text x="230" y="34" class="fd-label">Landingpage</text>
+            <text x="370" y="34" class="fd-label">Formular</text>
+            <text x="510" y="34" class="fd-label">Tracking</text>
+          </g>
+          <path d="M60,110 L540,110 L340,230 L260,230 Z" class="fd-funnel" />
+          <line x1="300" y1="230" x2="300" y2="290" class="fd-neck" />
+          <path d="M288,278 L300,296 L312,278" class="fd-arrow" />
+          <circle cx="300" cy="330" r="7" class="fd-out-dot" />
+          <text x="300" y="364" class="fd-out-label">Qualifizierte Anfrage</text>
+        </svg>
       </div>
     </div>
   </div>
@@ -840,6 +966,32 @@ section{ position:relative; }
         <a href="#quiz" class="btn btn-primary" data-magnetic data-cursor data-quiz-cta>Passt das zu mir? Jetzt prüfen
           <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
+      </div>
+    </div>
+
+    <div class="pay-flow reveal">
+      <span class="pay-flow-label">So läuft die Abrechnung konkret ab</span>
+      <div class="pay-flow-steps">
+        <div class="pf-step">
+          <span class="pfnum">1</span>
+          <h4>Setup-Gebühr</h4>
+          <p>Einmalig, fair kalkuliert und vor Projektstart schriftlich fixiert. Deckt Funnel, Tracking und Kampagnen-Aufbau.</p>
+        </div>
+        <div class="pf-step">
+          <span class="pfnum">2</span>
+          <h4>Werbebudget</h4>
+          <p>Fließt direkt an Meta oder Google – nicht an uns. Du siehst jederzeit, wohin dein Budget geht.</p>
+        </div>
+        <div class="pf-step">
+          <span class="pfnum">3</span>
+          <h4>Erfolgsvergütung</h4>
+          <p>Wird erst fällig, wenn messbare Ergebnisse entstehen – definiert und schriftlich festgehalten im Erstgespräch.</p>
+        </div>
+        <div class="pf-step">
+          <span class="pfnum">4</span>
+          <h4>Keine Bindung</h4>
+          <p>Keine Mindestlaufzeit, keine Kündigungsfrist mit Kleingedrucktem. Du bleibst, weil es sich rechnet.</p>
+        </div>
       </div>
     </div>
   </div>
@@ -902,6 +1054,7 @@ section{ position:relative; }
         </div>
         <p class="reveal d2">Ich bin Marc Richter und habe <b>MR Elevate</b> 2025 in Dresden gegründet – mit einer unbequemen Überzeugung: Eine Agentur sollte am Umsatz gemessen werden, den sie bringt. Nicht an Klicks, nicht an Reichweite, nicht an hübschen Folien.</p>
         <p class="reveal d2">Deshalb arbeite ich fast ausschließlich erfolgsbasiert. Mein Fokus: planbare Neukundengewinnung für Dienstleister, lokale Unternehmen und High-Ticket-Anbieter – in ganz Deutschland. Kein Buzzword-Gewitter, sondern ein System, das Anfragen liefert. Und das ich nur dann verdiene, wenn es genau das tut.</p>
+        <p class="reveal d2">Dabei stehe ich nicht allein: Ich arbeite eng mit einem Netzwerk erfahrener Performance-Marketer zusammen, die gemeinsam bereits <b>achtstellige Werbebudgets</b> verantwortet haben. Dieses Wissen fließt direkt in jede Kampagne ein, die ich für dich aufsetze.</p>
         <div class="founder-sign reveal d3"><span class="line"></span><span>Marc Richter, Gründer von MR Elevate</span></div>
 
         <div class="founder-direct reveal d3">
@@ -920,6 +1073,19 @@ section{ position:relative; }
               E-Mail
             </a>
           </div>
+        </div>
+
+        <div class="founder-map reveal d3" id="founderMap">
+          <div class="fm-info">
+            <span class="fm-pin" aria-hidden="true">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
+            </span>
+            <div>
+              <b>Vor Ort in Dresden</b>
+              <span>Briesnitzer Höhe 24 · 01157 Dresden</span>
+            </div>
+          </div>
+          <button type="button" class="fm-load" id="fmLoadBtn">Karte anzeigen</button>
         </div>
       </div>
     </div>
@@ -957,6 +1123,20 @@ section{ position:relative; }
       </div>
       <p class="note">Nur kleine Setup-Gebühr · ansonsten rein erfolgsbasiert · keine langen Bindungen</p>
     </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- QUELLEN                                                        -->
+<!-- ============================================================= -->
+<section class="quellen" id="quellen">
+  <div class="container">
+    <span class="quellen-label">Quellen</span>
+    <ol class="quellen-list">
+      <li>Bitkom e. V., Studie „Marketing im digitalen Wandel 2026" – <a href="https://www.bitkom.org/Bitkom/Publikationen/Marketing-im-digitalen-Wandel-2026" target="_blank" rel="noopener">bitkom.org</a></li>
+      <li>Bitkom e. V., Studie „Digitales Marketing in Deutschland 2025" – <a href="https://www.bitkom.org/Bitkom/Publikationen/Digitales-Marketing-in-Deutschland-2025" target="_blank" rel="noopener">bitkom.org</a></li>
+      <li>ARD/ZDF-Medienstudie 2025 – <a href="https://www.ard-zdf-medienstudie.de/" target="_blank" rel="noopener">ard-zdf-medienstudie.de</a></li>
+    </ol>
   </div>
 </section>
 
@@ -1163,6 +1343,22 @@ section{ position:relative; }
     }, {passive:true});
     document.addEventListener('mouseleave', function(){ dot.classList.remove('on'); shown=false; });
     document.addEventListener('mouseenter', function(){ dot.classList.add('on'); shown=true; });
+  })();
+
+  /* ---------- Standort-Karte: Google Maps erst nach Klick laden (Zwei-Klick-Lösung) ---------- */
+  (function(){
+    var btn = document.getElementById('fmLoadBtn');
+    var box = document.getElementById('founderMap');
+    if(!btn || !box) return;
+    btn.addEventListener('click', function(){
+      var iframe = document.createElement('iframe');
+      iframe.src = 'https://www.google.com/maps?q=Briesnitzer+H%C3%B6he+24,+01157+Dresden&output=embed';
+      iframe.loading = 'lazy';
+      iframe.referrerPolicy = 'no-referrer-when-downgrade';
+      iframe.setAttribute('aria-label', 'Google Maps: Briesnitzer Höhe 24, 01157 Dresden');
+      box.appendChild(iframe);
+      btn.remove();
+    });
   })();
 
   /* ---------- Magnetic buttons ---------- */
