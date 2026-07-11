@@ -787,6 +787,7 @@ section{ position:relative; }
       <a href="#modell">Modell</a>
       <a href="#prozess">Ablauf</a>
       <a href="#faq">FAQ</a>
+      <a href="leitfaden.html">Leitfaden</a>
     </div>
     <div class="nav-cta">
       <a href="#founder" class="btn btn-ghost">Über uns</a>
@@ -805,6 +806,7 @@ section{ position:relative; }
   <a href="#prozess">Ablauf</a>
   <a href="#founder">Über uns</a>
   <a href="#faq">FAQ</a>
+  <a href="leitfaden.html">Leitfaden</a>
   <a href="#quiz" class="btn btn-primary" data-quiz-cta>Kostenlos beraten</a>
 </div>
 
@@ -894,9 +896,9 @@ section{ position:relative; }
       </div>
     </div>
 
-    <a href="checkliste.html" class="freebie-nudge reveal">
+    <a href="leitfaden.html" class="freebie-nudge reveal">
       <span class="fn-text">
-        <b>Bevor du dich entscheidest:</b> Mach den kostenlosen 12-Punkte-Check – 2 Minuten, kein Verkaufsgespräch.
+        <b>Bevor du dich entscheidest:</b> Der komplette Leitfaden – wie du eine Kampagne selbst aufbaust. Offen, ohne Anmeldung.
       </span>
       <span class="fn-arrow" aria-hidden="true">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
@@ -1183,7 +1185,7 @@ section{ position:relative; }
           <a href="#modell">Das Modell</a>
           <a href="#prozess">Ablauf</a>
           <a href="#faq">FAQ</a>
-          <a href="checkliste.html">Kostenloser Check</a>
+          <a href="leitfaden.html">Der Leitfaden</a>
         </div>
         <div class="footer-col">
           <h5>Rechtliches</h5>
@@ -1641,6 +1643,7 @@ section{ position:relative; }
     if(opener){ e.preventDefault(); openQuizModal(); return; }
     if(e.target.closest('[data-quiz-close]')){ closeQuizModal(); }
   });
+  if(window.location.hash === '#quiz'){ openQuizModal(); }
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape' && quizModal && !quizModal.hidden){ closeQuizModal(); }
   });
