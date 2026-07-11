@@ -251,6 +251,9 @@ section{ position:relative; }
 .hero-bg{ position:absolute; inset:0; z-index:0; }
 .hero-bg video,.hero-photo,.hero-video{ width:100%; height:100%; object-fit:cover; }
 .hero-photo,.hero-video{ object-position:50% 42%; }
+/* Nahtloser Video-Loop: beide Ebenen übereinander, weiche Überblendung */
+.hero-bg .hero-video{ position:absolute; inset:0; opacity:1; transition:opacity 1s linear; }
+.hero-bg .hero-video.faded{ opacity:0; }
 .hero-bg::after{ /* dunkler Verlauf für Lesbarkeit (links stark, rechts mehr Foto) */
   content:""; position:absolute; inset:0;
   background:
@@ -817,9 +820,14 @@ section{ position:relative; }
 <!-- ============================================================= -->
 <header class="hero" id="hero">
   <div class="hero-bg">
-    <!-- Dresden-Skyline als Hero-Hintergrund (Video, stummgeschaltet) -->
-    <video class="hero-video" autoplay muted loop playsinline preload="metadata"
+    <!-- Dresden-Skyline als Hero-Hintergrund. Zwei Ebenen: kurz vor dem
+         Video-Ende blendet die zweite Kopie weich ein (nahtloser Loop,
+         kein Ruckler beim Neustart). loop-Attribut nur als JS-aus-Fallback. -->
+    <video class="hero-video" id="heroVidA" autoplay muted loop playsinline preload="metadata"
            poster="hero-dresden.jpg" aria-hidden="true">
+      <source src="Dresden_skyline_sunrise_loop_202606150930.mp4" type="video/mp4" />
+    </video>
+    <video class="hero-video hero-video-alt faded" id="heroVidB" muted playsinline preload="auto" aria-hidden="true">
       <source src="Dresden_skyline_sunrise_loop_202606150930.mp4" type="video/mp4" />
     </video>
   </div>
@@ -1288,6 +1296,43 @@ section{ position:relative; }
 (function(){
   "use strict";
   var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  /* ---------- Nahtloser Hero-Video-Loop (Crossfade zwischen zwei Ebenen) ---------- */
+  (function(){
+    var A = document.getElementById('heroVidA');
+    var B = document.getElementById('heroVidB');
+    if(!A || !B) return;
+    var FADE = 1.0; // Sekunden Überblendung vor dem Video-Ende
+    var swapping = false;
+
+    function watch(cur, nxt){
+      function onTime(){
+        if(swapping) return;
+        if(cur.duration && cur.currentTime >= cur.duration - FADE){
+          swapping = true;
+          cur.removeEventListener('timeupdate', onTime);
+          nxt.currentTime = 0;
+          var p = nxt.play();
+          if(p && p.catch) p.catch(function(){});
+          nxt.classList.remove('faded');
+          cur.classList.add('faded');
+          setTimeout(function(){
+            cur.pause();
+            swapping = false;
+            watch(nxt, cur);
+          }, FADE * 1000 + 120);
+        }
+      }
+      cur.addEventListener('timeupdate', onTime);
+    }
+
+    // loop-Attribut war nur der Fallback ohne JS – jetzt übernimmt der Crossfade
+    A.removeAttribute('loop');
+    var started = false;
+    function init(){ if(started) return; started = true; watch(A, B); }
+    A.addEventListener('loadedmetadata', init);
+    if(A.readyState >= 1){ init(); }
+  })();
 
   /* ---------- NAV scroll state ---------- */
   var nav = document.getElementById('nav');
