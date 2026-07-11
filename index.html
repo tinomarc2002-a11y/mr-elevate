@@ -120,7 +120,7 @@
   --line-strong:   #444b56;   /* betonte Border (Karten, Inputs, Buttons) */
   --fg:            #f4f6f7;
   --fg-muted:      #9aa1a8;
-  --fg-dim:        #646a70;
+  --fg-dim:        #7c8189;
 
   --accent:        #c6ff3a;   /* electric lime – signals growth / performance */
   --accent-deep:   #a4e000;
@@ -266,23 +266,12 @@ section{ position:relative; }
   .hero-photo,.hero-video{ object-position:50% 36%; }
 }
 .hero-inner{ position:relative; z-index:2; max-width:880px; }
-.hero-title,.hero-tagline,.hero-sub,.hero-bullets li{ text-shadow:0 2px 22px rgba(0,0,0,.55); }
+.hero-title,.hero-tagline,.hero-sub{ text-shadow:0 2px 22px rgba(0,0,0,.55); }
 .hero h1{ margin-bottom:26px; }
 .hero h1 .accent{ color:var(--accent); position:relative; white-space:nowrap; }
 .hero-sub{ font-size:clamp(1.05rem,1.6vw,1.3rem); color:var(--fg-muted); max-width:60ch; margin-bottom:34px; }
-.hero-bullets{ list-style:none; display:flex; flex-wrap:wrap; gap:14px 26px; margin-bottom:40px; }
-.hero-bullets li{ display:flex; align-items:center; gap:10px; font-size:.98rem; color:var(--fg); }
-.hero-bullets svg{ flex-shrink:0; color:var(--accent); }
 .hero-actions{ display:flex; flex-wrap:wrap; gap:14px; align-items:center; }
 .hero-actions .note{ font-size:.85rem; color:var(--fg-dim); }
-
-.badge-status{
-  display:inline-flex; align-items:center; gap:9px; padding:8px 16px; border-radius:100px;
-  border:1px solid var(--line-strong); background:rgba(255,255,255,.03);
-  font-size:.82rem; color:var(--fg-muted); margin-bottom:28px;
-}
-.pulse{ width:8px; height:8px; border-radius:50%; background:var(--accent); box-shadow:0 0 0 0 var(--accent-glow); animation:pulse 2s infinite; }
-@keyframes pulse{ 0%{box-shadow:0 0 0 0 var(--accent-glow);} 70%{box-shadow:0 0 0 9px transparent;} 100%{box-shadow:0 0 0 0 transparent;} }
 
 .scroll-cue{ display:inline-flex; flex-direction:row; align-items:center; gap:12px; margin-top:24px; z-index:2; color:var(--fg-dim); font-size:.72rem; letter-spacing:.15em; text-transform:uppercase; }
 .scroll-cue .mouse{ width:22px; height:36px; border:1.5px solid var(--line-strong); border-radius:12px; position:relative; }
@@ -311,7 +300,7 @@ section{ position:relative; }
 .reveal.d3{ transition-delay:.24s; } .reveal.d4{ transition-delay:.32s; }
 @media (prefers-reduced-motion:reduce){
   .reveal{ opacity:1 !important; transform:none !important; transition:none; }
-  .pulse,.scroll-cue .mouse::after,.btn-primary::after{ animation:none !important; }
+  .scroll-cue .mouse::after{ animation:none !important; }
 }
 
 
@@ -706,12 +695,6 @@ section{ position:relative; }
   user-select:none; margin:16px 0 44px; }
 @supports not (-webkit-text-stroke:1px #000){ .footer-wordmark{ color:var(--line-strong); } }
 
-/* Reveal variants */
-.reveal.blur{ filter:blur(14px); }
-.reveal.blur.in{ filter:blur(0); }
-.reveal.scale{ transform:translateY(34px) scale(.94); }
-.reveal.scale.in{ transform:none; }
-
 
 @media (prefers-reduced-motion:reduce){
   .hero-title .hl-in,.hero-tagline{ opacity:1 !important; transform:none !important; filter:none !important; animation:none !important; }
@@ -780,7 +763,7 @@ section{ position:relative; }
   <div class="container nav-inner">
     <a href="#top" class="brand" aria-label="MR Elevate Startseite">
       <span class="brand-stack">
-        <img class="brand-logo" src="logo-gruen.png" alt="MR Elevate Logo" width="147" height="130" />
+        <img class="brand-logo" src="logo-gruen.png" alt="MR Elevate Logo" width="283" height="280" />
         <span class="brand-elevate">Elevate</span>
       </span>
     </a>
@@ -1179,7 +1162,7 @@ section{ position:relative; }
       <div class="footer-brand">
         <a href="#top" class="brand">
           <span class="brand-stack">
-            <img class="brand-logo" src="logo-gruen.png" alt="MR Elevate Logo" width="147" height="130" />
+            <img class="brand-logo" src="logo-gruen.png" alt="MR Elevate Logo" width="283" height="280" />
             <span class="brand-elevate">Elevate</span>
           </span>
         </a>
@@ -1359,34 +1342,6 @@ section{ position:relative; }
     if(el.classList.contains('in')) return; io.observe(el);
   });
 
-  /* ---------- Count-up stat ---------- */
-  var counters = document.querySelectorAll('[data-count]');
-  var cio = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){
-      if(!e.isIntersecting) return; cio.unobserve(e.target);
-      var el = e.target, target = +el.dataset.count, suffix = el.dataset.suffix || '';
-      if(reduce){ el.textContent = target + suffix; return; }
-      var start = performance.now(), dur = 1400;
-      var tick = function(now){
-        var p = Math.min((now-start)/dur, 1), eased = 1-Math.pow(1-p,3);
-        el.textContent = Math.round(eased*target) + suffix;
-        if(p<1) requestAnimationFrame(tick);
-      };
-      requestAnimationFrame(tick);
-    });
-  }, {threshold:.5});
-  counters.forEach(function(c){ cio.observe(c); });
-
-  /* ---------- Hero parallax (pointer) ---------- */
-  var px = document.querySelector('[data-parallax]');
-  if(px && !reduce && window.matchMedia('(pointer:fine)').matches){
-    window.addEventListener('mousemove', function(ev){
-      var x = (ev.clientX/window.innerWidth - .5), y = (ev.clientY/window.innerHeight - .5);
-      px.style.transform = 'translate3d('+(x*-18)+'px,'+(y*-18)+'px,0) scale(1.05)';
-    }, {passive:true});
-  }
-
-  
   var fine = window.matchMedia('(pointer:fine)').matches;
 
   /* ---------- Scroll progress bar ---------- */
@@ -1650,7 +1605,7 @@ section{ position:relative; }
         '<div class="summary-pill">'+
           pill(a.branche)+pill(a.kundenwert)+pill(a.timing)+
         '</div>'+
-        '<a href="#system" class="btn btn-ghost" data-quiz-close>Solange unser System ansehen</a>'+
+        '<a href="#system" class="btn btn-ghost" data-quiz-close>In der Zwischenzeit unser System ansehen</a>'+
       '</div>';
   }
 

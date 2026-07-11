@@ -10,7 +10,7 @@
 <style>
 :root{
   --bg:#08090a; --bg-card:#111315; --line:#1d2024; --line-strong:#2a2e33;
-  --fg:#f4f6f7; --fg-muted:#9aa1a8; --fg-dim:#646a70; --accent:#c6ff3a;
+  --fg:#f4f6f7; --fg-muted:#9aa1a8; --fg-dim:#7c8189; --accent:#c6ff3a;
   --font-display:'Space Grotesk',system-ui,sans-serif; --font-body:'Inter',system-ui,sans-serif;
 }
 *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
@@ -31,8 +31,6 @@ h3{ font-family:var(--font-display); font-weight:600; font-size:1.05rem; margin:
 p,li{ color:var(--fg-muted); margin-bottom:12px; }
 ul{ padding-left:20px; }
 p strong{ color:var(--fg); font-weight:600; }
-.todo{ display:inline-block; background:rgba(198,255,58,.1); border:1px dashed var(--accent); color:var(--accent);
-  border-radius:6px; padding:1px 8px; font-family:var(--font-display); font-size:.82rem; }
 .card{ background:var(--bg-card); border:1px solid var(--line-strong); border-radius:14px; padding:22px 26px; margin:18px 0; }
 hr{ border:none; border-top:1px solid var(--line); margin:40px 0; }
 .note{ font-size:.85rem; color:var(--fg-dim); margin-top:30px; }
@@ -51,13 +49,6 @@ footer{ border-top:1px solid var(--line); margin-top:60px; padding-top:24px; fon
   <h1>Datenschutzerklärung</h1>
   <p class="intro">Der Schutz deiner persönlichen Daten ist uns wichtig. Nachfolgend informieren wir
   dich gemäß Art. 13 DSGVO über die Verarbeitung personenbezogener Daten auf dieser Website.</p>
-
-  <!-- =====================================================================
-       HINWEIS: Gerüst nach DSGVO. <span class="todo">[…]</span>-Felder ausfüllen.
-       Tracking-/Analyse-Abschnitte nur aktivieren, wenn entsprechende Tools
-       (Meta-Pixel, Google Analytics, etc.) tatsächlich eingesetzt werden.
-       Im Zweifel rechtlich prüfen lassen.
-       ===================================================================== -->
 
   <h2>1. Verantwortlicher</h2>
   <div class="card">
@@ -118,9 +109,9 @@ footer{ border-top:1px solid var(--line); margin-top:60px; padding-top:24px; fon
   und es besteht ein Auftragsverarbeitungsvertrag gemäß Art. 28 DSGVO. Näheres in der
   <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener">Datenschutzerklärung von Formspree</a>.</p>
   <div class="card">
-    <p style="margin:0">Zur Übermittlung und Verwaltung von Anfragen nutzen wir <strong>Formspree</strong>
-    (Formularversand) und <strong>DigiScale</strong> (CRM). Mit den Anbietern bestehen
-    Auftragsverarbeitungsverträge (AVV) gemäß Art. 28 DSGVO.</p>
+    <p style="margin:0">Zur Übermittlung von Anfragen nutzen wir <strong>Formspree</strong>
+    (Formularversand). Mit dem Anbieter besteht ein Auftragsverarbeitungsvertrag (AVV)
+    gemäß Art. 28 DSGVO.</p>
   </div>
 
   <h2>5. Cookies &amp; Einwilligung</h2>
@@ -152,9 +143,8 @@ footer{ border-top:1px solid var(--line); margin-top:60px; padding-top:24px; fon
 
   <hr/>
   <p class="note">Stand: Juli 2026. Enthält: Verantwortlicher, Aufsichtsbehörde, Hosting (Vercel mit
-  SCC/DPA), lokal gehostete Schriften, Formularversand (Formspree), CRM (DigiScale) und
-  Cookie-Einwilligung. Aktuell ist kein Tracking-Pixel eingebunden. Kein Ersatz für eine
-  Rechtsberatung.</p>
+  SCC/DPA), lokal gehostete Schriften, Formularversand (Formspree) und Cookie-Einwilligung.
+  Aktuell ist kein Tracking-Pixel eingebunden. Kein Ersatz für eine Rechtsberatung.</p>
 
   <footer>© 2026 MR Elevate · Marc Richter · Dresden · <a href="impressum.html">Impressum</a></footer>
 </div>
