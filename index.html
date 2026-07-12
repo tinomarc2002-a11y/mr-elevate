@@ -589,20 +589,25 @@ section{ position:relative; }
 /* =================================================================
    ZUSAMMENGEFASST — Bildfolge (5 verbundene Panels, Linien-Stil)
    ================================================================= */
-.story-strip{ position:relative; display:grid; grid-template-columns:repeat(5,1fr); gap:22px; margin-top:8px; }
-.story-track{ position:absolute; left:0; right:0; top:29px; height:1px; background:var(--line); z-index:0; }
-.story-panel{ position:relative; z-index:1; text-align:center; padding:0 8px; }
-.sp-icon{ width:58px; height:58px; margin:0 auto 18px; border-radius:50%; display:grid; place-items:center;
-  background:var(--bg); border:1px solid var(--line-strong); color:var(--accent);
+.story-strip{ display:grid; grid-template-columns:repeat(5,1fr); gap:18px; margin-top:8px; }
+.story-panel{ position:relative; text-align:center; }
+.sp-step{ display:block; font-family:var(--font-display); font-weight:700; font-size:.72rem;
+  letter-spacing:.14em; color:var(--fg-dim); margin-bottom:10px; }
+.story-illu{ border:1px solid var(--line-strong); border-radius:var(--radius); background:#0a0b0c;
+  padding:14px; margin-bottom:16px; aspect-ratio:180/130; display:grid; place-items:center;
   transition:border-color var(--t), transform var(--t); }
-.story-panel:hover .sp-icon{ border-color:var(--accent); transform:translateY(-3px); }
-.story-panel h4{ font-size:.98rem; margin-bottom:6px; }
-.story-panel p{ color:var(--fg-muted); font-size:.85rem; line-height:1.5; }
-@media(max-width:900px){
-  .story-strip{ grid-template-columns:1fr 1fr; }
-  .story-track{ display:none; }
-}
-@media(max-width:560px){ .story-strip{ grid-template-columns:1fr; } }
+.story-panel:hover .story-illu{ border-color:var(--accent); transform:translateY(-4px); }
+.story-illu svg{ width:100%; height:100%; display:block; }
+.story-illu .il-line{ stroke:var(--line-strong); stroke-width:2; }
+.story-illu .il-muted{ stroke:var(--fg-dim); stroke-width:2; }
+.story-illu .il-accent{ stroke:var(--accent); stroke-width:2; }
+.story-illu .il-fill{ fill:var(--accent); stroke:var(--accent); stroke-width:2; }
+.story-illu .il-fillsoft{ fill:rgba(198,255,58,.14); stroke:var(--line-strong); stroke-width:1.5; }
+.story-illu .il-text{ fill:var(--fg-muted); font-family:var(--font-display); font-size:13px; font-weight:600; text-anchor:middle; }
+.story-panel h4{ font-size:1rem; margin-bottom:6px; }
+.story-panel p{ color:var(--fg-muted); font-size:.85rem; line-height:1.5; padding:0 4px; }
+@media(max-width:900px){ .story-strip{ grid-template-columns:1fr 1fr; } }
+@media(max-width:560px){ .story-strip{ grid-template-columns:1fr; max-width:340px; margin-inline:auto; } }
 
 /* =================================================================
    FINAL CTA
@@ -1148,44 +1153,107 @@ section{ position:relative; }
       <h2 class="h-sec">Der Gedanke dahinter – in fünf Bildern.</h2>
     </div>
     <div class="story-strip">
-      <div class="story-track" aria-hidden="true"></div>
 
       <div class="story-panel reveal d1">
-        <span class="sp-icon" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6" stroke-dasharray="2 3"/></svg>
-        </span>
+        <span class="sp-step">01</span>
+        <div class="story-illu" aria-hidden="true">
+          <!-- Volle Reportings, leeres Postfach -->
+          <svg viewBox="0 0 180 130" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="20" y="24" width="62" height="82" rx="6" class="il-line"/>
+            <line x1="32" y1="40" x2="60" y2="40" class="il-muted"/>
+            <line x1="32" y1="49" x2="52" y2="49" class="il-muted"/>
+            <rect x="32" y="78" width="8" height="18" class="il-fillsoft"/>
+            <rect x="45" y="68" width="8" height="28" class="il-fillsoft"/>
+            <rect x="58" y="58" width="8" height="38" class="il-fill"/>
+            <path d="M104 66 h44 l-6 34 h-32 z" class="il-line"/>
+            <path d="M104 66 l10 12 h20 l10 -12" class="il-line"/>
+            <path d="M118 84 a8 8 0 1 1 8 8" class="il-accent" stroke-dasharray="3 4"/>
+            <circle cx="126" cy="94" r="1.6" class="il-fill"/>
+          </svg>
+        </div>
         <h4>Das Problem</h4>
         <p>Volle Reportings, leeres Postfach.</p>
       </div>
 
       <div class="story-panel reveal d2">
-        <span class="sp-icon" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v2.4M12 18.6V21M21 12h-2.4M5.4 12H3M18.4 5.6l-1.7 1.7M7.3 16.7l-1.7 1.7M18.4 18.4l-1.7-1.7M7.3 7.3 5.6 5.6"/></svg>
-        </span>
+        <span class="sp-step">02</span>
+        <div class="story-illu" aria-hidden="true">
+          <!-- Der Akquise-Motor: System-Block mit Zahnrädern + Output -->
+          <svg viewBox="0 0 180 130" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="26" y="34" width="86" height="62" rx="10" class="il-line"/>
+            <g class="il-accent">
+              <circle cx="55" cy="65" r="15"/>
+              <path d="M55 46 v-6 M55 84 v6 M74 65 h6 M36 65 h-6 M68.4 51.6 l4.3-4.3 M41.6 78.4 l-4.3 4.3 M68.4 78.4 l4.3 4.3 M41.6 51.6 l-4.3-4.3"/>
+              <circle cx="55" cy="65" r="5"/>
+            </g>
+            <g class="il-muted">
+              <circle cx="86" cy="76" r="9"/>
+              <path d="M86 64 v-4 M86 88 v4 M98 76 h4 M74 76 h-4"/>
+            </g>
+            <path d="M112 65 h34" class="il-accent"/>
+            <path d="M140 59 l8 6 -8 6" class="il-accent"/>
+          </svg>
+        </div>
         <h4>Der Akquise-Motor</h4>
         <p>Ein System, das erst zählt, wenn es liefert.</p>
       </div>
 
       <div class="story-panel reveal d3">
-        <span class="sp-icon" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h16l-6.5 8.2V19l-3 2v-8.8Z"/></svg>
-        </span>
+        <span class="sp-step">03</span>
+        <div class="story-illu" aria-hidden="true">
+          <!-- Klicks -> qualifizierte Anfragen: Trichter filtert -->
+          <svg viewBox="0 0 180 130" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <g class="il-muted">
+              <circle cx="62" cy="24" r="3"/><circle cx="80" cy="20" r="3"/><circle cx="98" cy="24" r="3"/>
+              <circle cx="116" cy="20" r="3"/><circle cx="71" cy="34" r="3"/><circle cx="107" cy="34" r="3"/><circle cx="89" cy="30" r="3"/>
+            </g>
+            <path d="M50 46 h80 l-24 30 v22 h-32 v-22 z" class="il-line"/>
+            <path d="M74 98 h32" class="il-line"/>
+            <line x1="90" y1="98" x2="90" y2="112" class="il-accent"/>
+            <circle cx="90" cy="118" r="6" class="il-fill" stroke="none"/>
+          </svg>
+        </div>
         <h4>Klicks → Anfragen</h4>
         <p>Nicht Reichweite. Qualifizierte Anfragen.</p>
       </div>
 
       <div class="story-panel reveal d4">
-        <span class="sp-icon" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="11" width="14" height="9" rx="2"/><path d="M7 11V7a5 5 0 0 1 8.9-3.1"/></svg>
-        </span>
+        <span class="sp-step">04</span>
+        <div class="story-illu" aria-hidden="true">
+          <!-- Kurze Laufzeit: Zeitachse mit Spanne 3-6 -->
+          <svg viewBox="0 0 180 130" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="24" y1="78" x2="156" y2="78" class="il-line"/>
+            <g class="il-muted">
+              <line x1="42" y1="74" x2="42" y2="82"/><line x1="66" y1="74" x2="66" y2="82"/>
+              <line x1="90" y1="74" x2="90" y2="82"/><line x1="114" y1="74" x2="114" y2="82"/><line x1="138" y1="74" x2="138" y2="82"/>
+            </g>
+            <line x1="66" y1="60" x2="114" y2="60" class="il-accent"/>
+            <line x1="66" y1="55" x2="66" y2="65" class="il-accent"/>
+            <line x1="114" y1="55" x2="114" y2="65" class="il-accent"/>
+            <circle cx="66" cy="78" r="4" class="il-fill" stroke="none"/>
+            <circle cx="114" cy="78" r="4" class="il-fill" stroke="none"/>
+            <text x="90" y="46" class="il-text">3–6 Monate</text>
+          </svg>
+        </div>
         <h4>Kurze Laufzeit</h4>
         <p>3–6 Monate. Kein Knebelvertrag.</p>
       </div>
 
       <div class="story-panel reveal d4">
-        <span class="sp-icon" aria-hidden="true">
-          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="4.4"/><circle cx="12" cy="12" r=".6" fill="currentColor"/></svg>
-        </span>
+        <span class="sp-step">05</span>
+        <div class="story-illu" aria-hidden="true">
+          <!-- Das Ergebnis: planbares Wachstum -->
+          <svg viewBox="0 0 180 130" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <line x1="30" y1="102" x2="150" y2="102" class="il-line"/>
+            <line x1="30" y1="102" x2="30" y2="28" class="il-line"/>
+            <rect x="46" y="82" width="14" height="20" class="il-fillsoft"/>
+            <rect x="72" y="68" width="14" height="34" class="il-fillsoft"/>
+            <rect x="98" y="52" width="14" height="50" class="il-fillsoft"/>
+            <rect x="124" y="38" width="14" height="64" class="il-fill"/>
+            <path d="M40 88 L70 66 L96 54 L134 30" class="il-accent"/>
+            <path d="M124 30 h10 v10" class="il-accent"/>
+          </svg>
+        </div>
         <h4>Das Ergebnis</h4>
         <p>Planbares Wachstum statt Zufall.</p>
       </div>
