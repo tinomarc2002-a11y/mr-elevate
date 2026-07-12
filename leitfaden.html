@@ -797,10 +797,34 @@ section{ position:relative; }
   };
   updPg(); window.addEventListener('scroll', updPg, {passive:true}); window.addEventListener('resize', updPg);
 
-  var io = new IntersectionObserver(function(entries){
-    entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
-  }, {threshold:.1, rootMargin:'0px 0px -40px 0px'});
-  document.querySelectorAll('.reveal').forEach(function(el){ io.observe(el); });
+  /* IntersectionObserver + Scroll-Fallback, damit Inhalte nie dauerhaft
+     unsichtbar bleiben, falls IO in einem Browser/einer Erweiterung
+     nicht zuverlässig feuert. */
+  var revealPending = Array.prototype.slice.call(document.querySelectorAll('.reveal'))
+    .filter(function(el){ return !el.classList.contains('in'); });
+
+  function revealSweep(){
+    var vh = window.innerHeight;
+    revealPending = revealPending.filter(function(el){
+      var r = el.getBoundingClientRect();
+      if(r.top < vh - 40 && r.bottom > 0){ el.classList.add('in'); return false; }
+      return true;
+    });
+    if(!revealPending.length){
+      window.removeEventListener('scroll', revealSweep);
+      window.removeEventListener('resize', revealSweep);
+    }
+  }
+
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+    }, {threshold:.1, rootMargin:'0px 0px -40px 0px'});
+    revealPending.forEach(function(el){ io.observe(el); });
+  }
+  window.addEventListener('scroll', revealSweep, {passive:true});
+  window.addEventListener('resize', revealSweep, {passive:true});
+  revealSweep();
 })();
 </script>
 </body>
