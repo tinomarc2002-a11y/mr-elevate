@@ -587,6 +587,24 @@ section{ position:relative; }
 .faq-a p{ padding:0 4px 26px; color:var(--fg-muted); max-width:68ch; }
 
 /* =================================================================
+   ZUSAMMENGEFASST — Bildfolge (5 verbundene Panels, Linien-Stil)
+   ================================================================= */
+.story-strip{ position:relative; display:grid; grid-template-columns:repeat(5,1fr); gap:22px; margin-top:8px; }
+.story-track{ position:absolute; left:0; right:0; top:29px; height:1px; background:var(--line); z-index:0; }
+.story-panel{ position:relative; z-index:1; text-align:center; padding:0 8px; }
+.sp-icon{ width:58px; height:58px; margin:0 auto 18px; border-radius:50%; display:grid; place-items:center;
+  background:var(--bg); border:1px solid var(--line-strong); color:var(--accent);
+  transition:border-color var(--t), transform var(--t); }
+.story-panel:hover .sp-icon{ border-color:var(--accent); transform:translateY(-3px); }
+.story-panel h4{ font-size:.98rem; margin-bottom:6px; }
+.story-panel p{ color:var(--fg-muted); font-size:.85rem; line-height:1.5; }
+@media(max-width:900px){
+  .story-strip{ grid-template-columns:1fr 1fr; }
+  .story-track{ display:none; }
+}
+@media(max-width:560px){ .story-strip{ grid-template-columns:1fr; } }
+
+/* =================================================================
    FINAL CTA
    ================================================================= */
 .final{ text-align:center; position:relative; }
@@ -1116,6 +1134,61 @@ section{ position:relative; }
     </div>
     <div class="faq-wrap reveal d1" id="faq-list">
       <!-- Items per JS-Daten generiert -->
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- ZUSAMMENGEFASST — Bildfolge (Linien-Stil, kein KI-Rendering)   -->
+<!-- ============================================================= -->
+<section class="sec-pad" id="story">
+  <div class="container">
+    <div class="sec-head center reveal">
+      <span class="eyebrow" style="justify-content:center;"><i>07</i>Zusammengefasst</span>
+      <h2 class="h-sec">Der Gedanke dahinter – in fünf Bildern.</h2>
+    </div>
+    <div class="story-strip">
+      <div class="story-track" aria-hidden="true"></div>
+
+      <div class="story-panel reveal d1">
+        <span class="sp-icon" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6" stroke-dasharray="2 3"/></svg>
+        </span>
+        <h4>Das Problem</h4>
+        <p>Volle Reportings, leeres Postfach.</p>
+      </div>
+
+      <div class="story-panel reveal d2">
+        <span class="sp-icon" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="3.2"/><path d="M12 3v2.4M12 18.6V21M21 12h-2.4M5.4 12H3M18.4 5.6l-1.7 1.7M7.3 16.7l-1.7 1.7M18.4 18.4l-1.7-1.7M7.3 7.3 5.6 5.6"/></svg>
+        </span>
+        <h4>Der Akquise-Motor</h4>
+        <p>Ein System, das erst zählt, wenn es liefert.</p>
+      </div>
+
+      <div class="story-panel reveal d3">
+        <span class="sp-icon" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h16l-6.5 8.2V19l-3 2v-8.8Z"/></svg>
+        </span>
+        <h4>Klicks → Anfragen</h4>
+        <p>Nicht Reichweite. Qualifizierte Anfragen.</p>
+      </div>
+
+      <div class="story-panel reveal d4">
+        <span class="sp-icon" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="11" width="14" height="9" rx="2"/><path d="M7 11V7a5 5 0 0 1 8.9-3.1"/></svg>
+        </span>
+        <h4>Kurze Laufzeit</h4>
+        <p>3–6 Monate. Kein Knebelvertrag.</p>
+      </div>
+
+      <div class="story-panel reveal d4">
+        <span class="sp-icon" aria-hidden="true">
+          <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="8.2"/><circle cx="12" cy="12" r="4.4"/><circle cx="12" cy="12" r=".6" fill="currentColor"/></svg>
+        </span>
+        <h4>Das Ergebnis</h4>
+        <p>Planbares Wachstum statt Zufall.</p>
+      </div>
     </div>
   </div>
 </section>
