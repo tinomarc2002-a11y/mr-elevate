@@ -13,6 +13,10 @@
 <link rel="icon" type="image/png" sizes="48x48" href="favicon-48.png" />
 <link rel="apple-touch-icon" href="apple-touch-icon.png" />
 
+<!-- Vercel Web Analytics: cookielose Reichweitenmessung, keine persönlichen Profile.
+     Aktiv erst, wenn Web Analytics im Vercel-Dashboard eingeschaltet ist. -->
+<script defer src="/_vercel/insights/script.js"></script>
+
 <!-- Open Graph (Link-Vorschau: WhatsApp, LinkedIn, Facebook) -->
 <meta property="og:type" content="website" />
 <meta property="og:locale" content="de_DE" />
@@ -1368,7 +1372,7 @@ section{ position:relative; }
   <div class="cc-inner">
     <div class="cc-text">
       <strong>Cookies &amp; Datenschutz</strong>
-      <p>Wir nutzen nur technisch notwendige Mittel. Cookies für Marketing/Reichweite (z.&nbsp;B. Meta-Pixel) setzen wir <b>ausschließlich mit deiner Einwilligung</b>. Mehr in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+      <p>Wir nutzen nur technisch notwendige Mittel und eine <b>cookielose</b> Reichweitenmessung ohne persönliche Profile. Marketing-Cookies (z.&nbsp;B. Meta-Pixel) setzen wir <b>ausschließlich mit deiner Einwilligung</b>. Mehr in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
     </div>
     <div class="cc-actions">
       <button class="btn-cc btn-cc-ghost" type="button" data-cc="necessary">Nur notwendige</button>
@@ -1542,6 +1546,36 @@ section{ position:relative; }
       btn.remove();
     });
   })();
+
+  /* ---------- Calendly: Termin-Popup, Assets laden erst beim Klick (DSGVO) ----------
+     Buchungslink hier eintragen – solange der Platzhalter drinsteht,
+     wird der Buchen-Button gar nicht erst angezeigt. */
+  var CALENDLY_URL = 'https://calendly.com/DEIN-LINK';
+  var calendlyReady = false;
+  function openCalendly(){
+    if(calendlyReady && window.Calendly){
+      window.Calendly.initPopupWidget({ url: CALENDLY_URL });
+      return;
+    }
+    var css = document.createElement('link');
+    css.rel = 'stylesheet';
+    css.href = 'https://assets.calendly.com/assets/external/widget.css';
+    document.head.appendChild(css);
+    var js = document.createElement('script');
+    js.src = 'https://assets.calendly.com/assets/external/widget.js';
+    js.async = true;
+    js.onload = function(){
+      calendlyReady = true;
+      if(window.Calendly){ window.Calendly.initPopupWidget({ url: CALENDLY_URL }); }
+    };
+    document.head.appendChild(js);
+  }
+  document.addEventListener('click', function(e){
+    var t = e.target.closest('[data-calendly]');
+    if(!t) return;
+    e.preventDefault();
+    openCalendly();
+  });
 
   /* ---------- Magnetic buttons ---------- */
   if(fine && !reduce){
@@ -1756,6 +1790,9 @@ section{ position:relative; }
     var msg = underThreshold
       ? 'Deine Anfrage ist eingegangen. Ehrlich gesagt entfaltet unser erfolgsbasiertes Modell seine Stärke vor allem ab ca. 500 € Kundenwert. Marc schaut sich deine Angaben trotzdem an und meldet sich, wenn er Potenzial sieht.'
       : 'Deine Anfrage ist eingegangen. Marc meldet sich persönlich mit einer ehrlichen Einschätzung – meist innerhalb von 24 Stunden.';
+    var calendlyBtn = CALENDLY_URL.indexOf('calendly.com/') > -1 && CALENDLY_URL.indexOf('DEIN-LINK') === -1
+      ? '<a href="#" class="btn btn-primary" data-calendly style="margin-bottom:12px;">Wunschtermin direkt buchen <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a><br/>'
+      : '';
     body.innerHTML =
       '<div class="quiz-success">'+
         '<div class="success-icon"><svg width="36" height="36" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></div>'+
@@ -1764,6 +1801,7 @@ section{ position:relative; }
         '<div class="summary-pill">'+
           pill(a.branche)+pill(a.kundenwert)+pill(a.timing)+
         '</div>'+
+        calendlyBtn+
         '<a href="#system" class="btn btn-ghost" data-quiz-close>In der Zwischenzeit unser System ansehen</a>'+
       '</div>';
   }
