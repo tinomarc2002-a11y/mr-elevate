@@ -117,19 +117,25 @@
    DESIGN TOKENS
    ================================================================= */
 :root{
-  --bg:            #08090a;
-  --bg-elev:       #0e0f11;
-  --bg-card:       #111315;
-  --line:          #2e333c;   /* klar sichtbare Border */
-  --line-strong:   #444b56;   /* betonte Border (Karten, Inputs, Buttons) */
-  --fg:            #f4f6f7;
-  --fg-muted:      #9aa1a8;
-  --fg-dim:        #7c8189;
+  /* Warm getönte Dunkelwerte – "gewähltes" Schwarz statt Default-Kohle */
+  --bg:            #0c0a0b;
+  --bg-elev:       #151114;
+  --bg-card:       #1a1518;
+  --line:          #342c31;   /* klar sichtbare Border, warm */
+  --line-strong:   #4a4046;   /* betonte Border (Karten, Inputs, Buttons) */
+  --fg:            #f6f3f0;   /* warmes Off-White */
+  --fg-muted:      #b3aaa6;
+  --fg-dim:        #8b8280;
 
   --accent:        #c6ff3a;   /* electric lime – signals growth / performance */
   --accent-deep:   #a4e000;
   --accent-ink:    #0a0d00;   /* text on accent */
   --accent-glow:   rgba(198,255,58,.35);
+
+  /* Stützpalette – jede Farbe hat eine Rolle */
+  --amber:         #e7a24b;   /* Wärme · Highlights · Eyebrows */
+  --teal:          #3fb0a4;   /* Vertrauen · Zahlen · Info */
+  --clay:          #d76a4c;   /* Mensch · Empathie · Betonung */
 
   --radius:        16px;
   --radius-sm:     10px;
@@ -139,7 +145,8 @@
   --t-fast:        .18s var(--ease);
   --t:             .3s var(--ease);
 
-  --font-display:  'Space Grotesk', system-ui, sans-serif;
+  --font-display:  'Fraunces', Georgia, serif;              /* Überschriften & Zitate – Charakter */
+  --font-ui:       'Space Grotesk', system-ui, sans-serif;  /* Buttons, Ziffern, Labels – Präzision */
   --font-body:     'Inter', system-ui, sans-serif;
 }
 
@@ -287,6 +294,23 @@ section{ position:relative; }
    ================================================================= */
 .sec-pad{ padding:clamp(80px,12vw,140px) 0; }
 #problem{ padding-top:clamp(40px,6vw,68px); }   /* enger an den Hero anschließen */
+
+/* ── "Breather": Graphit-Sektion – klar heller als das Near-Black, aber kein Weiß ── */
+.section-mid{
+  background:#38313a;
+  --bg:#38313a; --bg-elev:#322b33; --bg-card:#443b45;
+  --line:#4e444d; --line-strong:#635866;
+  --fg:#f6f3f0; --fg-muted:#c9c0c4; --fg-dim:#bab0b4;
+  --accent:#c6ff3a;            /* Marken-Lime bleibt – hoher Kontrast auf Graphit */
+  --accent-ink:#0a0d00;
+  --accent-glow:rgba(198,255,58,.26);
+  color:var(--fg);
+  border-top:1px solid rgba(255,255,255,.06);
+  border-bottom:1px solid rgba(255,255,255,.06);
+}
+/* Offenes FAQ-Icon: dunkle Markierung auf der Lime-Fläche (eindeutig, hoher Kontrast) */
+.section-mid .faq-item.open .faq-icon::before,
+.section-mid .faq-item.open .faq-icon::after{ background:#0a0d00; }
 .sec-head{ max-width:680px; margin-bottom:60px; }
 .sec-head.center{ margin-inline:auto; text-align:center; }
 .sec-head p{ margin-top:20px; }
@@ -560,20 +584,6 @@ section{ position:relative; }
 .fd-mail:hover{ transform:translateY(-2px); border-color:var(--accent); }
 @media(max-width:520px){ .fd-actions{ width:100%; } .fd-btn{ flex:1; justify-content:center; } }
 
-/* Standort-Karte (Zwei-Klick-Lösung: Google Maps lädt erst nach Klick) */
-.founder-map{ margin-top:16px; border:1px solid var(--line-strong); border-radius:var(--radius);
-  background:var(--bg-card); overflow:hidden; }
-.fm-info{ display:flex; align-items:center; gap:14px; padding:18px 20px; }
-.fm-pin{ flex-shrink:0; width:38px; height:38px; border-radius:50%; background:rgba(198,255,58,.08);
-  color:var(--accent); display:grid; place-items:center; }
-.fm-info b{ font-family:var(--font-display); font-size:.98rem; display:block; }
-.fm-info span{ font-size:.85rem; color:var(--fg-muted); }
-.fm-load{ display:block; width:100%; padding:13px; font-family:var(--font-display); font-weight:600;
-  font-size:.85rem; color:var(--accent); border-top:1px solid var(--line); background:rgba(198,255,58,.03);
-  transition:background var(--t-fast); }
-.fm-load:hover{ background:rgba(198,255,58,.07); }
-.founder-map iframe{ display:block; width:100%; height:230px; border:0; filter:grayscale(.2) contrast(1.05); }
-
 /* =================================================================
    FAQ
    ================================================================= */
@@ -616,7 +626,9 @@ section{ position:relative; }
 /* =================================================================
    FINAL CTA
    ================================================================= */
-.final{ text-align:center; position:relative; }
+.final{ text-align:center; position:relative;
+  background:radial-gradient(ellipse 70% 60% at 50% 118%, rgba(198,255,58,.08), transparent 68%), #080607;
+  border-top:1px solid var(--line); }
 .final-card{ position:relative; padding:clamp(40px,7vw,80px) 0; }
 .final h2{ font-size:clamp(2.6rem,6.5vw,5.2rem); letter-spacing:-.03em; line-height:1; margin-bottom:24px; }
 .final p{ color:var(--fg-muted); max-width:50ch; margin:0 auto 40px; font-size:1.1rem; }
@@ -687,15 +699,6 @@ section{ position:relative; }
 .hero-tagline .tg-arrow svg{ animation:arrowFloat 2.4s var(--ease) infinite; }
 @keyframes arrowFloat{ 0%,100%{ transform:translate(0,0); } 50%{ transform:translate(2px,-2px); } }
 
-/* ── Custom Cursor-Dot (nur Desktop-Maus) ── */
-.cursor-dot{ position:fixed; top:0; left:0; width:10px; height:10px; border-radius:50%;
-  background:var(--accent); pointer-events:none; z-index:600; opacity:0;
-  transform:translate(-50%,-50%); mix-blend-mode:difference;
-  transition:width .25s var(--ease), height .25s var(--ease), opacity .3s var(--ease); }
-.cursor-dot.on{ opacity:1; }
-.cursor-dot.grow{ width:38px; height:38px; }
-@media(pointer:coarse){ .cursor-dot{ display:none; } }
-
 /* ── Prozess: editoriale Steps mit Outline-Ziffern ── */
 .steps{ display:grid; grid-template-columns:repeat(5,1fr); border-top:1px solid var(--line); }
 .step{ position:relative; padding:34px 22px 10px 24px; border-right:1px solid var(--line); }
@@ -711,6 +714,17 @@ section{ position:relative; }
   .step{ border-bottom:1px solid var(--line); } .step:nth-child(2n){ border-right:0; } }
 @media(max-width:560px){ .steps{ grid-template-columns:1fr; }
   .step{ border-right:0; padding-inline:0; } }
+
+/* ── Redaktionelle Foto-Bänder: echte Fotos, dunkel abgetönt ── */
+/* ── Trenn-Band: gezeichnetes Reichweiten-Feld zwischen Prozess und Gründer ── */
+.trenn-band{ position:relative; border-top:1px solid var(--line); border-bottom:1px solid var(--line);
+  overflow:hidden; height:clamp(220px,28vw,340px); display:flex; align-items:center; justify-content:center;
+  background:linear-gradient(180deg, var(--bg), var(--bg-elev)); }
+.trenn-band .tb-quote{ position:relative; z-index:2; text-align:center; max-width:640px; padding-inline:24px; }
+.trenn-band .tb-quote strong{ display:block; font-family:var(--font-display); font-weight:600;
+  font-size:clamp(1.15rem,2.6vw,1.6rem); color:var(--fg); letter-spacing:-.015em; line-height:1.4; }
+.trenn-band .tb-quote span{ display:block; margin-top:10px; font-size:.82rem; color:var(--fg-dim);
+  text-transform:uppercase; letter-spacing:.1em; }
 
 /* ── Footer: riesige Outline-Wortmarke ── */
 .footer-wordmark{ font-family:var(--font-display); font-weight:700; line-height:.92;
@@ -771,6 +785,171 @@ section{ position:relative; }
 .btn-cc-accept:hover{ box-shadow:0 8px 26px -8px var(--accent-glow); }
 @media(min-width:600px){ .cc-inner{ flex-direction:row; align-items:center; } .cc-actions{ flex-shrink:0; width:300px; } }
 @media (prefers-reduced-motion:reduce){ .cc{ animation:none; } }
+
+/* =================================================================
+   REDESIGN-LAYER: Fraunces fürs Editoriale, Grotesk für UI-Präzision
+   ================================================================= */
+/* Kleine UI-Elemente (Buttons, Ziffern, Labels, Wortmarke) bleiben Grotesk */
+.btn,.btn-cc,.brand,.brand-elevate,.quiz-step-label,.prob-row .pnum,.sol-point .num,
+.sol-visual .vlabel,.price-tag,.pay-flow-label,.pf-step .pfnum,.fd-btn,
+.sp-step,.quellen-label,.footer-col h5,.footer-wordmark,.step .snum,.eyebrow,
+.founder-tag b,.fd-text b,.cc-text strong{ font-family:var(--font-ui); }
+.funnel-diagram .fd-label,.funnel-diagram .fd-out-label,.story-illu .il-text{ font-family:var(--font-ui); }
+
+/* Serif braucht etwas mehr Luft als die alte Grotesk */
+h1,h2,h3,h4{ letter-spacing:-.01em; line-height:1.08; }
+.h-sec{ letter-spacing:-.015em; }
+.h-hero{ letter-spacing:-.02em; line-height:1.02; }
+
+/* Eyebrow: wärmeres Label – Clay-Punkt statt klinischer Nummer, Text in Amber */
+.eyebrow{ color:var(--amber); }
+.eyebrow i{ font-size:0; width:7px; height:7px; border-radius:50%;
+  background:var(--clay); box-shadow:0 0 0 4px rgba(215,106,76,.15); letter-spacing:0; }
+
+/* Rollen-Akzente: Teal = Vertrauen/Zahlen, Clay = Mensch */
+.fact-cite{ border-left:2px solid var(--teal); padding-left:14px; }
+.fact-cite strong{ color:var(--teal); }
+.fc-ref:hover{ border-color:var(--teal); color:var(--teal) !important; }
+.founder-quote .accent{ color:var(--clay); }
+.pf-step .pfnum{ border-color:var(--teal); color:var(--teal); }
+.prob-row:nth-of-type(1):hover .pnum{ color:var(--amber); }
+.prob-row:nth-of-type(2):hover .pnum{ color:var(--teal); }
+.prob-row:nth-of-type(3):hover .pnum{ color:var(--clay); }
+
+/* Feine Textur + warme Lichtinseln: nimmt dem Dunkel das Plastisch-Tote */
+body{
+  background-image:
+    radial-gradient(1100px 560px at 85% -6%, rgba(231,162,75,.05), transparent 60%),
+    radial-gradient(900px 640px at -8% 34%, rgba(63,176,164,.04), transparent 55%),
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.022'/%3E%3C/svg%3E");
+}
+
+/* =================================================================
+   MARKEN-GRAFIKEN: gezeichnete UI-Panels statt Stockfotos
+   ================================================================= */
+.graphic-band{ display:grid; grid-template-columns:1fr 1.5fr; align-items:stretch; margin-top:44px;
+  border:1px solid var(--line-strong); border-radius:var(--radius); overflow:hidden;
+  background:linear-gradient(135deg,var(--bg-elev),var(--bg-card)); }
+.gb-text{ display:flex; flex-direction:column; justify-content:center; gap:8px;
+  padding:30px 28px; border-right:1px solid var(--line); }
+.gb-text b{ font-family:var(--font-display); font-size:1.25rem; font-weight:600; letter-spacing:-.01em; }
+.gb-text span{ font-size:.9rem; color:var(--fg-muted); max-width:32ch; }
+.gb-visual{ padding:22px 24px; display:flex; align-items:center; }
+.gb-visual svg{ width:100%; height:auto; display:block; }
+@media(max-width:760px){ .graphic-band{ grid-template-columns:1fr; }
+  .gb-text{ border-right:0; border-bottom:1px solid var(--line); padding:24px 22px 18px; } }
+
+/* SVG-Mockup-Vokabular (Fenster, Linien, Events, Kacheln) */
+.mk-win{ fill:var(--bg); stroke:var(--line-strong); }
+.mk-line{ stroke:var(--line); }
+.mk-strong{ stroke:var(--line-strong); }
+.mk-txt{ fill:var(--fg-dim); font-family:var(--font-ui); font-size:11px; letter-spacing:.08em; }
+.mk-dot-a{ fill:var(--clay); } .mk-dot-b{ fill:var(--amber); } .mk-dot-c{ fill:var(--teal); }
+.mk-ev-teal{ fill:rgba(63,176,164,.16); stroke:var(--teal); stroke-width:1.5; }
+.mk-ev-amber{ fill:rgba(231,162,75,.16); stroke:var(--amber); stroke-width:1.5; }
+.mk-empty{ fill:none; stroke:var(--line-strong); stroke-dasharray:4 5; stroke-width:1.5; }
+.mk-tile{ fill:var(--bg-elev); stroke:var(--line); }
+.mk-spark-lime{ stroke:var(--accent); stroke-width:2; fill:none; stroke-linecap:round; }
+.mk-spark-teal{ stroke:var(--teal); stroke-width:2; fill:none; stroke-linecap:round; }
+.mk-area{ fill:rgba(198,255,58,.09); }
+.mk-chart{ stroke:var(--accent); stroke-width:2.2; fill:none; stroke-linecap:round; }
+.mk-chart2{ stroke:var(--teal); stroke-width:1.6; fill:none; opacity:.85; stroke-linecap:round; }
+.mk-end{ fill:var(--amber); }
+.mk-halo{ fill:none; stroke:var(--amber); opacity:.35; }
+.mk-txt-hi{ fill:var(--fg-muted); font-family:var(--font-ui); font-size:11px; letter-spacing:.06em; }
+.mk-txt-amber{ fill:var(--amber); font-family:var(--font-ui); font-size:11px; letter-spacing:.08em; }
+.mk-ev-txt-teal{ fill:#a8ded7; font-family:var(--font-ui); font-size:9px; letter-spacing:.02em; }
+.mk-ev-txt-amber{ fill:#eed0a4; font-family:var(--font-ui); font-size:9px; letter-spacing:.02em; }
+.mk-card{ fill:var(--bg-card); stroke:var(--line-strong); }
+.mk-today{ fill:rgba(231,162,75,.05); }
+.mk-pill-lime{ fill:rgba(198,255,58,.13); stroke:var(--accent); }
+.mk-dash-amber{ stroke:var(--amber); stroke-dasharray:3 6; opacity:.35; }
+
+/* =================================================================
+   FX-LAYER: Premium-Interaktionen (Spotlight, Draw-In, Float, Puls)
+   ================================================================= */
+/* Spotlight, der der Maus über Karten folgt */
+.fx-spot{ position:relative; }
+.fx-spot::before{ content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+  opacity:0; transition:opacity .45s var(--ease); z-index:1;
+  background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%), rgba(198,255,58,.07), transparent 65%); }
+.fx-spot:hover::before{ opacity:1; }
+.section-mid .fx-spot::before{
+  background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%), rgba(246,243,240,.06), transparent 65%); }
+
+/* Featured-Karte: langsam rotierender Licht-Rahmen */
+@property --fx-angle{ syntax:'<angle>'; initial-value:0deg; inherits:false; }
+.price-card.featured::after{ content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px;
+  background:conic-gradient(from var(--fx-angle),
+    var(--accent) 0%, transparent 16%, transparent 55%, var(--amber) 70%, transparent 84%, var(--accent) 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none;
+  opacity:.75; animation:fxSpin 8s linear infinite; }
+@keyframes fxSpin{ to{ --fx-angle:360deg; } }
+
+/* Primary-Button: Licht-Sweep beim Hover */
+.btn-primary{ position:relative; overflow:hidden; }
+.btn-primary::after{ content:""; position:absolute; top:0; bottom:0; left:-80%; width:55%;
+  background:linear-gradient(105deg, transparent, rgba(255,255,255,.55), transparent);
+  transform:skewX(-20deg); transition:left .55s var(--ease); pointer-events:none; }
+.btn-primary:hover::after{ left:125%; }
+
+/* Charts zeichnen sich selbst, sobald das Panel einfährt */
+.gb-visual .mk-chart,.gb-visual .mk-chart2,.gb-visual .mk-spark-lime,.gb-visual .mk-spark-teal{
+  stroke-dasharray:1; stroke-dashoffset:1; }
+.graphic-band.in .mk-chart{ animation:fxDraw 1.4s var(--ease) .35s forwards; }
+.graphic-band.in .mk-chart2{ animation:fxDraw 1.4s var(--ease) .6s forwards; }
+.graphic-band.in .mk-spark-lime{ animation:fxDraw .9s var(--ease) .75s forwards; }
+.graphic-band.in .mk-spark-teal{ animation:fxDraw .9s var(--ease) .85s forwards; }
+@keyframes fxDraw{ to{ stroke-dashoffset:0; } }
+
+/* Elemente poppen gestaffelt ein */
+.gb-visual .fx-pop{ opacity:0; transform:translateY(7px); transform-box:fill-box; }
+.graphic-band.in .fx-pop{ animation:fxPop .55s var(--ease) forwards; }
+.graphic-band.in .fx-pop.p1{ animation-delay:.5s; }
+.graphic-band.in .fx-pop.p2{ animation-delay:.68s; }
+.graphic-band.in .fx-pop.p3{ animation-delay:.86s; }
+.graphic-band.in .fx-pop.p4{ animation-delay:1.1s; }
+@keyframes fxPop{ to{ opacity:1; transform:translateY(0); } }
+
+/* Schwebende Karten atmen leicht */
+.fx-float{ animation:fxFloat 4.5s ease-in-out 2s infinite alternate; }
+.fx-float-2{ animation-delay:3s; }
+@keyframes fxFloat{ from{ transform:translateY(0); } to{ transform:translateY(-6px); } }
+
+/* Trennband: Puls-Ringe am Sender */
+.tb-pulse{ transform-box:fill-box; transform-origin:center; animation:fxPulse 3.4s ease-out infinite; }
+.tb-pulse-2{ animation-delay:1.7s; }
+@keyframes fxPulse{ 0%{ transform:scale(.55); opacity:.55; } 70%{ opacity:.06; } 100%{ transform:scale(2); opacity:0; } }
+
+@media(prefers-reduced-motion:reduce){
+  .price-card.featured::after,.fx-float,.tb-pulse,.btn-primary::after{ animation:none !important; transition:none !important; }
+  .gb-visual .mk-chart,.gb-visual .mk-chart2,.gb-visual .mk-spark-lime,.gb-visual .mk-spark-teal{
+    stroke-dashoffset:0 !important; animation:none !important; }
+  .gb-visual .fx-pop{ opacity:1 !important; transform:none !important; animation:none !important; }
+}
+
+/* Trennband: gezeichnetes Reichweiten-Feld statt Foto */
+.tb-field{ position:absolute; inset:0; width:100%; height:100%; }
+
+/* Story-Illustrationen & Funnel: warme Palette, pro Panel eigener Akzent */
+.story-illu{ background:var(--bg-elev); }
+.sol-engine{ background:var(--bg-elev); }
+.story-illu .il-fillsoft{ fill:rgba(231,162,75,.12); }
+.story-panel:nth-of-type(1) .il-accent{ stroke:var(--amber); }
+.story-panel:nth-of-type(1) .il-fill{ fill:var(--amber); stroke:var(--amber); }
+.story-panel:nth-of-type(1):hover .story-illu{ border-color:var(--amber); }
+.story-panel:nth-of-type(2) .il-accent{ stroke:var(--teal); }
+.story-panel:nth-of-type(2) .il-fill{ fill:var(--teal); stroke:var(--teal); }
+.story-panel:nth-of-type(2):hover .story-illu{ border-color:var(--teal); }
+.story-panel:nth-of-type(3) .il-accent{ stroke:var(--clay); }
+.story-panel:nth-of-type(3) .il-fill{ fill:var(--clay); stroke:var(--clay); }
+.story-panel:nth-of-type(3):hover .story-illu{ border-color:var(--clay); }
+.story-panel:nth-of-type(4) .il-accent{ stroke:var(--teal); }
+.story-panel:nth-of-type(4) .il-fill{ fill:var(--teal); stroke:var(--teal); }
+.story-panel:nth-of-type(4):hover .story-illu{ border-color:var(--teal); }
+/* Panel 5 (Wachstum) bleibt bewusst Lime */
+.funnel-diagram .fd-dot{ fill:var(--teal); }
 </style>
 </head>
 
@@ -778,7 +957,6 @@ section{ position:relative; }
 
 <!-- Motion layer -->
 <div class="scroll-progress" id="scrollProgress"></div>
-<div class="cursor-dot" id="cursorDot" aria-hidden="true"></div>
 
 <!-- ============================================================= -->
 <!-- NAVBAR                                                         -->
@@ -910,6 +1088,69 @@ section{ position:relative; }
       </div>
     </div>
 
+    <div class="graphic-band reveal">
+      <div class="gb-text">
+        <b>Kein System, keine Termine.</b>
+        <span>Ein leerer Kalender ist selten Zufall – meist fehlt ein planbarer Prozess dahinter.</span>
+      </div>
+      <div class="gb-visual">
+        <svg viewBox="0 0 560 320" fill="none" role="img" aria-label="Stilisierte Kalenderwoche mit vielen freien Terminslots">
+          <defs>
+            <linearGradient id="calWin" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#1e181c"/><stop offset="1" stop-color="#141013"/>
+            </linearGradient>
+            <filter id="calShadow" x="-30%" y="-30%" width="160%" height="170%">
+              <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.5"/>
+            </filter>
+          </defs>
+          <!-- Fenster -->
+          <rect x="18" y="12" width="470" height="258" rx="16" fill="url(#calWin)" stroke="var(--line-strong)" filter="url(#calShadow)"/>
+          <circle cx="42" cy="34" r="4" class="mk-dot-a"/><circle cx="58" cy="34" r="4" class="mk-dot-b"/><circle cx="74" cy="34" r="4" class="mk-dot-c"/>
+          <text x="96" y="38" class="mk-txt-hi">Kalender · KW 29</text>
+          <line x1="18" y1="52" x2="488" y2="52" class="mk-line"/>
+          <!-- Heute-Spalte (DO) sanft markiert -->
+          <rect x="311" y="52" width="88" height="218" class="mk-today"/>
+          <line x1="311" y1="52" x2="399" y2="52" stroke="var(--amber)" stroke-width="2" opacity=".7"/>
+          <!-- Tagesköpfe -->
+          <text x="91" y="73" text-anchor="middle" class="mk-txt">MO 14</text>
+          <text x="179" y="73" text-anchor="middle" class="mk-txt">DI 15</text>
+          <text x="267" y="73" text-anchor="middle" class="mk-txt">MI 16</text>
+          <text x="355" y="73" text-anchor="middle" class="mk-txt-amber">DO 17</text>
+          <text x="443" y="73" text-anchor="middle" class="mk-txt">FR 18</text>
+          <!-- Spalten -->
+          <line x1="135" y1="82" x2="135" y2="270" class="mk-line" opacity=".7"/>
+          <line x1="223" y1="82" x2="223" y2="270" class="mk-line" opacity=".7"/>
+          <line x1="311" y1="82" x2="311" y2="270" class="mk-line" opacity=".7"/>
+          <line x1="399" y1="82" x2="399" y2="270" class="mk-line" opacity=".7"/>
+          <!-- Stundenraster -->
+          <line x1="18" y1="96" x2="488" y2="96" class="mk-line" opacity=".45"/>
+          <line x1="18" y1="140" x2="488" y2="140" class="mk-line" opacity=".45"/>
+          <line x1="18" y1="184" x2="488" y2="184" class="mk-line" opacity=".45"/>
+          <line x1="18" y1="228" x2="488" y2="228" class="mk-line" opacity=".45"/>
+          <!-- zwei echte Termine, mit Namen -->
+          <rect x="53" y="102" width="76" height="34" rx="8" class="mk-ev-teal fx-pop p1"/>
+          <text x="91" y="122" text-anchor="middle" class="mk-ev-txt-teal fx-pop p1">Erstgespräch</text>
+          <rect x="317" y="146" width="76" height="34" rx="8" class="mk-ev-amber fx-pop p2"/>
+          <text x="355" y="166" text-anchor="middle" class="mk-ev-txt-amber fx-pop p2">Strategie-Call</text>
+          <!-- viele leere Slots -->
+          <rect x="141" y="102" width="76" height="30" rx="8" class="mk-empty fx-pop p3"/>
+          <rect x="229" y="190" width="76" height="30" rx="8" class="mk-empty fx-pop p3"/>
+          <rect x="405" y="102" width="76" height="30" rx="8" class="mk-empty fx-pop p3"/>
+          <rect x="53" y="190" width="76" height="30" rx="8" class="mk-empty fx-pop p3"/>
+          <!-- schwebende Hinweis-Karte -->
+          <g class="fx-float" filter="url(#calShadow)">
+            <g class="fx-pop p4">
+              <rect x="356" y="240" width="182" height="60" rx="13" class="mk-card"/>
+              <circle cx="378" cy="262" r="4.5" fill="var(--clay)"/>
+              <circle cx="378" cy="262" r="9" stroke="var(--clay)" opacity=".3"/>
+              <text x="394" y="266" class="mk-txt-hi">Keine neuen Anfragen</text>
+              <text x="394" y="283" class="mk-txt" opacity=".8">diese Woche</text>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+
     <a href="leitfaden.html" class="freebie-nudge reveal">
       <span class="fn-text">
         <b>Bevor du dich entscheidest:</b> Der komplette Leitfaden – wie du eine Kampagne selbst aufbaust. Offen, ohne Anmeldung.
@@ -961,6 +1202,8 @@ section{ position:relative; }
           <line x1="300" y1="230" x2="300" y2="290" class="fd-neck" />
           <path d="M288,278 L300,296 L312,278" class="fd-arrow" />
           <circle cx="300" cy="330" r="7" class="fd-out-dot" />
+          <circle cx="300" cy="330" r="14" stroke="var(--accent)" fill="none" opacity=".35" />
+          <circle cx="300" cy="330" r="21" stroke="var(--accent)" fill="none" opacity=".14" />
           <text x="300" y="364" class="fd-out-label">Qualifizierte Anfrage</text>
         </svg>
       </div>
@@ -971,7 +1214,7 @@ section{ position:relative; }
 <!-- ============================================================= -->
 <!-- MODELL / PRICING                                               -->
 <!-- ============================================================= -->
-<section class="sec-pad" id="modell">
+<section class="sec-pad section-mid" id="modell">
   <div class="container">
     <div class="sec-head center reveal">
       <span class="eyebrow"><i>03</i>Das Modell</span>
@@ -1070,6 +1313,128 @@ section{ position:relative; }
         <p>Was funktioniert, wird hochgefahren – planbar mehr Anfragen, Monat für Monat.</p>
       </div>
     </div>
+
+    <div class="graphic-band reveal">
+      <div class="gb-text">
+        <b>Zahlen statt Bauchgefühl.</b>
+        <span>Jede Kampagne wird laufend gemessen, ausgewertet und nachgeschärft.</span>
+      </div>
+      <div class="gb-visual">
+        <svg viewBox="0 0 560 320" fill="none" role="img" aria-label="Stilisiertes Kampagnen-Dashboard mit steigender Ergebniskurve">
+          <defs>
+            <linearGradient id="dashWin" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#1e181c"/><stop offset="1" stop-color="#141013"/>
+            </linearGradient>
+            <linearGradient id="dashArea" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#c6ff3a" stop-opacity=".22"/>
+              <stop offset="1" stop-color="#c6ff3a" stop-opacity="0"/>
+            </linearGradient>
+            <filter id="dashShadow" x="-30%" y="-30%" width="160%" height="170%">
+              <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.5"/>
+            </filter>
+            <filter id="dashGlow" x="-20%" y="-20%" width="140%" height="140%">
+              <feGaussianBlur stdDeviation="4"/>
+            </filter>
+          </defs>
+          <!-- Fenster -->
+          <rect x="18" y="26" width="470" height="282" rx="16" fill="url(#dashWin)" stroke="var(--line-strong)" filter="url(#dashShadow)"/>
+          <circle cx="42" cy="48" r="4" class="mk-dot-a"/><circle cx="58" cy="48" r="4" class="mk-dot-b"/><circle cx="74" cy="48" r="4" class="mk-dot-c"/>
+          <text x="96" y="52" class="mk-txt-hi">Kampagnen-Übersicht</text>
+          <line x1="18" y1="66" x2="488" y2="66" class="mk-line"/>
+          <!-- KPI-Kacheln mit Trend-Pills -->
+          <rect x="34" y="80" width="136" height="62" rx="10" class="mk-tile"/>
+          <text x="46" y="100" class="mk-txt">ANFRAGEN</text>
+          <rect x="128" y="88" width="32" height="16" rx="8" class="mk-pill-lime fx-pop p2"/>
+          <path d="M140 100 l8 0 l-4 -7 z" fill="var(--accent)" class="fx-pop p2"/>
+          <path d="M46 128 l16 -5 l14 2 l16 -8 l14 2 l18 -7" class="mk-spark-lime" pathLength="1"/>
+          <rect x="184" y="80" width="136" height="62" rx="10" class="mk-tile"/>
+          <text x="196" y="100" class="mk-txt">QUALITÄT</text>
+          <rect x="278" y="88" width="32" height="16" rx="8" class="mk-pill-lime fx-pop p2" stroke="var(--teal)" fill="rgba(63,176,164,.13)"/>
+          <path d="M290 100 l8 0 l-4 -7 z" fill="var(--teal)" class="fx-pop p2"/>
+          <path d="M196 126 l16 -3 l14 -3 l16 1 l14 -5 l18 -3" class="mk-spark-teal" pathLength="1"/>
+          <rect x="334" y="80" width="136" height="62" rx="10" class="mk-tile"/>
+          <text x="346" y="100" class="mk-txt">KOSTEN&#160;/&#160;LEAD</text>
+          <rect x="428" y="88" width="32" height="16" rx="8" class="mk-pill-lime fx-pop p2"/>
+          <path d="M440 93 l8 0 l-4 7 z" fill="var(--accent)" class="fx-pop p2"/>
+          <path d="M346 116 l16 3 l14 -1 l16 5 l14 1 l18 4" class="mk-spark-lime" pathLength="1"/>
+          <!-- Chart -->
+          <line x1="34" y1="176" x2="470" y2="176" class="mk-line" opacity=".45"/>
+          <line x1="34" y1="214" x2="470" y2="214" class="mk-line" opacity=".45"/>
+          <line x1="34" y1="252" x2="470" y2="252" class="mk-line" opacity=".45"/>
+          <line x1="34" y1="290" x2="470" y2="290" class="mk-line"/>
+          <path d="M34 276 C90 272 140 262 190 254 C260 242 330 214 390 192 C420 181 450 172 470 166 L470 290 L34 290 Z" fill="url(#dashArea)"/>
+          <path d="M34 276 C90 272 140 262 190 254 C260 242 330 214 390 192 C420 181 450 172 470 166" class="mk-chart" filter="url(#dashGlow)" opacity=".55" pathLength="1"/>
+          <path d="M34 276 C90 272 140 262 190 254 C260 242 330 214 390 192 C420 181 450 172 470 166" class="mk-chart" pathLength="1"/>
+          <path d="M34 284 C120 281 210 274 290 266 C360 259 430 244 470 234" class="mk-chart2" pathLength="1"/>
+          <g class="fx-pop p3">
+            <circle cx="190" cy="254" r="3.5" fill="#141013" stroke="var(--accent)" stroke-width="2"/>
+            <circle cx="390" cy="192" r="3.5" fill="#141013" stroke="var(--accent)" stroke-width="2"/>
+            <line x1="470" y1="166" x2="470" y2="290" class="mk-dash-amber"/>
+            <circle cx="470" cy="166" r="5" class="mk-end"/>
+            <circle cx="470" cy="166" r="11" class="mk-halo"/>
+            <circle cx="470" cy="166" r="17" class="mk-halo" opacity=".16"/>
+          </g>
+          <!-- schwebender Anfrage-Toast -->
+          <g class="fx-float fx-float-2" filter="url(#dashShadow)">
+            <g class="fx-pop p4">
+              <rect x="372" y="4" width="168" height="52" rx="13" class="mk-card"/>
+              <circle cx="393" cy="24" r="4.5" fill="var(--accent)"/>
+              <circle cx="393" cy="24" r="9" stroke="var(--accent)" opacity=".3"/>
+              <text x="408" y="28" class="mk-txt-hi">Neue Anfrage</text>
+              <text x="408" y="44" class="mk-txt" opacity=".8">gerade eben</text>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- TRENN-BAND                                                     -->
+<!-- ============================================================= -->
+<section class="trenn-band reveal">
+  <svg class="tb-field" viewBox="0 0 1200 340" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none">
+    <defs>
+      <radialGradient id="tbGlow" cx=".5" cy=".5" r=".5">
+        <stop offset="0" stop-color="#c6ff3a" stop-opacity=".14"/>
+        <stop offset="1" stop-color="#c6ff3a" stop-opacity="0"/>
+      </radialGradient>
+    </defs>
+    <!-- Reichweiten-Wellen -->
+    <circle cx="600" cy="420" r="150" stroke="var(--line)" opacity=".9"/>
+    <circle cx="600" cy="420" r="240" stroke="var(--line)" opacity=".75"/>
+    <circle cx="600" cy="420" r="330" stroke="var(--teal)" stroke-dasharray="3 9" opacity=".45"/>
+    <circle cx="600" cy="420" r="420" stroke="var(--line)" opacity=".55"/>
+    <circle cx="600" cy="420" r="510" stroke="var(--amber)" stroke-dasharray="3 11" opacity=".3"/>
+    <circle cx="600" cy="420" r="600" stroke="var(--line)" opacity=".35"/>
+    <!-- Sender: Glow + Puls -->
+    <circle cx="600" cy="270" r="120" fill="url(#tbGlow)"/>
+    <circle cx="600" cy="270" r="5" fill="var(--accent)"/>
+    <circle cx="600" cy="270" r="12" stroke="var(--accent)" opacity=".4" class="tb-pulse"/>
+    <circle cx="600" cy="270" r="20" stroke="var(--accent)" opacity=".16" class="tb-pulse tb-pulse-2"/>
+    <!-- Verbindungen zu einzelnen Punkten -->
+    <line x1="600" y1="270" x2="431" y2="253" stroke="var(--teal)" opacity=".25"/>
+    <line x1="600" y1="270" x2="792" y2="285" stroke="var(--amber)" opacity=".25"/>
+    <line x1="600" y1="270" x2="705" y2="180" stroke="var(--teal)" opacity=".18"/>
+    <line x1="600" y1="270" x2="291" y2="300" stroke="var(--clay)" opacity=".16"/>
+    <!-- Publikum: Punkte auf den Wellen -->
+    <circle cx="431" cy="253" r="4" fill="var(--teal)" opacity=".85"/>
+    <circle cx="792" cy="285" r="4" fill="var(--amber)" opacity=".85"/>
+    <circle cx="291" cy="300" r="3.5" fill="var(--clay)" opacity=".75"/>
+    <circle cx="936" cy="240" r="3.5" fill="var(--teal)" opacity=".6"/>
+    <circle cx="180" cy="212" r="3" fill="var(--amber)" opacity=".55"/>
+    <circle cx="1046" cy="300" r="3" fill="var(--clay)" opacity=".5"/>
+    <circle cx="356" cy="150" r="2.5" fill="var(--fg-dim)" opacity=".55"/>
+    <circle cx="864" cy="140" r="2.5" fill="var(--fg-dim)" opacity=".55"/>
+    <circle cx="536" cy="96" r="2.5" fill="var(--fg-dim)" opacity=".45"/>
+    <circle cx="705" cy="180" r="3" fill="var(--teal)" opacity=".5"/>
+    <circle cx="112" cy="120" r="2" fill="var(--fg-dim)" opacity=".4"/>
+    <circle cx="1104" cy="160" r="2" fill="var(--fg-dim)" opacity=".4"/>
+  </svg>
+  <div class="tb-quote">
+    <strong>Rund 21,6 Millionen Menschen sind in Deutschland wöchentlich allein auf Facebook aktiv.<a href="#quellen" class="fc-ref">3</a></strong>
+    <span>Genau dort, wo deine nächsten Kunden gerade unterwegs sind</span>
   </div>
 </section>
 
@@ -1110,19 +1475,6 @@ section{ position:relative; }
             </a>
           </div>
         </div>
-
-        <div class="founder-map reveal d3" id="founderMap">
-          <div class="fm-info">
-            <span class="fm-pin" aria-hidden="true">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 6-9 12-9 12s-9-6-9-12a9 9 0 0 1 18 0Z"/><circle cx="12" cy="10" r="3"/></svg>
-            </span>
-            <div>
-              <b>Vor Ort in Dresden</b>
-              <span>Briesnitzer Höhe 24 · 01157 Dresden</span>
-            </div>
-          </div>
-          <button type="button" class="fm-load" id="fmLoadBtn">Karte anzeigen</button>
-        </div>
       </div>
     </div>
   </div>
@@ -1131,7 +1483,7 @@ section{ position:relative; }
 <!-- ============================================================= -->
 <!-- FAQ                                                            -->
 <!-- ============================================================= -->
-<section class="sec-pad" id="faq" style="background:var(--bg-elev);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
+<section class="sec-pad section-mid" id="faq" style="background:var(--bg-elev);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
   <div class="container">
     <div class="sec-head center reveal">
       <span class="eyebrow"><i>06</i>FAQ</span>
@@ -1515,36 +1867,16 @@ section{ position:relative; }
   };
   updPg(); window.addEventListener('scroll', updPg, {passive:true}); window.addEventListener('resize', updPg);
 
-  /* ---------- Custom Cursor-Dot ---------- */
+  /* ---------- Spotlight: Karten-Glow folgt der Maus ---------- */
   (function(){
-    var dot = document.getElementById('cursorDot');
-    if(!dot || !fine || reduce) return;
-    var x=0,y=0,shown=false;
-    document.addEventListener('mousemove', function(e){
-      x=e.clientX; y=e.clientY;
-      dot.style.transform='translate('+x+'px,'+y+'px) translate(-50%,-50%)';
-      if(!shown){ dot.classList.add('on'); shown=true; }
-      var t=e.target.closest('a,button,[data-cursor]');
-      dot.classList.toggle('grow', !!t);
+    document.querySelectorAll('.price-card,.graphic-band,.story-illu,.sol-visual').forEach(function(el){ el.classList.add('fx-spot'); });
+    if(!fine) return;
+    document.addEventListener('pointermove', function(e){
+      var t = e.target.closest('.fx-spot'); if(!t) return;
+      var r = t.getBoundingClientRect();
+      t.style.setProperty('--mx', (e.clientX - r.left) + 'px');
+      t.style.setProperty('--my', (e.clientY - r.top) + 'px');
     }, {passive:true});
-    document.addEventListener('mouseleave', function(){ dot.classList.remove('on'); shown=false; });
-    document.addEventListener('mouseenter', function(){ dot.classList.add('on'); shown=true; });
-  })();
-
-  /* ---------- Standort-Karte: Google Maps erst nach Klick laden (Zwei-Klick-Lösung) ---------- */
-  (function(){
-    var btn = document.getElementById('fmLoadBtn');
-    var box = document.getElementById('founderMap');
-    if(!btn || !box) return;
-    btn.addEventListener('click', function(){
-      var iframe = document.createElement('iframe');
-      iframe.src = 'https://www.google.com/maps?q=Briesnitzer+H%C3%B6he+24,+01157+Dresden&output=embed';
-      iframe.loading = 'lazy';
-      iframe.referrerPolicy = 'no-referrer-when-downgrade';
-      iframe.setAttribute('aria-label', 'Google Maps: Briesnitzer Höhe 24, 01157 Dresden');
-      box.appendChild(iframe);
-      btn.remove();
-    });
   })();
 
   /* ---------- Calendly: Termin-Popup, Assets laden erst beim Klick (DSGVO) ----------
