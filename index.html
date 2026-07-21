@@ -471,7 +471,7 @@ section{ position:relative; }
 @media(max-width:860px){ .sol-grid{ grid-template-columns:1fr; } .sol-visual{ min-height:340px; } }
 
 /* — SYSTEM: umfangreiches "Akquise-Motor"-Diagramm (dunkles Panel) — */
-.sol-engine{ background:linear-gradient(155deg,#1b151a,#100c10); padding:20px; min-height:0;
+.sol-engine{ background:var(--bg-card); padding:22px; min-height:0;
   align-items:stretch; justify-content:center; overflow:hidden; }
 .engine-diagram{ width:100%; height:auto; display:block; }
 
@@ -838,31 +838,23 @@ body{
 @media(max-width:760px){ .graphic-band{ grid-template-columns:1fr; }
   .gb-text{ border-right:0; border-bottom:1px solid var(--line); padding:24px 22px 18px; } }
 
-/* SVG-Mockup-Vokabular (Fenster, Linien, Events, Kacheln) */
-.mk-win{ fill:var(--bg); stroke:var(--line-strong); }
+/* SVG-Vokabular (Linien, Events, Kacheln) */
 .mk-line{ stroke:var(--line); }
-.mk-strong{ stroke:var(--line-strong); }
 .mk-txt{ fill:var(--fg-dim); font-family:var(--font-ui); font-size:11px; letter-spacing:.08em; }
-.mk-dot-a{ fill:var(--clay); } .mk-dot-b{ fill:var(--amber); } .mk-dot-c{ fill:var(--teal); }
-.mk-ev-teal{ fill:rgba(63,176,164,.16); stroke:var(--teal); stroke-width:1.5; }
-.mk-ev-amber{ fill:rgba(231,162,75,.16); stroke:var(--amber); stroke-width:1.5; }
+.mk-ev-teal{ fill:rgba(25,107,98,.12); stroke:var(--teal); stroke-width:1.6; }
+.mk-ev-amber{ fill:rgba(149,85,26,.12); stroke:var(--amber); stroke-width:1.6; }
 .mk-empty{ fill:none; stroke:var(--line-strong); stroke-dasharray:4 5; stroke-width:1.5; }
-.mk-tile{ fill:var(--bg-elev); stroke:var(--line); }
-.mk-spark-lime{ stroke:var(--accent); stroke-width:2; fill:none; stroke-linecap:round; }
-.mk-spark-teal{ stroke:var(--teal); stroke-width:2; fill:none; stroke-linecap:round; }
-.mk-area{ fill:rgba(198,255,58,.09); }
-.mk-chart{ stroke:var(--accent); stroke-width:2.2; fill:none; stroke-linecap:round; }
-.mk-chart2{ stroke:var(--teal); stroke-width:1.6; fill:none; opacity:.85; stroke-linecap:round; }
-.mk-end{ fill:var(--amber); }
-.mk-halo{ fill:none; stroke:var(--amber); opacity:.35; }
-.mk-txt-hi{ fill:var(--fg-muted); font-family:var(--font-ui); font-size:11px; letter-spacing:.06em; }
-.mk-txt-amber{ fill:var(--amber); font-family:var(--font-ui); font-size:11px; letter-spacing:.08em; }
-.mk-ev-txt-teal{ fill:#a8ded7; font-family:var(--font-ui); font-size:9px; letter-spacing:.02em; }
-.mk-ev-txt-amber{ fill:#eed0a4; font-family:var(--font-ui); font-size:9px; letter-spacing:.02em; }
+.mk-tile{ fill:var(--bg); stroke:var(--line-strong); }
+.mk-spark-lime{ stroke:var(--accent); stroke-width:2.2; fill:none; stroke-linecap:round; }
+.mk-spark-teal{ stroke:var(--teal); stroke-width:2.2; fill:none; stroke-linecap:round; }
+.mk-area{ fill:rgba(62,104,16,.10); }
+.mk-chart{ stroke:var(--accent); stroke-width:2.4; fill:none; stroke-linecap:round; }
+.mk-chart2{ stroke:var(--teal); stroke-width:1.8; fill:none; opacity:.7; stroke-linecap:round; }
+.mk-end{ fill:var(--accent); }
+.mk-txt-hi{ fill:var(--fg); font-family:var(--font-ui); font-size:11.5px; font-weight:600; letter-spacing:.02em; }
+.mk-ev-txt-teal{ fill:var(--teal); font-family:var(--font-ui); font-size:9.5px; letter-spacing:.02em; }
+.mk-ev-txt-amber{ fill:var(--amber); font-family:var(--font-ui); font-size:9.5px; letter-spacing:.02em; }
 .mk-card{ fill:var(--bg-card); stroke:var(--line-strong); }
-.mk-today{ fill:rgba(231,162,75,.05); }
-.mk-pill-lime{ fill:rgba(198,255,58,.13); stroke:var(--accent); }
-.mk-dash-amber{ stroke:var(--amber); stroke-dasharray:3 6; opacity:.35; }
 
 /* =================================================================
    FX-LAYER: Premium-Interaktionen (Spotlight, Draw-In, Float, Puls)
@@ -871,7 +863,7 @@ body{
 .fx-spot{ position:relative; }
 .fx-spot::before{ content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
   opacity:0; transition:opacity .45s var(--ease); z-index:1;
-  background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%), rgba(198,255,58,.07), transparent 65%); }
+  background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%), rgba(62,104,16,.06), transparent 65%); }
 .fx-spot:hover::before{ opacity:1; }
 /* Featured-Karte: langsam rotierender Licht-Rahmen (immer lebhaft, dekorativ) */
 @property --fx-angle{ syntax:'<angle>'; initial-value:0deg; inherits:false; }
@@ -908,18 +900,8 @@ body{
 .graphic-band.in .fx-pop.p4{ animation-delay:1.1s; }
 @keyframes fxPop{ to{ opacity:1; transform:translateY(0); } }
 
-/* Schwebende Karten atmen leicht */
-.fx-float{ animation:fxFloat 4.5s ease-in-out 2s infinite alternate; }
-.fx-float-2{ animation-delay:3s; }
-@keyframes fxFloat{ from{ transform:translateY(0); } to{ transform:translateY(-6px); } }
-
-/* Trennband: Puls-Ringe am Sender */
-.tb-pulse{ transform-box:fill-box; transform-origin:center; animation:fxPulse 3.4s ease-out infinite; }
-.tb-pulse-2{ animation-delay:1.7s; }
-@keyframes fxPulse{ 0%{ transform:scale(.55); opacity:.55; } 70%{ opacity:.06; } 100%{ transform:scale(2); opacity:0; } }
-
 @media(prefers-reduced-motion:reduce){
-  .price-card.featured::after,.fx-float,.tb-pulse,.btn-primary::after{ animation:none !important; transition:none !important; }
+  .price-card.featured::after,.btn-primary::after{ animation:none !important; transition:none !important; }
   .gb-visual .mk-chart,.gb-visual .mk-chart2,.gb-visual .mk-spark-lime,.gb-visual .mk-spark-teal{
     stroke-dashoffset:0 !important; animation:none !important; }
   .gb-visual .fx-pop{ opacity:1 !important; transform:none !important; animation:none !important; }
@@ -956,22 +938,20 @@ body{
 .eng-title{ fill:var(--fg); font-family:var(--font-ui); font-size:12px; font-weight:600; letter-spacing:.02em; }
 .eng-stage{ fill:var(--fg); font-family:var(--font-ui); font-size:11.5px; font-weight:500; }
 .eng-chiptxt{ fill:var(--fg-muted); font-family:var(--font-ui); font-size:11px; }
-.eng-chip{ fill:var(--bg-elev); stroke:var(--line-strong); }
-.eng-flow{ stroke:var(--teal); stroke-width:1.4; fill:none; stroke-linecap:round; }
-.eng-flow-dash{ stroke-dasharray:2 6; }
-.eng-band1{ fill:rgba(198,255,58,.32); }
-.eng-band2{ fill:rgba(198,255,58,.24); }
-.eng-band3{ fill:rgba(198,255,58,.16); }
-.eng-band4{ fill:rgba(198,255,58,.10); }
-.eng-funnel-edge{ stroke:var(--accent); stroke-width:1.4; fill:none; stroke-linejoin:round; }
-.eng-div{ stroke:rgba(198,255,58,.28); stroke-width:1; }
-.eng-vol{ fill:var(--teal); opacity:.5; }
-.eng-loop{ stroke:var(--amber); stroke-width:1.6; fill:none; stroke-dasharray:5 6; stroke-linecap:round; opacity:.85; }
+.eng-chip{ fill:var(--bg); stroke:var(--line-strong); }
+.eng-flow{ stroke:var(--teal); stroke-width:1.8; fill:none; stroke-linecap:round; }
+.eng-flow-dash{ stroke-dasharray:3 6; }
+.eng-band1{ fill:rgba(62,104,16,.24); }
+.eng-band2{ fill:rgba(62,104,16,.18); }
+.eng-band3{ fill:rgba(62,104,16,.12); }
+.eng-band4{ fill:rgba(62,104,16,.07); }
+.eng-funnel-edge{ stroke:var(--accent); stroke-width:1.8; fill:none; stroke-linejoin:round; }
+.eng-div{ stroke:rgba(62,104,16,.3); stroke-width:1; }
+.eng-loop{ stroke:var(--amber); stroke-width:1.8; fill:none; stroke-dasharray:5 6; stroke-linecap:round; }
 .eng-loop-arrow{ fill:var(--amber); }
-.eng-node{ fill:var(--bg); stroke:var(--amber); }
+.eng-node{ fill:var(--bg-card); stroke:var(--amber); }
 .eng-out-card{ fill:var(--bg-card); stroke:var(--line-strong); }
-.eng-badge{ fill:rgba(198,255,58,.14); stroke:var(--accent); }
-.eng-live{ fill:var(--accent); font-family:var(--font-ui); font-size:10px; font-weight:700; letter-spacing:.08em; }
+.eng-badge{ fill:rgba(62,104,16,.10); stroke:var(--accent); }
 .eng-loopcap{ fill:var(--amber); font-family:var(--font-ui); font-size:10px; letter-spacing:.14em; }
 .eng-pill-txt{ fill:var(--accent); font-family:var(--font-ui); font-size:9.5px; letter-spacing:.03em; }
 /* Ergebnis-Kurve zeichnet sich, sobald das Panel sichtbar wird */
@@ -1124,60 +1104,37 @@ body{
         <b>Kein System, keine Termine.</b>
         <span>Ein leerer Kalender ist selten Zufall – meist fehlt ein planbarer Prozess dahinter.</span>
       </div>
-      <div class="gb-visual zone-dark">
-        <svg viewBox="0 0 560 320" fill="none" role="img" aria-label="Stilisierte Kalenderwoche mit vielen freien Terminslots">
-          <defs>
-            <linearGradient id="calWin" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#1e181c"/><stop offset="1" stop-color="#141013"/>
-            </linearGradient>
-            <filter id="calShadow" x="-30%" y="-30%" width="160%" height="170%">
-              <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.5"/>
-            </filter>
-          </defs>
-          <!-- Fenster -->
-          <rect x="18" y="12" width="470" height="258" rx="16" fill="url(#calWin)" stroke="var(--line-strong)" filter="url(#calShadow)"/>
-          <circle cx="42" cy="34" r="4" class="mk-dot-a"/><circle cx="58" cy="34" r="4" class="mk-dot-b"/><circle cx="74" cy="34" r="4" class="mk-dot-c"/>
-          <text x="96" y="38" class="mk-txt-hi">Kalender · KW 29</text>
-          <line x1="18" y1="52" x2="488" y2="52" class="mk-line"/>
-          <!-- Heute-Spalte (DO) sanft markiert -->
-          <rect x="311" y="52" width="88" height="218" class="mk-today"/>
-          <line x1="311" y1="52" x2="399" y2="52" stroke="var(--amber)" stroke-width="2" opacity=".7"/>
+      <div class="gb-visual">
+        <svg viewBox="0 0 520 300" fill="none" role="img" aria-label="Stilisierte Kalenderwoche mit vielen freien Terminslots">
+          <!-- Kalenderblatt, ruhig und flächig -->
+          <rect x="12" y="12" width="496" height="276" rx="14" class="mk-card"/>
+          <!-- Kopfzeile -->
+          <text x="34" y="46" class="mk-txt-hi">Diese Woche</text>
+          <line x1="12" y1="62" x2="508" y2="62" class="mk-line"/>
           <!-- Tagesköpfe -->
-          <text x="91" y="73" text-anchor="middle" class="mk-txt">MO 14</text>
-          <text x="179" y="73" text-anchor="middle" class="mk-txt">DI 15</text>
-          <text x="267" y="73" text-anchor="middle" class="mk-txt">MI 16</text>
-          <text x="355" y="73" text-anchor="middle" class="mk-txt-amber">DO 17</text>
-          <text x="443" y="73" text-anchor="middle" class="mk-txt">FR 18</text>
-          <!-- Spalten -->
-          <line x1="135" y1="82" x2="135" y2="270" class="mk-line" opacity=".7"/>
-          <line x1="223" y1="82" x2="223" y2="270" class="mk-line" opacity=".7"/>
-          <line x1="311" y1="82" x2="311" y2="270" class="mk-line" opacity=".7"/>
-          <line x1="399" y1="82" x2="399" y2="270" class="mk-line" opacity=".7"/>
-          <!-- Stundenraster -->
-          <line x1="18" y1="96" x2="488" y2="96" class="mk-line" opacity=".45"/>
-          <line x1="18" y1="140" x2="488" y2="140" class="mk-line" opacity=".45"/>
-          <line x1="18" y1="184" x2="488" y2="184" class="mk-line" opacity=".45"/>
-          <line x1="18" y1="228" x2="488" y2="228" class="mk-line" opacity=".45"/>
-          <!-- zwei echte Termine, mit Namen -->
-          <rect x="53" y="102" width="76" height="34" rx="8" class="mk-ev-teal fx-pop p1"/>
-          <text x="91" y="122" text-anchor="middle" class="mk-ev-txt-teal fx-pop p1">Erstgespräch</text>
-          <rect x="317" y="146" width="76" height="34" rx="8" class="mk-ev-amber fx-pop p2"/>
-          <text x="355" y="166" text-anchor="middle" class="mk-ev-txt-amber fx-pop p2">Strategie-Call</text>
-          <!-- viele leere Slots -->
-          <rect x="141" y="102" width="76" height="30" rx="8" class="mk-empty fx-pop p3"/>
-          <rect x="229" y="190" width="76" height="30" rx="8" class="mk-empty fx-pop p3"/>
-          <rect x="405" y="102" width="76" height="30" rx="8" class="mk-empty fx-pop p3"/>
-          <rect x="53" y="190" width="76" height="30" rx="8" class="mk-empty fx-pop p3"/>
-          <!-- schwebende Hinweis-Karte -->
-          <g class="fx-float" filter="url(#calShadow)">
-            <g class="fx-pop p4">
-              <rect x="356" y="240" width="182" height="60" rx="13" class="mk-card"/>
-              <circle cx="378" cy="262" r="4.5" fill="var(--clay)"/>
-              <circle cx="378" cy="262" r="9" stroke="var(--clay)" opacity=".3"/>
-              <text x="394" y="266" class="mk-txt-hi">Keine neuen Anfragen</text>
-              <text x="394" y="283" class="mk-txt" opacity=".8">diese Woche</text>
-            </g>
-          </g>
+          <text x="82" y="88" text-anchor="middle" class="mk-txt">MO</text>
+          <text x="176" y="88" text-anchor="middle" class="mk-txt">DI</text>
+          <text x="270" y="88" text-anchor="middle" class="mk-txt">MI</text>
+          <text x="364" y="88" text-anchor="middle" class="mk-txt">DO</text>
+          <text x="458" y="88" text-anchor="middle" class="mk-txt">FR</text>
+          <!-- zwei echte Termine -->
+          <rect x="40" y="104" width="84" height="38" rx="10" class="mk-ev-teal fx-pop p1"/>
+          <text x="82" y="128" text-anchor="middle" class="mk-ev-txt-teal fx-pop p1">Erstgespräch</text>
+          <rect x="322" y="166" width="84" height="38" rx="10" class="mk-ev-amber fx-pop p2"/>
+          <text x="364" y="190" text-anchor="middle" class="mk-ev-txt-amber fx-pop p2">Strategie-Call</text>
+          <!-- freie Slots -->
+          <rect x="134" y="104" width="84" height="38" rx="10" class="mk-empty fx-pop p3"/>
+          <rect x="228" y="104" width="84" height="38" rx="10" class="mk-empty fx-pop p3"/>
+          <rect x="416" y="104" width="84" height="38" rx="10" class="mk-empty fx-pop p3"/>
+          <rect x="40" y="166" width="84" height="38" rx="10" class="mk-empty fx-pop p3"/>
+          <rect x="134" y="166" width="84" height="38" rx="10" class="mk-empty fx-pop p3"/>
+          <rect x="228" y="166" width="84" height="38" rx="10" class="mk-empty fx-pop p3"/>
+          <rect x="416" y="166" width="84" height="38" rx="10" class="mk-empty fx-pop p3"/>
+          <rect x="40" y="228" width="84" height="38" rx="10" class="mk-empty fx-pop p4"/>
+          <rect x="134" y="228" width="84" height="38" rx="10" class="mk-empty fx-pop p4"/>
+          <rect x="228" y="228" width="84" height="38" rx="10" class="mk-empty fx-pop p4"/>
+          <rect x="322" y="228" width="84" height="38" rx="10" class="mk-empty fx-pop p4"/>
+          <rect x="416" y="228" width="84" height="38" rx="10" class="mk-empty fx-pop p4"/>
         </svg>
       </div>
     </div>
@@ -1213,80 +1170,55 @@ body{
           <div class="sol-point reveal d4"><span class="num">04</span><div><h4>Erfolgsbasierte Deal-Struktur</h4><p>Du trägst Werbekosten plus erfolgsabhängige Vergütung. Unser Verdienst ist an dein Ergebnis gekoppelt.</p></div></div>
         </div>
       </div>
-      <div class="sol-visual sol-engine zone-dark eng-dash reveal d2">
-        <svg class="engine-diagram" viewBox="0 0 620 430" role="img" aria-label="Der Akquise-Motor: Traffic aus Meta, Google und Instagram speist einen Funnel aus Reichweite, Klicks, Landingpage und Formular; daraus entstehen qualifizierte Anfragen. Ein Tracking- und Optimierungs-Kreislauf führt kontinuierlich auf die Kampagnen zurück.">
-          <defs>
-            <filter id="engShadow" x="-30%" y="-30%" width="160%" height="180%">
-              <feDropShadow dx="0" dy="10" stdDeviation="14" flood-color="#000000" flood-opacity="0.5"/>
-            </filter>
-          </defs>
-          <!-- Fenster-Chrome -->
-          <rect x="6" y="6" width="608" height="418" rx="16" class="mk-win"/>
-          <circle cx="28" cy="30" r="4" class="mk-dot-a"/>
-          <circle cx="44" cy="30" r="4" class="mk-dot-b"/>
-          <circle cx="60" cy="30" r="4" class="mk-dot-c"/>
-          <text x="84" y="34" class="eng-title">Akquise-Motor</text>
-          <rect x="520" y="19" width="76" height="22" rx="11" class="eng-badge"/>
-          <circle cx="537" cy="30" r="3.5" fill="var(--accent)"/>
-          <text x="549" y="34" class="eng-live">LIVE</text>
-          <line x1="6" y1="52" x2="614" y2="52" class="mk-line"/>
-
+      <div class="sol-visual sol-engine eng-dash reveal d2">
+        <svg class="engine-diagram" viewBox="0 0 620 400" role="img" aria-label="Der Akquise-Motor: Traffic aus Meta, Google und Instagram speist einen Funnel aus Reichweite, Klicks, Landingpage und Formular; daraus entstehen qualifizierte Anfragen. Ein Tracking- und Optimierungs-Kreislauf führt kontinuierlich auf die Kampagnen zurück.">
           <!-- Traffic-Quellen -->
-          <text x="24" y="80" class="eng-cap">TRAFFIC-QUELLEN</text>
-          <rect x="24" y="90" width="150" height="34" rx="9" class="eng-chip"/>
-          <circle cx="43" cy="107" r="4" fill="var(--teal)"/>
-          <text x="56" y="111" class="eng-chiptxt">Meta Ads</text>
-          <rect x="24" y="132" width="150" height="34" rx="9" class="eng-chip"/>
-          <circle cx="43" cy="149" r="4" fill="var(--amber)"/>
-          <text x="56" y="153" class="eng-chiptxt">Google Ads</text>
-          <rect x="24" y="174" width="150" height="34" rx="9" class="eng-chip"/>
-          <circle cx="43" cy="191" r="4" fill="var(--clay)"/>
-          <text x="56" y="195" class="eng-chiptxt">Instagram / Reels</text>
-          <path d="M174 107 C192 107 196 138 208 147" class="eng-flow eng-flow-dash"/>
-          <path d="M174 149 C190 149 196 154 208 157" class="eng-flow eng-flow-dash"/>
-          <path d="M174 191 C192 191 196 176 208 167" class="eng-flow eng-flow-dash"/>
-          <path d="M204 151 l8 4 -2 -8 z" class="eng-loop-arrow" fill="var(--teal)"/>
+          <text x="24" y="46" class="eng-cap">TRAFFIC-QUELLEN</text>
+          <rect x="24" y="58" width="150" height="36" rx="10" class="eng-chip"/>
+          <circle cx="44" cy="76" r="4.5" fill="var(--teal)"/>
+          <text x="58" y="80" class="eng-chiptxt">Meta Ads</text>
+          <rect x="24" y="102" width="150" height="36" rx="10" class="eng-chip"/>
+          <circle cx="44" cy="120" r="4.5" fill="var(--amber)"/>
+          <text x="58" y="124" class="eng-chiptxt">Google Ads</text>
+          <rect x="24" y="146" width="150" height="36" rx="10" class="eng-chip"/>
+          <circle cx="44" cy="164" r="4.5" fill="var(--clay)"/>
+          <text x="58" y="168" class="eng-chiptxt">Instagram / Reels</text>
+          <path d="M174 76 C194 76 198 106 210 116" class="eng-flow eng-flow-dash"/>
+          <path d="M174 120 C192 120 200 122 210 124" class="eng-flow eng-flow-dash"/>
+          <path d="M174 164 C194 164 198 142 210 132" class="eng-flow eng-flow-dash"/>
 
           <!-- Funnel -->
-          <text x="216" y="80" class="eng-cap">FUNNEL</text>
-          <polygon points="212,92 412,92 394,131 230,131" class="eng-band1"/>
-          <polygon points="230,131 394,131 376,170 248,170" class="eng-band2"/>
-          <polygon points="248,170 376,170 358,209 266,209" class="eng-band3"/>
-          <polygon points="266,209 358,209 340,248 284,248" class="eng-band4"/>
-          <path d="M212,92 L412,92 L340,248 L284,248 Z" class="eng-funnel-edge"/>
-          <line x1="230" y1="131" x2="394" y2="131" class="eng-div"/>
-          <line x1="248" y1="170" x2="376" y2="170" class="eng-div"/>
-          <line x1="266" y1="209" x2="358" y2="209" class="eng-div"/>
-          <text x="312" y="116" text-anchor="middle" class="eng-stage">Reichweite</text>
-          <text x="312" y="155" text-anchor="middle" class="eng-stage">Klicks</text>
-          <text x="312" y="194" text-anchor="middle" class="eng-stage">Landingpage</text>
-          <text x="312" y="233" text-anchor="middle" class="eng-stage">Formular</text>
+          <text x="216" y="46" class="eng-cap">FUNNEL</text>
+          <polygon points="214,58 414,58 396,97 232,97" class="eng-band1"/>
+          <polygon points="232,97 396,97 378,136 250,136" class="eng-band2"/>
+          <polygon points="250,136 378,136 360,175 268,175" class="eng-band3"/>
+          <polygon points="268,175 360,175 342,214 286,214" class="eng-band4"/>
+          <path d="M214,58 L414,58 L342,214 L286,214 Z" class="eng-funnel-edge"/>
+          <line x1="232" y1="97" x2="396" y2="97" class="eng-div"/>
+          <line x1="250" y1="136" x2="378" y2="136" class="eng-div"/>
+          <line x1="268" y1="175" x2="360" y2="175" class="eng-div"/>
+          <text x="314" y="82" text-anchor="middle" class="eng-stage">Reichweite</text>
+          <text x="314" y="121" text-anchor="middle" class="eng-stage">Klicks</text>
+          <text x="314" y="160" text-anchor="middle" class="eng-stage">Landingpage</text>
+          <text x="314" y="199" text-anchor="middle" class="eng-stage">Formular</text>
 
-          <!-- Funnel-Neck → Output -->
-          <path d="M312 248 C312 290 410 300 450 246" class="eng-flow"/>
-          <path d="M445 252 l8 -4 -6 -6 z" class="eng-loop-arrow" fill="var(--teal)"/>
+          <!-- Funnel → Ergebnis -->
+          <path d="M314 214 C314 252 404 258 448 210" class="eng-flow"/>
 
-          <!-- Output-Karte -->
-          <g filter="url(#engShadow)">
-            <rect x="452" y="150" width="150" height="120" rx="13" class="eng-out-card"/>
-          </g>
-          <circle cx="472" cy="176" r="4.5" fill="var(--accent)"/>
-          <circle cx="472" cy="176" r="9" fill="none" stroke="var(--accent)" opacity=".3"/>
-          <text x="486" y="172" class="eng-title">Qualifizierte</text>
-          <text x="486" y="188" class="eng-title">Anfragen</text>
-          <path d="M470 240 L492 234 L512 236 L532 224 L552 226 L586 210" class="mk-spark-lime"/>
-          <path d="M586 210 l-1 8 7 -3 z" fill="var(--accent)"/>
-          <rect x="470" y="248" width="120" height="15" rx="7.5" class="eng-badge"/>
-          <text x="530" y="259" text-anchor="middle" class="eng-pill-txt">erfolgsbasiert</text>
+          <!-- Ergebnis-Karte -->
+          <rect x="452" y="116" width="150" height="112" rx="13" class="eng-out-card"/>
+          <circle cx="474" cy="142" r="5" fill="var(--accent)"/>
+          <text x="490" y="139" class="eng-title">Qualifizierte</text>
+          <text x="490" y="155" class="eng-title">Anfragen</text>
+          <path d="M472 200 L494 194 L514 196 L534 184 L554 186 L584 172" class="mk-spark-lime" pathLength="1"/>
+          <rect x="472" y="208" width="120" height="16" rx="8" class="eng-badge"/>
+          <text x="532" y="220" text-anchor="middle" class="eng-pill-txt">erfolgsbasiert</text>
 
           <!-- Tracking- & Optimierungs-Kreislauf -->
-          <path d="M527 270 C527 358 527 396 430 396 L212 396 C114 396 95 356 95 232" class="eng-loop"/>
-          <path d="M90 238 l5 -10 5 10 z" class="eng-loop-arrow"/>
-          <circle cx="360" cy="396" r="11" class="eng-node"/>
-          <path d="M356 398 a4 4 0 1 0 1.5 -3.2" fill="none" stroke="var(--amber)" stroke-width="1.3"/>
-          <path d="M357 391 l1 3.2 2.6 -1.6 z" class="eng-loop-arrow"/>
-          <text x="300" y="382" text-anchor="middle" class="eng-loopcap">TRACKING &amp; OPTIMIERUNG</text>
-          <text x="300" y="416" text-anchor="middle" class="mk-txt">Der Kreislauf, der den Motor am Laufen hält</text>
+          <path d="M527 228 C527 312 527 348 430 348 L212 348 C114 348 95 312 95 196" class="eng-loop"/>
+          <path d="M90 202 l5 -10 5 10 z" class="eng-loop-arrow"/>
+          <text x="316" y="340" text-anchor="middle" class="eng-loopcap">TRACKING &amp; OPTIMIERUNG</text>
+          <text x="316" y="378" text-anchor="middle" class="mk-txt">Der Kreislauf, der den Motor am Laufen hält</text>
         </svg>
       </div>
     </div>
@@ -1401,71 +1333,30 @@ body{
         <b>Zahlen statt Bauchgefühl.</b>
         <span>Jede Kampagne wird laufend gemessen, ausgewertet und nachgeschärft.</span>
       </div>
-      <div class="gb-visual zone-dark">
-        <svg viewBox="0 0 560 320" fill="none" role="img" aria-label="Stilisiertes Kampagnen-Dashboard mit steigender Ergebniskurve">
-          <defs>
-            <linearGradient id="dashWin" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#1e181c"/><stop offset="1" stop-color="#141013"/>
-            </linearGradient>
-            <linearGradient id="dashArea" x1="0" y1="0" x2="0" y2="1">
-              <stop offset="0" stop-color="#c6ff3a" stop-opacity=".22"/>
-              <stop offset="1" stop-color="#c6ff3a" stop-opacity="0"/>
-            </linearGradient>
-            <filter id="dashShadow" x="-30%" y="-30%" width="160%" height="170%">
-              <feDropShadow dx="0" dy="12" stdDeviation="16" flood-color="#000000" flood-opacity="0.5"/>
-            </filter>
-            <filter id="dashGlow" x="-20%" y="-20%" width="140%" height="140%">
-              <feGaussianBlur stdDeviation="4"/>
-            </filter>
-          </defs>
-          <!-- Fenster -->
-          <rect x="18" y="26" width="470" height="282" rx="16" fill="url(#dashWin)" stroke="var(--line-strong)" filter="url(#dashShadow)"/>
-          <circle cx="42" cy="48" r="4" class="mk-dot-a"/><circle cx="58" cy="48" r="4" class="mk-dot-b"/><circle cx="74" cy="48" r="4" class="mk-dot-c"/>
-          <text x="96" y="52" class="mk-txt-hi">Kampagnen-Übersicht</text>
-          <line x1="18" y1="66" x2="488" y2="66" class="mk-line"/>
-          <!-- KPI-Kacheln mit Trend-Pills -->
-          <rect x="34" y="80" width="136" height="62" rx="10" class="mk-tile"/>
-          <text x="46" y="100" class="mk-txt">ANFRAGEN</text>
-          <rect x="128" y="88" width="32" height="16" rx="8" class="mk-pill-lime fx-pop p2"/>
-          <path d="M140 100 l8 0 l-4 -7 z" fill="var(--accent)" class="fx-pop p2"/>
-          <path d="M46 128 l16 -5 l14 2 l16 -8 l14 2 l18 -7" class="mk-spark-lime" pathLength="1"/>
-          <rect x="184" y="80" width="136" height="62" rx="10" class="mk-tile"/>
-          <text x="196" y="100" class="mk-txt">QUALITÄT</text>
-          <rect x="278" y="88" width="32" height="16" rx="8" class="mk-pill-lime fx-pop p2" stroke="var(--teal)" fill="rgba(63,176,164,.13)"/>
-          <path d="M290 100 l8 0 l-4 -7 z" fill="var(--teal)" class="fx-pop p2"/>
-          <path d="M196 126 l16 -3 l14 -3 l16 1 l14 -5 l18 -3" class="mk-spark-teal" pathLength="1"/>
-          <rect x="334" y="80" width="136" height="62" rx="10" class="mk-tile"/>
-          <text x="346" y="100" class="mk-txt">KOSTEN&#160;/&#160;LEAD</text>
-          <rect x="428" y="88" width="32" height="16" rx="8" class="mk-pill-lime fx-pop p2"/>
-          <path d="M440 93 l8 0 l-4 7 z" fill="var(--accent)" class="fx-pop p2"/>
-          <path d="M346 116 l16 3 l14 -1 l16 5 l14 1 l18 4" class="mk-spark-lime" pathLength="1"/>
-          <!-- Chart -->
-          <line x1="34" y1="176" x2="470" y2="176" class="mk-line" opacity=".45"/>
-          <line x1="34" y1="214" x2="470" y2="214" class="mk-line" opacity=".45"/>
-          <line x1="34" y1="252" x2="470" y2="252" class="mk-line" opacity=".45"/>
-          <line x1="34" y1="290" x2="470" y2="290" class="mk-line"/>
-          <path d="M34 276 C90 272 140 262 190 254 C260 242 330 214 390 192 C420 181 450 172 470 166 L470 290 L34 290 Z" fill="url(#dashArea)"/>
-          <path d="M34 276 C90 272 140 262 190 254 C260 242 330 214 390 192 C420 181 450 172 470 166" class="mk-chart" filter="url(#dashGlow)" opacity=".55" pathLength="1"/>
-          <path d="M34 276 C90 272 140 262 190 254 C260 242 330 214 390 192 C420 181 450 172 470 166" class="mk-chart" pathLength="1"/>
-          <path d="M34 284 C120 281 210 274 290 266 C360 259 430 244 470 234" class="mk-chart2" pathLength="1"/>
-          <g class="fx-pop p3">
-            <circle cx="190" cy="254" r="3.5" fill="#141013" stroke="var(--accent)" stroke-width="2"/>
-            <circle cx="390" cy="192" r="3.5" fill="#141013" stroke="var(--accent)" stroke-width="2"/>
-            <line x1="470" y1="166" x2="470" y2="290" class="mk-dash-amber"/>
-            <circle cx="470" cy="166" r="5" class="mk-end"/>
-            <circle cx="470" cy="166" r="11" class="mk-halo"/>
-            <circle cx="470" cy="166" r="17" class="mk-halo" opacity=".16"/>
-          </g>
-          <!-- schwebender Anfrage-Toast -->
-          <g class="fx-float fx-float-2" filter="url(#dashShadow)">
-            <g class="fx-pop p4">
-              <rect x="372" y="4" width="168" height="52" rx="13" class="mk-card"/>
-              <circle cx="393" cy="24" r="4.5" fill="var(--accent)"/>
-              <circle cx="393" cy="24" r="9" stroke="var(--accent)" opacity=".3"/>
-              <text x="408" y="28" class="mk-txt-hi">Neue Anfrage</text>
-              <text x="408" y="44" class="mk-txt" opacity=".8">gerade eben</text>
-            </g>
-          </g>
+      <div class="gb-visual">
+        <svg viewBox="0 0 520 300" fill="none" role="img" aria-label="Stilisierte Kampagnen-Übersicht mit steigender Ergebniskurve">
+          <!-- Karte -->
+          <rect x="12" y="12" width="496" height="276" rx="14" class="mk-card"/>
+          <text x="34" y="46" class="mk-txt-hi">Kampagnen-Übersicht</text>
+          <line x1="12" y1="62" x2="508" y2="62" class="mk-line"/>
+          <!-- drei ruhige KPI-Kacheln -->
+          <rect x="34" y="82" width="146" height="58" rx="10" class="mk-tile fx-pop p1"/>
+          <text x="50" y="105" class="mk-txt">ANFRAGEN</text>
+          <path d="M50 126 l18 -6 l16 3 l18 -9 l16 3 l20 -8" class="mk-spark-lime" pathLength="1"/>
+          <rect x="187" y="82" width="146" height="58" rx="10" class="mk-tile fx-pop p2"/>
+          <text x="203" y="105" class="mk-txt">QUALITÄT</text>
+          <path d="M203 124 l18 -4 l16 -3 l18 1 l16 -6 l20 -3" class="mk-spark-teal" pathLength="1"/>
+          <rect x="340" y="82" width="146" height="58" rx="10" class="mk-tile fx-pop p3"/>
+          <text x="356" y="105" class="mk-txt">KOSTEN / LEAD</text>
+          <path d="M356 114 l18 4 l16 -1 l18 5 l16 2 l20 4" class="mk-spark-lime" pathLength="1"/>
+          <!-- Verlaufskurve -->
+          <line x1="34" y1="180" x2="486" y2="180" class="mk-line"/>
+          <line x1="34" y1="222" x2="486" y2="222" class="mk-line"/>
+          <line x1="34" y1="262" x2="486" y2="262" class="mk-line"/>
+          <path d="M34 250 C100 246 160 236 220 226 C300 213 370 190 430 174 C450 168 470 163 486 159 L486 262 L34 262 Z" class="mk-area"/>
+          <path d="M34 250 C100 246 160 236 220 226 C300 213 370 190 430 174 C450 168 470 163 486 159" class="mk-chart" pathLength="1"/>
+          <path d="M34 256 C120 253 210 246 290 238 C360 231 430 218 486 208" class="mk-chart2" pathLength="1"/>
+          <circle cx="486" cy="159" r="5" class="mk-end fx-pop p4"/>
         </svg>
       </div>
     </div>
@@ -1477,42 +1368,25 @@ body{
 <!-- ============================================================= -->
 <section class="trenn-band zone-dark reveal">
   <svg class="tb-field" viewBox="0 0 1200 340" preserveAspectRatio="xMidYMid slice" aria-hidden="true" fill="none">
-    <defs>
-      <radialGradient id="tbGlow" cx=".5" cy=".5" r=".5">
-        <stop offset="0" stop-color="#c6ff3a" stop-opacity=".14"/>
-        <stop offset="1" stop-color="#c6ff3a" stop-opacity="0"/>
-      </radialGradient>
-    </defs>
-    <!-- Reichweiten-Wellen -->
-    <circle cx="600" cy="420" r="150" stroke="var(--line)" opacity=".9"/>
-    <circle cx="600" cy="420" r="240" stroke="var(--line)" opacity=".75"/>
-    <circle cx="600" cy="420" r="330" stroke="var(--teal)" stroke-dasharray="3 9" opacity=".45"/>
-    <circle cx="600" cy="420" r="420" stroke="var(--line)" opacity=".55"/>
-    <circle cx="600" cy="420" r="510" stroke="var(--amber)" stroke-dasharray="3 11" opacity=".3"/>
-    <circle cx="600" cy="420" r="600" stroke="var(--line)" opacity=".35"/>
-    <!-- Sender: Glow + Puls -->
-    <circle cx="600" cy="270" r="120" fill="url(#tbGlow)"/>
-    <circle cx="600" cy="270" r="5" fill="var(--accent)"/>
-    <circle cx="600" cy="270" r="12" stroke="var(--accent)" opacity=".4" class="tb-pulse"/>
-    <circle cx="600" cy="270" r="20" stroke="var(--accent)" opacity=".16" class="tb-pulse tb-pulse-2"/>
-    <!-- Verbindungen zu einzelnen Punkten -->
-    <line x1="600" y1="270" x2="431" y2="253" stroke="var(--teal)" opacity=".25"/>
-    <line x1="600" y1="270" x2="792" y2="285" stroke="var(--amber)" opacity=".25"/>
-    <line x1="600" y1="270" x2="705" y2="180" stroke="var(--teal)" opacity=".18"/>
-    <line x1="600" y1="270" x2="291" y2="300" stroke="var(--clay)" opacity=".16"/>
-    <!-- Publikum: Punkte auf den Wellen -->
-    <circle cx="431" cy="253" r="4" fill="var(--teal)" opacity=".85"/>
-    <circle cx="792" cy="285" r="4" fill="var(--amber)" opacity=".85"/>
-    <circle cx="291" cy="300" r="3.5" fill="var(--clay)" opacity=".75"/>
-    <circle cx="936" cy="240" r="3.5" fill="var(--teal)" opacity=".6"/>
-    <circle cx="180" cy="212" r="3" fill="var(--amber)" opacity=".55"/>
-    <circle cx="1046" cy="300" r="3" fill="var(--clay)" opacity=".5"/>
-    <circle cx="356" cy="150" r="2.5" fill="var(--fg-dim)" opacity=".55"/>
-    <circle cx="864" cy="140" r="2.5" fill="var(--fg-dim)" opacity=".55"/>
-    <circle cx="536" cy="96" r="2.5" fill="var(--fg-dim)" opacity=".45"/>
-    <circle cx="705" cy="180" r="3" fill="var(--teal)" opacity=".5"/>
-    <circle cx="112" cy="120" r="2" fill="var(--fg-dim)" opacity=".4"/>
-    <circle cx="1104" cy="160" r="2" fill="var(--fg-dim)" opacity=".4"/>
+    <!-- Ruhige Reichweiten-Wellen -->
+    <circle cx="600" cy="430" r="170" stroke="var(--line-strong)" opacity=".6"/>
+    <circle cx="600" cy="430" r="270" stroke="var(--line-strong)" opacity=".45"/>
+    <circle cx="600" cy="430" r="370" stroke="var(--line-strong)" opacity=".35"/>
+    <circle cx="600" cy="430" r="470" stroke="var(--line-strong)" opacity=".25"/>
+    <circle cx="600" cy="430" r="570" stroke="var(--line-strong)" opacity=".18"/>
+    <!-- Ausgangspunkt -->
+    <circle cx="600" cy="260" r="6" fill="var(--accent)"/>
+    <!-- Publikum -->
+    <circle cx="431" cy="253" r="4" fill="var(--teal)" opacity=".8"/>
+    <circle cx="792" cy="285" r="4" fill="var(--amber)" opacity=".8"/>
+    <circle cx="291" cy="300" r="3.5" fill="var(--clay)" opacity=".7"/>
+    <circle cx="936" cy="240" r="3.5" fill="var(--teal)" opacity=".55"/>
+    <circle cx="180" cy="212" r="3" fill="var(--amber)" opacity=".5"/>
+    <circle cx="1046" cy="300" r="3" fill="var(--clay)" opacity=".45"/>
+    <circle cx="356" cy="150" r="2.5" fill="var(--fg-dim)" opacity=".5"/>
+    <circle cx="864" cy="140" r="2.5" fill="var(--fg-dim)" opacity=".5"/>
+    <circle cx="705" cy="180" r="3" fill="var(--teal)" opacity=".45"/>
+    <circle cx="1104" cy="160" r="2" fill="var(--fg-dim)" opacity=".35"/>
   </svg>
   <div class="tb-quote">
     <strong>Rund 21,6 Millionen Menschen sind in Deutschland wöchentlich allein auf Facebook aktiv.<a href="#quellen" class="fc-ref">3</a></strong>
