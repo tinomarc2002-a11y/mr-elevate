@@ -10,9 +10,10 @@
 <script defer src="/_vercel/insights/script.js"></script>
 <style>
 :root{
-  --bg:#08090a; --bg-card:#111315; --line:#1d2024; --line-strong:#2a2e33;
-  --fg:#f4f6f7; --fg-muted:#9aa1a8; --fg-dim:#7c8189; --accent:#c6ff3a;
-  --font-display:'Space Grotesk',system-ui,sans-serif; --font-body:'Inter',system-ui,sans-serif;
+  /* Helle, warme Basis – identisch zur Startseite */
+  --bg:#f7f3ec; --bg-card:#fffdf8; --line:#e4dbc9; --line-strong:#cfc2a8;
+  --fg:#211c17; --fg-muted:#5c5349; --fg-dim:#675e51; --accent:#3e6810;
+  --font-display:'Fraunces',Georgia,serif; --font-body:'Inter',system-ui,sans-serif;
 }
 *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
 body{ font-family:var(--font-body); background:var(--bg); color:var(--fg); line-height:1.7; -webkit-font-smoothing:antialiased; }
@@ -22,7 +23,7 @@ a:hover{ text-decoration:underline; }
 .back{ display:inline-flex; align-items:center; gap:8px; color:var(--fg-muted); font-size:.92rem; margin-bottom:40px; }
 .back:hover{ color:var(--fg); text-decoration:none; }
 .brand{ display:flex; align-items:center; gap:12px; margin-bottom:34px; }
-.brand img{ height:40px; width:auto; filter:drop-shadow(0 4px 12px rgba(0,0,0,.55)); }
+.brand img{ height:40px; width:auto; filter:drop-shadow(0 2px 6px rgba(33,28,23,.18)); }
 .brand b{ font-family:var(--font-display); font-weight:700; font-size:1.15rem; }
 .brand .we{ color:var(--accent); }
 h1{ font-family:var(--font-display); font-weight:700; font-size:clamp(2rem,5vw,2.8rem); letter-spacing:-.02em; margin-bottom:30px; }
