@@ -310,12 +310,12 @@ section{ position:relative; }
 /* =================================================================
    GENERIC SECTION HEADER + REVEAL
    ================================================================= */
-.sec-pad{ padding:clamp(80px,12vw,140px) 0; }
+.sec-pad{ padding:clamp(100px,13.5vw,176px) 0; }
 #problem{ padding-top:clamp(40px,6vw,68px); }   /* enger an den Hero anschließen */
 
 /* ── "Breather": eine Idee tieferer Papierton – Rhythmus statt Graphit-Insel ── */
 .section-mid{ background:var(--bg-elev); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
-.sec-head{ max-width:680px; margin-bottom:60px; }
+.sec-head{ max-width:680px; margin-bottom:74px; }
 .sec-head.center{ margin-inline:auto; text-align:center; }
 .sec-head p{ margin-top:20px; }
 .fact-cite{ margin-top:14px !important; font-size:.88rem !important; color:var(--fg-dim) !important;
@@ -479,7 +479,7 @@ section{ position:relative; }
    PRICING / MODELL COMPARISON
    ================================================================= */
 .price-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
-.price-card{ border:1px solid var(--line); border-radius:var(--radius); padding:38px 34px; background:var(--bg-card); position:relative; overflow:hidden; transition:border-color var(--t); }
+.price-card{ border:1px solid var(--line); border-radius:var(--radius); padding:46px 40px; background:var(--bg-card); position:relative; overflow:hidden; transition:border-color var(--t); }
 .price-card.classic h3{ color:var(--fg-muted); }
 .price-card.featured{ border-color:var(--line-strong); }
 .price-card.featured::before{ content:""; position:absolute; inset:0 0 auto 0; height:3px; background:var(--accent); }
@@ -517,6 +517,7 @@ section{ position:relative; }
   .price-card .price-list li{ opacity:1 !important; transform:none !important; animation:none !important; }
 }
 @media(max-width:860px){ .price-grid{ grid-template-columns:1fr; } }
+@media(max-width:560px){ .price-card{ padding:32px 24px; } }
 
 /* — Transparenz: Ablauf der Abrechnung (Vertrauens-Baustein statt vager Werbesprache) — */
 .pay-flow{ margin-top:56px; padding-top:36px; border-top:1px solid var(--line); }
@@ -800,20 +801,17 @@ h1,h2,h3,h4{ letter-spacing:-.01em; line-height:1.08; }
 .h-sec{ letter-spacing:-.015em; }
 .h-hero{ letter-spacing:-.02em; line-height:1.02; }
 
-/* Eyebrow: wärmeres Label – Clay-Punkt statt klinischer Nummer, Text in Amber */
-.eyebrow{ color:var(--amber); }
-.eyebrow i{ font-size:0; width:7px; height:7px; border-radius:50%;
-  background:var(--clay); box-shadow:0 0 0 4px rgba(215,106,76,.15); letter-spacing:0; }
+/* Eyebrow: nüchternes, neutrales Label mit sichtbarer Gliederungsnummer */
+.eyebrow{ color:var(--fg-dim); letter-spacing:.14em; }
+.eyebrow i{ font-style:normal; color:var(--fg-dim); opacity:.75; letter-spacing:.04em; }
 
-/* Rollen-Akzente: Teal = Vertrauen/Zahlen, Clay = Mensch */
-.fact-cite{ border-left:2px solid var(--teal); padding-left:14px; }
-.fact-cite strong{ color:var(--teal); }
-.fc-ref:hover{ border-color:var(--teal); color:var(--teal) !important; }
-.founder-quote .accent{ color:var(--clay); }
-.pf-step .pfnum{ border-color:var(--teal); color:var(--teal); }
-.prob-row:nth-of-type(1):hover .pnum{ color:var(--amber); }
-.prob-row:nth-of-type(2):hover .pnum{ color:var(--teal); }
-.prob-row:nth-of-type(3):hover .pnum{ color:var(--clay); }
+/* Zurückhaltende Akzente: ein Akzent statt vier Farben */
+.fact-cite{ border-left:2px solid var(--line-strong); padding-left:14px; }
+.fact-cite strong{ color:var(--fg); }
+.fc-ref:hover{ border-color:var(--accent); color:var(--accent) !important; }
+.founder-quote .accent{ color:var(--accent); }
+.pf-step .pfnum{ border-color:var(--line-strong); color:var(--fg-muted); }
+.prob-row:hover .pnum{ color:var(--accent); }
 
 /* Feine Textur + warme Lichtinseln: nimmt dem Dunkel das Plastisch-Tote */
 body{
@@ -826,7 +824,7 @@ body{
 /* =================================================================
    MARKEN-GRAFIKEN: gezeichnete UI-Panels statt Stockfotos
    ================================================================= */
-.graphic-band{ display:grid; grid-template-columns:1fr 1.5fr; align-items:stretch; margin-top:44px;
+.graphic-band{ display:grid; grid-template-columns:1fr 1.5fr; align-items:stretch; margin-top:60px;
   border:1px solid var(--line-strong); border-radius:var(--radius); overflow:hidden;
   background:linear-gradient(135deg,var(--bg-elev),var(--bg-card)); }
 .gb-text{ display:flex; flex-direction:column; justify-content:center; gap:8px;
@@ -917,19 +915,7 @@ body{
 .story-illu .il-line{ stroke:var(--fg-dim); stroke-width:2; }
 .story-illu .il-muted{ stroke:#9c8f7d; stroke-width:1.8; }
 .story-illu .il-accent{ stroke-width:2.2; }
-.story-panel:nth-of-type(1) .il-accent{ stroke:var(--amber); }
-.story-panel:nth-of-type(1) .il-fill{ fill:var(--amber); stroke:var(--amber); }
-.story-panel:nth-of-type(1):hover .story-illu{ border-color:var(--amber); }
-.story-panel:nth-of-type(2) .il-accent{ stroke:var(--teal); }
-.story-panel:nth-of-type(2) .il-fill{ fill:var(--teal); stroke:var(--teal); }
-.story-panel:nth-of-type(2):hover .story-illu{ border-color:var(--teal); }
-.story-panel:nth-of-type(3) .il-accent{ stroke:var(--clay); }
-.story-panel:nth-of-type(3) .il-fill{ fill:var(--clay); stroke:var(--clay); }
-.story-panel:nth-of-type(3):hover .story-illu{ border-color:var(--clay); }
-.story-panel:nth-of-type(4) .il-accent{ stroke:var(--teal); }
-.story-panel:nth-of-type(4) .il-fill{ fill:var(--teal); stroke:var(--teal); }
-.story-panel:nth-of-type(4):hover .story-illu{ border-color:var(--teal); }
-/* Panel 5 (Wachstum) bleibt bewusst Lime */
+/* Alle fünf Panels teilen einen ruhigen Akzent statt vier Farben */
 
 /* =================================================================
    AKQUISE-MOTOR: umfangreiches System-Diagramm (dunkles Panel)
@@ -1377,15 +1363,15 @@ body{
     <!-- Ausgangspunkt -->
     <circle cx="600" cy="260" r="6" fill="var(--accent)"/>
     <!-- Publikum -->
-    <circle cx="431" cy="253" r="4" fill="var(--teal)" opacity=".8"/>
-    <circle cx="792" cy="285" r="4" fill="var(--amber)" opacity=".8"/>
-    <circle cx="291" cy="300" r="3.5" fill="var(--clay)" opacity=".7"/>
-    <circle cx="936" cy="240" r="3.5" fill="var(--teal)" opacity=".55"/>
-    <circle cx="180" cy="212" r="3" fill="var(--amber)" opacity=".5"/>
-    <circle cx="1046" cy="300" r="3" fill="var(--clay)" opacity=".45"/>
-    <circle cx="356" cy="150" r="2.5" fill="var(--fg-dim)" opacity=".5"/>
-    <circle cx="864" cy="140" r="2.5" fill="var(--fg-dim)" opacity=".5"/>
-    <circle cx="705" cy="180" r="3" fill="var(--teal)" opacity=".45"/>
+    <circle cx="431" cy="253" r="4" fill="var(--fg-muted)" opacity=".75"/>
+    <circle cx="792" cy="285" r="4" fill="var(--fg-muted)" opacity=".7"/>
+    <circle cx="291" cy="300" r="3.5" fill="var(--fg-muted)" opacity=".6"/>
+    <circle cx="936" cy="240" r="3.5" fill="var(--fg-muted)" opacity=".55"/>
+    <circle cx="180" cy="212" r="3" fill="var(--fg-dim)" opacity=".5"/>
+    <circle cx="1046" cy="300" r="3" fill="var(--fg-dim)" opacity=".45"/>
+    <circle cx="356" cy="150" r="2.5" fill="var(--fg-dim)" opacity=".45"/>
+    <circle cx="864" cy="140" r="2.5" fill="var(--fg-dim)" opacity=".45"/>
+    <circle cx="705" cy="180" r="3" fill="var(--fg-dim)" opacity=".4"/>
     <circle cx="1104" cy="160" r="2" fill="var(--fg-dim)" opacity=".35"/>
   </svg>
   <div class="tb-quote">
