@@ -230,6 +230,24 @@ section{ position:relative; }
   padding:26px; }
 .figure svg{ width:100%; height:auto; display:block; }
 .figure figcaption{ margin-top:14px; font-size:.82rem; color:var(--fg-dim); text-align:center; }
+.figure.tight{ padding:18px; }
+/* Guide-Mockups: schlichte UI-Nachbauten im Seiten-Stil (kein echtes Konto) */
+.gm-win{ fill:var(--bg-card); stroke:var(--line-strong); }
+.gm-panel{ fill:var(--bg-elev); stroke:var(--line); }
+.gm-line{ stroke:var(--line); }
+.gm-strong{ stroke:var(--line-strong); }
+.gm-txt{ fill:var(--fg-dim); font-family:var(--font-ui); font-size:12px; }
+.gm-txt-hi{ fill:var(--fg); font-family:var(--font-ui); font-size:12.5px; font-weight:600; }
+.gm-txt-mut{ fill:var(--fg-muted); font-family:var(--font-ui); font-size:11px; }
+.gm-soft{ fill:rgba(62,104,16,.10); }
+.gm-sel{ fill:rgba(62,104,16,.13); stroke:var(--accent); stroke-width:1.6; }
+.gm-accent{ stroke:var(--accent); fill:none; }
+.gm-accent-fill{ fill:var(--accent); }
+.gm-lime{ fill:var(--accent-fill); }
+.gm-dot-a{ fill:var(--clay); } .gm-dot-b{ fill:var(--amber); } .gm-dot-c{ fill:var(--teal); }
+.gm-btn{ fill:var(--accent-fill); }
+.gm-btn-txt{ fill:#0a0d00; font-family:var(--font-ui); font-size:12px; font-weight:600; }
+.gm-ph{ fill:var(--bg); stroke:var(--line-strong); }
 
 /* CLOSING */
 .closing{ padding:clamp(64px,9vw,100px) 0; text-align:center; }
@@ -464,6 +482,39 @@ section{ position:relative; }
         <li><b>Genau ein Button-Ziel</b>, mehrfach wiederholt. Kein „Kontakt“, kein „Über uns“. Ein Ziel, sonst nichts.</li>
       </ol>
 
+      <figure class="figure tight reveal">
+        <svg viewBox="0 0 520 300" role="img" aria-label="Wireframe einer Landingpage: Überschrift, kurzes Formular mit Button, Vertrauenssignale">
+          <rect x="8" y="8" width="504" height="284" rx="12" class="gm-win"/>
+          <circle cx="28" cy="28" r="3.5" class="gm-dot-a"/><circle cx="42" cy="28" r="3.5" class="gm-dot-b"/><circle cx="56" cy="28" r="3.5" class="gm-dot-c"/>
+          <rect x="76" y="21" width="330" height="14" rx="7" class="gm-panel"/>
+          <text x="88" y="32" class="gm-txt-mut">deine-landingpage.de</text>
+          <line x1="8" y1="48" x2="512" y2="48" class="gm-line"/>
+          <!-- Ueberschrift -->
+          <rect x="40" y="70" width="300" height="16" rx="6" class="gm-strong" fill="var(--fg-muted)" stroke="none"/>
+          <rect x="40" y="94" width="210" height="16" rx="6" class="gm-soft"/>
+          <rect x="40" y="122" width="360" height="9" rx="4" class="gm-panel"/>
+          <!-- Formular-Karte -->
+          <rect x="40" y="150" width="290" height="112" rx="10" class="gm-panel"/>
+          <rect x="56" y="166" width="258" height="22" rx="6" class="gm-ph"/>
+          <text x="66" y="181" class="gm-txt-mut">Name</text>
+          <rect x="56" y="196" width="258" height="22" rx="6" class="gm-ph"/>
+          <text x="66" y="211" class="gm-txt-mut">E-Mail oder Telefon</text>
+          <rect x="56" y="228" width="150" height="24" rx="7" class="gm-btn"/>
+          <text x="131" y="244" text-anchor="middle" class="gm-btn-txt">Jetzt anfragen</text>
+          <!-- Vertrauenssignale -->
+          <circle cx="366" cy="168" r="18" class="gm-ph"/>
+          <path d="M360 172 a6 6 0 0 1 12 0" class="gm-accent"/><circle cx="366" cy="162" r="4" class="gm-accent"/>
+          <rect x="396" y="158" width="96" height="8" rx="4" class="gm-panel"/>
+          <rect x="396" y="172" width="70" height="8" rx="4" class="gm-panel"/>
+          <text x="366" y="212" text-anchor="middle" class="gm-txt-mut">echtes Gesicht</text>
+          <g class="gm-accent-fill">
+            <circle cx="360" cy="232" r="2.5"/><circle cx="372" cy="232" r="2.5"/><circle cx="384" cy="232" r="2.5"/><circle cx="396" cy="232" r="2.5"/><circle cx="408" cy="232" r="2.5"/>
+          </g>
+          <text x="384" y="252" text-anchor="middle" class="gm-txt-mut">Bewertungen</text>
+        </svg>
+        <figcaption>Eine Seite, ein Ziel: Überschrift mit Nutzen, kurzes Formular, echte Vertrauenssignale, ein Button.</figcaption>
+      </figure>
+
       <div class="mistake">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>
         <div>
@@ -530,6 +581,29 @@ section{ position:relative; }
     </div>
     <div class="phase-body reveal">
       <p>Jetzt wird’s konkret. So baust du im <b>Meta-Werbeanzeigenmanager</b> (business.facebook.com) deine erste Kampagne. Meta arbeitet in drei Ebenen: <b>Kampagne</b> (das Ziel), <b>Anzeigengruppe</b> (wer, wo, wie viel Budget) und <b>Anzeige</b> (was man sieht).</p>
+
+      <figure class="figure tight reveal">
+        <svg viewBox="0 0 520 246" role="img" aria-label="Nachgebauter Auswahlbildschirm: als Kampagnenziel ist Leads markiert, andere Ziele sind ausgegraut">
+          <rect x="8" y="8" width="504" height="230" rx="12" class="gm-win"/>
+          <circle cx="28" cy="30" r="4" class="gm-dot-a"/><circle cx="44" cy="30" r="4" class="gm-dot-b"/><circle cx="60" cy="30" r="4" class="gm-dot-c"/>
+          <text x="82" y="34" class="gm-txt-hi">Neue Kampagne · Ziel wählen</text>
+          <line x1="8" y1="48" x2="512" y2="48" class="gm-line"/>
+          <!-- ausgegraute Ziele -->
+          <circle cx="34" cy="72" r="7" class="gm-ph"/><text x="52" y="76" class="gm-txt">Reichweite</text>
+          <circle cx="34" cy="106" r="7" class="gm-ph"/><text x="52" y="110" class="gm-txt">Interaktionen</text>
+          <circle cx="34" cy="140" r="7" class="gm-ph"/><text x="52" y="144" class="gm-txt">Traffic</text>
+          <!-- ausgewaehltes Ziel: Leads -->
+          <rect x="16" y="158" width="488" height="42" rx="9" class="gm-sel"/>
+          <circle cx="34" cy="179" r="8" class="gm-accent-fill"/>
+          <path d="M30 179 l3 3 5 -6" stroke="#fffdf8" stroke-width="1.8" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+          <text x="52" y="176" class="gm-txt-hi">Leads</text>
+          <text x="52" y="191" class="gm-txt-mut">Anfragen &amp; Kontakte sammeln</text>
+          <text x="490" y="184" text-anchor="end" class="gm-accent-fill" font-family="var(--font-ui)" font-size="11" font-weight="600">gewählt</text>
+          <circle cx="34" cy="220" r="7" class="gm-ph"/><text x="52" y="224" class="gm-txt">Verkäufe</text>
+        </svg>
+        <figcaption>Schritt 2 im Werbeanzeigenmanager: Als Ziel „Leads“ wählen, nicht „Reichweite“ oder „Interaktionen“.</figcaption>
+      </figure>
+
       <ol class="do-list">
         <li>Oben links auf <span class="path">+ Erstellen</span> klicken.</li>
         <li>Als Kampagnenziel <b>„Leads“</b> wählen, das ist das Ziel für Anfragen. (Nicht „Reichweite“, nicht „Interaktionen“, die bringen dir hübsche Zahlen, aber keine Kunden.)</li>
@@ -606,6 +680,43 @@ section{ position:relative; }
       <p>Video oder Bild? Die Daten sagen: Videos haben oft eine 25–35&nbsp;% höhere Klickrate, aber Bilder konvertieren manchmal besser, weil sie sofort erfasst werden.<a href="#q7" class="ref">7</a> Heißt für dich: <b>Nicht raten, beides testen.</b> Die Botschaft ist wichtiger als das Format.<a href="#q7" class="ref">7</a></p>
       <p>Bau von Anfang an <b>drei bis vier verschiedene Creatives</b> und lass sie gegeneinander laufen. Erst der Vergleich zeigt dir, welche Botschaft wirklich zieht, und die überträgst du dann auf alles andere.</p>
 
+      <figure class="figure tight reveal">
+        <svg viewBox="0 0 520 250" role="img" aria-label="Drei Anzeigen-Varianten im Vergleich, die mittlere hat die beste Klickrate und ist markiert">
+          <!-- Variante A (schwaecher) -->
+          <g opacity=".7">
+            <rect x="20" y="30" width="150" height="170" rx="11" class="gm-panel"/>
+            <rect x="34" y="44" width="122" height="66" rx="7" class="gm-ph"/>
+            <circle cx="95" cy="77" r="13" class="gm-line" fill="none" stroke="var(--line-strong)"/><path d="M88 80 a7 7 0 0 1 14 0" fill="none" stroke="var(--line-strong)"/>
+            <rect x="34" y="120" width="100" height="8" rx="4" class="gm-panel"/>
+            <rect x="34" y="134" width="80" height="8" rx="4" class="gm-panel"/>
+            <rect x="34" y="156" width="70" height="18" rx="6" class="gm-ph"/>
+          </g>
+          <text x="95" y="220" text-anchor="middle" class="gm-txt-mut">CTR 0,9 %</text>
+          <!-- Variante B (Gewinner) -->
+          <rect x="185" y="22" width="150" height="186" rx="11" class="gm-sel"/>
+          <rect x="199" y="38" width="122" height="66" rx="7" class="gm-ph"/>
+          <circle cx="260" cy="71" r="13" class="gm-accent" fill="none"/><path d="M253 74 a7 7 0 0 1 14 0" class="gm-accent"/><circle cx="260" cy="64" r="4" class="gm-accent"/>
+          <rect x="199" y="114" width="105" height="8" rx="4" class="gm-panel"/>
+          <rect x="199" y="128" width="86" height="8" rx="4" class="gm-panel"/>
+          <rect x="199" y="150" width="90" height="20" rx="6" class="gm-btn"/>
+          <text x="244" y="164" text-anchor="middle" class="gm-btn-txt" font-size="11">Mehr dazu</text>
+          <rect x="255" y="180" width="66" height="16" rx="8" class="gm-soft"/>
+          <text x="288" y="192" text-anchor="middle" class="gm-accent-fill" font-family="var(--font-ui)" font-size="10" font-weight="600">beste CTR</text>
+          <text x="260" y="228" text-anchor="middle" class="gm-txt-hi">CTR 2,7 %</text>
+          <!-- Variante C (schwaecher) -->
+          <g opacity=".7">
+            <rect x="350" y="30" width="150" height="170" rx="11" class="gm-panel"/>
+            <rect x="364" y="44" width="122" height="66" rx="7" class="gm-ph"/>
+            <circle cx="425" cy="77" r="13" class="gm-line" fill="none" stroke="var(--line-strong)"/><path d="M418 80 a7 7 0 0 1 14 0" fill="none" stroke="var(--line-strong)"/>
+            <rect x="364" y="120" width="96" height="8" rx="4" class="gm-panel"/>
+            <rect x="364" y="134" width="76" height="8" rx="4" class="gm-panel"/>
+            <rect x="364" y="156" width="70" height="18" rx="6" class="gm-ph"/>
+          </g>
+          <text x="425" y="220" text-anchor="middle" class="gm-txt-mut">CTR 1,3 %</text>
+        </svg>
+        <figcaption>Drei bis vier Varianten laufen lassen, dann die mit den besten Zahlen weiterfahren. Nicht die, die dir am besten gefällt.</figcaption>
+      </figure>
+
       <div class="aside">
         <p>Merksatz</p>
         <p>Dein bestes Creative ist nicht das, das dir am besten gefällt. Es ist das, bei dem die Zahlen am besten sind. Häng nicht an einem Motiv. Der Test entscheidet, nicht dein Geschmack.</p>
@@ -640,14 +751,14 @@ section{ position:relative; }
 
       <figure class="figure reveal">
         <svg viewBox="0 0 560 200" role="img" aria-label="Diagramm der Lernphase: unruhige Ergebnisse am Anfang, die sich nach rund 50 Conversions stabilisieren">
-          <line x1="40" y1="170" x2="540" y2="170" stroke="#2e333c" stroke-width="1"/>
-          <line x1="40" y1="20" x2="40" y2="170" stroke="#2e333c" stroke-width="1"/>
+          <line x1="40" y1="170" x2="540" y2="170" class="gm-strong" stroke-width="1"/>
+          <line x1="40" y1="20" x2="40" y2="170" class="gm-strong" stroke-width="1"/>
           <polyline points="40,150 80,60 120,150 160,80 200,140 240,70 280,110 320,95 360,100 400,97 440,99 480,98 520,98"
-            fill="none" stroke="#c6ff3a" stroke-width="2" stroke-linejoin="round" stroke-linecap="round"/>
-          <line x1="300" y1="20" x2="300" y2="170" stroke="#444b56" stroke-width="1" stroke-dasharray="4 4"/>
-          <text x="300" y="14" fill="#9aa1a8" font-family="Space Grotesk, sans-serif" font-size="11" text-anchor="middle">~50 Conversions</text>
-          <text x="150" y="192" fill="#646a70" font-family="Space Grotesk, sans-serif" font-size="11" text-anchor="middle">Lernphase (unruhig)</text>
-          <text x="420" y="192" fill="#646a70" font-family="Space Grotesk, sans-serif" font-size="11" text-anchor="middle">stabil &amp; planbar</text>
+            fill="none" class="gm-accent" stroke-width="2.4" stroke-linejoin="round" stroke-linecap="round"/>
+          <line x1="300" y1="20" x2="300" y2="170" class="gm-line" stroke-width="1" stroke-dasharray="4 4"/>
+          <text x="300" y="14" class="gm-txt-mut" text-anchor="middle">~50 Conversions</text>
+          <text x="150" y="192" class="gm-txt" text-anchor="middle">Lernphase (unruhig)</text>
+          <text x="420" y="192" class="gm-txt" text-anchor="middle">stabil &amp; planbar</text>
         </svg>
         <figcaption>Vereinfachte Darstellung: Erst schwanken die Ergebnisse, dann stabilisieren sie sich, wenn du die Kampagne so lange laufen lässt.</figcaption>
       </figure>
