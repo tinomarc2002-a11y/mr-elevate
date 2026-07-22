@@ -946,6 +946,19 @@ body{
 .eng-badge{ fill:rgba(62,104,16,.10); stroke:var(--accent); }
 .eng-loopcap{ fill:var(--amber); font-family:var(--font-ui); font-size:10px; letter-spacing:.14em; }
 .eng-pill-txt{ fill:var(--accent); font-family:var(--font-ui); font-size:9.5px; letter-spacing:.03em; }
+/* Auf dem Handy skaliert das SVG stark runter, darum groessere Schrift im Diagramm.
+   Funnel-Stufen nur leicht, damit sie im schmalen Trichter bleiben. */
+@media(max-width:760px){
+  .eng-cap{ font-size:12.5px; }
+  .eng-title{ font-size:14.5px; }
+  .eng-stage{ font-size:13px; }
+  .eng-chiptxt{ font-size:13.5px; }
+  .eng-loopcap{ font-size:12px; }
+  .eng-pill-txt{ font-size:11.5px; }
+  .eng-live{ font-size:12px; }
+  .sol-engine .mk-txt{ font-size:13.5px; }
+  .sol-engine .mk-txt-hi{ font-size:14px; }
+}
 /* Ergebnis-Kurve zeichnet sich, sobald das Panel sichtbar wird */
 .sol-visual .mk-spark-lime{ stroke-dasharray:200; stroke-dashoffset:200; }
 .sol-visual.in .mk-spark-lime{ animation:engDraw 1.2s var(--ease) .6s forwards; }
@@ -1055,6 +1068,74 @@ body{
      öffnet sich bei jedem Klick auf einen [data-quiz-cta]-Button. -->
 
 <!-- ============================================================= -->
+<!-- AUSGANGSLAGE: Kalender-Grafik als Ueberleitung zum System      -->
+<!-- ============================================================= -->
+<section class="sec-pad" id="ausgangslage" style="padding-block:clamp(60px,9vw,104px);">
+  <div class="container">
+    <div class="graphic-band reveal" style="margin-top:0;">
+      <div class="gb-text">
+        <b>Zwei Termine diese Woche. Der Rest bleibt leer.</b>
+        <span>Ein voller Kalender ist kein Zufall. Er braucht ein System dahinter.</span>
+      </div>
+      <div class="gb-visual">
+        <svg viewBox="0 0 520 320" fill="none" role="img" aria-label="Kalenderwoche mit nur zwei Terminen und überwiegend freien Slots">
+          <rect x="12" y="12" width="496" height="296" rx="14" class="mk-card"/>
+
+          <!-- Kopfzeile mit ehrlicher Auslastung -->
+          <text x="34" y="44" class="mk-txt-hi">Diese Woche</text>
+          <text x="486" y="44" text-anchor="end" class="mk-txt">2 von 20 Slots belegt</text>
+          <line x1="12" y1="60" x2="508" y2="60" class="mk-line"/>
+
+          <!-- Heute-Spalte dezent hinterlegt -->
+          <rect x="329" y="60" width="90" height="248" class="mk-today"/>
+
+          <!-- Tagesköpfe mit Datum -->
+          <text x="105" y="82" text-anchor="middle" class="mk-txt">MO 14</text>
+          <text x="194" y="82" text-anchor="middle" class="mk-txt">DI 15</text>
+          <text x="284" y="82" text-anchor="middle" class="mk-txt">MI 16</text>
+          <text x="374" y="82" text-anchor="middle" class="mk-txt-hi">DO 17</text>
+          <text x="463" y="82" text-anchor="middle" class="mk-txt">FR 18</text>
+
+          <!-- Zeitachse -->
+          <text x="46" y="118" text-anchor="end" class="mk-txt">09</text>
+          <text x="46" y="166" text-anchor="end" class="mk-txt">11</text>
+          <text x="46" y="214" text-anchor="end" class="mk-txt">13</text>
+          <text x="46" y="262" text-anchor="end" class="mk-txt">15</text>
+
+          <!-- Raster -->
+          <line x1="56" y1="92" x2="508" y2="92" class="mk-line"/>
+          <line x1="56" y1="140" x2="508" y2="140" class="mk-line"/>
+          <line x1="56" y1="188" x2="508" y2="188" class="mk-line"/>
+          <line x1="56" y1="236" x2="508" y2="236" class="mk-line"/>
+          <line x1="56" y1="284" x2="508" y2="284" class="mk-line"/>
+          <line x1="56" y1="60" x2="56" y2="308" class="mk-line"/>
+
+          <!-- die zwei einzigen Termine -->
+          <rect x="64" y="98" width="82" height="36" rx="9" class="mk-ev-teal fx-pop p1"/>
+          <text x="105" y="114" text-anchor="middle" class="mk-ev-txt-teal fx-pop p1">Erstgespräch</text>
+          <text x="105" y="126" text-anchor="middle" class="mk-ev-txt-teal fx-pop p1">09:30</text>
+          <rect x="333" y="146" width="82" height="36" rx="9" class="mk-ev-amber fx-pop p2"/>
+          <text x="374" y="162" text-anchor="middle" class="mk-ev-txt-amber fx-pop p2">Strategie-Call</text>
+          <text x="374" y="174" text-anchor="middle" class="mk-ev-txt-amber fx-pop p2">11:15</text>
+
+          <!-- freie Slots, bewusst unregelmässig verteilt -->
+          <rect x="154" y="98" width="82" height="36" rx="9" class="mk-empty fx-pop p3"/>
+          <rect x="243" y="146" width="82" height="36" rx="9" class="mk-empty fx-pop p3"/>
+          <rect x="422" y="98" width="82" height="36" rx="9" class="mk-empty fx-pop p3"/>
+          <rect x="64" y="194" width="82" height="36" rx="9" class="mk-empty fx-pop p4"/>
+          <rect x="243" y="242" width="82" height="36" rx="9" class="mk-empty fx-pop p4"/>
+          <rect x="422" y="194" width="82" height="36" rx="9" class="mk-empty fx-pop p4"/>
+
+          <!-- Jetzt-Linie im heutigen Tag -->
+          <line x1="329" y1="212" x2="419" y2="212" stroke="var(--clay)" stroke-width="1.6"/>
+          <circle cx="329" cy="212" r="3.5" fill="var(--clay)"/>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
 <!-- SOLUTION / UNSER SYSTEM                                        -->
 <!-- ============================================================= -->
 <section class="sec-pad" id="system" style="background:var(--bg-elev);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
@@ -1098,10 +1179,10 @@ body{
           <line x1="232" y1="97" x2="396" y2="97" class="eng-div"/>
           <line x1="250" y1="136" x2="378" y2="136" class="eng-div"/>
           <line x1="268" y1="175" x2="360" y2="175" class="eng-div"/>
-          <text x="314" y="82" text-anchor="middle" class="eng-stage">Impressionen</text>
-          <text x="314" y="121" text-anchor="middle" class="eng-stage">Klicks</text>
-          <text x="314" y="160" text-anchor="middle" class="eng-stage">Landingpage</text>
-          <text x="314" y="199" text-anchor="middle" class="eng-stage">Anfrage</text>
+          <text x="314" y="82" text-anchor="middle" class="eng-stage">Gesehen</text>
+          <text x="314" y="121" text-anchor="middle" class="eng-stage">Geklickt</text>
+          <text x="314" y="160" text-anchor="middle" class="eng-stage">Überzeugt</text>
+          <text x="314" y="199" text-anchor="middle" class="eng-stage">Angefragt</text>
 
           <!-- Funnel → Ergebnis -->
           <path d="M314 214 C314 252 404 258 448 210" class="eng-flow"/>
