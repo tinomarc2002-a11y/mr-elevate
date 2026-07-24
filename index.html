@@ -1500,7 +1500,7 @@ body{
   <div class="cc-inner">
     <div class="cc-text">
       <strong>Cookies &amp; Datenschutz</strong>
-      <p>Wir nutzen nur technisch notwendige Mittel und eine <b>cookielose</b> Reichweitenmessung ohne persönliche Profile. Marketing-Cookies (z.&nbsp;B. Meta-Pixel) setzen wir <b>ausschließlich mit deiner Einwilligung</b>. Mehr in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
+      <p>Wir nutzen nur technisch notwendige Mittel und eine <b>cookielose</b> Reichweitenmessung ohne persönliche Profile. Analyse- und Marketing-Dienste mit Cookies (z.&nbsp;B. Microsoft&nbsp;Clarity, Meta-Pixel) laden wir <b>ausschließlich mit deiner Einwilligung</b>. Mehr in der <a href="datenschutz.html">Datenschutzerklärung</a>.</p>
     </div>
     <div class="cc-actions">
       <button class="btn-cc btn-cc-ghost" type="button" data-cc="necessary">Nur notwendige</button>
@@ -1520,9 +1520,17 @@ body{
   function save(marketing){ try{ localStorage.setItem(KEY, JSON.stringify({ necessary:true, marketing:!!marketing, ts:Date.now() })); }catch(e){} }
   function loadMarketing(){
     if(window.__mreMarketing) return; window.__mreMarketing = true;
-    /* TODO[META-PIXEL]: Hier den Meta-/Facebook-Pixel-Code einsetzen.
-       Dieser Block läuft NUR, wenn der Nutzer "Alle akzeptieren" gewählt hat
+    /* Dieser Block läuft NUR, wenn der Nutzer "Alle akzeptieren" gewählt hat
        (jetzt oder in einem früheren Besuch). Ohne Einwilligung wird nichts geladen. */
+
+    /* Microsoft Clarity (Heatmaps & Sitzungsanalyse) – erst nach Einwilligung */
+    (function(c,l,a,r,i,t,y){
+      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "xritxdmsli");
+
+    /* TODO[META-PIXEL]: Hier ggf. den Meta-/Facebook-Pixel-Code einsetzen. */
   }
   function show(){ el.hidden = false; }
   function hide(){ el.hidden = true; }
