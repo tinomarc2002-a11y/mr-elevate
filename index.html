@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>MR Elevate | Erfolgsbasierte Neukundengewinnung, Dresden</title>
 <meta name="description" content="MR Elevate baut Systeme zur planbaren Neukundengewinnung für Dienstleister, lokale Unternehmen & High-Ticket-Anbieter. Erfolgsbasiert, aus Dresden." />
-<meta name="theme-color" content="#08090a" />
+<meta name="theme-color" content="#0c0a0b" />
 <meta name="robots" content="index, follow" />
 <link rel="canonical" href="https://www.mr-elevate.de/" />
 
@@ -152,6 +152,12 @@
   --fg-muted:      #5c5349;
   --fg-dim:        #675e51;   /* WCAG-AA-sicher auf beiden Cremetönen (5.2–5.8:1) */
 
+  /* Eine einzige Grundschwärze für ALLE dunklen Flächen (Nav, Menü, Hero,
+     Final-CTA, Modal-Backdrop, Foto-Tags). Vorher liefen hier drei leicht
+     verschiedene Werte nebeneinander. --ink-rgb für rgba()-Abstufungen. */
+  --ink:           #0c0a0b;
+  --ink-rgb:       12,10,11;
+
   /* Lime bleibt IMMER lebhaft für Flächen (Buttons, Badges, Punkte, Progress-Bars) */
   --accent-fill:   #c6ff3a;
   --accent-deep:   #a4e000;   /* für Verlaufs-Balken (Scroll-/Quiz-Progress) */
@@ -206,9 +212,10 @@ img,video{ display:block; max-width:100%; }
    Nav/Menü/Modal-Chrome, die dunklen Mockup-Screens) – unabhängig vom
    hellen Grundton der restlichen Seite. */
 .zone-dark{
-  --bg:#0c0a0b; --bg-elev:#151114; --bg-card:#1a1518;
-  --line:#342c31; --line-strong:#4a4046;
-  --fg:#f6f3f0; --fg-muted:#b3aaa6; --fg-dim:#8b8280;
+  --bg:var(--ink); --bg-elev:#161213; --bg-card:#1b1618;
+  --line:#332b2d; --line-strong:#4a4043;
+  /* Neutrale in derselben warmen Achse wie die helle Seite, statt kühler Graustufen */
+  --fg:#f7f3ec; --fg-muted:#c0b6a8; --fg-dim:#a2988a;
   --accent:#c6ff3a; --amber:#e7a24b; --teal:#3fb0a4; --clay:#d76a4c;
   color:var(--fg);
 }
@@ -271,7 +278,7 @@ section{ position:relative; }
   border-bottom:1px solid transparent;
 }
 .nav.scrolled{
-  background:rgba(8,9,10,.72); backdrop-filter:blur(14px);
+  background:rgba(var(--ink-rgb),.72); backdrop-filter:blur(14px);
   border-bottom-color:var(--line);
 }
 .nav-inner{ display:flex; align-items:center; justify-content:space-between; height:72px; }
@@ -317,12 +324,12 @@ section{ position:relative; }
 .hero-bg::after{ /* dunkler Verlauf für Lesbarkeit (links stark, rechts mehr Foto) */
   content:""; position:absolute; inset:0;
   background:
-    linear-gradient(90deg, rgba(8,9,10,.28) 0%, rgba(8,9,10,.18) 42%, rgba(8,9,10,.10) 72%, rgba(8,9,10,.04) 100%),
-    linear-gradient(180deg, rgba(8,9,10,.45) 0%, rgba(8,9,10,.22) 38%, rgba(8,9,10,.5) 78%, var(--bg-light) 100%);
+    linear-gradient(90deg, rgba(var(--ink-rgb),.28) 0%, rgba(var(--ink-rgb),.18) 42%, rgba(var(--ink-rgb),.10) 72%, rgba(var(--ink-rgb),.04) 100%),
+    linear-gradient(180deg, rgba(var(--ink-rgb),.45) 0%, rgba(var(--ink-rgb),.22) 38%, rgba(var(--ink-rgb),.5) 78%, var(--bg-light) 100%);
 }
 @media (max-width:900px){
   .hero-bg::after{ background:
-    linear-gradient(180deg, rgba(8,9,10,.72) 0%, rgba(8,9,10,.55) 42%, rgba(8,9,10,.62) 74%, var(--bg-light) 100%); }
+    linear-gradient(180deg, rgba(var(--ink-rgb),.72) 0%, rgba(var(--ink-rgb),.55) 42%, rgba(var(--ink-rgb),.62) 74%, var(--bg-light) 100%); }
   .hero-photo,.hero-video{ object-position:50% 36%; }
 }
 .hero-inner{ position:relative; z-index:2; max-width:880px; }
@@ -497,7 +504,7 @@ section{ position:relative; }
 .sol-visual .vlabel{ font-family:var(--font-display); font-size:.78rem; letter-spacing:.15em; text-transform:uppercase; color:var(--fg-dim); }
 .sol-photo{ position:absolute; inset:0; width:100%; height:100%; object-fit:cover; z-index:0; }
 .sol-visual.has-photo::after{ content:""; position:absolute; inset:0; z-index:1;
-  background:linear-gradient(180deg, rgba(8,9,10,.30) 0%, rgba(8,9,10,.45) 55%, rgba(8,9,10,.88) 100%); }
+  background:linear-gradient(180deg, rgba(var(--ink-rgb),.30) 0%, rgba(var(--ink-rgb),.45) 55%, rgba(var(--ink-rgb),.88) 100%); }
 .sol-visual.has-photo > *{ position:relative; z-index:2; }
 @media(max-width:860px){ .sol-grid{ grid-template-columns:1fr; } .sol-visual{ min-height:340px; } }
 
@@ -577,8 +584,8 @@ section{ position:relative; }
    und würde das Foto auf hellem Papier weiß überstrahlen. Nur ein dezenter Schutz
    hinter dem Namens-Chip. */
 .founder-photo::after{ content:""; position:absolute; inset:auto 0 0 0; height:120px; pointer-events:none;
-  background:linear-gradient(180deg, transparent, rgba(8,9,10,.34)); }
-.founder-tag{ position:absolute; left:18px; bottom:18px; z-index:2; background:rgba(8,9,10,.7); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.14); border-radius:12px; padding:12px 16px; color:#f6f3f0; }
+  background:linear-gradient(180deg, transparent, rgba(var(--ink-rgb),.34)); }
+.founder-tag{ position:absolute; left:18px; bottom:18px; z-index:2; background:rgba(var(--ink-rgb),.7); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.14); border-radius:12px; padding:12px 16px; color:var(--bg-light); }
 .founder-tag b{ font-family:var(--font-display); display:block; }
 .founder-tag span{ font-size:.82rem; color:#c6ff3a; }
 .founder-quote{ font-family:var(--font-display); font-size:clamp(1.4rem,3vw,2rem); font-weight:500; line-height:1.25; margin:18px 0 24px; }
@@ -658,7 +665,7 @@ section{ position:relative; }
    FINAL CTA
    ================================================================= */
 .final{ text-align:center; position:relative;
-  background:radial-gradient(ellipse 70% 60% at 50% 118%, rgba(198,255,58,.08), transparent 68%), #080607;
+  background:radial-gradient(ellipse 70% 60% at 50% 118%, rgba(198,255,58,.08), transparent 68%), var(--ink);
   border-top:1px solid var(--line); }
 .final-card{ position:relative; padding:clamp(40px,7vw,80px) 0; }
 .final h2{ font-size:clamp(2.6rem,6.5vw,5.2rem); letter-spacing:-.03em; line-height:1; margin-bottom:24px; }
@@ -689,7 +696,7 @@ section{ position:relative; }
 .footer-bottom{ display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; padding-top:26px; border-top:1px solid var(--line); color:var(--fg-dim); font-size:.85rem; }
 
 /* mobile menu */
-.mobile-menu{ position:fixed; inset:0; z-index:99; background:rgba(8,9,10,.96); backdrop-filter:blur(12px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:30px; opacity:0; pointer-events:none; transition:opacity var(--t); }
+.mobile-menu{ position:fixed; inset:0; z-index:99; background:rgba(var(--ink-rgb),.96); backdrop-filter:blur(12px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:30px; opacity:0; pointer-events:none; transition:opacity var(--t); }
 .mobile-menu.open{ opacity:1; pointer-events:auto; }
 .mobile-menu a{ font-family:var(--font-display); font-size:1.6rem; color:var(--fg); }
 .mobile-menu a:hover{ color:var(--accent); }
@@ -775,7 +782,7 @@ section{ position:relative; }
    ================================================================= */
 .quiz-modal{ position:fixed; inset:0; z-index:500; display:grid; place-items:center; padding:18px; }
 .quiz-modal[hidden]{ display:none; }
-.quiz-modal-backdrop{ position:absolute; inset:0; background:rgba(4,5,6,.82); backdrop-filter:blur(6px); animation:mFade .3s var(--ease); }
+.quiz-modal-backdrop{ position:absolute; inset:0; background:rgba(var(--ink-rgb),.82); backdrop-filter:blur(6px); animation:mFade .3s var(--ease); }
 @keyframes mFade{ from{ opacity:0; } to{ opacity:1; } }
 .quiz-modal-dialog{ position:relative; z-index:1; width:100%; max-width:680px; max-height:92svh; overflow-y:auto; overscroll-behavior:contain;
   background:linear-gradient(180deg,var(--bg-elev),#0c0e10); border:1px solid var(--line-strong); border-radius:20px;
@@ -889,25 +896,40 @@ body{
 .il-bg{ fill:var(--bg-card); }
 .il-shape{ fill:var(--bg-elev); }
 .il-soft{ fill:rgba(62,104,16,.10); }
+/* Bewusst schmale Palette: Oliv-Lime als Leitfarbe, Amber als einziger
+   Gegenpol, dazu Neutrale. Kein Teal/Clay mehr in den Illustrationen –
+   das hielt die Seite farblich unruhig. */
 .il-accent{ fill:var(--accent); }
+.il-accent-mid{ fill:rgba(62,104,16,.55); }
 .il-lime{ fill:var(--accent-fill); }
-.il-teal{ fill:var(--teal); }
 .il-amber{ fill:var(--amber); }
-.il-clay{ fill:var(--clay); }
+.il-amber-mid{ fill:rgba(149,85,26,.55); }
 .il-ink{ fill:var(--fg); }
 .il-mute{ fill:var(--line-strong); }
+.il-skin{ fill:#c9a27a; }
 .il-stroke{ stroke:var(--accent); stroke-width:3; fill:none; stroke-linecap:round; stroke-linejoin:round; }
-.il-stroke-teal{ stroke:var(--teal); stroke-width:3; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+.il-stroke-amber{ stroke:var(--amber); stroke-width:3; fill:none; stroke-linecap:round; stroke-linejoin:round; }
 .il-txt{ fill:var(--fg); font-family:var(--font-ui); font-size:14px; font-weight:600; }
 .il-txt-sm{ fill:var(--fg-muted); font-family:var(--font-ui); font-size:12.5px; font-weight:500; }
 .il-txt-on{ fill:var(--accent-ink); font-family:var(--font-ui); font-size:14px; font-weight:600; }
 .il-txt-light{ fill:var(--bg-card); font-family:var(--font-ui); font-size:14px; font-weight:600; }
+.il-check{ stroke:var(--bg-card); stroke-width:2.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
 /* Mobil schrumpfen die SVG stark (Faktor ~0,53), daher deutlich groessere
    Schriftgroessen in viewBox-Einheiten. Die Formen sind auf diese Groesse
    ausgelegt, auf dem Desktop steht der Text entsprechend luftiger. */
 @media(max-width:860px){
   .il-txt{ font-size:22px; } .il-txt-sm{ font-size:20px; }
   .il-txt-on{ font-size:22px; } .il-txt-light{ font-size:22px; }
+}
+
+/* Figuren: ruhiges Schweben, Zeigearm wippt leicht. Bewusst langsam und
+   klein gehalten, damit es lebendig wirkt und nicht zappelt. */
+.il-float{ transform-box:fill-box; transform-origin:50% 100%; animation:ilFloat 5.5s ease-in-out infinite; }
+@keyframes ilFloat{ 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-6px); } }
+.il-wave{ transform-box:fill-box; transform-origin:0% 100%; animation:ilWave 4.2s ease-in-out infinite; }
+@keyframes ilWave{ 0%,100%{ transform:rotate(0deg); } 50%{ transform:rotate(-7deg); } }
+@media(prefers-reduced-motion:reduce){
+  .il-float,.il-wave{ animation:none !important; }
 }
 
 /* =================================================================
@@ -1144,7 +1166,7 @@ body{
 
           <!-- Terminfelder: 4 Reihen x 5 Spalten -->
           <g class="fx-pop p1">
-            <rect x="110" y="108" width="56" height="36" rx="10" class="il-teal"/>
+            <rect x="110" y="108" width="56" height="36" rx="10" class="il-accent"/>
             <rect x="290" y="156" width="56" height="36" rx="10" class="il-amber"/>
           </g>
           <g class="fx-pop p3">
@@ -1201,15 +1223,15 @@ body{
         <svg class="engine-diagram" viewBox="0 0 520 440" role="img" aria-label="Illustration des Akquise-Motors: Meta Ads und Google Ads füllen oben einen Trichter, aus dem unten qualifizierte Anfragen kommen. Ein Kreislaufpfeil steht für laufendes Optimieren.">
           <!-- die beiden Kanäle als flache Kreise -->
           <g class="fx-pop p1">
-            <circle cx="140" cy="64" r="46" class="il-teal"/>
+            <circle cx="140" cy="64" r="46" class="il-accent"/>
             <text x="140" y="72" text-anchor="middle" class="il-txt-light">Meta</text>
             <circle cx="272" cy="64" r="46" class="il-amber"/>
             <text x="272" y="72" text-anchor="middle" class="il-txt-light">Google</text>
           </g>
 
           <!-- Zuflüsse in den Trichter -->
-          <path d="M158 106 C176 124 190 132 206 138" class="il-stroke-teal"/>
-          <path d="M258 106 C246 122 238 130 228 138" class="il-stroke-teal"/>
+          <path d="M158 106 C176 124 190 132 206 138" class="il-stroke"/>
+          <path d="M258 106 C246 122 238 130 228 138" class="il-stroke"/>
 
           <!-- Trichter als eine geschlossene Form -->
           <path d="M104 146 h300 l-112 132 v54 h-76 v-54 Z" class="il-soft fx-pop p2"/>
@@ -1310,6 +1332,58 @@ body{
       <p class="sec-sub">Von der Analyse bis zur Skalierung</p>
       <p class="lead">Nach jeder Phase bekommst du eine kurze Einordnung: was lief, was wir als Nächstes ändern.</p>
     </div>
+
+    <div class="graphic-band reveal" style="margin-top:0;margin-bottom:56px;">
+      <div class="gb-text">
+        <b>Du sprichst mit Marc, nicht mit einem Account-Manager.</b>
+        <span>Wir gehen den Plan gemeinsam durch und haken ab, was steht.</span>
+      </div>
+      <div class="gb-visual">
+        <svg viewBox="0 0 520 300" fill="none" role="img" aria-label="Illustration: zwei Personen stehen vor einem Plan und gehen die erledigten Punkte gemeinsam durch">
+          <!-- Plan-Tafel -->
+          <rect x="252" y="46" width="230" height="164" rx="22" class="il-bg"/>
+          <rect x="276" y="70" width="104" height="14" rx="7" class="il-mute"/>
+
+          <g class="fx-pop p1">
+            <circle cx="290" cy="114" r="12" class="il-accent"/>
+            <path d="M285 114 l3.5 4 l6.5 -8" class="il-check"/>
+            <rect x="312" y="106" width="124" height="15" rx="7.5" class="il-shape"/>
+          </g>
+          <g class="fx-pop p2">
+            <circle cx="290" cy="150" r="12" class="il-accent"/>
+            <path d="M285 150 l3.5 4 l6.5 -8" class="il-check"/>
+            <rect x="312" y="142" width="146" height="15" rx="7.5" class="il-shape"/>
+          </g>
+          <g class="fx-pop p3">
+            <circle cx="290" cy="186" r="12" class="il-mute"/>
+            <rect x="312" y="178" width="98" height="15" rx="7.5" class="il-shape"/>
+          </g>
+
+          <!-- Boden -->
+          <rect x="26" y="250" width="456" height="6" rx="3" class="il-mute"/>
+
+          <g class="il-float">
+            <!-- hintere Person -->
+            <path d="M36 250 v-50 a26 26 0 0 1 52 0 v50 z" class="il-amber-mid"/>
+            <rect x="54" y="146" width="16" height="22" rx="8" class="il-skin"/>
+            <circle cx="62" cy="132" r="23" class="il-skin"/>
+            <path d="M39 130 a23 23 0 0 1 46 0 z" class="il-ink"/>
+
+            <!-- vordere Person, zeigt auf den Plan -->
+            <path d="M102 250 v-60 a30 30 0 0 1 60 0 v60 z" class="il-accent"/>
+            <rect x="123" y="128" width="18" height="24" rx="9" class="il-skin"/>
+            <circle cx="132" cy="114" r="27" class="il-skin"/>
+            <path d="M107 112 a27 27 0 0 1 50 0 z" class="il-ink"/>
+
+            <g class="il-wave">
+              <path d="M158 186 C186 180 210 158 232 138" stroke="var(--accent)" stroke-width="15" fill="none" stroke-linecap="round"/>
+              <circle cx="236" cy="134" r="10" class="il-skin"/>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </div>
+
     <div class="steps">
       <div class="step reveal d1">
         <span class="snum">01</span>
@@ -1354,8 +1428,8 @@ body{
             <rect x="146" y="160" width="46" height="78" rx="12" class="il-shape"/>
           </g>
           <g class="fx-pop p2">
-            <rect x="214" y="132" width="46" height="106" rx="12" class="il-teal"/>
-            <rect x="282" y="106" width="46" height="132" rx="12" class="il-teal"/>
+            <rect x="214" y="132" width="46" height="106" rx="12" class="il-accent-mid"/>
+            <rect x="282" y="106" width="46" height="132" rx="12" class="il-accent-mid"/>
           </g>
           <g class="fx-pop p3">
             <rect x="350" y="76" width="46" height="162" rx="12" class="il-accent"/>
