@@ -29,28 +29,42 @@
 <meta property="og:image:height" content="804" />
 <meta name="twitter:card" content="summary_large_image" />
 
-<!-- Strukturierte Daten: lokales Unternehmen -->
+<!-- Strukturierte Daten: lokales Unternehmen + Gründer (verknüpft über @id) -->
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
-  "@type": "ProfessionalService",
-  "name": "MR Elevate",
-  "description": "Systeme zur planbaren, erfolgsbasierten Neukundengewinnung für Dienstleister, lokale Unternehmen und High-Ticket-Anbieter.",
-  "url": "https://www.mr-elevate.de/",
-  "image": "https://www.mr-elevate.de/hero-dresden.jpg",
-  "logo": "https://www.mr-elevate.de/logo-gruen.png",
-  "email": "info@mr-elevate.de",
-  "telephone": "+4915510657637",
-  "founder": { "@type": "Person", "name": "Marc Richter" },
-  "address": {
-    "@type": "PostalAddress",
-    "streetAddress": "Briesnitzer Höhe 24",
-    "addressLocality": "Dresden",
-    "postalCode": "01157",
-    "addressCountry": "DE"
-  },
-  "areaServed": { "@type": "Country", "name": "Deutschland" },
-  "priceRange": "erfolgsbasiert"
+  "@graph": [
+    {
+      "@type": "ProfessionalService",
+      "@id": "https://www.mr-elevate.de/#organization",
+      "name": "MR Elevate",
+      "description": "Erfolgsbasierte Performance-Marketing-Agentur aus Dresden. Systeme zur planbaren Neukundengewinnung für Dienstleister, lokale Unternehmen und High-Ticket-Anbieter.",
+      "url": "https://www.mr-elevate.de/",
+      "image": "https://www.mr-elevate.de/hero-dresden.jpg",
+      "logo": "https://www.mr-elevate.de/logo-gruen.png",
+      "email": "info@mr-elevate.de",
+      "telephone": "+4915510657637",
+      "founder": { "@id": "https://www.mr-elevate.de/#marc-richter" },
+      "address": {
+        "@type": "PostalAddress",
+        "streetAddress": "Briesnitzer Höhe 24",
+        "addressLocality": "Dresden",
+        "postalCode": "01157",
+        "addressCountry": "DE"
+      },
+      "areaServed": { "@type": "Country", "name": "Deutschland" },
+      "priceRange": "erfolgsbasiert",
+      "knowsAbout": ["Performance Marketing", "Meta Ads", "Google Ads", "Neukundengewinnung", "Erfolgsbasiertes Marketing", "Leadgenerierung"]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://www.mr-elevate.de/#marc-richter",
+      "name": "Marc Richter",
+      "jobTitle": "Gründer",
+      "worksFor": { "@id": "https://www.mr-elevate.de/#organization" },
+      "sameAs": ["https://www.linkedin.com/in/marc-richter-043a90412/"]
+    }
+  ]
 }
 </script>
 
@@ -1046,7 +1060,8 @@ body{
 
     <!-- CONVERSION-CRITICAL: Hero-Subheadline -->
     <p class="hero-sub reveal in d1">
-      <b>MR Elevate</b> baut Systeme zur planbaren Neukundengewinnung, für Dienstleister,
+      <b>MR Elevate</b> ist eine erfolgsbasierte Performance-Marketing-Agentur aus Dresden.
+      Wir bauen Systeme zur planbaren Neukundengewinnung für Dienstleister,
       lokale Unternehmen und High-Ticket-Anbieter.
     </p>
 
@@ -1453,6 +1468,12 @@ body{
           <a href="datenschutz.html">Datenschutz</a>
           <a href="#" data-cc-open>Cookie-Einstellungen</a>
           <a href="#quiz" data-quiz-cta>Analysegespräch</a>
+        </div>
+        <div class="footer-col">
+          <h5>Kontakt</h5>
+          <a href="https://www.linkedin.com/in/marc-richter-043a90412/" target="_blank" rel="noopener me">LinkedIn</a>
+          <a href="mailto:info@mr-elevate.de">E-Mail</a>
+          <a href="https://wa.me/4915510657637" target="_blank" rel="noopener">WhatsApp</a>
         </div>
       </div>
     </div>
