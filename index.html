@@ -885,6 +885,28 @@ body{
 .mk-ev-txt-amber{ fill:var(--amber); font-family:var(--font-ui); font-size:9.5px; letter-spacing:.02em; }
 .mk-card{ fill:var(--bg-card); stroke:var(--line-strong); }
 
+/* Flache Illustration: gefüllte Formen statt UI-Linien, keine Konturen */
+.il-bg{ fill:var(--bg-card); }
+.il-shape{ fill:var(--bg-elev); }
+.il-soft{ fill:rgba(62,104,16,.10); }
+.il-accent{ fill:var(--accent); }
+.il-lime{ fill:var(--accent-fill); }
+.il-teal{ fill:var(--teal); }
+.il-amber{ fill:var(--amber); }
+.il-clay{ fill:var(--clay); }
+.il-ink{ fill:var(--fg); }
+.il-mute{ fill:var(--line-strong); }
+.il-stroke{ stroke:var(--accent); stroke-width:3; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+.il-stroke-teal{ stroke:var(--teal); stroke-width:3; fill:none; stroke-linecap:round; stroke-linejoin:round; }
+.il-txt{ fill:var(--fg); font-family:var(--font-ui); font-size:13px; font-weight:600; }
+.il-txt-sm{ fill:var(--fg-muted); font-family:var(--font-ui); font-size:11.5px; font-weight:500; }
+.il-txt-on{ fill:var(--accent-ink); font-family:var(--font-ui); font-size:12px; font-weight:600; }
+.il-txt-light{ fill:var(--bg-card); font-family:var(--font-ui); font-size:12px; font-weight:600; }
+@media(max-width:760px){
+  .il-txt{ font-size:15px; } .il-txt-sm{ font-size:13.5px; }
+  .il-txt-on{ font-size:14px; } .il-txt-light{ font-size:14px; }
+}
+
 /* =================================================================
    FX-LAYER: Premium-Interaktionen (Spotlight, Draw-In, Float, Puls)
    ================================================================= */
@@ -1104,57 +1126,49 @@ body{
         <span>Ein voller Kalender ist kein Zufall. Er braucht ein System dahinter.</span>
       </div>
       <div class="gb-visual">
-        <svg viewBox="0 0 520 320" fill="none" role="img" aria-label="Kalenderwoche mit nur zwei Terminen und überwiegend freien Slots">
-          <rect x="12" y="12" width="496" height="296" rx="14" class="mk-card"/>
+        <svg viewBox="0 0 520 320" fill="none" role="img" aria-label="Illustration eines Wandkalenders: von zwanzig Terminfeldern sind nur zwei belegt, der Rest bleibt leer">
+          <!-- Wandkalender als flache Form -->
+          <rect x="86" y="46" width="348" height="252" rx="20" class="il-bg"/>
 
-          <!-- Kopfzeile mit ehrlicher Auslastung -->
-          <text x="34" y="44" class="mk-txt-hi">Diese Woche</text>
-          <text x="486" y="44" text-anchor="end" class="mk-txt">2 von 20 Slots belegt</text>
-          <line x1="12" y1="60" x2="508" y2="60" class="mk-line"/>
+          <!-- Aufhänger-Ringe -->
+          <rect x="150" y="30" width="12" height="30" rx="6" class="il-mute"/>
+          <rect x="254" y="30" width="12" height="30" rx="6" class="il-mute"/>
+          <rect x="358" y="30" width="12" height="30" rx="6" class="il-mute"/>
 
-          <!-- Heute-Spalte dezent hinterlegt -->
-          <rect x="329" y="60" width="90" height="248" class="mk-today"/>
+          <!-- Kopfband -->
+          <path d="M86 66 a20 20 0 0 1 20-20 h308 a20 20 0 0 1 20 20 v22 H86 Z" class="il-accent"/>
+          <text x="260" y="82" text-anchor="middle" class="il-txt-light">Diese Woche</text>
 
-          <!-- Tagesköpfe mit Datum -->
-          <text x="105" y="82" text-anchor="middle" class="mk-txt">MO 14</text>
-          <text x="194" y="82" text-anchor="middle" class="mk-txt">DI 15</text>
-          <text x="284" y="82" text-anchor="middle" class="mk-txt">MI 16</text>
-          <text x="374" y="82" text-anchor="middle" class="mk-txt-hi">DO 17</text>
-          <text x="463" y="82" text-anchor="middle" class="mk-txt">FR 18</text>
+          <!-- Terminfelder: 4 Reihen x 5 Spalten -->
+          <g class="fx-pop p1">
+            <rect x="110" y="108" width="56" height="36" rx="10" class="il-teal"/>
+            <rect x="290" y="156" width="56" height="36" rx="10" class="il-amber"/>
+          </g>
+          <g class="fx-pop p3">
+            <rect x="182" y="108" width="56" height="36" rx="10" class="il-shape"/>
+            <rect x="254" y="108" width="56" height="36" rx="10" class="il-shape"/>
+            <rect x="326" y="108" width="56" height="36" rx="10" class="il-shape"/>
+            <rect x="110" y="156" width="56" height="36" rx="10" class="il-shape"/>
+            <rect x="182" y="156" width="56" height="36" rx="10" class="il-shape"/>
+          </g>
+          <g class="fx-pop p4">
+            <rect x="362" y="156" width="20" height="36" rx="10" class="il-shape"/>
+            <rect x="110" y="204" width="56" height="36" rx="10" class="il-shape"/>
+            <rect x="182" y="204" width="56" height="36" rx="10" class="il-shape"/>
+            <rect x="254" y="204" width="56" height="36" rx="10" class="il-shape"/>
+            <rect x="326" y="204" width="56" height="36" rx="10" class="il-shape"/>
+            <rect x="110" y="252" width="56" height="30" rx="10" class="il-shape"/>
+            <rect x="182" y="252" width="56" height="30" rx="10" class="il-shape"/>
+            <rect x="254" y="252" width="56" height="30" rx="10" class="il-shape"/>
+            <rect x="326" y="252" width="56" height="30" rx="10" class="il-shape"/>
+          </g>
 
-          <!-- Zeitachse -->
-          <text x="46" y="118" text-anchor="end" class="mk-txt">09</text>
-          <text x="46" y="166" text-anchor="end" class="mk-txt">11</text>
-          <text x="46" y="214" text-anchor="end" class="mk-txt">13</text>
-          <text x="46" y="262" text-anchor="end" class="mk-txt">15</text>
-
-          <!-- Raster -->
-          <line x1="56" y1="92" x2="508" y2="92" class="mk-line"/>
-          <line x1="56" y1="140" x2="508" y2="140" class="mk-line"/>
-          <line x1="56" y1="188" x2="508" y2="188" class="mk-line"/>
-          <line x1="56" y1="236" x2="508" y2="236" class="mk-line"/>
-          <line x1="56" y1="284" x2="508" y2="284" class="mk-line"/>
-          <line x1="56" y1="60" x2="56" y2="308" class="mk-line"/>
-
-          <!-- die zwei einzigen Termine -->
-          <rect x="64" y="98" width="82" height="36" rx="9" class="mk-ev-teal fx-pop p1"/>
-          <text x="105" y="114" text-anchor="middle" class="mk-ev-txt-teal fx-pop p1">Erstgespräch</text>
-          <text x="105" y="126" text-anchor="middle" class="mk-ev-txt-teal fx-pop p1">09:30</text>
-          <rect x="333" y="146" width="82" height="36" rx="9" class="mk-ev-amber fx-pop p2"/>
-          <text x="374" y="162" text-anchor="middle" class="mk-ev-txt-amber fx-pop p2">Strategie-Call</text>
-          <text x="374" y="174" text-anchor="middle" class="mk-ev-txt-amber fx-pop p2">11:15</text>
-
-          <!-- freie Slots, bewusst unregelmässig verteilt -->
-          <rect x="154" y="98" width="82" height="36" rx="9" class="mk-empty fx-pop p3"/>
-          <rect x="243" y="146" width="82" height="36" rx="9" class="mk-empty fx-pop p3"/>
-          <rect x="422" y="98" width="82" height="36" rx="9" class="mk-empty fx-pop p3"/>
-          <rect x="64" y="194" width="82" height="36" rx="9" class="mk-empty fx-pop p4"/>
-          <rect x="243" y="242" width="82" height="36" rx="9" class="mk-empty fx-pop p4"/>
-          <rect x="422" y="194" width="82" height="36" rx="9" class="mk-empty fx-pop p4"/>
-
-          <!-- Jetzt-Linie im heutigen Tag -->
-          <line x1="329" y1="212" x2="419" y2="212" stroke="var(--clay)" stroke-width="1.6"/>
-          <circle cx="329" cy="212" r="3.5" fill="var(--clay)"/>
+          <!-- Zählmarke: 2 von 20 -->
+          <g class="fx-pop p2">
+            <circle cx="440" cy="252" r="34" class="il-lime"/>
+            <text x="440" y="250" text-anchor="middle" class="il-txt-on">2/20</text>
+            <text x="440" y="264" text-anchor="middle" class="il-txt-on" style="font-size:9px;">belegt</text>
+          </g>
         </svg>
       </div>
     </div>
@@ -1182,51 +1196,50 @@ body{
         </div>
       </div>
       <div class="sol-visual sol-engine eng-dash reveal d2">
-        <svg class="engine-diagram" viewBox="0 0 620 400" role="img" aria-label="Der Akquise-Motor: bezahlte Kampagnen auf Meta Ads und Google Ads speisen einen Funnel aus Impressionen, Klicks, Landingpage und Anfrage; daraus entstehen qualifizierte Anfragen. Ein Tracking- und Optimierungs-Kreislauf führt kontinuierlich auf die Kampagnen zurück.">
-          <!-- Bezahlte Kanäle: ausschließlich Meta Ads und Google Ads -->
-          <text x="24" y="70" class="eng-cap">BEZAHLTE KANÄLE</text>
-          <rect x="24" y="82" width="150" height="36" rx="10" class="eng-chip"/>
-          <circle cx="44" cy="100" r="4.5" fill="var(--teal)"/>
-          <text x="58" y="104" class="eng-chiptxt">Meta Ads</text>
-          <rect x="24" y="130" width="150" height="36" rx="10" class="eng-chip"/>
-          <circle cx="44" cy="148" r="4.5" fill="var(--amber)"/>
-          <text x="58" y="152" class="eng-chiptxt">Google Ads</text>
-          <path d="M174 100 C194 100 200 112 210 120" class="eng-flow eng-flow-dash"/>
-          <path d="M174 148 C194 148 200 136 210 128" class="eng-flow eng-flow-dash"/>
-          <path d="M206 124 l9 4 -2 -9 z" class="eng-loop-arrow" fill="var(--teal)"/>
+        <svg class="engine-diagram" viewBox="0 0 620 400" role="img" aria-label="Illustration des Akquise-Motors: Meta Ads und Google Ads füllen oben einen Trichter, aus dem unten qualifizierte Anfragen kommen. Ein Kreislaufpfeil steht für laufendes Tracking und Optimierung.">
+          <!-- die beiden Kanäle als flache Kreise -->
+          <g class="fx-pop p1">
+            <circle cx="112" cy="76" r="34" class="il-teal"/>
+            <text x="112" y="81" text-anchor="middle" class="il-txt-light">Meta</text>
+            <circle cx="216" cy="76" r="34" class="il-amber"/>
+            <text x="216" y="81" text-anchor="middle" class="il-txt-light">Google</text>
+          </g>
 
-          <!-- Funnel -->
-          <text x="216" y="46" class="eng-cap">FUNNEL</text>
-          <polygon points="214,58 414,58 396,97 232,97" class="eng-band1"/>
-          <polygon points="232,97 396,97 378,136 250,136" class="eng-band2"/>
-          <polygon points="250,136 378,136 360,175 268,175" class="eng-band3"/>
-          <polygon points="268,175 360,175 342,214 286,214" class="eng-band4"/>
-          <path d="M214,58 L414,58 L342,214 L286,214 Z" class="eng-funnel-edge"/>
-          <line x1="232" y1="97" x2="396" y2="97" class="eng-div"/>
-          <line x1="250" y1="136" x2="378" y2="136" class="eng-div"/>
-          <line x1="268" y1="175" x2="360" y2="175" class="eng-div"/>
-          <text x="314" y="82" text-anchor="middle" class="eng-stage">Gesehen</text>
-          <text x="314" y="121" text-anchor="middle" class="eng-stage">Geklickt</text>
-          <text x="314" y="160" text-anchor="middle" class="eng-stage">Überzeugt</text>
-          <text x="314" y="199" text-anchor="middle" class="eng-stage">Angefragt</text>
+          <!-- Zuflüsse in den Trichter -->
+          <path d="M136 106 C160 136 180 146 208 152" class="il-stroke-teal"/>
+          <path d="M214 112 C226 132 236 142 250 150" class="il-stroke-teal"/>
 
-          <!-- Funnel → Ergebnis -->
-          <path d="M314 214 C314 252 404 258 448 210" class="eng-flow"/>
+          <!-- Trichter als eine geschlossene Form -->
+          <path d="M196 158 h176 l-52 92 v58 h-72 v-58 Z" class="il-soft fx-pop p2"/>
+          <path d="M196 158 h176 l-52 92 v58 h-72 v-58 Z" class="il-stroke fx-pop p2"/>
 
-          <!-- Ergebnis-Karte -->
-          <rect x="452" y="116" width="150" height="112" rx="13" class="eng-out-card"/>
-          <circle cx="474" cy="142" r="5" fill="var(--accent)"/>
-          <text x="490" y="139" class="eng-title">Qualifizierte</text>
-          <text x="490" y="155" class="eng-title">Anfragen</text>
-          <path d="M472 200 L494 194 L514 196 L534 184 L554 186 L584 172" class="mk-spark-lime" pathLength="1"/>
-          <rect x="472" y="208" width="120" height="16" rx="8" class="eng-badge"/>
-          <text x="532" y="220" text-anchor="middle" class="eng-pill-txt">erfolgsbasiert</text>
+          <!-- fallende Punkte im Trichter -->
+          <g class="fx-pop p3">
+            <circle cx="248" cy="184" r="7" class="il-accent"/>
+            <circle cx="284" cy="196" r="7" class="il-accent"/>
+            <circle cx="320" cy="182" r="7" class="il-accent"/>
+            <circle cx="272" cy="228" r="6" class="il-accent"/>
+            <circle cx="300" cy="240" r="6" class="il-accent"/>
+          </g>
 
-          <!-- Tracking- & Optimierungs-Kreislauf -->
-          <path d="M527 228 C527 312 527 348 430 348 L212 348 C114 348 95 312 95 196" class="eng-loop"/>
-          <path d="M90 202 l5 -10 5 10 z" class="eng-loop-arrow"/>
-          <text x="316" y="340" text-anchor="middle" class="eng-loopcap">TRACKING &amp; OPTIMIERUNG</text>
-          <text x="316" y="378" text-anchor="middle" class="mk-txt">Der Kreislauf, der den Motor am Laufen hält</text>
+          <!-- Auslauf zur Ergebnis-Form -->
+          <path d="M300 316 C300 348 360 356 404 336" class="il-stroke"/>
+
+          <!-- Ergebnis: gefüllte Sprechblasen-Form -->
+          <g class="fx-pop p4">
+            <rect x="410" y="248" width="176" height="96" rx="24" class="il-lime"/>
+            <text x="498" y="286" text-anchor="middle" class="il-txt-on">Qualifizierte</text>
+            <text x="498" y="308" text-anchor="middle" class="il-txt-on">Anfragen</text>
+            <path d="M446 344 l-4 22 26 -22 z" class="il-lime"/>
+          </g>
+
+          <!-- Kreislauf: Tracking & Optimierung -->
+          <path d="M436 128 C500 128 542 158 542 196 C542 226 516 244 486 246" class="il-stroke"/>
+          <path d="M444 118 l-16 10 16 10 z" class="il-accent"/>
+          <g class="fx-pop p4">
+            <rect x="396" y="96" width="188" height="38" rx="19" class="il-soft"/>
+            <text x="490" y="120" text-anchor="middle" class="il-txt">Messen &amp; Nachschärfen</text>
+          </g>
         </svg>
       </div>
     </div>
@@ -1330,29 +1343,36 @@ body{
         <span>Jede Kampagne wird laufend gemessen, ausgewertet und nachgeschärft.</span>
       </div>
       <div class="gb-visual">
-        <svg viewBox="0 0 520 300" fill="none" role="img" aria-label="Stilisierte Kampagnen-Übersicht mit steigender Ergebniskurve">
-          <!-- Karte -->
-          <rect x="12" y="12" width="496" height="276" rx="14" class="mk-card"/>
-          <text x="34" y="46" class="mk-txt-hi">Kampagnen-Übersicht</text>
-          <line x1="12" y1="62" x2="508" y2="62" class="mk-line"/>
-          <!-- drei ruhige KPI-Kacheln -->
-          <rect x="34" y="82" width="146" height="58" rx="10" class="mk-tile fx-pop p1"/>
-          <text x="50" y="105" class="mk-txt">ANFRAGEN</text>
-          <path d="M50 126 l18 -6 l16 3 l18 -9 l16 3 l20 -8" class="mk-spark-lime" pathLength="1"/>
-          <rect x="187" y="82" width="146" height="58" rx="10" class="mk-tile fx-pop p2"/>
-          <text x="203" y="105" class="mk-txt">QUALITÄT</text>
-          <path d="M203 124 l18 -4 l16 -3 l18 1 l16 -6 l20 -3" class="mk-spark-teal" pathLength="1"/>
-          <rect x="340" y="82" width="146" height="58" rx="10" class="mk-tile fx-pop p3"/>
-          <text x="356" y="105" class="mk-txt">KOSTEN / LEAD</text>
-          <path d="M356 114 l18 4 l16 -1 l18 5 l16 2 l20 4" class="mk-spark-lime" pathLength="1"/>
-          <!-- Verlaufskurve -->
-          <line x1="34" y1="180" x2="486" y2="180" class="mk-line"/>
-          <line x1="34" y1="222" x2="486" y2="222" class="mk-line"/>
-          <line x1="34" y1="262" x2="486" y2="262" class="mk-line"/>
-          <path d="M34 250 C100 246 160 236 220 226 C300 213 370 190 430 174 C450 168 470 163 486 159 L486 262 L34 262 Z" class="mk-area"/>
-          <path d="M34 250 C100 246 160 236 220 226 C300 213 370 190 430 174 C450 168 470 163 486 159" class="mk-chart" pathLength="1"/>
-          <path d="M34 256 C120 253 210 246 290 238 C360 231 430 218 486 208" class="mk-chart2" pathLength="1"/>
-          <circle cx="486" cy="159" r="5" class="mk-end fx-pop p4"/>
+        <svg viewBox="0 0 520 300" fill="none" role="img" aria-label="Illustration wachsender Ergebnisse: Balken werden von Monat zu Monat höher, eine Kurve steigt darüber an">
+          <!-- weiche Hintergrundform -->
+          <rect x="30" y="30" width="460" height="240" rx="28" class="il-bg"/>
+
+          <!-- Balken, von links nach rechts wachsend -->
+          <g class="fx-pop p1">
+            <rect x="78" y="186" width="46" height="52" rx="12" class="il-shape"/>
+            <rect x="146" y="160" width="46" height="78" rx="12" class="il-shape"/>
+          </g>
+          <g class="fx-pop p2">
+            <rect x="214" y="132" width="46" height="106" rx="12" class="il-teal"/>
+            <rect x="282" y="106" width="46" height="132" rx="12" class="il-teal"/>
+          </g>
+          <g class="fx-pop p3">
+            <rect x="350" y="76" width="46" height="162" rx="12" class="il-accent"/>
+            <rect x="418" y="56" width="46" height="182" rx="12" class="il-lime"/>
+          </g>
+
+          <!-- Bodenlinie -->
+          <rect x="62" y="238" width="418" height="5" rx="2.5" class="il-mute"/>
+
+          <!-- aufsteigende Kurve über den Balken -->
+          <path d="M101 176 C150 168 190 150 237 122 C284 96 330 70 441 48" class="il-stroke mk-chart" pathLength="1"/>
+          <circle cx="441" cy="48" r="9" class="il-accent fx-pop p4"/>
+
+          <!-- Wachstums-Marke -->
+          <g class="fx-pop p4">
+            <rect x="62" y="56" width="112" height="34" rx="17" class="il-soft"/>
+            <text x="118" y="78" text-anchor="middle" class="il-txt">Monat für Monat</text>
+          </g>
         </svg>
       </div>
     </div>
