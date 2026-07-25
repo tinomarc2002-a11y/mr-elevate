@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>MR Elevate | Zeit, dass es alle sehen | Neukundengewinnung aus Dresden</title>
-<meta name="description" content="MR Elevate baut Systeme zur planbaren Neukundengewinnung für Dienstleister, lokale Unternehmen & High-Ticket-Anbieter. Erfolgsbasiert: Du zahlst fast nur für echte Ergebnisse. Aus Dresden für ganz Deutschland." />
+<title>MR Elevate | Erfolgsbasierte Neukundengewinnung, Dresden</title>
+<meta name="description" content="MR Elevate baut Systeme zur planbaren Neukundengewinnung für Dienstleister, lokale Unternehmen & High-Ticket-Anbieter. Erfolgsbasiert, aus Dresden." />
 <meta name="theme-color" content="#08090a" />
 <link rel="canonical" href="https://www.mr-elevate.de/" />
 
@@ -1040,7 +1040,7 @@ body{
            poster="hero-dresden.jpg" aria-hidden="true">
       <source src="Dresden_skyline_sunrise_loop_202606150930.mp4" type="video/mp4" />
     </video>
-    <video class="hero-video hero-video-alt faded" id="heroVidB" muted playsinline preload="auto" aria-hidden="true">
+    <video class="hero-video hero-video-alt faded" id="heroVidB" muted playsinline preload="none" aria-hidden="true">
       <source src="Dresden_skyline_sunrise_loop_202606150930.mp4" type="video/mp4" />
     </video>
   </div>
@@ -1613,6 +1613,15 @@ body{
     function init(){ if(started) return; started = true; watch(A, B); }
     A.addEventListener('loadedmetadata', init);
     if(A.readyState >= 1){ init(); }
+
+    // B erst laden, wenn A wirklich läuft – nicht sofort beim Parsen
+    // (spart ~2 MB auf der ersten Seite, B lief bisher mit preload="auto" doppelt mit)
+    var bLoadStarted = false;
+    function loadB(){
+      if(bLoadStarted) return; bLoadStarted = true;
+      B.preload = 'auto'; B.load();
+    }
+    A.addEventListener('playing', loadB, { once: true });
   })();
 
   /* ---------- NAV scroll state ---------- */
