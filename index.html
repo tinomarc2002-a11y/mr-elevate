@@ -1328,24 +1328,18 @@ body{
           <path d="M104 146 h300 l-112 132 v54 h-76 v-54 Z" class="il-soft fx-pop p2"/>
           <path d="M104 146 h300 l-112 132 v54 h-76 v-54 Z" class="il-stroke fx-pop p2"/>
 
-          <!-- fallende Punkte im Trichter -->
+          <!-- Trichter-Stufen als zentrierte Pillen statt Rand-verankerter
+               Labels: bei langen Woertern (z. B. "Quizformular") auf
+               grossen Mobil-Schriftgroessen lief der linksbuendige Text
+               sonst ins Negative und wurde vom Zeichenbereich abgeschnitten.
+               Zentriert auf der Trichter-Mittelachse kann das nicht passieren. -->
           <g class="fx-pop p3">
-            <circle cx="196" cy="182" r="10" class="il-accent"/>
-            <circle cx="254" cy="200" r="10" class="il-accent"/>
-            <circle cx="312" cy="180" r="10" class="il-accent"/>
-            <circle cx="228" cy="240" r="9" class="il-accent"/>
-            <circle cx="280" cy="250" r="9" class="il-accent"/>
-          </g>
-
-          <!-- Trichter-Stufen: mit duennen Anschlusslinien an den linken
-               Trichterrand gebunden, damit klar ist, was gemeint ist -->
-          <g class="fx-pop p3">
-            <path d="M120 168 H70" class="il-mute" stroke-width="1.5"/>
-            <text x="66" y="172" text-anchor="end" class="il-txt-sm">Anzeige</text>
-            <path d="M156 212 H70" class="il-mute" stroke-width="1.5"/>
-            <text x="66" y="216" text-anchor="end" class="il-txt-sm">Klick</text>
-            <path d="M216 306 H70" class="il-mute" stroke-width="1.5"/>
-            <text x="66" y="310" text-anchor="end" class="il-txt-sm">Quizformular</text>
+            <rect x="204" y="163" width="100" height="24" rx="12" class="il-bg"/>
+            <text x="254" y="180" text-anchor="middle" class="il-txt-sm">Anzeige</text>
+            <rect x="214" y="203" width="80" height="24" rx="12" class="il-bg"/>
+            <text x="254" y="220" text-anchor="middle" class="il-txt-sm">Klick</text>
+            <rect x="174" y="240" width="160" height="24" rx="12" class="il-bg"/>
+            <text x="254" y="257" text-anchor="middle" class="il-txt-sm">Quizformular</text>
           </g>
 
           <!-- Auslauf in die Ergebnis-Form -->
