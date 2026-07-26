@@ -892,6 +892,9 @@ body{
 .il-stroke-amber{ stroke:var(--amber); stroke-width:3; fill:none; stroke-linecap:round; stroke-linejoin:round; }
 .il-txt{ fill:var(--fg); font-family:var(--font-ui); font-size:14px; font-weight:600; }
 .il-txt-sm{ fill:var(--fg-muted); font-family:var(--font-ui); font-size:12.5px; font-weight:500; }
+/* Eine Stufe kleiner: die Trichter-Stufen muessen auch an der engsten
+   Stelle noch zwischen die Trichterwaende passen ("Quizformular"). */
+.il-txt-xs{ fill:var(--fg-muted); font-family:var(--font-ui); font-size:11px; font-weight:600; }
 .il-txt-on{ fill:var(--accent-ink); font-family:var(--font-ui); font-size:14px; font-weight:600; }
 .il-txt-light{ fill:var(--bg-card); font-family:var(--font-ui); font-size:14px; font-weight:600; }
 .il-check{ stroke:var(--bg-card); stroke-width:2.8; fill:none; stroke-linecap:round; stroke-linejoin:round; }
@@ -909,6 +912,7 @@ body{
 @media(max-width:860px){
   .il-txt{ font-size:22px; } .il-txt-sm{ font-size:20px; }
   .il-txt-on{ font-size:22px; } .il-txt-light{ font-size:22px; }
+  .il-txt-xs{ font-size:16px; }
 }
 
 /* ── Figuren: Hautoene, Haare, Kleidung ── */
@@ -1349,12 +1353,12 @@ body{
                sonst ins Negative und wurde vom Zeichenbereich abgeschnitten.
                Zentriert auf der Trichter-Mittelachse kann das nicht passieren. -->
           <g class="fx-pop p3">
-            <rect x="204" y="163" width="100" height="24" rx="12" class="il-bg"/>
-            <text x="254" y="180" text-anchor="middle" class="il-txt-sm">Anzeige</text>
-            <rect x="214" y="203" width="80" height="24" rx="12" class="il-bg"/>
-            <text x="254" y="220" text-anchor="middle" class="il-txt-sm">Klick</text>
-            <rect x="174" y="240" width="160" height="24" rx="12" class="il-bg"/>
-            <text x="254" y="257" text-anchor="middle" class="il-txt-sm">Quizformular</text>
+            <rect x="215" y="158" width="78" height="22" rx="11" class="il-bg"/>
+            <text x="254" y="169" text-anchor="middle" dominant-baseline="central" class="il-txt-xs">Anzeige</text>
+            <rect x="223" y="190" width="62" height="22" rx="11" class="il-bg"/>
+            <text x="254" y="201" text-anchor="middle" dominant-baseline="central" class="il-txt-xs">Klick</text>
+            <rect x="196" y="222" width="116" height="22" rx="11" class="il-bg"/>
+            <text x="254" y="233" text-anchor="middle" dominant-baseline="central" class="il-txt-xs">Quizformular</text>
           </g>
 
           <!-- Auslauf: reicht bis an die Ergebnis-Karte, keine Luecke -->
