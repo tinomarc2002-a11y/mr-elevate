@@ -333,11 +333,10 @@ section{ position:relative; }
   .hero-photo,.hero-video{ object-position:50% 36%; }
 }
 .hero-inner{ position:relative; z-index:2; max-width:880px; }
-.hero-title,.hero-tagline,.hero-sub{ text-shadow:0 2px 22px rgba(0,0,0,.55); }
+.hero-title,.hero-tagline{ text-shadow:0 2px 22px rgba(0,0,0,.55); }
 .hero h1{ margin-bottom:26px; }
 .hero h1 .accent{ color:var(--accent); position:relative; white-space:nowrap; }
-.hero-sub{ font-size:clamp(1.05rem,1.6vw,1.3rem); color:var(--fg-muted); max-width:60ch; margin-bottom:34px; }
-.hero-actions{ display:flex; flex-wrap:wrap; gap:14px; align-items:center; }
+.hero-actions{ display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin-top:34px; }
 .hero-actions .note{ font-size:.85rem; color:var(--fg-dim); }
 
 .scroll-cue{ display:inline-flex; flex-direction:row; align-items:center; gap:12px; margin-top:24px; z-index:2; color:var(--fg-dim); font-size:.72rem; letter-spacing:.15em; text-transform:uppercase; }
@@ -1195,15 +1194,7 @@ body{
       Nach einer Zusammenarbeit mit uns brauchst du definitiv <span class="accent">mehr Mitarbeiter</span>. Zum Glück können wir da auch helfen.
     </p>
 
-    <!-- CONVERSION-CRITICAL: Hero-Subheadline -->
-    <p class="hero-sub reveal in d1">
-      <b>MR Elevate</b> ist eine erfolgsbasierte Performance-Marketing-Agentur aus Dresden.
-      Wir bauen Systeme zur planbaren Neukundengewinnung für Dienstleister,
-      lokale Unternehmen und High-Ticket-Anbieter.
-    </p>
-
-
-<div class="hero-actions reveal in d2">
+    <div class="hero-actions reveal in d2">
       <!-- CONVERSION-CRITICAL: Primary CTA -->
       <a href="#quiz" class="btn btn-primary" data-magnetic data-cursor data-quiz-cta>
         Kostenloses Analysegespräch sichern
