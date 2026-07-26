@@ -356,14 +356,6 @@ section{ position:relative; }
 .sec-head{ max-width:680px; margin-bottom:74px; }
 .sec-head.center{ margin-inline:auto; text-align:center; }
 .sec-head p{ margin-top:20px; }
-.fact-cite{ margin-top:14px !important; font-size:.88rem !important; color:var(--fg-dim) !important;
-  max-width:60ch; line-height:1.6; }
-.fact-cite strong{ color:var(--fg-muted); font-weight:600; }
-.fc-ref{ display:inline-flex; align-items:center; justify-content:center; width:15px; height:15px;
-  margin-left:3px; border-radius:50%; border:1px solid var(--line-strong); color:var(--fg-dim) !important;
-  font-size:.62rem; vertical-align:super; text-decoration:none !important; transition:border-color var(--t-fast), color var(--t-fast); }
-.fc-ref:hover{ border-color:var(--accent); color:var(--accent) !important; }
-
 .reveal{ opacity:0; transform:translateY(34px); transition:opacity .7s var(--ease), transform .7s var(--ease); }
 .reveal.in{ opacity:1; transform:none; }
 .reveal.d1{ transition-delay:.08s; } .reveal.d2{ transition-delay:.16s; }
@@ -665,8 +657,12 @@ section{ position:relative; }
    FINAL CTA
    ================================================================= */
 .final{ text-align:center; position:relative;
-  background:radial-gradient(ellipse 70% 60% at 50% 118%, rgba(198,255,58,.08), transparent 68%), var(--ink);
-  border-top:1px solid var(--line); }
+  background:radial-gradient(ellipse 60% 55% at 50% 8%, rgba(198,255,58,.10), transparent 62%),
+    radial-gradient(ellipse 70% 60% at 50% 118%, rgba(198,255,58,.08), transparent 68%), var(--ink);
+  border-top:0; }
+/* Weicher Verlauf statt harter Kante zum hellen Content darueber */
+.final::before{ content:""; position:absolute; top:-1px; left:0; right:0; height:120px;
+  background:linear-gradient(180deg, var(--bg-light) 0%, transparent 100%); pointer-events:none; }
 .final-card{ position:relative; padding:clamp(40px,7vw,80px) 0; }
 .final h2{ font-size:clamp(2.6rem,6.5vw,5.2rem); letter-spacing:-.03em; line-height:1; margin-bottom:24px; }
 .final p{ color:var(--fg-muted); max-width:50ch; margin:0 auto 40px; font-size:1.1rem; }
@@ -676,24 +672,19 @@ section{ position:relative; }
 /* =================================================================
    FOOTER
    ================================================================= */
-.quellen{ padding:36px 0; border-top:1px solid var(--line); }
-.quellen-label{ display:block; font-family:var(--font-display); font-weight:600; font-size:.72rem;
-  letter-spacing:.14em; text-transform:uppercase; color:var(--fg-dim); margin-bottom:12px; }
-.quellen-list{ list-style:none; counter-reset:q; display:flex; flex-direction:column; gap:6px; }
-.quellen-list li{ counter-increment:q; font-size:.8rem; color:var(--fg-dim); }
-.quellen-list li::before{ content:counter(q) ". "; color:var(--fg-dim); }
-.quellen-list a{ color:var(--fg-dim); text-decoration:underline; text-underline-offset:2px; transition:color var(--t-fast); }
-.quellen-list a:hover{ color:var(--accent); }
-
-.footer{ border-top:1px solid var(--line); padding:60px 0 40px; }
-.footer-top{ display:flex; justify-content:space-between; gap:40px; flex-wrap:wrap; margin-bottom:44px; }
-.footer-brand{ max-width:320px; }
+.footer{ border-top:1px solid var(--line); padding:48px 0 28px; }
+.footer-top{ display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap; margin-bottom:28px; }
+.footer-brand{ max-width:400px; }
 .footer-brand p{ color:var(--fg-muted); font-size:.92rem; margin-top:16px; }
-.footer-cols{ display:flex; gap:64px; flex-wrap:wrap; }
-.footer-col h5{ font-family:var(--font-display); font-size:.78rem; letter-spacing:.14em; text-transform:uppercase; color:var(--fg-dim); margin-bottom:16px; }
-.footer-col a{ display:block; color:var(--fg-muted); font-size:.92rem; padding:5px 0; transition:color var(--t-fast); }
-.footer-col a:hover{ color:var(--accent); }
-.footer-bottom{ display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; padding-top:26px; border-top:1px solid var(--line); color:var(--fg-dim); font-size:.85rem; }
+.footer-social{ display:flex; gap:10px; }
+.footer-social a{ display:flex; align-items:center; justify-content:center; width:40px; height:40px;
+  border:1px solid var(--line-strong); border-radius:50%; color:var(--fg-muted);
+  transition:color var(--t-fast), border-color var(--t-fast), transform var(--t-fast); }
+.footer-social a:hover{ color:var(--accent); border-color:var(--accent); transform:translateY(-2px); }
+.footer-bottom{ display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; padding-top:22px; border-top:1px solid var(--line); color:var(--fg-dim); font-size:.85rem; }
+.footer-legal{ display:flex; gap:18px; flex-wrap:wrap; }
+.footer-legal a{ color:var(--fg-dim); transition:color var(--t-fast); }
+.footer-legal a:hover{ color:var(--accent); }
 
 /* mobile menu */
 .mobile-menu{ position:fixed; inset:0; z-index:99; background:rgba(var(--ink-rgb),.96); backdrop-filter:blur(12px); display:flex; flex-direction:column; align-items:center; justify-content:center; gap:30px; opacity:0; pointer-events:none; transition:opacity var(--t); }
@@ -742,10 +733,10 @@ section{ position:relative; }
 .step{ position:relative; padding:34px 22px 10px 24px; border-right:1px solid var(--line); }
 .step:last-child{ border-right:0; }
 .step .snum{ display:block; font-family:var(--font-display); font-weight:700; line-height:1;
-  font-size:clamp(2.6rem,4vw,3.6rem); color:transparent; -webkit-text-stroke:1px var(--line-strong);
-  transition:-webkit-text-stroke-color .3s var(--ease); }
-.step:hover .snum{ -webkit-text-stroke-color:var(--accent); }
-@supports not (-webkit-text-stroke:1px #000){ .step .snum{ color:var(--fg-dim); } }
+  font-size:clamp(2.6rem,4vw,3.6rem); color:var(--accent); opacity:.28;
+  transition:opacity .3s var(--ease); }
+.step:hover .snum{ opacity:1; }
+@supports not (-webkit-text-stroke:1px #000){ .step .snum{ color:var(--accent); } }
 .step h4{ margin:18px 0 8px; font-size:1.16rem; }
 .step p{ color:var(--fg-muted); font-size:.9rem; line-height:1.55; }
 @media(max-width:1000px){ .steps{ grid-template-columns:1fr 1fr; }
@@ -763,13 +754,6 @@ section{ position:relative; }
   font-size:clamp(1.15rem,2.6vw,1.6rem); color:var(--fg); letter-spacing:-.015em; line-height:1.4; }
 .trenn-band .tb-quote span{ display:block; margin-top:10px; font-size:.82rem; color:var(--fg-dim);
   text-transform:uppercase; letter-spacing:.1em; }
-
-/* ── Footer: riesige Outline-Wortmarke ── */
-.footer-wordmark{ font-family:var(--font-display); font-weight:700; line-height:.92;
-  letter-spacing:-.02em; font-size:clamp(3rem,11vw,9.5rem); white-space:nowrap;
-  color:transparent; -webkit-text-stroke:1px var(--line-strong);
-  user-select:none; margin:16px 0 44px; }
-@supports not (-webkit-text-stroke:1px #000){ .footer-wordmark{ color:var(--line-strong); } }
 
 
 @media (prefers-reduced-motion:reduce){
@@ -830,7 +814,7 @@ section{ position:relative; }
 /* Kleine UI-Elemente (Buttons, Ziffern, Labels, Wortmarke) bleiben Grotesk */
 .btn,.btn-cc,.brand,.brand-elevate,.quiz-step-label,.prob-row .pnum,.sol-point .num,
 .sol-visual .vlabel,.price-tag,.pay-flow-label,.pf-step .pfnum,.fd-btn,
-.sp-step,.quellen-label,.footer-col h5,.footer-wordmark,.step .snum,.eyebrow,
+.sp-step,.step .snum,.eyebrow,
 .founder-tag b,.fd-text b,.cc-text strong{ font-family:var(--font-ui); }
 .funnel-diagram .fd-label,.funnel-diagram .fd-out-label,.story-illu .il-text{ font-family:var(--font-ui); }
 
@@ -844,9 +828,6 @@ h1,h2,h3,h4{ letter-spacing:-.01em; line-height:1.08; }
 .eyebrow i{ font-style:normal; color:var(--fg-dim); opacity:.75; letter-spacing:.04em; }
 
 /* Zurückhaltende Akzente: ein Akzent statt vier Farben */
-.fact-cite{ border-left:2px solid var(--line-strong); padding-left:14px; }
-.fact-cite strong{ color:var(--fg); }
-.fc-ref:hover{ border-color:var(--accent); color:var(--accent) !important; }
 .founder-quote .accent{ color:var(--accent); }
 .pf-step .pfnum{ border-color:var(--line-strong); color:var(--fg-muted); }
 .prob-row:hover .pnum{ color:var(--accent); }
@@ -1321,7 +1302,6 @@ body{
           <h2 class="h-sec">Unser System</h2>
           <p class="sec-sub">Ein Akquise-Motor, der erst zählt, wenn er liefert.</p>
           <p class="lead">MR Elevate baut, betreibt und optimiert deinen kompletten Akquise-Funnel: Setup, Kampagnen, Tracking, Optimierung. Eine kleine Setup-Gebühr zum Start, danach ist unsere Vergütung an deine Ergebnisse gekoppelt.</p>
-          <p class="fact-cite">2024 flossen bereits <strong>30,9&nbsp;Mrd.&nbsp;€</strong> in digitales Marketing in Deutschland, ein Plus von 20&nbsp;% in nur zwei Jahren.<a href="#quellen" class="fc-ref">1</a> Allein auf Facebook sind wöchentlich rund <strong>21,6&nbsp;Millionen Menschen</strong> in Deutschland aktiv.<a href="#quellen" class="fc-ref">2</a></p>
         </div>
         <div class="sol-points">
           <div class="sol-point reveal d1"><span class="num">01</span><div><h4>Performance-Setup</h4><p>Funnel, Landingpages, Tracking und Anzeigen, komplett aufgesetzt und auf deine Zielgruppe geschärft.</p></div></div>
@@ -1331,13 +1311,13 @@ body{
         </div>
       </div>
       <div class="sol-visual sol-engine eng-dash reveal d2">
-        <svg class="engine-diagram" viewBox="0 0 520 440" role="img" aria-label="Illustration des Akquise-Motors: Meta Ads und Google Ads füllen oben einen Trichter, aus dem unten qualifizierte Anfragen kommen. Ein Kreislaufpfeil steht für laufendes Optimieren.">
-          <!-- die beiden Kanäle als flache Kreise -->
+        <svg class="engine-diagram" viewBox="0 0 520 440" role="img" aria-label="Illustration des Akquise-Motors: Meta Ads und Google Ads fuellen oben einen Trichter mit den Stufen Anzeige, Klick und Quizformular, aus dem unten qualifizierte Anfragen kommen. Ein Kreislaufpfeil, verbunden mit einer Optimieren-Markierung, fuehrt zurueck zu den Kampagnen.">
+          <!-- die beiden Kanaele als Icon-Kreise -->
           <g class="fx-pop p1">
             <circle cx="140" cy="64" r="46" class="il-accent"/>
-            <text x="140" y="72" text-anchor="middle" class="il-txt-light">Meta</text>
+            <text x="140" y="80" text-anchor="middle" class="il-txt-light" style="font-size:34px;font-weight:700;">∞</text>
             <circle cx="272" cy="64" r="46" class="il-amber"/>
-            <text x="272" y="72" text-anchor="middle" class="il-txt-light">Google</text>
+            <text x="272" y="78" text-anchor="middle" class="il-txt-light" style="font-size:34px;font-weight:700;">G</text>
           </g>
 
           <!-- Zuflüsse in den Trichter -->
@@ -1357,6 +1337,17 @@ body{
             <circle cx="280" cy="250" r="9" class="il-accent"/>
           </g>
 
+          <!-- Trichter-Stufen: mit duennen Anschlusslinien an den linken
+               Trichterrand gebunden, damit klar ist, was gemeint ist -->
+          <g class="fx-pop p3">
+            <path d="M120 168 H70" class="il-mute" stroke-width="1.5"/>
+            <text x="66" y="172" text-anchor="end" class="il-txt-sm">Anzeige</text>
+            <path d="M156 212 H70" class="il-mute" stroke-width="1.5"/>
+            <text x="66" y="216" text-anchor="end" class="il-txt-sm">Klick</text>
+            <path d="M216 306 H70" class="il-mute" stroke-width="1.5"/>
+            <text x="66" y="310" text-anchor="end" class="il-txt-sm">Quizformular</text>
+          </g>
+
           <!-- Auslauf in die Ergebnis-Form -->
           <path d="M254 332 v20" class="il-stroke"/>
 
@@ -1367,12 +1358,15 @@ body{
             <text x="255" y="416" text-anchor="middle" class="il-txt-on">Anfragen</text>
           </g>
 
-          <!-- Kreislauf zurück zu den Kampagnen -->
+          <!-- Kreislauf zurück zu den Kampagnen, "Optimieren" direkt am
+               Pfeil verankert statt lose danebenstehend -->
           <path d="M404 152 C482 186 496 306 414 380" class="il-stroke"/>
           <path d="M396 146 l20 -2 -8 19 z" class="il-accent"/>
+          <circle cx="469" cy="240" r="4.5" class="il-accent fx-pop p4"/>
+          <path d="M469 240 L444 249" class="il-mute fx-pop p4" stroke-width="1.5"/>
           <g class="fx-pop p4">
-            <rect x="330" y="228" width="150" height="46" rx="23" class="il-soft"/>
-            <text x="405" y="258" text-anchor="middle" class="il-txt">Optimieren</text>
+            <rect x="314" y="228" width="130" height="42" rx="21" class="il-soft"/>
+            <text x="379" y="255" text-anchor="middle" class="il-txt">Optimieren</text>
           </g>
         </svg>
       </div>
@@ -1663,19 +1657,6 @@ body{
 </section>
 
 <!-- ============================================================= -->
-<!-- QUELLEN                                                        -->
-<!-- ============================================================= -->
-<section class="quellen" id="quellen">
-  <div class="container">
-    <span class="quellen-label">Quellen</span>
-    <ol class="quellen-list">
-      <li>Bitkom e. V., Studie „Digitales Marketing in Deutschland 2025“, <a href="https://www.bitkom.org/Bitkom/Publikationen/Digitales-Marketing-in-Deutschland-2025" target="_blank" rel="noopener">bitkom.org</a></li>
-      <li>ARD/ZDF-Medienstudie 2025, <a href="https://www.ard-zdf-medienstudie.de/" target="_blank" rel="noopener">ard-zdf-medienstudie.de</a></li>
-    </ol>
-  </div>
-</section>
-
-<!-- ============================================================= -->
 <!-- FOOTER                                                         -->
 <!-- ============================================================= -->
 <footer class="footer">
@@ -1690,35 +1671,25 @@ body{
         </a>
         <p>Systeme zur planbaren, erfolgsbasierten Neukundengewinnung. Gegründet 2025 von Marc Richter in Dresden, für Dienstleister, lokale Unternehmen & High-Ticket-Anbieter in ganz Deutschland.</p>
       </div>
-      <div class="footer-cols">
-        <div class="footer-col">
-          <h5>Navigation</h5>
-          <a href="#system">Unser System</a>
-          <a href="#modell">Preise</a>
-          <a href="#prozess">Ablauf</a>
-          <a href="#founder">Über uns</a>
-          <a href="#faq">FAQ</a>
-          <a href="leitfaden.html">Der Leitfaden</a>
-        </div>
-        <div class="footer-col">
-          <h5>Rechtliches</h5>
-          <a href="impressum.html">Impressum</a>
-          <a href="datenschutz.html">Datenschutz</a>
-          <a href="#" data-cc-open>Cookie-Einstellungen</a>
-          <a href="#quiz" data-quiz-cta>Analysegespräch</a>
-        </div>
-        <div class="footer-col">
-          <h5>Kontakt</h5>
-          <a href="https://www.linkedin.com/in/marc-richter-043a90412/" target="_blank" rel="noopener me">LinkedIn</a>
-          <a href="mailto:info@mr-elevate.de">E-Mail</a>
-          <a href="https://wa.me/4915510657637" target="_blank" rel="noopener">WhatsApp</a>
-        </div>
+      <div class="footer-social">
+        <a href="https://www.linkedin.com/in/marc-richter-043a90412/" target="_blank" rel="noopener me" aria-label="Marc Richter auf LinkedIn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M4.98 3.5a2.5 2.5 0 1 1 0 5 2.5 2.5 0 0 1 0-5ZM3 9h4v12H3V9Zm7 0h3.8v1.7h.05c.53-1 1.83-2 3.77-2 4.03 0 4.78 2.65 4.78 6.1V21h-4v-5.6c0-1.34-.02-3.05-1.86-3.05-1.87 0-2.16 1.46-2.16 2.96V21h-4V9Z"/></svg>
+        </a>
+        <a href="mailto:info@mr-elevate.de" aria-label="E-Mail an MR Elevate">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/></svg>
+        </a>
+        <a href="https://wa.me/4915510657637" target="_blank" rel="noopener" aria-label="MR Elevate per WhatsApp">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M17.6 6.3A8 8 0 0 0 4.1 14.8L3 20l5.3-1.4a8 8 0 0 0 3.8 1h.1a8 8 0 0 0 5.4-13.3ZM12.2 18a6.6 6.6 0 0 1-3.4-.9l-.2-.1-2.5.6.7-2.4-.2-.3a6.6 6.6 0 1 1 5.6 3.1Zm3.7-5c-.2-.1-1.2-.6-1.4-.6-.2-.1-.3-.1-.5.1l-.6.7c-.1.2-.2.2-.4.1a5.4 5.4 0 0 1-1.6-1 6 6 0 0 1-1.1-1.4c-.1-.2 0-.3.1-.4l.3-.4.2-.4v-.3l-.6-1.4c-.1-.4-.3-.3-.4-.3h-.4a.8.8 0 0 0-.5.2 2.2 2.2 0 0 0-.7 1.6 3.8 3.8 0 0 0 .8 2 8.8 8.8 0 0 0 3.4 3c.5.2.8.3 1.1.4.5.2.9.1 1.2.1.4-.1 1.2-.5 1.3-.9.2-.5.2-.8.1-.9l-.3-.2Z"/></svg>
+        </a>
       </div>
     </div>
-    <div class="footer-wordmark" aria-hidden="true">MR&nbsp;ELEVATE</div>
     <div class="footer-bottom">
       <span>© 2026 MR Elevate · Marc Richter · Dresden</span>
-      <span>Gebaut für planbares Wachstum.</span>
+      <span class="footer-legal">
+        <a href="impressum.html">Impressum</a>
+        <a href="datenschutz.html">Datenschutz</a>
+        <a href="#" data-cc-open>Cookie-Einstellungen</a>
+      </span>
     </div>
   </div>
 </footer>
