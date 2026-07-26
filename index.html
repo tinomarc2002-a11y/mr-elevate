@@ -943,6 +943,16 @@ body{
 .il-glass-arm{ stroke:#2a211c; stroke-width:2; fill:none; stroke-linecap:round; }
 .il-blind{ fill:rgba(var(--ink-rgb),.07); }
 .il-button{ fill:rgba(var(--ink-rgb),.18); }
+.il-tan{ fill:#c9a878; }
+.il-tan-mid{ fill:#b3905e; }
+.il-beard{ fill:rgba(42,33,28,.3); }
+.il-dot{ fill:var(--line-strong); }
+.il-blob{ fill:rgba(62,104,16,.08); }
+/* Ruhiges Ein- und Ausatmen fuer stehende Figuren, minimal skaliert */
+.il-breathe{ transform-box:fill-box; transform-origin:50% 100%; animation:ilBreathe 4.6s ease-in-out infinite; }
+.il-breathe-b{ transform-box:fill-box; transform-origin:50% 100%; animation:ilBreathe 5.3s ease-in-out infinite .6s; }
+@keyframes ilBreathe{ 0%,100%{ transform:scale(1); } 50%{ transform:scale(1.012); } }
+@media(prefers-reduced-motion:reduce){ .il-breathe,.il-breathe-b{ animation:none !important; } }
 .il-brow{ stroke:#2a211c; stroke-width:2; fill:none; stroke-linecap:round; }
 .il-mouth{ stroke:#2a211c; stroke-width:2; fill:none; stroke-linecap:round; }
 .il-nose{ stroke:rgba(42,33,28,.4); stroke-width:1.6; fill:none; stroke-linecap:round; }
@@ -1432,113 +1442,121 @@ body{
         <span>Du sprichst direkt mit Marc. Kein Account-Manager, keine Weiterreiche.</span>
       </div>
       <div class="gb-visual">
-        <svg viewBox="0 0 600 340" fill="none" role="img" aria-label="Illustration: zwei Personen im Büro stehen sich gegenüber, sehen sich an und geben sich die Hand">
-          <!-- Büro-Umgebung: Fenster mit Jalousie, Fensterbank, Pflanze -->
-          <rect x="205" y="18" width="190" height="138" rx="10" class="il-bg"/>
-          <rect x="213" y="28" width="174" height="7" rx="3.5" class="il-blind"/>
-          <rect x="213" y="44" width="174" height="7" rx="3.5" class="il-blind"/>
-          <rect x="213" y="60" width="174" height="7" rx="3.5" class="il-blind"/>
-          <rect x="213" y="76" width="174" height="7" rx="3.5" class="il-blind"/>
-          <rect x="213" y="92" width="174" height="7" rx="3.5" class="il-blind"/>
-          <rect x="213" y="108" width="174" height="7" rx="3.5" class="il-blind"/>
-          <rect x="213" y="124" width="174" height="7" rx="3.5" class="il-blind"/>
-          <rect x="213" y="140" width="174" height="7" rx="3.5" class="il-blind"/>
-          <rect x="197" y="156" width="206" height="9" rx="4.5" class="il-mute"/>
+        <svg viewBox="0 0 600 380" fill="none" role="img" aria-label="Illustration: zwei Personen stehen sich gegenüber, lächeln sich an und geben sich die Hand">
+          <!-- Weiche Hintergrundform statt Rahmen, dazu Punkteraster,
+               ein Kreis und zwei Pflanzen – Bildsprache statt Kasten -->
+          <ellipse cx="410" cy="185" rx="195" ry="172" class="il-blob"/>
+          <g class="il-dot">
+            <circle cx="50" cy="48" r="2.2"/><circle cx="66" cy="48" r="2.2"/><circle cx="82" cy="48" r="2.2"/><circle cx="98" cy="48" r="2.2"/>
+            <circle cx="50" cy="64" r="2.2"/><circle cx="66" cy="64" r="2.2"/><circle cx="82" cy="64" r="2.2"/><circle cx="98" cy="64" r="2.2"/>
+            <circle cx="50" cy="80" r="2.2"/><circle cx="66" cy="80" r="2.2"/><circle cx="82" cy="80" r="2.2"/><circle cx="98" cy="80" r="2.2"/>
+          </g>
+          <circle cx="58" cy="300" r="32" class="il-shape"/>
 
-          <ellipse cx="534" cy="238" rx="11" ry="27" transform="rotate(-24 534 238)" class="il-accent"/>
-          <ellipse cx="548" cy="226" rx="10" ry="30" class="il-accent-mid"/>
-          <ellipse cx="562" cy="240" rx="10" ry="25" transform="rotate(24 562 240)" class="il-accent"/>
-          <rect x="522" y="262" width="52" height="9" rx="4.5" class="il-amber"/>
-          <path d="M524 270 L572 270 L566 312 L530 312 Z" class="il-amber-mid"/>
+          <!-- Pflanzentrieb unten links -->
+          <path d="M78 358 v-30" stroke="var(--accent)" stroke-width="3" stroke-linecap="round" fill="none"/>
+          <path d="M78 340 c-11-4 -18-15 -16-24 c11 2 20 11 20 22z" class="il-accent-mid"/>
+          <path d="M78 330 c11-4 17-14 16-23 c-11 1 -20 10 -20 21z" class="il-accent-mid"/>
 
-          <ellipse cx="150" cy="300" rx="56" ry="8" fill="rgba(var(--ink-rgb),.07)"/>
-          <ellipse cx="410" cy="300" rx="56" ry="8" fill="rgba(var(--ink-rgb),.07)"/>
+          <!-- Topfpflanze unten rechts -->
+          <ellipse cx="534" cy="278" rx="10" ry="26" transform="rotate(-22 534 278)" class="il-accent"/>
+          <ellipse cx="548" cy="266" rx="9" ry="28" class="il-accent-mid"/>
+          <ellipse cx="562" cy="280" rx="9" ry="24" transform="rotate(22 562 280)" class="il-accent"/>
+          <rect x="522" y="302" width="52" height="9" rx="4.5" class="il-tan-mid"/>
+          <path d="M524 310 L572 310 L566 350 L530 350 Z" class="il-tan"/>
 
-          <!-- beide Figuren plus Handschlag schweben als eine Einheit,
-               damit die Haende beim Schweben verbunden bleiben -->
-          <g class="il-float">
-            <!-- ── linke Person ── -->
-            <path d="M136 214 C132 240 130 268 133 288" class="il-leg" stroke-width="16"/>
-            <path d="M164 214 C168 240 170 268 167 288" class="il-leg" stroke-width="16"/>
-            <rect x="117" y="284" width="33" height="14" rx="7" class="il-shoe"/>
-            <rect x="151" y="284" width="33" height="14" rx="7" class="il-shoe"/>
-            <rect x="143" y="110" width="14" height="28" rx="7" class="il-skin-a"/>
-            <path d="M118 148 C118 138 129 132 150 132 C171 132 182 138 182 148 L179 216 L121 216 Z" class="il-accent"/>
-            <path d="M141 133 L150 145 L159 133 Z" class="il-bg"/>
-            <circle cx="150" cy="165" r="2.2" class="il-button"/>
-            <circle cx="150" cy="183" r="2.2" class="il-button"/>
-            <circle cx="150" cy="201" r="2.2" class="il-button"/>
-            <path d="M122 152 C116 168 114 184 116 196" class="il-sleeve-a" stroke-width="15"/>
-            <path d="M116 196 C117 203 119 209 122 214" class="il-limb-a" stroke-width="12"/>
-            <circle cx="124" cy="218" r="7.5" class="il-skin-a"/>
-            <path d="M178 152 C196 158 212 166 226 172" class="il-sleeve-a" stroke-width="15"/>
-            <path d="M226 172 C240 178 252 182 262 184" class="il-limb-a" stroke-width="12"/>
+          <!-- ── linke Person: gruene Jacke ueber weissem Shirt ── -->
+          <g class="il-breathe">
+            <!-- Hand in der Geste, hinter dem Torso begonnen, vor ihm beendet -->
+            <path d="M178 156 C196 162 212 170 226 176" class="il-sleeve-a" stroke-width="16"/>
+            <path d="M226 176 C240 182 252 186 262 188" class="il-limb-a" stroke-width="13"/>
 
-            <!-- ── rechte Person ── -->
-            <path d="M396 214 C392 240 390 268 393 288" class="il-leg" stroke-width="16"/>
-            <path d="M424 214 C428 240 430 268 427 288" class="il-leg" stroke-width="16"/>
-            <rect x="377" y="284" width="33" height="14" rx="7" class="il-shoe"/>
-            <rect x="411" y="284" width="33" height="14" rx="7" class="il-shoe"/>
-            <rect x="403" y="110" width="14" height="28" rx="7" class="il-skin-b"/>
-            <path d="M378 148 C378 138 389 132 410 132 C431 132 442 138 442 148 L439 216 L381 216 Z" class="il-amber-mid"/>
-            <path d="M401 133 L410 145 L419 133 Z" class="il-bg"/>
-            <circle cx="410" cy="165" r="2.2" class="il-button"/>
-            <circle cx="410" cy="183" r="2.2" class="il-button"/>
-            <circle cx="410" cy="201" r="2.2" class="il-button"/>
-            <path d="M438 152 C444 168 446 184 444 196" class="il-sleeve-b" stroke-width="15"/>
-            <path d="M444 196 C443 203 441 209 438 214" class="il-limb-b" stroke-width="12"/>
-            <circle cx="436" cy="218" r="7.5" class="il-skin-b"/>
-            <path d="M382 152 C364 158 348 166 334 172" class="il-sleeve-b" stroke-width="15"/>
-            <path d="M334 172 C320 178 308 182 298 184" class="il-limb-b" stroke-width="12"/>
+            <rect x="143" y="112" width="14" height="30" rx="7" class="il-skin-a"/>
+            <path d="M116 152 C116 140 129 133 150 133 C171 133 184 140 184 152 L180 380 L120 380 Z" class="il-accent"/>
+            <!-- offene Jacke: zwei Revers-Flaechen, dazwischen weisses Shirt -->
+            <path d="M141 138 L120 220 L134 226 L152 144 Z" class="il-accent-mid"/>
+            <path d="M159 138 L180 220 L166 226 L148 144 Z" class="il-accent-mid"/>
+            <path d="M141 138 L150 152 L159 138 Z" class="il-bg"/>
+            <rect x="146" y="152" width="8" height="70" class="il-bg"/>
 
-            <!-- ── der Handschlag ── -->
-            <g class="il-shake">
-              <rect x="254" y="172" width="52" height="24" rx="12" class="il-skin-a"/>
-              <path d="M280 173 v22" stroke="rgba(42,33,28,.2)" stroke-width="2"/>
-              <rect x="268" y="166" width="22" height="11" rx="5.5" class="il-skin-b"/>
-            </g>
+            <path d="M120 156 C113 174 111 192 114 206" class="il-sleeve-a" stroke-width="16"/>
+            <path d="M114 206 C115 214 118 221 122 226" class="il-limb-a" stroke-width="13"/>
+            <circle cx="125" cy="230" r="7.5" class="il-skin-a"/>
 
-            <!-- ── Kopf links, gedreht zur rechten Person ──
-                 Augen, Nase und Mund sitzen aus der Mitte versetzt, das
-                 abgewandte Ohr ist kleiner: liest sich als Dreiviertelprofil. -->
+            <!-- Kopf: Ellipse statt Kreis fuer eine erkennbare Kieferlinie -->
             <g class="il-head">
-              <circle cx="150" cy="96" r="20" class="il-skin-a"/>
-              <circle cx="130" cy="99" r="5" class="il-skin-a"/>
-              <circle cx="170" cy="99" r="3.5" class="il-skin-a"/>
-              <path d="M130 96 a20 20 0 0 1 40 0 c0-8 -5-13 -12-14 c-10-1 -18 3 -23 9 c-3 3 -5 5 -5 5 z" class="il-hair-a"/>
-              <path d="M146 92 q4 -2.6 8 0" class="il-brow"/>
-              <path d="M158 92 q4 -2.6 8 0" class="il-brow"/>
-              <g class="il-blink">
-                <ellipse cx="148" cy="99" rx="4.2" ry="4.8" class="il-eye-white"/>
-                <ellipse cx="162" cy="99" rx="4.2" ry="4.8" class="il-eye-white"/>
-                <circle cx="149.4" cy="99.5" r="2.1" class="il-eye"/>
-                <circle cx="163.4" cy="99.5" r="2.1" class="il-eye"/>
-              </g>
-              <circle cx="148" cy="99" r="6.3" class="il-glass"/>
-              <circle cx="162" cy="99" r="6.3" class="il-glass"/>
-              <path d="M154.3 99 h1.4" class="il-glass-arm"/>
-              <path d="M141.7 99 L134 100.5" class="il-glass-arm"/>
-              <path d="M157 106 v4" class="il-nose"/>
-              <path d="M151 112 q5.5 3.5 11 0" class="il-mouth"/>
-            </g>
+              <ellipse cx="135" cy="100" rx="3.4" ry="5.8" class="il-skin-a"/>
+              <ellipse cx="167" cy="101" rx="4.6" ry="7" class="il-skin-a"/>
+              <ellipse cx="150" cy="99" rx="19" ry="23" class="il-skin-a"/>
 
-            <!-- ── Kopf rechts, gedreht zur linken Person ── -->
-            <g class="il-head-b">
-              <circle cx="410" cy="96" r="20" class="il-skin-b"/>
-              <circle cx="430" cy="99" r="5" class="il-skin-b"/>
-              <circle cx="390" cy="99" r="3.5" class="il-skin-b"/>
-              <path d="M390 96 a20 20 0 0 1 40 0 c0-6 -4-11 -10-13 c-7-2 -13-2 -20 0 c-6 2 -10 7 -10 13 z" class="il-hair-b"/>
-              <path d="M397 92 q4 -2.6 8 0" class="il-brow"/>
-              <path d="M410 92 q4 -2.6 8 0" class="il-brow"/>
-              <g class="il-blink-b">
-                <ellipse cx="399" cy="99" rx="4.2" ry="4.8" class="il-eye-white"/>
-                <ellipse cx="413" cy="99" rx="4.2" ry="4.8" class="il-eye-white"/>
-                <circle cx="397.6" cy="99.5" r="2.1" class="il-eye"/>
-                <circle cx="411.6" cy="99.5" r="2.1" class="il-eye"/>
+              <!-- seitlich gescheiteltes, volles Deckhaar -->
+              <path d="M129 90 C127 71 138 57 152 57 C165 57 175 68 176 82 C176 87 174 90 171 91
+                       C173 78 165 66 153 65 C142 64 132 72 130 84 C129 88 129 90 129 90 Z" class="il-hair-b"/>
+              <path d="M164 62 C173 60 179 65 180 73 C175 68 168 67 162 70 Z" class="il-hair-b"/>
+
+              <path d="M141 90 q4.5 -2.8 9 0" class="il-brow"/>
+              <path d="M156 90.5 q4.5 -2.8 9 0" class="il-brow"/>
+              <g class="il-blink">
+                <ellipse cx="145.5" cy="98" rx="4.4" ry="5" class="il-eye-white"/>
+                <ellipse cx="160.5" cy="98.5" rx="4.4" ry="5" class="il-eye-white"/>
+                <circle cx="147" cy="98.4" r="2.2" class="il-eye"/>
+                <circle cx="162" cy="98.9" r="2.2" class="il-eye"/>
               </g>
-              <path d="M403 106 v4" class="il-nose"/>
-              <path d="M398 112 q5.5 3.5 11 0" class="il-mouth"/>
+              <path d="M156 106 q1.5 3 0 6" class="il-nose"/>
+              <path d="M148 116 q7 5.5 15 0.5" class="il-mouth"/>
             </g>
+          </g>
+
+          <!-- ── rechte Person: beiges Hemd, hochgekrempelter Aermel, Hand in der Tasche ── -->
+          <g class="il-breathe-b">
+            <!-- verstecktes Ende zuerst: die Hand verschwindet hinterm Torso -->
+            <path d="M462 158 C470 182 468 206 452 224 C446 231 440 234 435 236" class="il-sleeve-b" stroke-width="15"/>
+
+            <rect x="403" y="112" width="14" height="30" rx="7" class="il-skin-b"/>
+            <path d="M376 152 C376 140 389 133 410 133 C431 133 444 140 444 152 L440 380 L380 380 Z" class="il-tan"/>
+            <path d="M398 138 L388 148 L400 151 Z" class="il-tan-mid"/>
+            <path d="M422 138 L432 148 L420 151 Z" class="il-tan-mid"/>
+            <circle cx="410" cy="168" r="2.2" class="il-button"/>
+            <circle cx="410" cy="186" r="2.2" class="il-button"/>
+            <circle cx="410" cy="204" r="2.2" class="il-button"/>
+
+            <path d="M382 156 C364 162 348 170 334 176" class="il-sleeve-b" stroke-width="16"/>
+            <path d="M334 176 C320 182 308 186 298 188" class="il-limb-b" stroke-width="13"/>
+            <ellipse cx="345" cy="180" rx="10" ry="8" transform="rotate(-24 345 180)" class="il-tan-mid"/>
+
+            <g class="il-head-b">
+              <ellipse cx="365" cy="101" rx="4.6" ry="7" class="il-skin-b"/>
+              <ellipse cx="397" cy="100" rx="3.4" ry="5.8" class="il-skin-b"/>
+              <ellipse cx="382" cy="99" rx="19" ry="23" class="il-skin-b"/>
+
+              <!-- kurzes lockiges Haar: Cluster aus Kreisen, geometrisch sicher -->
+              <g class="il-hair-a">
+                <circle cx="367" cy="76" r="6.5"/><circle cx="378" cy="70" r="7.2"/><circle cx="390" cy="70" r="7"/>
+                <circle cx="400" cy="76" r="6.2"/><circle cx="373" cy="83" r="6"/><circle cx="405" cy="84" r="5.6"/>
+                <circle cx="384" cy="64" r="6.6"/><circle cx="395" cy="64" r="6"/>
+              </g>
+              <!-- Dreitagebart -->
+              <path d="M368 108 C370 118 375 124 382 126 C389 124 394 118 396 108
+                       C392 114 387 118 382 118 C377 118 372 114 368 108 Z" class="il-beard"/>
+
+              <path d="M370 92 q4.5 -2.8 9 0" class="il-brow"/>
+              <path d="M385 91 q4.5 -2.8 9 0" class="il-brow"/>
+              <g class="il-blink-b">
+                <ellipse cx="374.5" cy="99" rx="4.4" ry="5" class="il-eye-white"/>
+                <ellipse cx="389.5" cy="98.5" rx="4.4" ry="5" class="il-eye-white"/>
+                <circle cx="373" cy="99.4" r="2.2" class="il-eye"/>
+                <circle cx="388" cy="98.9" r="2.2" class="il-eye"/>
+              </g>
+              <path d="M377 107 q-1.5 3 0 6" class="il-nose"/>
+              <path d="M370 116 q7 5.5 15 0.5" class="il-mouth"/>
+            </g>
+          </g>
+
+          <!-- ── der Handschlag: schwebt mit beiden Figuren mit ── -->
+          <g class="il-shake">
+            <rect x="254" y="172" width="52" height="24" rx="12" class="il-skin-a"/>
+            <path d="M280 173 v22" stroke="rgba(42,33,28,.2)" stroke-width="2"/>
+            <rect x="268" y="166" width="22" height="11" rx="5.5" class="il-skin-b"/>
           </g>
         </svg>
       </div>
