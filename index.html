@@ -1245,7 +1245,7 @@ body{
         <span>Wer planbar Anfragen bekommt, hat ein System dahinter.</span>
       </div>
       <div class="gb-visual">
-        <svg viewBox="0 0 520 330" fill="none" role="img" aria-label="Wandkalender für August 2026: die Kalenderwochen 32 bis 35 sind zu sehen, kein einziger Tag ist belegt">
+        <svg viewBox="0 0 520 330" fill="none" role="img" aria-label="Wandkalender: die Kalenderwochen 32 bis 35 sind zu sehen, kein einziger Tag ist belegt">
           <rect x="70" y="52" width="400" height="270" rx="24" fill="rgba(var(--ink-rgb),.05)"/>
           <rect x="60" y="40" width="400" height="270" rx="24" class="il-bg"/>
 
@@ -1254,10 +1254,11 @@ body{
           <rect x="254" y="20" width="13" height="32" rx="6.5" class="il-mute"/>
           <rect x="368" y="20" width="13" height="32" rx="6.5" class="il-mute"/>
 
-          <!-- Kopfband mit Monat und Jahr -->
+          <!-- Kopfband, ohne Monat/Jahr: bleibt zeitlos statt an ein
+               bestimmtes Datum gebunden -->
           <path d="M60 62 a22 22 0 0 1 22-22 h356 a22 22 0 0 1 22 22 v30 H60 Z" class="il-accent"/>
-          <text x="84" y="78" class="il-cal-month">August</text>
-          <text x="436" y="78" text-anchor="end" class="il-cal-year">2026</text>
+          <circle cx="90" cy="77" r="4" fill="rgba(255,255,255,.45)"/>
+          <circle cx="106" cy="77" r="4" fill="rgba(255,255,255,.28)"/>
 
           <!-- Spaltenköpfe -->
           <text x="84" y="114" text-anchor="middle" class="il-cal-lbl">KW</text>
@@ -1551,7 +1552,11 @@ body{
                 <circle cx="300" cy="32" r="16" class="il-skin-a"/>
                 <circle cx="284" cy="35" r="4" class="il-skin-a"/>
                 <circle cx="316" cy="35" r="4" class="il-skin-a"/>
-                <path d="M284 32 a16 16 0 0 1 32 0 c0-6 -4-10 -9-11 c-8-1 -14 3 -18 8 c-2 2 -4 3 -5 3 z" class="il-hair-a"/>
+                <!-- voluminoeses, seitlich gescheiteltes Deckhaar statt der
+                     flachen Kappe, plus kleiner Schwung als Frisurendetail -->
+                <path d="M285 26 C284 12 293 2 302 2 C311 2 318 9 319 19 C319 23 317 25 315 26
+                         C316 15 309 6 300 6 C292 6 286 12 285 22 C285 24 285 26 285 26 Z" class="il-hair-b"/>
+                <path d="M312 8 C319 6 324 10 325 16 C321 12 315 11 310 14 Z" class="il-hair-b"/>
                 <path d="M291 31 q3.5 -2 7 0" class="il-brow"/>
                 <path d="M302 31 q3.5 -2 7 0" class="il-brow"/>
                 <g class="il-blink">
