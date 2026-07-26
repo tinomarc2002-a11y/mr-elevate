@@ -1180,82 +1180,6 @@ body{
      öffnet sich bei jedem Klick auf einen [data-quiz-cta]-Button. -->
 
 <!-- ============================================================= -->
-<!-- AUSGANGSLAGE: Kalender-Grafik als Ueberleitung zum System      -->
-<!-- ============================================================= -->
-<section class="sec-pad" id="ausgangslage" style="padding-block:clamp(110px,16vw,180px) clamp(60px,9vw,104px);">
-  <div class="container">
-    <div class="graphic-band reveal" style="margin-top:0;">
-      <div class="gb-text">
-        <b>Ein leerer Kalender ist selten Zufall.</b>
-        <span>Wer planbar Anfragen bekommt, hat ein System dahinter.</span>
-      </div>
-      <div class="gb-visual">
-        <svg viewBox="0 0 520 330" fill="none" role="img" aria-label="Wandkalender: die Kalenderwochen 32 bis 35 sind zu sehen, kein einziger Tag ist belegt">
-          <rect x="70" y="52" width="400" height="270" rx="24" fill="rgba(var(--ink-rgb),.05)"/>
-          <rect x="60" y="40" width="400" height="270" rx="24" class="il-bg"/>
-
-          <!-- Aufhänger-Ringe -->
-          <rect x="140" y="20" width="13" height="32" rx="6.5" class="il-mute"/>
-          <rect x="254" y="20" width="13" height="32" rx="6.5" class="il-mute"/>
-          <rect x="368" y="20" width="13" height="32" rx="6.5" class="il-mute"/>
-
-          <!-- Kopfband, ohne Monat/Jahr: bleibt zeitlos statt an ein
-               bestimmtes Datum gebunden -->
-          <path d="M60 62 a22 22 0 0 1 22-22 h356 a22 22 0 0 1 22 22 v30 H60 Z" class="il-accent"/>
-          <circle cx="90" cy="77" r="4" fill="rgba(255,255,255,.45)"/>
-          <circle cx="106" cy="77" r="4" fill="rgba(255,255,255,.28)"/>
-
-          <!-- Spaltenköpfe -->
-          <text x="84" y="114" text-anchor="middle" class="il-cal-lbl">KW</text>
-          <text x="136" y="114" text-anchor="middle" class="il-cal-lbl">MO</text>
-          <text x="205" y="114" text-anchor="middle" class="il-cal-lbl">DI</text>
-          <text x="274" y="114" text-anchor="middle" class="il-cal-lbl">MI</text>
-          <text x="343" y="114" text-anchor="middle" class="il-cal-lbl">DO</text>
-          <text x="412" y="114" text-anchor="middle" class="il-cal-lbl">FR</text>
-
-          <!-- KW 32 -->
-          <g class="fx-pop p1">
-            <text x="84" y="153" text-anchor="middle" class="il-cal-day">32</text>
-            <rect x="104" y="130" width="64" height="34" rx="10" class="il-shape"/><text x="113" y="152" class="il-cal-day">3</text>
-            <rect x="173" y="130" width="64" height="34" rx="10" class="il-shape"/><text x="182" y="152" class="il-cal-day">4</text>
-            <rect x="242" y="130" width="64" height="34" rx="10" class="il-shape"/><text x="251" y="152" class="il-cal-day">5</text>
-            <rect x="311" y="130" width="64" height="34" rx="10" class="il-shape"/><text x="320" y="152" class="il-cal-day">6</text>
-            <rect x="380" y="130" width="64" height="34" rx="10" class="il-shape"/><text x="389" y="152" class="il-cal-day">7</text>
-          </g>
-          <!-- KW 33 -->
-          <g class="fx-pop p2">
-            <text x="84" y="195" text-anchor="middle" class="il-cal-day">33</text>
-            <rect x="104" y="172" width="64" height="34" rx="10" class="il-shape"/><text x="113" y="194" class="il-cal-day">10</text>
-            <rect x="173" y="172" width="64" height="34" rx="10" class="il-shape"/><text x="182" y="194" class="il-cal-day">11</text>
-            <rect x="242" y="172" width="64" height="34" rx="10" class="il-shape"/><text x="251" y="194" class="il-cal-day">12</text>
-            <rect x="311" y="172" width="64" height="34" rx="10" class="il-shape"/><text x="320" y="194" class="il-cal-day">13</text>
-            <rect x="380" y="172" width="64" height="34" rx="10" class="il-shape"/><text x="389" y="194" class="il-cal-day">14</text>
-          </g>
-          <!-- KW 34 -->
-          <g class="fx-pop p3">
-            <text x="84" y="237" text-anchor="middle" class="il-cal-day">34</text>
-            <rect x="104" y="214" width="64" height="34" rx="10" class="il-shape"/><text x="113" y="236" class="il-cal-day">17</text>
-            <rect x="173" y="214" width="64" height="34" rx="10" class="il-shape"/><text x="182" y="236" class="il-cal-day">18</text>
-            <rect x="242" y="214" width="64" height="34" rx="10" class="il-shape"/><text x="251" y="236" class="il-cal-day">19</text>
-            <rect x="311" y="214" width="64" height="34" rx="10" class="il-shape"/><text x="320" y="236" class="il-cal-day">20</text>
-            <rect x="380" y="214" width="64" height="34" rx="10" class="il-shape"/><text x="389" y="236" class="il-cal-day">21</text>
-          </g>
-          <!-- KW 35 -->
-          <g class="fx-pop p4">
-            <text x="84" y="279" text-anchor="middle" class="il-cal-day">35</text>
-            <rect x="104" y="256" width="64" height="34" rx="10" class="il-shape"/><text x="113" y="278" class="il-cal-day">24</text>
-            <rect x="173" y="256" width="64" height="34" rx="10" class="il-shape"/><text x="182" y="278" class="il-cal-day">25</text>
-            <rect x="242" y="256" width="64" height="34" rx="10" class="il-shape"/><text x="251" y="278" class="il-cal-day">26</text>
-            <rect x="311" y="256" width="64" height="34" rx="10" class="il-shape"/><text x="320" y="278" class="il-cal-day">27</text>
-            <rect x="380" y="256" width="64" height="34" rx="10" class="il-shape"/><text x="389" y="278" class="il-cal-day">28</text>
-          </g>
-        </svg>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- ============================================================= -->
 <!-- SOLUTION / UNSER SYSTEM                                        -->
 <!-- ============================================================= -->
 <section class="sec-pad" id="system" style="background:var(--bg-elev);border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
@@ -1340,6 +1264,82 @@ body{
             <rect x="328" y="238" width="124" height="42" rx="21" class="il-bg"/>
             <rect x="328" y="238" width="124" height="42" rx="21" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
             <text x="390" y="259" text-anchor="middle" dominant-baseline="central" class="il-txt-sm" fill="var(--accent)">Optimieren</text>
+          </g>
+        </svg>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============================================================= -->
+<!-- AUSGANGSLAGE: Kalender-Grafik als Ueberleitung zum System      -->
+<!-- ============================================================= -->
+<section class="sec-pad" id="ausgangslage">
+  <div class="container">
+    <div class="graphic-band reveal" style="margin-top:0;">
+      <div class="gb-text">
+        <b>Ein leerer Kalender ist selten Zufall.</b>
+        <span>Wer planbar Anfragen bekommt, hat ein System dahinter.</span>
+      </div>
+      <div class="gb-visual">
+        <svg viewBox="0 0 520 330" fill="none" role="img" aria-label="Wandkalender: die Kalenderwochen 32 bis 35 sind zu sehen, kein einziger Tag ist belegt">
+          <rect x="70" y="52" width="400" height="270" rx="24" fill="rgba(var(--ink-rgb),.05)"/>
+          <rect x="60" y="40" width="400" height="270" rx="24" class="il-bg"/>
+
+          <!-- Aufhänger-Ringe -->
+          <rect x="140" y="20" width="13" height="32" rx="6.5" class="il-mute"/>
+          <rect x="254" y="20" width="13" height="32" rx="6.5" class="il-mute"/>
+          <rect x="368" y="20" width="13" height="32" rx="6.5" class="il-mute"/>
+
+          <!-- Kopfband, ohne Monat/Jahr: bleibt zeitlos statt an ein
+               bestimmtes Datum gebunden -->
+          <path d="M60 62 a22 22 0 0 1 22-22 h356 a22 22 0 0 1 22 22 v30 H60 Z" class="il-accent"/>
+          <circle cx="90" cy="77" r="4" fill="rgba(255,255,255,.45)"/>
+          <circle cx="106" cy="77" r="4" fill="rgba(255,255,255,.28)"/>
+
+          <!-- Spaltenköpfe -->
+          <text x="84" y="114" text-anchor="middle" class="il-cal-lbl">KW</text>
+          <text x="136" y="114" text-anchor="middle" class="il-cal-lbl">MO</text>
+          <text x="205" y="114" text-anchor="middle" class="il-cal-lbl">DI</text>
+          <text x="274" y="114" text-anchor="middle" class="il-cal-lbl">MI</text>
+          <text x="343" y="114" text-anchor="middle" class="il-cal-lbl">DO</text>
+          <text x="412" y="114" text-anchor="middle" class="il-cal-lbl">FR</text>
+
+          <!-- KW 32 -->
+          <g class="fx-pop p1">
+            <text x="84" y="153" text-anchor="middle" class="il-cal-day">32</text>
+            <rect x="104" y="130" width="64" height="34" rx="10" class="il-shape"/><text x="113" y="152" class="il-cal-day">3</text>
+            <rect x="173" y="130" width="64" height="34" rx="10" class="il-shape"/><text x="182" y="152" class="il-cal-day">4</text>
+            <rect x="242" y="130" width="64" height="34" rx="10" class="il-shape"/><text x="251" y="152" class="il-cal-day">5</text>
+            <rect x="311" y="130" width="64" height="34" rx="10" class="il-shape"/><text x="320" y="152" class="il-cal-day">6</text>
+            <rect x="380" y="130" width="64" height="34" rx="10" class="il-shape"/><text x="389" y="152" class="il-cal-day">7</text>
+          </g>
+          <!-- KW 33 -->
+          <g class="fx-pop p2">
+            <text x="84" y="195" text-anchor="middle" class="il-cal-day">33</text>
+            <rect x="104" y="172" width="64" height="34" rx="10" class="il-shape"/><text x="113" y="194" class="il-cal-day">10</text>
+            <rect x="173" y="172" width="64" height="34" rx="10" class="il-shape"/><text x="182" y="194" class="il-cal-day">11</text>
+            <rect x="242" y="172" width="64" height="34" rx="10" class="il-shape"/><text x="251" y="194" class="il-cal-day">12</text>
+            <rect x="311" y="172" width="64" height="34" rx="10" class="il-shape"/><text x="320" y="194" class="il-cal-day">13</text>
+            <rect x="380" y="172" width="64" height="34" rx="10" class="il-shape"/><text x="389" y="194" class="il-cal-day">14</text>
+          </g>
+          <!-- KW 34 -->
+          <g class="fx-pop p3">
+            <text x="84" y="237" text-anchor="middle" class="il-cal-day">34</text>
+            <rect x="104" y="214" width="64" height="34" rx="10" class="il-shape"/><text x="113" y="236" class="il-cal-day">17</text>
+            <rect x="173" y="214" width="64" height="34" rx="10" class="il-shape"/><text x="182" y="236" class="il-cal-day">18</text>
+            <rect x="242" y="214" width="64" height="34" rx="10" class="il-shape"/><text x="251" y="236" class="il-cal-day">19</text>
+            <rect x="311" y="214" width="64" height="34" rx="10" class="il-shape"/><text x="320" y="236" class="il-cal-day">20</text>
+            <rect x="380" y="214" width="64" height="34" rx="10" class="il-shape"/><text x="389" y="236" class="il-cal-day">21</text>
+          </g>
+          <!-- KW 35 -->
+          <g class="fx-pop p4">
+            <text x="84" y="279" text-anchor="middle" class="il-cal-day">35</text>
+            <rect x="104" y="256" width="64" height="34" rx="10" class="il-shape"/><text x="113" y="278" class="il-cal-day">24</text>
+            <rect x="173" y="256" width="64" height="34" rx="10" class="il-shape"/><text x="182" y="278" class="il-cal-day">25</text>
+            <rect x="242" y="256" width="64" height="34" rx="10" class="il-shape"/><text x="251" y="278" class="il-cal-day">26</text>
+            <rect x="311" y="256" width="64" height="34" rx="10" class="il-shape"/><text x="320" y="278" class="il-cal-day">27</text>
+            <rect x="380" y="256" width="64" height="34" rx="10" class="il-shape"/><text x="389" y="278" class="il-cal-day">28</text>
           </g>
         </svg>
       </div>
