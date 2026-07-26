@@ -1200,13 +1200,20 @@ body{
       </div>
       <div class="sol-visual sol-engine eng-dash reveal d2">
         <svg class="engine-diagram" viewBox="0 0 520 440" role="img" aria-label="Illustration des Akquise-Motors: Meta Ads und Google Ads fuellen oben einen Trichter mit den Stufen Anzeige, Klick und Quizformular, aus dem unten qualifizierte Anfragen kommen. Ein Kreislaufpfeil, verbunden mit einer Optimieren-Markierung, fuehrt zurueck zu den Kampagnen.">
-          <!-- die beiden Kanaele mit den echten Plattform-Logos. Heller
-               Kreis statt farbiger Fuellung, damit die Markenfarben der
-               Logos korrekt lesbar bleiben. -->
+          <!-- Funken wie bei der Rakete, fuer denselben lebendigen Look -->
+          <g transform="translate(16,33)"><path d="M96 78 C98.25 88.5 101.5 90.75 111 93 C101.5 95.25 98.25 97.5 96 108 C93.75 97.5 90.5 95.25 81 93 C90.5 90.75 93.75 88.5 96 78 Z" class="il-lime il-spark"/></g>
+          <g transform="translate(376,4)"><path d="M96 78 C98.25 88.5 101.5 90.75 111 93 C101.5 95.25 98.25 97.5 96 108 C93.75 97.5 90.5 95.25 81 93 C90.5 90.75 93.75 88.5 96 78 Z" class="il-amber il-spark k3"/></g>
+
+          <!-- die beiden Kanaele mit den echten Plattform-Logos. Weicher
+               Glow-Ring dahinter (wie das Bullauge am Raketenrumpf) fuer
+               mehr Tiefe, heller Kreis fuer die Logos selbst, damit die
+               Markenfarben korrekt lesbar bleiben. -->
           <g class="fx-pop p1">
+            <circle cx="140" cy="64" r="54" class="il-soft"/>
             <circle cx="140" cy="64" r="46" class="il-bg"/>
             <circle cx="140" cy="64" r="46" fill="none" stroke="var(--line-strong)" stroke-width="1.5"/>
             <image href="meta-mark.webp" x="102" y="45" width="76" height="43" preserveAspectRatio="xMidYMid meet"/>
+            <circle cx="272" cy="64" r="54" class="il-soft"/>
             <circle cx="272" cy="64" r="46" class="il-bg"/>
             <circle cx="272" cy="64" r="46" fill="none" stroke="var(--line-strong)" stroke-width="1.5"/>
             <image href="Google.webp" x="248" y="40" width="48" height="48" preserveAspectRatio="xMidYMid meet"/>
@@ -1217,18 +1224,21 @@ body{
           <path d="M158 106 C178 124 194 136 208 146" class="il-stroke"/>
           <path d="M258 106 C244 124 232 136 222 146" class="il-stroke"/>
 
-          <!-- Trichter als eine geschlossene Form -->
+          <!-- Trichter als eine geschlossene Form, mit Tiefe: dunkleres
+               Schatten-Band im Stiel, analog zum Akzent-Band am Raketenrumpf -->
           <path d="M104 146 h300 l-112 132 v54 h-76 v-54 Z" class="il-soft fx-pop p2"/>
+          <rect x="216" y="304" width="76" height="28" class="il-accent-mid fx-pop p2"/>
           <path d="M104 146 h300 l-112 132 v54 h-76 v-54 Z" class="il-stroke fx-pop p2"/>
 
-          <!-- fallende Punkte im Trichter, links und rechts neben den
-               Stufen-Pillen platziert, damit sie nicht verdeckt werden -->
+          <!-- fallende Punkte: Farbverlauf von kuehlem Oliv (frischer Klick)
+               zu warmem Amber (heisser, qualifizierter Lead) kurz vorm
+               Ausgang -- macht die Bewegung im Trichter lesbar -->
           <g class="fx-pop p3">
             <circle cx="150" cy="175" r="10" class="il-accent"/>
             <circle cx="352" cy="172" r="10" class="il-accent"/>
-            <circle cx="186" cy="215" r="9" class="il-accent"/>
-            <circle cx="322" cy="212" r="9" class="il-accent"/>
-            <circle cx="254" cy="292" r="8" class="il-accent"/>
+            <circle cx="186" cy="215" r="9" class="il-lime"/>
+            <circle cx="322" cy="212" r="9" class="il-lime"/>
+            <circle cx="254" cy="292" r="9" class="il-amber"/>
           </g>
 
           <!-- Trichter-Stufen als zentrierte Pillen statt Rand-verankerter
@@ -1248,11 +1258,15 @@ body{
           <!-- Auslauf: reicht bis an die Ergebnis-Karte, keine Luecke -->
           <path d="M254 332 v25" class="il-stroke"/>
 
-          <!-- Ergebnis: gefüllte Karte -->
+          <!-- Ergebnis: gefüllte Karte mit weichem Glow-Rand (der "Reward"-
+               Moment des Trichters) und Haekchen-Stempel als Punch -->
           <g class="fx-pop p4">
+            <rect x="112" y="346" width="286" height="98" rx="34" class="il-soft"/>
             <rect x="124" y="356" width="262" height="78" rx="26" class="il-lime"/>
             <text x="255" y="388" text-anchor="middle" class="il-txt-on">Qualifizierte</text>
             <text x="255" y="416" text-anchor="middle" class="il-txt-on">Anfragen</text>
+            <circle cx="378" cy="362" r="15" class="il-accent"/>
+            <path d="M371 362 l5 5 l10 -10" class="il-check" style="stroke:var(--accent-fill); stroke-width:2.4px;"/>
           </g>
 
           <!-- Kreislauf zurück zu den Kampagnen: der Bogen laeuft
