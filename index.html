@@ -385,8 +385,13 @@ section{ position:relative; }
 .quiz-back:hover{ color:var(--fg); }
 .quiz-back[hidden]{ display:none; }
 
-.progress{ height:6px; background:rgba(255,255,255,.07); border-radius:100px; overflow:hidden; margin-bottom:34px; }
-.progress-bar{ height:100%; width:0; background:linear-gradient(90deg,var(--accent-deep),var(--accent)); border-radius:100px; transition:width .5s var(--ease); }
+/* Trichter-Perspektive statt schlichtem Balken: die ganze Spur ist per
+   clip-path ein Trapez (breit links, eng rechts). Der Fuellbalken ist ein
+   normales Kind-Element und wird automatisch auf dieselbe Form
+   zugeschnitten -- keine Aenderung an der Fortschritts-Logik in JS noetig. */
+.progress{ height:20px; background:rgba(255,255,255,.07); overflow:hidden; margin-bottom:34px;
+  clip-path:polygon(0 0, 100% 26%, 100% 74%, 0 100%); }
+.progress-bar{ height:100%; width:0; background:linear-gradient(90deg,var(--accent-deep),var(--accent)); transition:width .5s var(--ease); }
 
 .quiz-q{ font-family:var(--font-display); font-size:clamp(1.4rem,3vw,1.9rem); font-weight:600; line-height:1.15; margin-bottom:8px; }
 .quiz-hint{ color:var(--fg-muted); font-size:.95rem; margin-bottom:26px; }
@@ -408,8 +413,16 @@ section{ position:relative; }
 .quiz-opt.sel .tick{ background:var(--accent-fill); border-color:var(--accent-fill); }
 .quiz-opt .tick svg{ opacity:0; transition:var(--t-fast); }
 .quiz-opt.sel .tick svg{ opacity:1; }
-.quiz-opt .o-text{ font-size:1rem; font-weight:500; }
+.quiz-opt .o-text{ font-size:1rem; font-weight:500; flex:1; }
 .quiz-opt .o-sub{ display:block; font-size:.82rem; color:var(--fg-dim); font-weight:400; margin-top:2px; }
+.quiz-opt .oicon{
+  display:grid; place-items:center; flex-shrink:0; width:38px; height:38px; border-radius:50%;
+  background:rgba(198,255,58,.09); color:var(--accent); transition:background var(--t-fast), color var(--t-fast);
+  animation:oiconIn .35s var(--ease) backwards;
+}
+.quiz-opt:hover .oicon,.quiz-opt.sel .oicon{ background:var(--accent-fill); color:var(--accent-ink); }
+@keyframes oiconIn{ from{ opacity:0; transform:scale(.5) rotate(-8deg); } to{ opacity:1; transform:none; } }
+@media(prefers-reduced-motion:reduce){ .quiz-opt .oicon{ animation:none; } }
 
 /* contact step */
 .quiz-fields{ display:grid; grid-template-columns:1fr 1fr; gap:16px; }
@@ -504,27 +517,6 @@ section{ position:relative; }
   align-items:stretch; justify-content:center; overflow:hidden; }
 .engine-diagram{ width:100%; height:auto; display:block; }
 
-/* =================================================================
-   PRICING / MODELL COMPARISON
-   ================================================================= */
-.price-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; }
-.price-card{ border:1px solid var(--line); border-radius:var(--radius); padding:46px 40px; background:var(--bg-card); position:relative; overflow:hidden; transition:border-color var(--t); }
-.price-card.classic h3{ color:var(--fg-muted); }
-.price-card.featured{ border-color:var(--line-strong); }
-.price-card.featured::before{ content:""; position:absolute; inset:0 0 auto 0; height:3px; background:var(--accent); }
-.price-card:hover{ border-color:var(--line-strong); }
-.price-tag{ display:inline-block; font-family:var(--font-display); font-weight:600; font-size:.74rem;
-  letter-spacing:.2em; text-transform:uppercase; color:var(--accent); margin-bottom:14px; }
-.price-card h3{ font-size:clamp(1.5rem,2.4vw,1.9rem); margin-bottom:6px; letter-spacing:-.015em; }
-.price-card .ptype{ color:var(--fg-dim); font-size:.9rem; margin-bottom:24px; }
-.price-list{ list-style:none; display:grid; gap:14px; }
-.price-list li{ display:flex; gap:12px; font-size:.95rem; color:var(--fg-muted); }
-.price-list li svg{ flex-shrink:0; margin-top:3px; }
-.price-list li.no svg{ color:#ff6b6b; }
-.price-list li.yes svg{ color:var(--accent); }
-.price-list li.yes{ color:var(--fg); }
-.price-card .btn{ width:100%; margin-top:28px; }
-
 /* ════════ EDITORIALE VARIANTEN ════════ */
 
 /* — SYSTEM: sol-points als Hairline-Liste — */
@@ -534,19 +526,6 @@ section{ position:relative; }
 .sol-point:hover{ border-color:var(--line); }
 .sol-point .num{ width:auto; font-size:.95rem; letter-spacing:.1em; color:var(--accent); padding-top:3px; }
 
-/* — MODELL: gestaffeltes Aufdecken der Listenpunkte — */
-.price-card .price-list li{ opacity:0; transform:translateX(-10px); }
-.price-card.in .price-list li{ animation:liIn .45s var(--ease) forwards; }
-.price-card.in .price-list li:nth-child(1){ animation-delay:.12s }
-.price-card.in .price-list li:nth-child(2){ animation-delay:.20s }
-.price-card.in .price-list li:nth-child(3){ animation-delay:.28s }
-.price-card.in .price-list li:nth-child(4){ animation-delay:.36s }
-@keyframes liIn{ to{ opacity:1; transform:none; } }
-@media(prefers-reduced-motion:reduce){
-  .price-card .price-list li{ opacity:1 !important; transform:none !important; animation:none !important; }
-}
-@media(max-width:860px){ .price-grid{ grid-template-columns:1fr; } }
-@media(max-width:560px){ .price-card{ padding:32px 24px; } }
 
 /* — Transparenz: Ablauf der Abrechnung (Vertrauens-Baustein statt vager Werbesprache) — */
 .pay-flow{ margin-top:56px; padding-top:36px; border-top:1px solid var(--line); }
@@ -812,7 +791,7 @@ section{ position:relative; }
    ================================================================= */
 /* Kleine UI-Elemente (Buttons, Ziffern, Labels, Wortmarke) bleiben Grotesk */
 .btn,.btn-cc,.brand,.brand-elevate,.quiz-step-label,.prob-row .pnum,.sol-point .num,
-.sol-visual .vlabel,.price-tag,.pay-flow-label,.pf-step .pfnum,.fd-btn,
+.sol-visual .vlabel,.pay-flow-label,.pf-step .pfnum,.fd-btn,
 .sp-step,.step .snum,.eyebrow,
 .founder-tag b,.fd-text b,.cc-text strong{ font-family:var(--font-ui); }
 .funnel-diagram .fd-label,.funnel-diagram .fd-out-label,.story-illu .il-text{ font-family:var(--font-ui); }
@@ -1019,16 +998,6 @@ body{
   opacity:0; transition:opacity .45s var(--ease); z-index:1;
   background:radial-gradient(340px circle at var(--mx,50%) var(--my,50%), rgba(62,104,16,.06), transparent 65%); }
 .fx-spot:hover::before{ opacity:1; }
-/* Featured-Karte: langsam rotierender Licht-Rahmen (immer lebhaft, dekorativ) */
-@property --fx-angle{ syntax:'<angle>'; initial-value:0deg; inherits:false; }
-.price-card.featured::after{ content:""; position:absolute; inset:-1px; border-radius:inherit; padding:1px;
-  background:conic-gradient(from var(--fx-angle),
-    var(--accent-fill) 0%, transparent 16%, transparent 55%, #e7a24b 70%, transparent 84%, var(--accent-fill) 100%);
-  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-  -webkit-mask-composite:xor; mask-composite:exclude; pointer-events:none;
-  opacity:.75; animation:fxSpin 8s linear infinite; }
-@keyframes fxSpin{ to{ --fx-angle:360deg; } }
-
 /* Primary-Button: Licht-Sweep beim Hover */
 .btn-primary{ position:relative; overflow:hidden; }
 .btn-primary::after{ content:""; position:absolute; top:0; bottom:0; left:-80%; width:55%;
@@ -1055,7 +1024,7 @@ body{
 @keyframes fxPop{ to{ opacity:1; transform:translateY(0); } }
 
 @media(prefers-reduced-motion:reduce){
-  .price-card.featured::after,.btn-primary::after{ animation:none !important; transition:none !important; }
+  .btn-primary::after{ animation:none !important; transition:none !important; }
   .gb-visual .mk-chart,.gb-visual .mk-chart2,.gb-visual .mk-spark-lime,.gb-visual .mk-spark-teal{
     stroke-dashoffset:0 !important; animation:none !important; }
   .gb-visual .fx-pop{ opacity:1 !important; transform:none !important; animation:none !important; }
@@ -1213,7 +1182,7 @@ body{
 <!-- ============================================================= -->
 <!-- AUSGANGSLAGE: Kalender-Grafik als Ueberleitung zum System      -->
 <!-- ============================================================= -->
-<section class="sec-pad" id="ausgangslage" style="padding-block:clamp(60px,9vw,104px);">
+<section class="sec-pad" id="ausgangslage" style="padding-block:clamp(110px,16vw,180px) clamp(60px,9vw,104px);">
   <div class="container">
     <div class="graphic-band reveal" style="margin-top:0;">
       <div class="gb-text">
@@ -1384,15 +1353,15 @@ body{
 <section class="sec-pad" id="prozess" style="border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
   <div class="container">
     <div class="sec-head reveal">
-      <h2 class="h-sec">So arbeiten wir zusammen</h2>
+      <h2 class="h-sec">So sieht eine Zusammenarbeit mit uns aus</h2>
       <p class="sec-sub">Von der Analyse bis zur Skalierung</p>
-      <p class="lead">Nach jeder Phase bekommst du eine kurze Einordnung: was lief, was wir als Nächstes ändern.</p>
+      <p class="lead">Nach jeder Phase bekommst du eine kurze Einordnung, was gut lief und was ausbaufähig ist.</p>
     </div>
 
     <div class="graphic-band reveal" style="margin-top:0;margin-bottom:56px;">
       <div class="gb-text">
         <b>Eine Zusammenarbeit auf Augenhöhe.</b>
-        <span>Du sprichst direkt mit Marc. Kein Account-Manager, keine Weiterreiche.</span>
+        <span>Du sprichst direkt mit mir. Kein Account-Manager oder wechselnde Ansprechpartner.</span>
       </div>
       <div class="gb-visual">
         <img class="gb-photo" src="handshake.webp" width="1200" height="675" loading="lazy" alt="Zwei Personen lächeln sich an und geben sich die Hand" />
@@ -1580,22 +1549,10 @@ body{
   <div class="container">
     <div class="sec-head center reveal">
       <h2 class="h-sec">Erfolgsbasiert</h2>
-      <p class="sec-sub">Du zahlst fast nur für echte Ergebnisse.</p>
-      <p class="lead" style="margin-inline:auto;">Eine kleine Setup-Gebühr zum Start, danach hängt unsere Vergütung an dem, was für dich herauskommt.</p>
-    </div>
-    <div class="price-grid" style="grid-template-columns:minmax(0,540px); justify-content:center;">
-      <div class="price-card reveal">
-        <span class="price-tag">So rechnen wir ab</span>
-        <ul class="price-list">
-          <li class="yes"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Nur eine kleine, faire Setup-Gebühr zum Start</li>
-          <li class="yes"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Werbekosten fließen direkt an Meta und Google</li>
-          <li class="yes"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Erfolgsvergütung erst, wenn messbare Ergebnisse entstehen</li>
-          <li class="yes"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M20 6 9 17l-5-5"/></svg> Kurze Erstlaufzeit, keine langen Bindungen</li>
-        </ul>
-        <a href="#quiz" class="btn btn-primary" data-magnetic data-cursor data-quiz-cta>Passt das zu mir? Jetzt prüfen
-          <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-        </a>
-      </div>
+      <p class="sec-sub">Du zahlst nur für echte Ergebnisse.</p>
+      <a href="#quiz" class="btn btn-primary" data-magnetic data-cursor data-quiz-cta style="margin-top:28px;">Passt das zu mir? Jetzt prüfen
+        <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
     </div>
 
     <div class="pay-flow reveal">
@@ -1658,7 +1615,6 @@ body{
              der Leitfaden ist offen und ohne Anmeldung lesbar -->
         <a href="leitfaden.html" class="btn btn-ghost" data-cursor>Noch nicht bereit? Lies den Leitfaden</a>
       </div>
-      <p class="note">Nur kleine Setup-Gebühr · ansonsten rein erfolgsbasiert · keine langen Bindungen</p>
     </div>
   </div>
 </section>
@@ -1899,7 +1855,7 @@ body{
 
   /* ---------- Spotlight: Karten-Glow folgt der Maus ---------- */
   (function(){
-    document.querySelectorAll('.price-card,.graphic-band,.story-illu,.sol-visual').forEach(function(el){ el.classList.add('fx-spot'); });
+    document.querySelectorAll('.graphic-band,.story-illu,.sol-visual').forEach(function(el){ el.classList.add('fx-spot'); });
     if(!fine) return;
     document.addEventListener('pointermove', function(e){
       var t = e.target.closest('.fx-spot'); if(!t) return;
@@ -1989,42 +1945,62 @@ body{
      QUIZ FUNNEL  (state machine)
      CONVERSION-CRITICAL: Fragen + Optionen unten anpassbar
      ============================================================= */
+  /* Symbol-Set: einfache, sichere Lucide-Icon-Formen (nur gerade Linien /
+     einzelne Boegen), keine handgezeichneten Kurven wie bei den
+     Illustrationen -- hier soll nichts optisch schiefgehen koennen. */
+  var ICON = {
+    briefcase:'<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="3" y1="13" x2="21" y2="13"/>',
+    gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/>',
+    chat:'<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>',
+    cart:'<circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>',
+    spark:'<path d="M12 2l1.5 5.5L19 9l-5.5 1.5L12 16l-1.5-5.5L5 9l5.5-1.5z"/>',
+    coin:'<circle cx="12" cy="12" r="9"/><path d="M15 8.5a4 4 0 1 0 0 7"/><line x1="7" y1="10" x2="13" y2="10"/><line x1="7" y1="14" x2="13" y2="14"/>',
+    users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+    share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.5" x2="15.4" y2="6.5"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/>',
+    megaphone:'<path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+    help:'<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 1 1 5.83 1c0 2-3 2-3 4"/><line x1="12" y1="17" x2="12" y2="17.01"/>',
+    zap:'<path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>',
+    calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+    clock:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+    book:'<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>'
+  };
+
   var steps = [
     {
       key:'branche', q:'In welcher Branche bist du tätig?',
       options:[
-        {v:'Dienstleister'},
-        {v:'Handwerk'},
-        {v:'Coaching / Beratung'},
-        {v:'E-Commerce / Handel'},
-        {v:'Sonstiges'}
+        {v:'Dienstleister', icon:ICON.briefcase},
+        {v:'Handwerk', icon:ICON.gear},
+        {v:'Coaching / Beratung', icon:ICON.chat},
+        {v:'E-Commerce / Handel', icon:ICON.cart},
+        {v:'Sonstiges', icon:ICON.spark}
       ]
     },
     {
       key:'kundenwert', q:'Wie hoch ist dein durchschnittlicher Kundenwert?',
       options:[
-        {v:'unter 500 €'},
-        {v:'500–1.000 €'},
-        {v:'1.000–5.000 €'},
-        {v:'über 5.000 €'}
+        {v:'unter 500 €', icon:ICON.coin, iconSize:14},
+        {v:'500–1.000 €', icon:ICON.coin, iconSize:17},
+        {v:'1.000–5.000 €', icon:ICON.coin, iconSize:20},
+        {v:'über 5.000 €', icon:ICON.coin, iconSize:24}
       ]
     },
     {
       key:'akquise', q:'Wie gewinnst du aktuell Neukunden?',
       options:[
-        {v:'Empfehlungen'},
-        {v:'Social Media / organisch'},
-        {v:'Bezahlte Werbung'},
-        {v:'Aktuell kaum / gar nicht'}
+        {v:'Empfehlungen', icon:ICON.users},
+        {v:'Social Media / organisch', icon:ICON.share},
+        {v:'Bezahlte Werbung', icon:ICON.megaphone},
+        {v:'Aktuell kaum / gar nicht', icon:ICON.help}
       ]
     },
     {
       key:'timing', q:'Wann möchtest du eine Lösung?',
       options:[
-        {v:'Sofort'},
-        {v:'Innerhalb von 30 Tagen'},
-        {v:'In den nächsten Monaten'},
-        {v:'Ich möchte mich nur informieren'}
+        {v:'Sofort', icon:ICON.zap},
+        {v:'Innerhalb von 30 Tagen', icon:ICON.calendar},
+        {v:'In den nächsten Monaten', icon:ICON.clock},
+        {v:'Ich möchte mich nur informieren', icon:ICON.book}
       ]
     },
     { key:'kontakt', q:'Wohin dürfen wir deine Einschätzung schicken?', hint:'Wir melden uns nur, wenn wir echtes Potenzial sehen.', contact:true }
@@ -2050,9 +2026,12 @@ body{
     var html = '<div class="quiz-step"><h3 class="quiz-q">'+step.q+'</h3>'+(step.hint?'<p class="quiz-hint">'+step.hint+'</p>':'')+'<div class="quiz-options" role="listbox" aria-label="'+step.q+'">';
     step.options.forEach(function(o, i){
       var selected = state.answers[step.key] === o.v;
+      var iconSize = o.iconSize || 19;
+      var oicon = o.icon ? '<span class="oicon" style="animation-delay:'+(i*0.05)+'s"><svg width="'+iconSize+'" height="'+iconSize+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">'+o.icon+'</svg></span>' : '';
       html += '<button class="quiz-opt'+(selected?' sel':'')+'" role="option" aria-selected="'+selected+'" data-val="'+encodeURIComponent(o.v)+'">'+
-        '<span class="tick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span>'+
-        '<span class="o-text">'+o.v+(o.sub?'<span class="o-sub">'+o.sub+'</span>':'')+'</span></button>';
+        oicon+
+        '<span class="o-text">'+o.v+(o.sub?'<span class="o-sub">'+o.sub+'</span>':'')+'</span>'+
+        '<span class="tick"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6 9 17l-5-5"/></svg></span></button>';
     });
     html += '</div></div>';
     body.innerHTML = html;
