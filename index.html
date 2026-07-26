@@ -1540,9 +1540,10 @@ body{
       </div>
       <div class="gb-visual">
         <svg viewBox="0 0 560 340" fill="none" role="img" aria-label="Illustration: eine Person sitzt auf einer startenden Rakete, winkt und fliegt nach oben">
-          <!-- Flugbahn -->
-          <path d="M96 306 C150 296 196 276 236 250" stroke="var(--accent)" stroke-width="3"
-                stroke-linecap="round" stroke-dasharray="1 13" opacity=".35" fill="none"/>
+          <!-- Abgas-Wolken, laufen von der Flamme nach unten links aus -->
+          <circle cx="205" cy="312" r="10" fill="rgba(var(--ink-rgb),.10)"/>
+          <circle cx="180" cy="322" r="7.5" fill="rgba(var(--ink-rgb),.075)"/>
+          <circle cx="158" cy="328" r="5.5" fill="rgba(var(--ink-rgb),.05)"/>
 
           <!-- Funken -->
           <path d="M96 78 C98.25 88.5 101.5 90.75 111 93 C101.5 95.25 98.25 97.5 96 108 C93.75 97.5 90.5 95.25 81 93 C90.5 90.75 93.75 88.5 96 78 Z" class="il-lime il-spark"/>
@@ -1551,7 +1552,9 @@ body{
           <path d="M72 215 C73.35 221.3 74.65 222.65 81 224 C74.65 225.35 73.35 226.7 72 233 C70.65 226.7 69.35 225.35 63 224 C69.35 222.65 70.65 221.3 72 215 Z" class="il-accent il-spark k4"/>
 
           <g class="il-rocket">
-            <g transform="rotate(22 300 180)">
+            <!-- skaliert und zentriert, damit die winkende Hand oben nicht
+                 aus dem Zeichenbereich laeuft -->
+            <g transform="translate(16.97,36.89) scale(0.85) rotate(22 300 180)">
               <!-- Antriebsflamme -->
               <g class="il-flame">
                 <path d="M278 256 C282 284 292 302 300 318 C308 302 318 284 322 256 Z" class="il-lime"/>
