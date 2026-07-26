@@ -1512,11 +1512,14 @@ body{
               <!-- Spitze -->
               <path d="M270 130 a30 30 0 0 1 60 0 v8 h-60 z" class="il-lime"/>
 
-              <!-- Beine der Person, vor dem Rumpf -->
-              <path d="M290 100 C285 118 283 134 287 148" class="il-leg" stroke-width="13"/>
-              <path d="M312 100 C317 118 319 134 315 148" class="il-leg" stroke-width="13"/>
-              <rect x="276" y="145" width="24" height="11" rx="5.5" class="il-shoe"/>
-              <rect x="304" y="145" width="24" height="11" rx="5.5" class="il-shoe"/>
+              <!-- Beine: angewinkelt und um den Rumpf gelegt, damit die
+                   Person sitzt/reitet statt nur davor zu stehen -->
+              <path d="M294 100 C278 106 264 116 258 132" class="il-leg" stroke-width="13"/>
+              <path d="M258 132 C254 150 256 170 262 188" class="il-leg" stroke-width="13"/>
+              <path d="M306 100 C322 106 336 116 342 132" class="il-leg" stroke-width="13"/>
+              <path d="M342 132 C346 150 344 170 338 188" class="il-leg" stroke-width="13"/>
+              <rect x="244" y="182" width="26" height="13" rx="6.5" class="il-shoe" transform="rotate(-18 257 188)"/>
+              <rect x="330" y="182" width="26" height="13" rx="6.5" class="il-shoe" transform="rotate(18 343 188)"/>
 
               <!-- Oberkoerper -->
               <path d="M284 66 C284 58 291 54 300 54 C309 54 316 58 316 66 L318 102 L282 102 Z" class="il-accent"/>
@@ -1555,6 +1558,15 @@ body{
                 <!-- kleiner Fransen-Schwung ueber der Stirn, als gerades
                      Dreieck statt Kurve -->
                 <path d="M295 20 L305 15 L303 25 Z" class="il-hair-b"/>
+
+                <!-- Cap wie auf Marcs echtem Foto: einfacher Arc-Dome statt
+                     Kurve, die sich selbst wegschneiden kann. Deckt die
+                     oberen Haar-Kreise ab, die unteren blitzen an den
+                     Schlaefen unterm Schirm hervor -- wie im Foto. -->
+                <path d="M281 25 A19 24 0 0 1 319 25 Z" class="il-tan"/>
+                <ellipse cx="303" cy="24" rx="13" ry="4" class="il-tan-mid"/>
+                <circle cx="300" cy="2.5" r="1.6" class="il-tan-mid"/>
+
                 <path d="M291 31 q3.5 -2 7 0" class="il-brow"/>
                 <path d="M302 31 q3.5 -2 7 0" class="il-brow"/>
                 <g class="il-blink">
@@ -1565,6 +1577,8 @@ body{
                 </g>
                 <path d="M300 41 v3" class="il-nose"/>
                 <path d="M296 45 q4 2.5 8 0" class="il-mouth"/>
+                <!-- leichter Bartschatten -->
+                <path d="M292 43 C294 46.5 297 48 300 48 C303 48 306 46.5 308 43 C305 45.5 302.5 47 300 47 C297.5 47 295 45.5 292 43 Z" class="il-beard"/>
               </g>
             </g>
           </g>
