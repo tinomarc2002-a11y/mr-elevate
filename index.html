@@ -1312,17 +1312,22 @@ body{
       </div>
       <div class="sol-visual sol-engine eng-dash reveal d2">
         <svg class="engine-diagram" viewBox="0 0 520 440" role="img" aria-label="Illustration des Akquise-Motors: Meta Ads und Google Ads fuellen oben einen Trichter mit den Stufen Anzeige, Klick und Quizformular, aus dem unten qualifizierte Anfragen kommen. Ein Kreislaufpfeil, verbunden mit einer Optimieren-Markierung, fuehrt zurueck zu den Kampagnen.">
-          <!-- die beiden Kanaele als Icon-Kreise -->
+          <!-- die beiden Kanaele mit den echten Plattform-Logos. Heller
+               Kreis statt farbiger Fuellung, damit die Markenfarben der
+               Logos korrekt lesbar bleiben. -->
           <g class="fx-pop p1">
-            <circle cx="140" cy="64" r="46" class="il-accent"/>
-            <text x="140" y="80" text-anchor="middle" class="il-txt-light" style="font-size:34px;font-weight:700;">∞</text>
-            <circle cx="272" cy="64" r="46" class="il-amber"/>
-            <text x="272" y="78" text-anchor="middle" class="il-txt-light" style="font-size:34px;font-weight:700;">G</text>
+            <circle cx="140" cy="64" r="46" class="il-bg"/>
+            <circle cx="140" cy="64" r="46" fill="none" stroke="var(--line-strong)" stroke-width="1.5"/>
+            <image href="meta-mark.webp" x="102" y="45" width="76" height="43" preserveAspectRatio="xMidYMid meet"/>
+            <circle cx="272" cy="64" r="46" class="il-bg"/>
+            <circle cx="272" cy="64" r="46" fill="none" stroke="var(--line-strong)" stroke-width="1.5"/>
+            <image href="Google.webp" x="248" y="40" width="48" height="48" preserveAspectRatio="xMidYMid meet"/>
           </g>
 
-          <!-- Zuflüsse in den Trichter -->
-          <path d="M158 106 C176 124 190 132 206 138" class="il-stroke"/>
-          <path d="M258 106 C246 122 238 130 228 138" class="il-stroke"/>
+          <!-- Zuflüsse: reichen bis auf die Trichter-Oberkante, damit die
+               gruene Linie ohne Luecke durchlaeuft -->
+          <path d="M158 106 C178 124 194 136 208 146" class="il-stroke"/>
+          <path d="M258 106 C244 124 232 136 222 146" class="il-stroke"/>
 
           <!-- Trichter als eine geschlossene Form -->
           <path d="M104 146 h300 l-112 132 v54 h-76 v-54 Z" class="il-soft fx-pop p2"/>
@@ -1352,8 +1357,8 @@ body{
             <text x="254" y="257" text-anchor="middle" class="il-txt-sm">Quizformular</text>
           </g>
 
-          <!-- Auslauf in die Ergebnis-Form -->
-          <path d="M254 332 v20" class="il-stroke"/>
+          <!-- Auslauf: reicht bis an die Ergebnis-Karte, keine Luecke -->
+          <path d="M254 332 v25" class="il-stroke"/>
 
           <!-- Ergebnis: gefüllte Karte -->
           <g class="fx-pop p4">
@@ -1362,15 +1367,15 @@ body{
             <text x="255" y="416" text-anchor="middle" class="il-txt-on">Anfragen</text>
           </g>
 
-          <!-- Kreislauf zurück zu den Kampagnen. Das Label sitzt direkt AUF
-               dem Bogen (deckt dessen Mitte ab), damit die Zuordnung ohne
-               Hilfslinie klar ist. Bogen etwas schmaler gezogen, damit die
-               Pille bis Mobil-Schriftgroesse in den Zeichenbereich passt. -->
+          <!-- Kreislauf zurück zu den Kampagnen: der Bogen laeuft
+               durchgehend, das Label liegt in der Luecke zwischen
+               Trichterkante und Bogen, ohne die Linie zu unterbrechen. -->
           <path d="M404 152 C470 186 484 306 414 380" class="il-stroke"/>
           <path d="M396 146 l20 -2 -8 19 z" class="il-accent"/>
           <g class="fx-pop p4">
-            <rect x="388" y="230" width="128" height="42" rx="21" class="il-bg"/>
-            <text x="452" y="257" text-anchor="middle" class="il-txt-sm" fill="var(--accent)">Optimieren</text>
+            <rect x="328" y="238" width="124" height="42" rx="21" class="il-bg"/>
+            <rect x="328" y="238" width="124" height="42" rx="21" fill="none" stroke="var(--accent)" stroke-width="1.5"/>
+            <text x="390" y="259" text-anchor="middle" dominant-baseline="central" class="il-txt-sm" fill="var(--accent)">Optimieren</text>
           </g>
         </svg>
       </div>
