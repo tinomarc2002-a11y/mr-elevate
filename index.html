@@ -1552,11 +1552,21 @@ body{
                 <circle cx="300" cy="32" r="16" class="il-skin-a"/>
                 <circle cx="284" cy="35" r="4" class="il-skin-a"/>
                 <circle cx="316" cy="35" r="4" class="il-skin-a"/>
-                <!-- voluminoeses, seitlich gescheiteltes Deckhaar statt der
-                     flachen Kappe, plus kleiner Schwung als Frisurendetail -->
-                <path d="M285 26 C284 12 293 2 302 2 C311 2 318 9 319 19 C319 23 317 25 315 26
-                         C316 15 309 6 300 6 C292 6 286 12 285 22 C285 24 285 26 285 26 Z" class="il-hair-b"/>
-                <path d="M312 8 C319 6 324 10 325 16 C321 12 315 11 310 14 Z" class="il-hair-b"/>
+                <!-- Kurzer, texturierter Crop als Kreis-Cluster: deckt den
+                     ganzen Oberkopf, keine Bezier-Kurve, die sich selbst
+                     wegschneiden kann -->
+                <g class="il-hair-b">
+                  <circle cx="287" cy="26" r="6.5"/>
+                  <circle cx="292" cy="18.5" r="6.6"/>
+                  <circle cx="299" cy="14.5" r="7"/>
+                  <circle cx="306" cy="16" r="6.8"/>
+                  <circle cx="312" cy="21" r="6.4"/>
+                  <circle cx="314.5" cy="28" r="5.6"/>
+                  <circle cx="282.5" cy="31" r="4.6"/>
+                </g>
+                <!-- kleiner Fransen-Schwung ueber der Stirn, als gerades
+                     Dreieck statt Kurve -->
+                <path d="M295 20 L305 15 L303 25 Z" class="il-hair-b"/>
                 <path d="M291 31 q3.5 -2 7 0" class="il-brow"/>
                 <path d="M302 31 q3.5 -2 7 0" class="il-brow"/>
                 <g class="il-blink">
