@@ -1025,7 +1025,7 @@ body{
 <!-- ============================================================= -->
 <!-- NAVBAR                                                         -->
 <!-- ============================================================= -->
-<nav class="nav zone-dark" id="nav">
+<nav class="nav" id="nav">
   <div class="container nav-inner">
     <a href="#top" class="brand" aria-label="MR Elevate Startseite">
       <span class="brand-stack">
@@ -1598,9 +1598,17 @@ body{
   "use strict";
   var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 
-  /* ---------- NAV scroll state ---------- */
+  /* ---------- NAV scroll state ----------
+     zone-dark haengt jetzt am Scroll-Zustand statt fest am Markup: die Nav
+     ist bis zum Scrollen transparent und sitzt auf dem hellen Hero-Foto
+     (braucht dunklen Text), erst .scrolled gibt ihr einen dunklen
+     Hintergrund (braucht dann hellen Text). */
   var nav = document.getElementById('nav');
-  var onScroll = function(){ nav.classList.toggle('scrolled', window.scrollY > 20); };
+  var onScroll = function(){
+    var isScrolled = window.scrollY > 20;
+    nav.classList.toggle('scrolled', isScrolled);
+    nav.classList.toggle('zone-dark', isScrolled);
+  };
   onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
 
   /* ---------- Mobile menu ---------- */
