@@ -25,15 +25,15 @@
 <meta property="og:title" content="MR Elevate | Planbare Neukundengewinnung aus Dresden" />
 <meta property="og:description" content="Systeme zur planbaren Neukundengewinnung, erfolgsbasiert. Du zahlst fast nur für echte Ergebnisse." />
 <meta property="og:url" content="https://www.mr-elevate.de/" />
-<meta property="og:image" content="https://www.mr-elevate.de/hero-dresden.jpg" />
+<meta property="og:image" content="https://www.mr-elevate.de/hero-pastel.jpg" />
 <meta property="og:image:width" content="1440" />
 <meta property="og:image:height" content="804" />
-<meta property="og:image:alt" content="Dresden bei Sonnenaufgang, Sitz von MR Elevate" />
+<meta property="og:image:alt" content="Dresdner Frauenkirche in Pastelltoenen, Sitz von MR Elevate" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="MR Elevate | Planbare Neukundengewinnung aus Dresden" />
 <meta name="twitter:description" content="Systeme zur planbaren Neukundengewinnung, erfolgsbasiert. Du zahlst fast nur für echte Ergebnisse." />
-<meta name="twitter:image" content="https://www.mr-elevate.de/hero-dresden.jpg" />
-<meta name="twitter:image:alt" content="Dresden bei Sonnenaufgang, Sitz von MR Elevate" />
+<meta name="twitter:image" content="https://www.mr-elevate.de/hero-pastel.jpg" />
+<meta name="twitter:image:alt" content="Dresdner Frauenkirche in Pastelltoenen, Sitz von MR Elevate" />
 
 <!-- Strukturierte Daten: lokales Unternehmen + Gründer (verknüpft über @id) -->
 <script type="application/ld+json">
@@ -46,7 +46,7 @@
       "name": "MR Elevate",
       "description": "Erfolgsbasierte Performance-Marketing-Agentur aus Dresden. Systeme zur planbaren Neukundengewinnung für Dienstleister, lokale Unternehmen und High-Ticket-Anbieter.",
       "url": "https://www.mr-elevate.de/",
-      "image": "https://www.mr-elevate.de/hero-dresden.jpg",
+      "image": "https://www.mr-elevate.de/hero-pastel.jpg",
       "logo": "https://www.mr-elevate.de/logo-gruen.png",
       "email": "info@mr-elevate.de",
       "telephone": "+4915510657637",
@@ -173,6 +173,7 @@
 
   /* Konstante für den weichen Übergang Hero → nächster Abschnitt (nie überschrieben) */
   --bg-light:      #f7f3ec;
+  --bg-light-rgb:  247,243,236;
 
   --radius:        16px;
   --radius-sm:     10px;
@@ -316,24 +317,23 @@ section{ position:relative; }
 .hero{ position:relative; min-height:100svh; display:flex; align-items:center; padding:120px 0 40px; overflow:hidden; }
 @media (max-width:900px){ .hero{ align-items:flex-start; padding-top:104px; } }
 .hero-bg{ position:absolute; inset:0; z-index:0; }
-.hero-bg video,.hero-photo,.hero-video{ width:100%; height:100%; object-fit:cover; }
-.hero-photo,.hero-video{ object-position:50% 42%; }
-/* Nahtloser Video-Loop: beide Ebenen übereinander, weiche Überblendung */
-.hero-bg .hero-video{ position:absolute; inset:0; opacity:1; transition:opacity 1s linear; }
-.hero-bg .hero-video.faded{ opacity:0; }
-.hero-bg::after{ /* dunkler Verlauf für Lesbarkeit (links stark, rechts mehr Foto) */
+.hero-photo{ width:100%; height:100%; object-fit:cover; object-position:50% 42%; display:block; }
+.hero-bg::after{ /* heller Verlauf für Lesbarkeit auf dem Pastellfoto (links stark, rechts mehr Foto) */
   content:""; position:absolute; inset:0;
   background:
-    linear-gradient(90deg, rgba(var(--ink-rgb),.28) 0%, rgba(var(--ink-rgb),.18) 42%, rgba(var(--ink-rgb),.10) 72%, rgba(var(--ink-rgb),.04) 100%),
-    linear-gradient(180deg, rgba(var(--ink-rgb),.45) 0%, rgba(var(--ink-rgb),.22) 38%, rgba(var(--ink-rgb),.5) 78%, var(--bg-light) 100%);
+    linear-gradient(90deg, rgba(var(--bg-light-rgb),.72) 0%, rgba(var(--bg-light-rgb),.5) 42%, rgba(var(--bg-light-rgb),.24) 72%, rgba(var(--bg-light-rgb),.08) 100%),
+    linear-gradient(180deg, rgba(var(--bg-light-rgb),.2) 0%, rgba(var(--bg-light-rgb),.05) 38%, rgba(var(--bg-light-rgb),.4) 78%, var(--bg-light) 100%);
 }
 @media (max-width:900px){
   .hero-bg::after{ background:
-    linear-gradient(180deg, rgba(var(--ink-rgb),.72) 0%, rgba(var(--ink-rgb),.55) 42%, rgba(var(--ink-rgb),.62) 74%, var(--bg-light) 100%); }
-  .hero-photo,.hero-video{ object-position:50% 36%; }
+    linear-gradient(180deg, rgba(var(--bg-light-rgb),.82) 0%, rgba(var(--bg-light-rgb),.68) 42%, rgba(var(--bg-light-rgb),.72) 74%, var(--bg-light) 100%); }
+  .hero-photo{ object-position:50% 36%; }
 }
 .hero-inner{ position:relative; z-index:2; max-width:880px; }
-.hero-title,.hero-tagline{ text-shadow:0 2px 22px rgba(0,0,0,.55); }
+/* Kein Schwarz-Schatten mehr: helles Pastellfoto braucht keine Aufhellung
+   fuer dunklen Text, ein weisser Halo trennt die Schrift stattdessen sanft
+   vom Foto darunter. */
+.hero-title,.hero-tagline{ text-shadow:0 1px 0 rgba(255,255,255,.5), 0 0 26px rgba(var(--bg-light-rgb),.65); }
 .hero h1{ margin-bottom:26px; }
 .hero h1 .accent{ color:var(--accent); position:relative; white-space:nowrap; }
 .hero-actions{ display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin-top:34px; }
@@ -1065,18 +1065,12 @@ body{
 <!-- ============================================================= -->
 <!-- HERO                                                           -->
 <!-- ============================================================= -->
-<header class="hero zone-dark" id="hero">
+<header class="hero" id="hero">
   <div class="hero-bg">
-    <!-- Dresden-Skyline als Hero-Hintergrund. Zwei Ebenen: kurz vor dem
-         Video-Ende blendet die zweite Kopie weich ein (nahtloser Loop,
-         kein Ruckler beim Neustart). loop-Attribut nur als JS-aus-Fallback. -->
-    <video class="hero-video" id="heroVidA" autoplay muted loop playsinline preload="metadata"
-           poster="hero-dresden.jpg" aria-hidden="true">
-      <source src="Dresden_skyline_sunrise_loop_202606150930.mp4" type="video/mp4" />
-    </video>
-    <video class="hero-video hero-video-alt faded" id="heroVidB" muted playsinline preload="none" aria-hidden="true">
-      <source src="Dresden_skyline_sunrise_loop_202606150930.mp4" type="video/mp4" />
-    </video>
+    <!-- Pastellige Dresden-Skyline (Frauenkirche) als Hero-Hintergrund.
+         Standbild statt Video: leichter, kein Autoplay/Decoding-Aufwand,
+         passt zur hellen Farbwelt der restlichen Seite. -->
+    <img class="hero-photo" src="hero-pastel.webp" width="1920" height="1072" alt="" aria-hidden="true" fetchpriority="high" />
   </div>
 
   <div class="container hero-inner">
@@ -1603,52 +1597,6 @@ body{
 (function(){
   "use strict";
   var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
-
-  /* ---------- Nahtloser Hero-Video-Loop (Crossfade zwischen zwei Ebenen) ---------- */
-  (function(){
-    var A = document.getElementById('heroVidA');
-    var B = document.getElementById('heroVidB');
-    if(!A || !B) return;
-    var FADE = 1.0; // Sekunden Überblendung vor dem Video-Ende
-    var swapping = false;
-
-    function watch(cur, nxt){
-      function onTime(){
-        if(swapping) return;
-        if(cur.duration && cur.currentTime >= cur.duration - FADE){
-          swapping = true;
-          cur.removeEventListener('timeupdate', onTime);
-          nxt.currentTime = 0;
-          var p = nxt.play();
-          if(p && p.catch) p.catch(function(){});
-          nxt.classList.remove('faded');
-          cur.classList.add('faded');
-          setTimeout(function(){
-            cur.pause();
-            swapping = false;
-            watch(nxt, cur);
-          }, FADE * 1000 + 120);
-        }
-      }
-      cur.addEventListener('timeupdate', onTime);
-    }
-
-    // loop-Attribut war nur der Fallback ohne JS, jetzt übernimmt der Crossfade
-    A.removeAttribute('loop');
-    var started = false;
-    function init(){ if(started) return; started = true; watch(A, B); }
-    A.addEventListener('loadedmetadata', init);
-    if(A.readyState >= 1){ init(); }
-
-    // B erst laden, wenn A wirklich läuft – nicht sofort beim Parsen
-    // (spart ~2 MB auf der ersten Seite, B lief bisher mit preload="auto" doppelt mit)
-    var bLoadStarted = false;
-    function loadB(){
-      if(bLoadStarted) return; bLoadStarted = true;
-      B.preload = 'auto'; B.load();
-    }
-    A.addEventListener('playing', loadB, { once: true });
-  })();
 
   /* ---------- NAV scroll state ---------- */
   var nav = document.getElementById('nav');
