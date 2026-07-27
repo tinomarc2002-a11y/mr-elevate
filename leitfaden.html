@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Der komplette Meta- &amp; Google-Ads-Leitfaden | MR Elevate</title>
 <meta name="description" content="Schritt für Schritt zur eigenen Werbekampagne auf Meta und Google: vom Angebot bis zur Skalierung. Kostenlos, ohne Anmeldung, mit Studien belegt." />
-<meta name="theme-color" content="#08090a" />
+<meta name="theme-color" content="#0c0a0b" />
 <link rel="canonical" href="https://www.mr-elevate.de/leitfaden.html" />
 
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
@@ -65,19 +65,20 @@
   --fg:#211c17; --fg-muted:#5c5349; --fg-dim:#675e51;
   /* Lime bleibt als Flaeche immer lebhaft, als Text/Linie gedeckt und AA-sicher */
   --accent-fill:#c6ff3a; --accent-deep:#a4e000; --accent-ink:#0a0d00; --accent-glow:rgba(198,255,58,.35);
-  --accent:#3e6810;
-  --meta:#2f5fbf; --radius:16px; --radius-sm:10px; --maxw:1180px; --maxw-read:760px;
+  --accent:#3e6810; --amber:#95551a; --teal:#196b62; --clay:#923d24;
+  --ink:#0c0a0b; --ink-rgb:12,10,11;
+  --meta:#2f5fbf; --google:#b8860b; --radius:16px; --radius-sm:10px; --maxw:1180px; --maxw-read:760px;
   --ease:cubic-bezier(.22,.61,.36,1); --t-fast:.18s var(--ease); --t:.3s var(--ease);
   --font-display:'Fraunces',Georgia,serif;
   --font-ui:'Space Grotesk',system-ui,sans-serif;
   --font-body:'Inter',system-ui,sans-serif;
 }
-/* Dunkel-Zone: fuer Inseln, die bewusst dunkel bleiben (Nav-Leiste) */
+/* Dunkel-Zone: fuer Inseln, die bewusst dunkel bleiben (Nav-Leiste) – identisch zur Startseite */
 .zone-dark{
-  --bg:#0c0a0b; --bg-elev:#151114; --bg-card:#1a1518;
-  --line:#342c31; --line-strong:#4a4046;
-  --fg:#f6f3f0; --fg-muted:#b3aaa6; --fg-dim:#8b8280;
-  --accent:#c6ff3a;
+  --bg:var(--ink); --bg-elev:#161213; --bg-card:#1b1618;
+  --line:#332b2d; --line-strong:#4a4043;
+  --fg:#f7f3ec; --fg-muted:#c0b6a8; --fg-dim:#a2988a;
+  --accent:#c6ff3a; --amber:#e7a24b; --teal:#3fb0a4; --clay:#d76a4c;
   color:var(--fg);
 }
 *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
@@ -205,7 +206,7 @@ section{ position:relative; }
 /* mistake box */
 .mistake{ display:flex; gap:14px; margin-top:24px; padding:18px 20px; border:1px solid var(--line-strong);
   border-radius:var(--radius-sm); background:rgba(146,61,36,.05); }
-.mistake svg{ flex-shrink:0; color:#a8492c; margin-top:2px; }
+.mistake svg{ flex-shrink:0; color:var(--clay); margin-top:2px; }
 .mistake .m-label{ display:block; font-family:var(--font-ui); font-weight:600; font-size:.76rem;
   letter-spacing:.1em; text-transform:uppercase; color:#923d24; margin-bottom:6px; }
 .mistake p{ color:var(--fg-muted); font-size:.94rem; margin:0; }
@@ -213,7 +214,7 @@ section{ position:relative; }
 /* channel compare */
 .compare{ display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:26px 0 8px; }
 .compare-card{ border:1px solid var(--line-strong); border-radius:var(--radius); padding:24px; }
-.compare-card.google{ border-top:3px solid #b8860b; }
+.compare-card.google{ border-top:3px solid var(--google); }
 .compare-card.meta{ border-top:3px solid var(--meta); }
 .compare-card h4{ display:flex; align-items:center; gap:9px; font-size:1.1rem; margin-bottom:4px; }
 .compare-card .ctag{ font-size:.76rem; color:var(--fg-dim); display:block; margin-bottom:14px; }
