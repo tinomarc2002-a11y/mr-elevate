@@ -264,8 +264,8 @@ section{ position:relative; }
   will-change:transform;
 }
 .btn:active{ transform:scale(.97); }
-.btn-primary{ background:var(--accent-fill); color:var(--accent-ink); }
-.btn-primary:hover{ background:#b9d651; transform:translateY(-2px); }
+.btn-primary{ background:var(--bg-card); color:var(--accent); border:2px solid var(--accent); }
+.btn-primary:hover{ background:var(--accent); color:var(--accent-ink); transform:translateY(-2px); }
 .btn-ghost{ background:rgba(255,255,255,.04); color:var(--fg); border:1px solid var(--line-strong); }
 .btn-ghost:hover{ background:rgba(255,255,255,.08); border-color:var(--fg-dim); transform:translateY(-2px); }
 .btn .arrow{ transition:transform var(--t); }
@@ -779,8 +779,8 @@ section{ position:relative; }
   transition:background var(--t-fast), box-shadow var(--t-fast), border-color var(--t-fast); }
 .btn-cc-ghost{ background:rgba(0,0,0,.035); color:var(--fg); }
 .btn-cc-ghost:hover{ background:rgba(0,0,0,.07); border-color:var(--fg-dim); }
-.btn-cc-accept{ background:var(--accent-fill); color:var(--accent-ink); border-color:var(--accent-fill); }
-.btn-cc-accept:hover{ box-shadow:0 8px 26px -8px var(--accent-glow); }
+.btn-cc-accept{ background:var(--bg-card); color:var(--accent); border-color:var(--accent); }
+.btn-cc-accept:hover{ background:var(--accent); color:var(--accent-ink); box-shadow:0 8px 26px -8px var(--accent-glow); }
 @media(min-width:600px){ .cc-inner{ flex-direction:row; align-items:center; } .cc-actions{ flex-shrink:0; width:300px; } }
 @media (prefers-reduced-motion:reduce){ .cc{ animation:none; } }
 
