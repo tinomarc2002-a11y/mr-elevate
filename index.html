@@ -318,19 +318,19 @@ section{ position:relative; }
 @media (max-width:900px){ .hero{ align-items:flex-start; padding-top:104px; } }
 .hero-bg{ position:absolute; inset:0; z-index:0; }
 .hero-photo{ width:100%; height:100%; object-fit:cover; object-position:50% 42%; display:block; }
-.hero-bg::after{ /* dunkler Verlauf für Lesbarkeit auf dem Originalfoto (links stark, rechts mehr Foto) */
+.hero-bg::after{ /* heller Verlauf für Lesbarkeit auf der papierhellen Illustration (links stark, rechts mehr Bild) */
   content:""; position:absolute; inset:0;
   background:
-    linear-gradient(90deg, rgba(var(--ink-rgb),.42) 0%, rgba(var(--ink-rgb),.28) 42%, rgba(var(--ink-rgb),.14) 72%, rgba(var(--ink-rgb),.05) 100%),
-    linear-gradient(180deg, rgba(var(--ink-rgb),.22) 0%, rgba(var(--ink-rgb),.06) 38%, rgba(var(--ink-rgb),.42) 78%, var(--bg-light) 100%);
+    linear-gradient(90deg, rgba(var(--bg-light-rgb),.62) 0%, rgba(var(--bg-light-rgb),.4) 42%, rgba(var(--bg-light-rgb),.18) 72%, rgba(var(--bg-light-rgb),.06) 100%),
+    linear-gradient(180deg, rgba(var(--bg-light-rgb),.15) 0%, rgba(var(--bg-light-rgb),.02) 38%, rgba(var(--bg-light-rgb),.35) 78%, var(--bg-light) 100%);
 }
 @media (max-width:900px){
   .hero-bg::after{ background:
-    linear-gradient(180deg, rgba(var(--ink-rgb),.6) 0%, rgba(var(--ink-rgb),.45) 42%, rgba(var(--ink-rgb),.52) 74%, var(--bg-light) 100%); }
+    linear-gradient(180deg, rgba(var(--bg-light-rgb),.75) 0%, rgba(var(--bg-light-rgb),.58) 42%, rgba(var(--bg-light-rgb),.65) 74%, var(--bg-light) 100%); }
   .hero-photo{ object-position:50% 36%; }
 }
 .hero-inner{ position:relative; z-index:2; max-width:880px; }
-.hero-title,.hero-tagline{ text-shadow:0 2px 22px rgba(var(--ink-rgb),.55); }
+.hero-title,.hero-tagline{ text-shadow:0 1px 0 rgba(255,255,255,.5), 0 0 24px rgba(var(--bg-light-rgb),.6); }
 .hero h1{ margin-bottom:26px; }
 .hero h1 .accent{ color:var(--accent); position:relative; white-space:nowrap; }
 .hero-actions{ display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin-top:34px; }
@@ -1022,7 +1022,7 @@ body{
 <!-- ============================================================= -->
 <!-- NAVBAR                                                         -->
 <!-- ============================================================= -->
-<nav class="nav zone-dark" id="nav">
+<nav class="nav" id="nav">
   <div class="container nav-inner">
     <a href="#top" class="brand" aria-label="MR Elevate Startseite">
       <span class="brand-stack">
@@ -1062,12 +1062,11 @@ body{
 <!-- ============================================================= -->
 <!-- HERO                                                           -->
 <!-- ============================================================= -->
-<header class="hero zone-dark" id="hero">
+<header class="hero" id="hero">
   <div class="hero-bg">
-    <!-- Pastellige Dresden-Skyline (Frauenkirche) als Hero-Hintergrund.
-         Standbild statt Video: leichter, kein Autoplay/Decoding-Aufwand.
-         Nur ganz leicht verblasstes Originalfoto, keine starke Umfärbung. -->
-    <img class="hero-photo" src="hero-pastel.webp" width="1920" height="1072" alt="" aria-hidden="true" fetchpriority="high" />
+    <!-- Handgezeichnete Dresden-Skyline (Frauenkirche) als Hero-Hintergrund,
+         warm und papierhell wie die Cremetoene der restlichen Seite. -->
+    <img class="hero-photo" src="hero-pastel.webp" width="1920" height="1024" alt="" aria-hidden="true" fetchpriority="high" />
   </div>
 
   <div class="container hero-inner">
@@ -1596,13 +1595,14 @@ body{
   var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
 
   /* ---------- NAV scroll state ----------
-     Nav ist fest zone-dark (heller Text, passend zum dunklen Hero-Foto
-     direkt darunter); .scrolled ergaenzt nur noch den dunklen
-     Hintergrund/Blur, sobald der Hero verlassen wird. */
+     zone-dark haengt am Scroll-Zustand: bis zum Scrollen sitzt die Nav
+     transparent auf der hellen Hero-Illustration (braucht dunklen Text),
+     erst .scrolled gibt ihr einen dunklen Hintergrund (heller Text). */
   var nav = document.getElementById('nav');
   var onScroll = function(){
     var isScrolled = window.scrollY > 20;
     nav.classList.toggle('scrolled', isScrolled);
+    nav.classList.toggle('zone-dark', isScrolled);
   };
   onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
 
