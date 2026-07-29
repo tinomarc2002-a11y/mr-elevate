@@ -53,6 +53,79 @@
 }
 </script>
 
+<!-- Strukturierte Daten: Article (Autorschaft + Aktualitaet fuer E-E-A-T) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Deine erste Kampagne auf Meta & Google, Schritt für Schritt",
+  "description": "Der komplette Prozess für eine eigene Werbekampagne auf Meta und Google: von der Kanalwahl über Landingpage und Tracking bis zur Skalierung.",
+  "inLanguage": "de-DE",
+  "author": {
+    "@type": "Person",
+    "@id": "https://www.mr-elevate.de/#marc-richter",
+    "name": "Marc Richter",
+    "jobTitle": "Gründer",
+    "url": "https://www.mr-elevate.de/#founder",
+    "knowsAbout": ["Google Ads", "Meta Ads", "Performance Marketing", "Leadgenerierung", "Erfolgsbasiertes Marketing"],
+    "sameAs": ["https://www.linkedin.com/in/marc-richter-043a90412/"]
+  },
+  "publisher": {
+    "@type": "Organization",
+    "@id": "https://www.mr-elevate.de/#organization",
+    "name": "MR Elevate",
+    "url": "https://www.mr-elevate.de/",
+    "logo": { "@type": "ImageObject", "url": "https://www.mr-elevate.de/logo-gruen.png" }
+  },
+  "datePublished": "2026-07-25",
+  "dateModified": "2026-07-30",
+  "mainEntityOfPage": { "@type": "WebPage", "@id": "https://www.mr-elevate.de/leitfaden.html" },
+  "image": "https://www.mr-elevate.de/hero-pastel.jpg"
+}
+</script>
+
+<!-- Strukturierte Daten: FAQPage (Antwortblöcke, die KI-Suchmaschinen direkt zitieren koennen) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "Wie lange dauert die Lernphase bei Meta Ads?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Als Richtwert gilt: rund 50 Conversions innerhalb von 7 Tagen pro Anzeigengruppe. Bis dahin testet der Algorithmus, die Ergebnisse schwanken. Erst danach liefert die Auslieferung stabil." }
+    },
+    {
+      "@type": "Question",
+      "name": "Was ist der Unterschied zwischen Google Ads und Meta Ads?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Google Ads erreicht Menschen, die aktiv nach einer Lösung suchen, der Bedarf ist also schon da. Meta Ads erreicht Menschen über Zielgruppenmerkmale, bevor sie selbst suchen. Bei Google erntest du bestehende Nachfrage, bei Meta erzeugst du sie." }
+    },
+    {
+      "@type": "Question",
+      "name": "Brauche ich für Werbeanzeigen eine eigene Landingpage?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Ja. Eine dedizierte Landingpage mit einem einzigen Ziel konvertiert deutlich besser als die normale Website-Startseite. Allein das Entfernen der Navigation kann die Conversion-Rate laut HubSpot-Auswertung um 16 bis 28 Prozent steigern." }
+    },
+    {
+      "@type": "Question",
+      "name": "Um wie viel darf ich das Budget erhöhen, ohne die Kampagne zu zerstören?",
+      "acceptedAnswer": { "@type": "Answer", "text": "In Schritten von 15 bis 20 Prozent, mit einigen Tagen Abstand. Größere Sprünge setzen die Anzeigengruppe zurück in die Lernphase und machen die bereits gesammelten Daten wertlos." }
+    }
+  ]
+}
+</script>
+
+<!-- Strukturierte Daten: BreadcrumbList -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Startseite", "item": "https://www.mr-elevate.de/" },
+    { "@type": "ListItem", "position": 2, "name": "Meta- & Google-Ads-Leitfaden", "item": "https://www.mr-elevate.de/leitfaden.html" }
+  ]
+}
+</script>
+
 <link rel="preload" href="fonts/inter.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="preload" href="fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="fonts.css" />
@@ -263,6 +336,14 @@ section{ position:relative; }
 .closing-actions{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
 
 /* Quellen */
+/* Sichtbare FAQ – Pflicht fuer valides FAQPage-Schema (Google verlangt, dass
+   die Q&A-Paare fuer Nutzer sichtbar sind) und bestes Format fuer Zitate in
+   KI-Suchmaschinen. Statisch im HTML, kein JS. */
+.g-faq{ padding:clamp(48px,7vw,80px) 0; border-top:1px solid var(--line); }
+.g-faq h2{ font-size:clamp(1.6rem,3.4vw,2.4rem); letter-spacing:-.02em; margin-bottom:32px; max-width:var(--maxw-read); }
+.g-faq dl{ max-width:var(--maxw-read); display:flex; flex-direction:column; gap:26px; }
+.g-faq dt{ font-family:var(--font-display); font-weight:600; font-size:1.12rem; color:var(--fg); margin-bottom:7px; }
+.g-faq dd{ color:var(--fg-muted); font-size:1.02rem; }
 .quellen{ padding:40px 0; border-top:1px solid var(--line); }
 .quellen-label{ display:block; font-family:var(--font-display); font-weight:600; font-size:.72rem;
   letter-spacing:.14em; text-transform:uppercase; color:var(--fg-dim); margin-bottom:14px; }
@@ -323,8 +404,10 @@ section{ position:relative; }
     <span class="g-kicker">Der komplette Leitfaden, kostenlos und ohne Anmeldung</span>
     <h1 class="g-title">Deine erste Kampagne auf Meta &amp; Google, Schritt für Schritt</h1>
     <p class="g-lead">Kein Freebie gegen deine E-Mail-Adresse, kein halbes Wissen. Das hier ist <b>der ganze Prozess</b>, den wir auch für unsere Kunden nutzen, von der ersten Überlegung bis zur skalierenden Kampagne. Für Meta (Facebook &amp; Instagram) und Google. Mit Zahlen belegt, wo es welche gibt. Und ehrlich da, wo es keine gibt.</p>
-    <p class="g-lead">Wenn du danach lieber willst, dass jemand das für dich übernimmt, und nur verdient, wenn es liefert, findest du den Weg ganz unten. Aber du brauchst mich dafür nicht. Alles steht hier.</p>
+    <p class="g-lead">Wenn du danach lieber willst, dass jemand das für dich übernimmt, und nur verdient, wenn es liefert, findest du den Weg ganz unten. So funktioniert unser <a href="index.html#modell">erfolgsbasiertes Modell</a>. Aber du brauchst mich dafür nicht. Alles steht hier.</p>
     <div class="g-meta">
+      <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16M6.5 17a5.5 5.5 0 0 1 11 0"/></svg> von <a href="index.html#founder">Marc Richter</a></span>
+      <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg> aktualisiert <time datetime="2026-07-30">30. Juli 2026</time></span>
       <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> ca. 15 Minuten Lesezeit</span>
       <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> 10 Phasen, komplett offen</span>
       <span class="print-hint" onclick="window.print()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg> Als PDF speichern</span>
@@ -848,6 +931,30 @@ section{ position:relative; }
         </div>
       </div>
     </div>
+  </div>
+</section>
+
+<section class="g-faq" id="faq">
+  <div class="container">
+    <h2>Häufige Fragen zum Kampagnen-Aufbau</h2>
+    <dl>
+      <div>
+        <dt>Wie lange dauert die Lernphase bei Meta Ads?</dt>
+        <dd>Als Richtwert gilt: rund 50 Conversions innerhalb von 7 Tagen pro Anzeigengruppe. Bis dahin testet der Algorithmus, die Ergebnisse schwanken. Erst danach liefert die Auslieferung stabil.</dd>
+      </div>
+      <div>
+        <dt>Was ist der Unterschied zwischen Google Ads und Meta Ads?</dt>
+        <dd>Google Ads erreicht Menschen, die aktiv nach einer Lösung suchen, der Bedarf ist also schon da. Meta Ads erreicht Menschen über Zielgruppenmerkmale, bevor sie selbst suchen. Bei Google erntest du bestehende Nachfrage, bei Meta erzeugst du sie.</dd>
+      </div>
+      <div>
+        <dt>Brauche ich für Werbeanzeigen eine eigene Landingpage?</dt>
+        <dd>Ja. Eine dedizierte Landingpage mit einem einzigen Ziel konvertiert deutlich besser als die normale Website-Startseite. Allein das Entfernen der Navigation kann die Conversion-Rate laut HubSpot-Auswertung um 16 bis 28&nbsp;% steigern.</dd>
+      </div>
+      <div>
+        <dt>Um wie viel darf ich das Budget erhöhen, ohne die Kampagne zu zerstören?</dt>
+        <dd>In Schritten von 15 bis 20&nbsp;%, mit einigen Tagen Abstand. Größere Sprünge setzen die Anzeigengruppe zurück in die Lernphase und machen die bereits gesammelten Daten wertlos.</dd>
+      </div>
+    </dl>
   </div>
 </section>
 
