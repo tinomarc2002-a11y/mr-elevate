@@ -497,6 +497,8 @@ section{ position:relative; }
 .sol-point:hover{ border-color:var(--accent); }
 .sol-point .num{ font-family:var(--font-display); font-weight:700; color:var(--accent); font-size:1.1rem; flex-shrink:0; width:34px; }
 .sol-point h4{ font-size:1.18rem; margin-bottom:5px; }
+.sol-point h4 a{ text-underline-offset:3px; }
+.sol-point h4 a:hover{ text-decoration:underline; color:var(--accent); }
 .sol-point p{ color:var(--fg-muted); font-size:.92rem; }
 .sol-visual{
   position:relative; border:1px solid var(--line-strong); border-radius:var(--radius); overflow:hidden;
@@ -1112,10 +1114,10 @@ body{
           <p class="lead">MR Elevate baut, betreibt und optimiert deinen kompletten Akquise-Funnel: Setup, Kampagnen, Tracking, Optimierung. Eine kleine Setup-Gebühr zum Start, danach ist unsere Vergütung an deine Ergebnisse gekoppelt.</p>
         </div>
         <div class="sol-points">
-          <div class="sol-point reveal d1"><span class="num">01</span><div><h4>Performance-Setup</h4><p>Funnel, Landingpages, Tracking und Anzeigen, komplett aufgesetzt und auf deine Zielgruppe geschärft.</p></div></div>
-          <div class="sol-point reveal d2"><span class="num">02</span><div><h4>Kampagnen &amp; Traffic</h4><p>Bezahlte Kampagnen, die qualifizierte Anfragen bringen. Klicks allein zahlen keine Rechnung.</p></div></div>
-          <div class="sol-point reveal d3"><span class="num">03</span><div><h4>Tracking &amp; Optimierung</h4><p>Datenbasierte Optimierung in kurzen Zyklen. Was funktioniert, wird skaliert, was nicht, fliegt raus.</p></div></div>
-          <div class="sol-point reveal d4"><span class="num">04</span><div><h4>Erfolgsbasierte Deal-Struktur</h4><p>Du trägst Werbekosten plus erfolgsabhängige Vergütung. Unser Verdienst ist an dein Ergebnis gekoppelt.</p></div></div>
+          <div class="sol-point reveal d1"><span class="num">01</span><div><h4><a href="leitfaden.html#phase-3">Performance-Setup (Landingpage &amp; Tracking)</a></h4><p>Funnel, Landingpages, Tracking und Anzeigen, komplett aufgesetzt und auf deine Zielgruppe geschärft.</p></div></div>
+          <div class="sol-point reveal d2"><span class="num">02</span><div><h4><a href="leitfaden.html#phase-1">Google Ads &amp; Meta Ads Kampagnen</a></h4><p>Bezahlte Kampagnen, die qualifizierte Anfragen bringen. Klicks allein zahlen keine Rechnung.</p></div></div>
+          <div class="sol-point reveal d3"><span class="num">03</span><div><h4><a href="leitfaden.html#phase-4">Tracking &amp; Performance-Optimierung</a></h4><p>Datenbasierte Optimierung in kurzen Zyklen. Was funktioniert, wird skaliert, was nicht, fliegt raus.</p></div></div>
+          <div class="sol-point reveal d4"><span class="num">04</span><div><h4><a href="#modell">Erfolgsbasierte Deal-Struktur</a></h4><p>Du trägst Werbekosten plus erfolgsabhängige Vergütung. Unser Verdienst ist an dein Ergebnis gekoppelt.</p></div></div>
         </div>
       </div>
       <div class="sol-visual sol-engine eng-dash reveal d2">
@@ -1438,7 +1440,40 @@ body{
       <p class="sec-sub">Die Fragen, die im Erstgespräch ohnehin kommen.</p>
     </div>
     <div class="faq-wrap reveal d1" id="faq-list">
-      <!-- Items per JS-Daten generiert -->
+      <!-- Statisch vorgerendert (crawlerlesbar ohne JS); JS haengt unten
+           nur noch das Auf-/Zuklapp-Verhalten an die vorhandenen Elemente. -->
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" id="faq-q-0"><span>Trage ich wirklich kein Agentur-Risiko?</span><span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-a" role="region" aria-labelledby="faq-q-0"><p>Korrekt. Außer einer kleinen Setup-Gebühr fällt für unsere Leistung nur dann eine Vergütung an, wenn tatsächlich Ergebnisse entstehen. Du trägst die Werbekosten (die fließen direkt an die Plattformen) und eine erfolgsabhängige Vergütung. Einen klassischen Retainer ohne Gegenwert gibt es bei uns nicht.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" id="faq-q-1"><span>Was genau kostet mich die Zusammenarbeit?</span><span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-a" role="region" aria-labelledby="faq-q-1"><p>Eine kleine, faire Setup-Gebühr zu Beginn deckt den Aufbau von Funnel, Tracking und Kampagnen. Danach zahlst du ausschließlich deine Werbekosten plus eine erfolgsabhängige Vergütung. Die genaue Struktur besprechen wir transparent im Erstgespräch.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" id="faq-q-2"><span>Gibt es eine Mindestlaufzeit oder lange Bindung?</span><span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-a" role="region" aria-labelledby="faq-q-2"><p>Wir arbeiten mit Vertrag, aber ohne Knebelvertrag: Erstverträge laufen bei uns maximal 3 bis 6 Monate, um das Risiko für dich überschaubar zu halten. Andere Laufzeiten lassen sich individuell vereinbaren, wenn es für dich passt.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" id="faq-q-3"><span>Wie hoch sollte mein Werbebudget sein?</span><span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-a" role="region" aria-labelledby="faq-q-3"><p>Das hängt von Branche, Region und Zielen ab. Wichtig ist ein Budget, mit dem wir sauber testen und dann skalieren können. Im Analysegespräch geben wir dir eine ehrliche Einschätzung. Auch dann, wenn der richtige Zeitpunkt noch nicht gekommen ist.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" id="faq-q-4"><span>Wie ist der Funnel aufgebaut?</span><span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-a" role="region" aria-labelledby="faq-q-4"><p>Typisch: zielgerichtete Anzeigen → überzeugende Landingpage → Qualifizierung der Anfrage → Übergabe an dich. Jeder Schritt wird gemessen, sodass wir genau sehen, wo Anfragen entstehen und wo wir optimieren.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" id="faq-q-5"><span>Wie und wie oft bekomme ich Reporting?</span><span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-a" role="region" aria-labelledby="faq-q-5"><p>Du erhältst transparente Einblicke in die relevanten Zahlen: Anfragen, Kosten pro Anfrage und Entwicklung. Du siehst die Kennzahlen, die für dein Geschäft zählen. Mehr nicht.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" id="faq-q-6"><span>Für welche Unternehmen funktioniert das?</span><span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-a" role="region" aria-labelledby="faq-q-6"><p>Besonders gut für Dienstleister, lokale Unternehmen und High-Ticket-Anbieter mit klarem Angebot und ausreichender Marge, um erfolgsbasiert zu arbeiten. Im kostenlosen Analysegespräch finden wir gemeinsam heraus, ob du dazugehörst.</p></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q" type="button" aria-expanded="false" id="faq-q-7"><span>Wie schnell sehe ich erste Ergebnisse?</span><span class="faq-icon" aria-hidden="true"></span></button>
+        <div class="faq-a" role="region" aria-labelledby="faq-q-7"><p>Nach dem Setup folgt eine kurze Testphase, in der wir Kampagnen kontrolliert anlaufen lassen. Erste qualifizierte Anfragen sind oft innerhalb der ersten Wochen realistisch. Verlässlich wird die Aussage aber erst auf Basis deiner konkreten Ausgangslage.</p></div>
+      </div>
     </div>
   </div>
 </section>
@@ -1717,34 +1752,18 @@ body{
   
 
   /* =============================================================
-     FAQ  (data-driven accordion)
+     FAQ  (accordion)
      CONVERSION-CRITICAL: behandelt Risiko/Kosten/Laufzeit-Einwände
-     ============================================================= */
-  var faqs = [
-    {q:'Trage ich wirklich kein Agentur-Risiko?', a:'Korrekt. Außer einer kleinen Setup-Gebühr fällt für unsere Leistung nur dann eine Vergütung an, wenn tatsächlich Ergebnisse entstehen. Du trägst die Werbekosten (die fließen direkt an die Plattformen) und eine erfolgsabhängige Vergütung. Einen klassischen Retainer ohne Gegenwert gibt es bei uns nicht.'},
-    {q:'Was genau kostet mich die Zusammenarbeit?', a:'Eine kleine, faire Setup-Gebühr zu Beginn deckt den Aufbau von Funnel, Tracking und Kampagnen. Danach zahlst du ausschließlich deine Werbekosten plus eine erfolgsabhängige Vergütung. Die genaue Struktur besprechen wir transparent im Erstgespräch.'},
-    {q:'Gibt es eine Mindestlaufzeit oder lange Bindung?', a:'Wir arbeiten mit Vertrag, aber ohne Knebelvertrag: Erstverträge laufen bei uns maximal 3 bis 6 Monate, um das Risiko für dich überschaubar zu halten. Andere Laufzeiten lassen sich individuell vereinbaren, wenn es für dich passt.'},
-    {q:'Wie hoch sollte mein Werbebudget sein?', a:'Das hängt von Branche, Region und Zielen ab. Wichtig ist ein Budget, mit dem wir sauber testen und dann skalieren können. Im Analysegespräch geben wir dir eine ehrliche Einschätzung. Auch dann, wenn der richtige Zeitpunkt noch nicht gekommen ist.'},
-    {q:'Wie ist der Funnel aufgebaut?', a:'Typisch: zielgerichtete Anzeigen → überzeugende Landingpage → Qualifizierung der Anfrage → Übergabe an dich. Jeder Schritt wird gemessen, sodass wir genau sehen, wo Anfragen entstehen und wo wir optimieren.'},
-    {q:'Wie und wie oft bekomme ich Reporting?', a:'Du erhältst transparente Einblicke in die relevanten Zahlen: Anfragen, Kosten pro Anfrage und Entwicklung. Du siehst die Kennzahlen, die für dein Geschäft zählen. Mehr nicht.'},
-    {q:'Für welche Unternehmen funktioniert das?', a:'Besonders gut für Dienstleister, lokale Unternehmen und High-Ticket-Anbieter mit klarem Angebot und ausreichender Marge, um erfolgsbasiert zu arbeiten. Im kostenlosen Analysegespräch finden wir gemeinsam heraus, ob du dazugehörst.'},
-    {q:'Wie schnell sehe ich erste Ergebnisse?', a:'Nach dem Setup folgt eine kurze Testphase, in der wir Kampagnen kontrolliert anlaufen lassen. Erste qualifizierte Anfragen sind oft innerhalb der ersten Wochen realistisch. Verlässlich wird die Aussage aber erst auf Basis deiner konkreten Ausgangslage.'}
-  ];
-  var faqList = document.getElementById('faq-list');
-  faqs.forEach(function(f, i){
-    var item = document.createElement('div'); item.className = 'faq-item';
-    var btn = document.createElement('button');
-    btn.className = 'faq-q'; btn.type='button';
-    btn.setAttribute('aria-expanded','false'); btn.id = 'faq-q-'+i;
-    btn.innerHTML = '<span>'+f.q+'</span><span class="faq-icon" aria-hidden="true"></span>';
-    var ans = document.createElement('div'); ans.className='faq-a'; ans.setAttribute('role','region'); ans.setAttribute('aria-labelledby','faq-q-'+i);
-    var p = document.createElement('p'); p.textContent = f.a; ans.appendChild(p);
+     Fragen/Antworten stehen statisch im HTML (crawlerlesbar ohne JS-
+     Ausfuehrung); hier wird nur noch das Auf-/Zuklappen angehaengt. */
+  document.querySelectorAll('#faq-list .faq-item').forEach(function(item){
+    var btn = item.querySelector('.faq-q');
+    var ans = item.querySelector('.faq-a');
     btn.addEventListener('click', function(){
       var open = item.classList.toggle('open');
       btn.setAttribute('aria-expanded', open);
       ans.style.maxHeight = open ? ans.scrollHeight + 'px' : '0px';
     });
-    item.appendChild(btn); item.appendChild(ans); faqList.appendChild(item);
   });
 
   /* =============================================================
