@@ -3,60 +3,65 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Werbe-Check: Lohnt sich Werbung für dein Unternehmen? | Google vs. Meta Ads</title>
-<meta name="description" content="Kostenloser Werbe-Check in 3 Minuten: Finde heraus, ob sich Google Ads oder Meta Ads für dein Unternehmen lohnt – inkl. konkreter Budget-Empfehlung.">
-<meta name="theme-color" content="#14203A">
+<title>Werbe-Check von MR Elevate: Lohnt sich Werbung für dein Unternehmen? | Google vs. Meta Ads</title>
+<meta name="description" content="Kostenloser Werbe-Check von MR Elevate in 3 Minuten: Finde heraus, ob sich Google Ads oder Meta Ads für dein Unternehmen lohnt – inkl. konkreter Budget-Empfehlung.">
+<meta name="theme-color" content="#211c17">
 <meta name="robots" content="index,follow">
 
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="favicon.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
 
 <meta property="og:type" content="website">
 <meta property="og:locale" content="de_DE">
-<meta property="og:site_name" content="Werbe-Check">
-<meta property="og:title" content="Lohnt sich Werbung für dein Unternehmen?">
+<meta property="og:site_name" content="MR Elevate">
+<meta property="og:title" content="Werbe-Check von MR Elevate: Lohnt sich Werbung für dein Unternehmen?">
 <meta property="og:description" content="In 3 Minuten erfahren, ob sich Google Ads oder Meta Ads lohnt – inkl. Budget-Empfehlung.">
+<meta property="og:image" content="../logo-gruen.png">
 
-<!-- Selbst gehostete Schriften (DSGVO-konform, keine Verbindung zu Google Fonts) -->
-<link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/onest.woff2" as="font" type="font/woff2" crossorigin>
+<!-- Selbst gehostete Schriften – dieselben Dateien wie die Hauptseite (DSGVO-konform) -->
+<link rel="preload" href="../fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="fonts.css">
 
 <style>
 /* ============== ROOT TOKENS ============== */
+/* Übernommen aus der MR-Elevate-Hauptseite (index.html / datenschutz.html), damit der Werbe-Check
+   sich klar als MR-Elevate-Tool zu erkennen gibt. Variablennamen bewusst wie im ursprünglichen
+   Werbe-Check-Entwurf belassen (--deep/--mid/--soft usw.), nur die Werte sind jetzt Corporate-Identity-Farben. */
 :root {
-  --deep: #14203A;
-  --mid: #3B5BFF;
-  --soft: #EAF0FF;
-  --line-blue: #D3DEFB;
+  --deep: #0c0a0b;       /* MR-Elevate --ink: dunkle Flächen (Kontaktkarte, aktive Buttons) */
+  --mid: #3e6810;        /* MR-Elevate --accent: AA-sicheres Oliv-Lime für Text/Linien-Akzente */
+  --soft: #eef2df;       /* heller Lime-Ton für Badges/Hover-Flächen */
+  --line-blue: #cfc2a8;  /* MR-Elevate --line-strong */
 
-  --accent: #17A673;
-  --accent-dark: #0E7F57;
-  --accent-soft: #E3F7EF;
+  --accent: #a8c93e;      /* MR-Elevate --accent-fill: das Marken-Lime */
+  --accent-dark: #3e6810; /* MR-Elevate --accent */
+  --accent-soft: #eef2df;
+  --accent-ink: #0a0d00;  /* Text auf Lime-Fläche */
 
   --google: #4285F4;
   --google-dark: #2A63C7;
   --meta: #7B2FF7;
   --meta-dark: #5E1FC4;
 
-  --cream: #F7F5F0;
-  --paper: #FFFFFF;
-  --ink: #14203A;
-  --ink-soft: #3B4A60;
-  --muted: #7A8499;
-  --line: #E7E2D8;
+  --cream: #f7f3ec;
+  --paper: #fffdf8;
+  --ink: #211c17;
+  --ink-soft: #5c5349;
+  --muted: #675e51;
+  --line: #e4dbc9;
 
-  --shadow-sm: 0 1px 2px rgba(20,32,58,0.05), 0 1px 3px rgba(20,32,58,0.04);
-  --shadow-md: 0 4px 12px rgba(20,32,58,0.07), 0 2px 4px rgba(20,32,58,0.04);
-  --shadow-lg: 0 20px 40px -10px rgba(20,32,58,0.18), 0 8px 16px -8px rgba(20,32,58,0.08);
-  --shadow-accent: 0 8px 24px -8px rgba(23,166,115,0.45);
+  --shadow-sm: 0 1px 2px rgba(33,28,23,0.05), 0 1px 3px rgba(33,28,23,0.04);
+  --shadow-md: 0 4px 12px rgba(33,28,23,0.07), 0 2px 4px rgba(33,28,23,0.04);
+  --shadow-lg: 0 20px 40px -10px rgba(33,28,23,0.18), 0 8px 16px -8px rgba(33,28,23,0.08);
+  --shadow-accent: 0 8px 24px -8px rgba(168,201,62,0.45);
 
-  --radius-sm: 8px;
+  --radius-sm: 10px;
   --radius-md: 14px;
   --radius-lg: 20px;
 
   --font-display: 'Fraunces', Georgia, serif;
-  --font-body: 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-body: 'Inter', system-ui, sans-serif;
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -89,8 +94,10 @@ input { font: inherit; }
   border-bottom: 1px solid rgba(231, 226, 216, 0.6);
 }
 .site-header .container { display: flex; justify-content: space-between; align-items: center; }
-.brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 600; font-size: 20px; color: var(--deep); letter-spacing: -0.01em; }
-.brand .mark { width: 34px; height: 34px; border-radius: 9px; background: var(--deep); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.brand { display: flex; align-items: center; gap: 12px; font-family: var(--font-display); font-weight: 700; font-size: 19px; color: var(--ink); letter-spacing: -0.01em; text-decoration: none; }
+.brand img { height: 38px; width: auto; filter: drop-shadow(0 3px 10px rgba(168,201,62,0.18)); }
+.brand .we { color: var(--mid); }
+.tool-badge { font-family: var(--font-display); font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); border: 1px solid var(--line-blue); border-radius: 100px; padding: 4px 12px; }
 .header-meta { font-size: 14px; color: var(--muted); font-weight: 500; }
 .header-meta strong { color: var(--accent-dark); font-weight: 600; }
 @media (max-width: 640px) { .header-meta { display: none; } }
@@ -99,11 +106,11 @@ input { font: inherit; }
 .hero { padding: 72px 0 56px; position: relative; overflow: hidden; }
 .hero::before {
   content: ''; position: absolute; top: -100px; right: -100px; width: 480px; height: 480px;
-  background: radial-gradient(circle, rgba(59,91,255,0.08) 0%, transparent 70%); pointer-events: none;
+  background: radial-gradient(circle, rgba(168,201,62,0.1) 0%, transparent 70%); pointer-events: none;
 }
 .hero::after {
   content: ''; position: absolute; bottom: -150px; left: -100px; width: 400px; height: 400px;
-  background: radial-gradient(circle, rgba(23,166,115,0.08) 0%, transparent 70%); pointer-events: none;
+  background: radial-gradient(circle, rgba(168,201,62,0.06) 0%, transparent 70%); pointer-events: none;
 }
 .hero-inner { position: relative; z-index: 1; max-width: 780px; }
 
@@ -112,8 +119,8 @@ input { font: inherit; }
   border: 1px solid var(--line); border-radius: 100px; font-size: 13px; font-weight: 500;
   color: var(--ink-soft); margin-bottom: 26px; box-shadow: var(--shadow-sm);
 }
-.eyebrow .dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; display: inline-block; box-shadow: 0 0 0 4px rgba(23,166,115,0.15); animation: pulse 2s ease-in-out infinite; }
-@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 4px rgba(23,166,115,0.15); } 50% { box-shadow: 0 0 0 7px rgba(23,166,115,0.05); } }
+.eyebrow .dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; display: inline-block; box-shadow: 0 0 0 4px rgba(168,201,62,0.2); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 4px rgba(168,201,62,0.2); } 50% { box-shadow: 0 0 0 7px rgba(168,201,62,0.08); } }
 
 .hero h1 {
   font-family: var(--font-display); font-weight: 500; font-size: clamp(36px, 5.2vw, 60px);
@@ -128,12 +135,14 @@ input { font: inherit; }
 .hero p.lead { font-size: clamp(17px, 2vw, 20px); color: var(--ink-soft); line-height: 1.5; margin-bottom: 32px; max-width: 620px; }
 
 .cta-row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+/* Button-Stil 1:1 von der MR-Elevate-Hauptseite übernommen: Outline in Ruhe, Lime-Fläche erst beim Hover
+   (dieselbe bewusste Design-Entscheidung wie dort – kein durchgehend flächiger Lime-Button). */
 .btn-primary {
-  display: inline-flex; align-items: center; gap: 10px; background: var(--accent); color: white;
-  padding: 18px 32px; border-radius: 100px; font-weight: 600; font-size: 17px; box-shadow: var(--shadow-accent);
-  transition: all 0.2s ease; letter-spacing: -0.005em; text-decoration: none;
+  display: inline-flex; align-items: center; gap: 10px; background: var(--paper); color: var(--mid);
+  border: 2px solid var(--mid); padding: 16px 30px; border-radius: 100px; font-family: var(--font-display);
+  font-weight: 500; font-size: 17px; transition: all 0.2s ease; letter-spacing: -0.005em; text-decoration: none;
 }
-.btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 12px 28px -8px rgba(23,166,115,0.55); }
+.btn-primary:hover { background: var(--mid); color: var(--accent-ink); transform: translateY(-2px); }
 .btn-primary:active { transform: translateY(0); }
 .btn-primary svg { transition: transform 0.2s ease; }
 .btn-primary:hover svg { transform: translateX(3px); }
@@ -144,8 +153,8 @@ input { font: inherit; }
 
 /* ============== QUIZ SECTION ============== */
 .quiz-section { padding: 72px 0 100px; background: var(--paper); border-top: 1px solid var(--line); position: relative; overflow: hidden; }
-.quiz-section::before { content: ''; position: absolute; top: 80px; left: -140px; width: 380px; height: 380px; background: radial-gradient(circle, rgba(59,91,255,0.06) 0%, transparent 70%); pointer-events: none; }
-.quiz-section::after { content: ''; position: absolute; bottom: 120px; right: -140px; width: 380px; height: 380px; background: radial-gradient(circle, rgba(23,166,115,0.06) 0%, transparent 70%); pointer-events: none; }
+.quiz-section::before { content: ''; position: absolute; top: 80px; left: -140px; width: 380px; height: 380px; background: radial-gradient(circle, rgba(168,201,62,0.06) 0%, transparent 70%); pointer-events: none; }
+.quiz-section::after { content: ''; position: absolute; bottom: 120px; right: -140px; width: 380px; height: 380px; background: radial-gradient(circle, rgba(168,201,62,0.05) 0%, transparent 70%); pointer-events: none; }
 .quiz-section .container { position: relative; z-index: 1; }
 
 .progress-wrap { margin-bottom: 32px; max-width: 760px; margin-left: auto; margin-right: auto; }
@@ -176,9 +185,9 @@ input { font: inherit; }
   transition: transform 0.14s cubic-bezier(0.34, 1.4, 0.64, 1), border-color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
   position: relative;
 }
-.option:hover { border-color: var(--mid); background: rgba(234, 240, 255, 0.5); transform: translateX(3px); }
+.option:hover { border-color: var(--mid); background: rgba(168,201,62,0.05); transform: translateX(3px); }
 .option:active { transform: scale(0.985); }
-.option.selected { border-color: var(--mid); background: var(--soft); color: var(--deep); box-shadow: 0 6px 18px -6px rgba(59,91,255,0.3); }
+.option.selected { border-color: var(--mid); background: var(--soft); color: var(--deep); box-shadow: 0 6px 18px -6px rgba(168,201,62,0.25); }
 .opt-label { flex: 1; line-height: 1.35; }
 .option .check { width: 26px; height: 26px; border: 2px solid var(--line); border-radius: 50%; flex-shrink: 0; margin-left: auto; display: flex; align-items: center; justify-content: center; transition: all 0.18s ease; background: var(--paper); }
 .option.selected .check { border-color: var(--mid); background: var(--mid); animation: checkPop 0.32s cubic-bezier(0.34, 1.56, 0.64, 1); }
@@ -190,7 +199,7 @@ input { font: inherit; }
 .btn-back:hover { color: var(--mid); background: var(--soft); }
 .btn-back:disabled { opacity: 0.3; cursor: not-allowed; }
 .btn-back:disabled:hover { background: none; color: var(--muted); }
-.btn-next { display: inline-flex; align-items: center; gap: 10px; background: var(--deep); color: white; padding: 16px 28px; border-radius: 100px; font-weight: 600; font-size: 16px; transition: all 0.2s ease; }
+.btn-next { display: inline-flex; align-items: center; gap: 10px; background: var(--deep); color: white; padding: 16px 28px; border-radius: 100px; font-family: var(--font-display); font-weight: 500; font-size: 16px; transition: all 0.2s ease; }
 .btn-next:hover { background: var(--mid); transform: translateX(2px); }
 .btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
 .btn-next:disabled:hover { background: var(--deep); transform: none; }
@@ -209,8 +218,8 @@ input { font: inherit; }
 
 /* ============== BOOKING FORM ============== */
 .booking { background: var(--deep); border-radius: var(--radius-lg); padding: 56px 48px; max-width: 820px; margin: 0 auto; color: white; position: relative; overflow: hidden; }
-.booking::before { content: ''; position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(23,166,115,0.25) 0%, transparent 70%); pointer-events: none; }
-.booking::after { content: ''; position: absolute; bottom: -120px; left: -80px; width: 260px; height: 260px; background: radial-gradient(circle, rgba(59,91,255,0.2) 0%, transparent 70%); pointer-events: none; }
+.booking::before { content: ''; position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(168,201,62,0.25) 0%, transparent 70%); pointer-events: none; }
+.booking::after { content: ''; position: absolute; bottom: -120px; left: -80px; width: 260px; height: 260px; background: radial-gradient(circle, rgba(168,201,62,0.12) 0%, transparent 70%); pointer-events: none; }
 .booking-inner { position: relative; z-index: 1; }
 .booking-eyebrow { font-size: 13px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 14px; }
 .booking h3 { font-family: var(--font-display); font-weight: 500; font-size: clamp(26px, 3.4vw, 34px); line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px; color: white; }
@@ -219,7 +228,7 @@ input { font: inherit; }
 
 .booking-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
 .booking-item { display: flex; align-items: center; gap: 12px; font-size: 15px; color: rgba(255,255,255,0.92); }
-.check-icon { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; }
+.check-icon { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--mid); display: flex; align-items: center; justify-content: center; }
 
 .booking-form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
 .field { display: flex; }
@@ -227,8 +236,8 @@ input { font: inherit; }
 .field input, .field select { width: 100%; padding: 15px 18px; border-radius: var(--radius-sm); border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.08); color: white; font-size: 15.5px; }
 .field input::placeholder { color: rgba(255,255,255,0.5); }
 .field input:focus, .field select:focus { outline: none; border-color: var(--accent); background: rgba(255,255,255,0.13); }
-.booking-submit { grid-column: 1 / -1; display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--accent); color: white; padding: 17px 28px; border-radius: 100px; font-weight: 600; font-size: 16.5px; box-shadow: var(--shadow-accent); transition: all 0.2s ease; }
-.booking-submit:hover { background: var(--accent-dark); transform: translateY(-2px); }
+.booking-submit { grid-column: 1 / -1; display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--accent); color: var(--accent-ink); padding: 17px 28px; border-radius: 100px; font-family: var(--font-display); font-weight: 500; font-size: 16.5px; box-shadow: var(--shadow-accent); transition: all 0.2s ease; }
+.booking-submit:hover { background: var(--accent-dark); color: white; transform: translateY(-2px); }
 .booking-meta { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; }
 .booking-meta a { color: rgba(255,255,255,0.8); }
 
@@ -250,10 +259,11 @@ input { font: inherit; }
 <!-- ============ HEADER ============ -->
 <header class="site-header">
   <div class="container">
-    <div class="brand">
-      <span class="mark"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#17A673" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12 L7 7 L10.5 10 L15 4"/></svg></span>
-      Werbe-Check
-    </div>
+    <a class="brand" href="/">
+      <img src="../logo-gruen.png" alt="MR Elevate Logo">
+      MR <span class="we">Elevate</span>
+      <span class="tool-badge">Werbe-Check</span>
+    </a>
     <div class="header-meta">Google Ads vs. Meta Ads · <strong>kostenlos</strong></div>
   </div>
 </header>
@@ -361,9 +371,10 @@ input { font: inherit; }
 <!-- ============ FOOTER ============ -->
 <footer class="site-footer">
   <div class="container">
-    <div>© <span id="year"></span> Werbe-Check</div>
+    <div>© <span id="year"></span> MR Elevate · Werbe-Check</div>
     <div class="links">
-      <a href="index.html">Startseite</a>
+      <a href="/">MR Elevate</a>
+      <a href="index.html">Werbe-Check</a>
       <a href="/impressum.html">Impressum</a>
       <a href="/datenschutz.html">Datenschutz</a>
     </div>

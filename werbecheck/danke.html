@@ -3,21 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vielen Dank | Werbe-Check</title>
+<title>Vielen Dank | Werbe-Check von MR Elevate</title>
 <meta name="description" content="Vielen Dank für deine Teilnahme am Werbe-Check – deine Auswertung ist unterwegs.">
-<meta name="theme-color" content="#14203A">
+<meta name="theme-color" content="#211c17">
 <meta name="robots" content="noindex,follow">
-<link rel="icon" href="favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="favicon.svg">
-<link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="fonts/onest.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32.png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="preload" href="../fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="../fonts/inter.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="fonts.css">
 <style>
 :root{
-  --deep:#14203A; --mid:#3B5BFF; --soft:#EAF0FF;
-  --accent:#17A673; --accent-dark:#0E7F57;
-  --cream:#F7F5F0; --paper:#FFFFFF; --ink:#14203A; --ink-soft:#3B4A60; --muted:#7A8499; --line:#E7E2D8;
-  --font-display:'Fraunces',Georgia,serif; --font-body:'Onest',-apple-system,BlinkMacSystemFont,sans-serif;
+  --deep:#0c0a0b; --mid:#3e6810; --soft:#eef2df;
+  --accent:#a8c93e; --accent-dark:#3e6810; --accent-ink:#0a0d00;
+  --cream:#f7f3ec; --paper:#fffdf8; --ink:#211c17; --ink-soft:#5c5349; --muted:#675e51; --line:#e4dbc9;
+  --font-display:'Fraunces',Georgia,serif; --font-body:'Inter',system-ui,sans-serif;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{-webkit-text-size-adjust:100%;}
@@ -27,22 +27,24 @@ body{font-family:var(--font-body);font-size:17px;line-height:1.55;color:var(--in
 img{max-width:100%;display:block;}
 a{color:inherit;}
 .container{max-width:1180px;margin:0 auto;padding:0 24px;width:100%;}
-.site-header{padding:24px 0;border-bottom:1px solid rgba(231,226,216,.6);}
+.site-header{padding:24px 0;border-bottom:1px solid rgba(228,219,201,.6);}
 .site-header .container{display:flex;align-items:center;}
-.brand{display:flex;align-items:center;gap:10px;font-family:var(--font-display);font-weight:600;font-size:19px;color:var(--deep);text-decoration:none;}
-.brand .mark{width:32px;height:32px;border-radius:8px;background:var(--deep);display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.brand{display:flex;align-items:center;gap:12px;font-family:var(--font-display);font-weight:700;font-size:19px;color:var(--ink);text-decoration:none;}
+.brand img{height:34px;width:auto;}
+.brand .we{color:var(--mid);}
+.tool-badge{font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);border:1px solid #cfc2a8;border-radius:100px;padding:4px 12px;}
 main{flex:1;display:flex;align-items:center;justify-content:center;padding:56px 0;}
 .thanks-card{
   background:var(--paper);border:1px solid var(--soft);border-radius:20px;
   max-width:620px;width:100%;text-align:center;padding:56px 44px;
-  box-shadow:0 20px 40px -10px rgba(20,32,58,.16), 0 8px 16px -8px rgba(20,32,58,.08);
+  box-shadow:0 20px 40px -10px rgba(33,28,23,.16), 0 8px 16px -8px rgba(33,28,23,.08);
   position:relative;overflow:hidden;
 }
 .thanks-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
   background:linear-gradient(90deg,var(--mid) 0%,var(--accent) 100%);}
-.success-icon{width:76px;height:76px;background:var(--accent);border-radius:50%;
+.success-icon{width:76px;height:76px;background:var(--mid);border-radius:50%;
   margin:0 auto 28px;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 10px 26px -8px rgba(23,166,115,.5);animation:pop .5s cubic-bezier(.34,1.56,.64,1);}
+  box-shadow:0 10px 26px -8px rgba(62,104,16,.5);animation:pop .5s cubic-bezier(.34,1.56,.64,1);}
 @keyframes pop{0%{transform:scale(.6);opacity:0;}100%{transform:scale(1);opacity:1;}}
 .eyebrow{display:inline-block;font-size:13px;font-weight:600;color:var(--accent-dark);
   text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px;}
@@ -53,10 +55,10 @@ main{flex:1;display:flex;align-items:center;justify-content:center;padding:56px 
 .next-item{display:flex;gap:14px;align-items:flex-start;font-size:15px;color:var(--ink-soft);}
 .next-num{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--soft);
   color:var(--mid);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;}
-.btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--accent);color:#fff;
-  padding:16px 30px;border-radius:100px;font-weight:600;font-size:16px;text-decoration:none;
-  margin-top:36px;box-shadow:0 8px 24px -8px rgba(23,166,115,.45);transition:all .2s ease;}
-.btn-primary:hover{background:var(--accent-dark);transform:translateY(-2px);}
+.btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--paper);color:var(--mid);
+  border:2px solid var(--mid);padding:14px 28px;border-radius:100px;font-family:var(--font-display);
+  font-weight:500;font-size:16px;text-decoration:none;margin-top:36px;transition:all .2s ease;}
+.btn-primary:hover{background:var(--mid);color:white;transform:translateY(-2px);}
 .site-footer{padding:32px 0;border-top:1px solid var(--line);font-size:14px;color:var(--muted);}
 .site-footer .container{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
 .site-footer a{color:var(--muted);text-decoration:none;margin-left:18px;}
@@ -68,8 +70,9 @@ main{flex:1;display:flex;align-items:center;justify-content:center;padding:56px 
 <header class="site-header">
   <div class="container">
     <a class="brand" href="index.html">
-      <span class="mark"><svg width="16" height="16" viewBox="0 0 18 18" fill="none" stroke="#17A673" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12 L7 7 L10.5 10 L15 4"/></svg></span>
-      Werbe-Check
+      <img src="../logo-gruen.png" alt="MR Elevate Logo">
+      MR <span class="we">Elevate</span>
+      <span class="tool-badge">Werbe-Check</span>
     </a>
   </div>
 </header>
@@ -100,7 +103,7 @@ main{flex:1;display:flex;align-items:center;justify-content:center;padding:56px 
 
 <footer class="site-footer">
   <div class="container">
-    <div>© <span id="year"></span> Werbe-Check</div>
+    <div>© <span id="year"></span> MR Elevate · Werbe-Check</div>
     <div>
       <a href="/impressum.html">Impressum</a>
       <a href="/datenschutz.html">Datenschutz</a>
