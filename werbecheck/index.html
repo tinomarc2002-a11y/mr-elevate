@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Werbe-Check: Lohnt sich Werbung für dein Unternehmen? | Google vs. Meta Ads</title>
+<meta name="description" content="Kostenloser Werbe-Check in 3 Minuten: Finde heraus, ob sich Google Ads oder Meta Ads für dein Unternehmen lohnt – inkl. konkreter Budget-Empfehlung.">
+<meta name="theme-color" content="#14203A">
+<meta name="robots" content="index,follow">
+
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="favicon.svg">
+
+<meta property="og:type" content="website">
+<meta property="og:locale" content="de_DE">
+<meta property="og:site_name" content="Werbe-Check">
+<meta property="og:title" content="Lohnt sich Werbung für dein Unternehmen?">
+<meta property="og:description" content="In 3 Minuten erfahren, ob sich Google Ads oder Meta Ads lohnt – inkl. Budget-Empfehlung.">
+
+<!-- Selbst gehostete Schriften (DSGVO-konform, keine Verbindung zu Google Fonts) -->
+<link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="fonts/onest.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="fonts.css">
+
+<style>
+/* ============== ROOT TOKENS ============== */
+:root {
+  --deep: #14203A;
+  --mid: #3B5BFF;
+  --soft: #EAF0FF;
+  --line-blue: #D3DEFB;
+
+  --accent: #17A673;
+  --accent-dark: #0E7F57;
+  --accent-soft: #E3F7EF;
+
+  --google: #4285F4;
+  --google-dark: #2A63C7;
+  --meta: #7B2FF7;
+  --meta-dark: #5E1FC4;
+
+  --cream: #F7F5F0;
+  --paper: #FFFFFF;
+  --ink: #14203A;
+  --ink-soft: #3B4A60;
+  --muted: #7A8499;
+  --line: #E7E2D8;
+
+  --shadow-sm: 0 1px 2px rgba(20,32,58,0.05), 0 1px 3px rgba(20,32,58,0.04);
+  --shadow-md: 0 4px 12px rgba(20,32,58,0.07), 0 2px 4px rgba(20,32,58,0.04);
+  --shadow-lg: 0 20px 40px -10px rgba(20,32,58,0.18), 0 8px 16px -8px rgba(20,32,58,0.08);
+  --shadow-accent: 0 8px 24px -8px rgba(23,166,115,0.45);
+
+  --radius-sm: 8px;
+  --radius-md: 14px;
+  --radius-lg: 20px;
+
+  --font-display: 'Fraunces', Georgia, serif;
+  --font-body: 'Onest', -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+body {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.55;
+  color: var(--ink);
+  background: var(--cream);
+  font-feature-settings: "ss01", "cv02";
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+img { max-width: 100%; display: block; }
+button { font: inherit; border: none; background: none; cursor: pointer; color: inherit; }
+input { font: inherit; }
+
+.container { max-width: 1180px; margin: 0 auto; padding: 0 24px; }
+
+/* ============== HEADER ============== */
+.site-header {
+  padding: 22px 0;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(247, 245, 240, 0.85);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(231, 226, 216, 0.6);
+}
+.site-header .container { display: flex; justify-content: space-between; align-items: center; }
+.brand { display: flex; align-items: center; gap: 10px; font-family: var(--font-display); font-weight: 600; font-size: 20px; color: var(--deep); letter-spacing: -0.01em; }
+.brand .mark { width: 34px; height: 34px; border-radius: 9px; background: var(--deep); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.header-meta { font-size: 14px; color: var(--muted); font-weight: 500; }
+.header-meta strong { color: var(--accent-dark); font-weight: 600; }
+@media (max-width: 640px) { .header-meta { display: none; } }
+
+/* ============== HERO ============== */
+.hero { padding: 72px 0 56px; position: relative; overflow: hidden; }
+.hero::before {
+  content: ''; position: absolute; top: -100px; right: -100px; width: 480px; height: 480px;
+  background: radial-gradient(circle, rgba(59,91,255,0.08) 0%, transparent 70%); pointer-events: none;
+}
+.hero::after {
+  content: ''; position: absolute; bottom: -150px; left: -100px; width: 400px; height: 400px;
+  background: radial-gradient(circle, rgba(23,166,115,0.08) 0%, transparent 70%); pointer-events: none;
+}
+.hero-inner { position: relative; z-index: 1; max-width: 780px; }
+
+.eyebrow {
+  display: inline-flex; align-items: center; gap: 8px; padding: 8px 16px; background: var(--paper);
+  border: 1px solid var(--line); border-radius: 100px; font-size: 13px; font-weight: 500;
+  color: var(--ink-soft); margin-bottom: 26px; box-shadow: var(--shadow-sm);
+}
+.eyebrow .dot { width: 7px; height: 7px; background: var(--accent); border-radius: 50%; display: inline-block; box-shadow: 0 0 0 4px rgba(23,166,115,0.15); animation: pulse 2s ease-in-out infinite; }
+@keyframes pulse { 0%, 100% { box-shadow: 0 0 0 4px rgba(23,166,115,0.15); } 50% { box-shadow: 0 0 0 7px rgba(23,166,115,0.05); } }
+
+.hero h1 {
+  font-family: var(--font-display); font-weight: 500; font-size: clamp(36px, 5.2vw, 60px);
+  line-height: 1.08; letter-spacing: -0.025em; color: var(--ink); margin-bottom: 22px;
+}
+.hero h1 em { font-style: italic; font-weight: 400; color: var(--mid); }
+.hero h1 .highlight { position: relative; display: inline-block; }
+.hero h1 .highlight::after {
+  content: ''; position: absolute; left: -4px; right: -4px; bottom: 4px; height: 14px;
+  background: var(--accent); opacity: 0.28; z-index: -1; border-radius: 2px;
+}
+.hero p.lead { font-size: clamp(17px, 2vw, 20px); color: var(--ink-soft); line-height: 1.5; margin-bottom: 32px; max-width: 620px; }
+
+.cta-row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
+.btn-primary {
+  display: inline-flex; align-items: center; gap: 10px; background: var(--accent); color: white;
+  padding: 18px 32px; border-radius: 100px; font-weight: 600; font-size: 17px; box-shadow: var(--shadow-accent);
+  transition: all 0.2s ease; letter-spacing: -0.005em; text-decoration: none;
+}
+.btn-primary:hover { background: var(--accent-dark); transform: translateY(-2px); box-shadow: 0 12px 28px -8px rgba(23,166,115,0.55); }
+.btn-primary:active { transform: translateY(0); }
+.btn-primary svg { transition: transform 0.2s ease; }
+.btn-primary:hover svg { transform: translateX(3px); }
+
+.trust-row { display: flex; gap: 26px; margin-top: 36px; flex-wrap: wrap; }
+.trust-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--ink-soft); font-weight: 500; }
+.trust-item .icon { width: 20px; height: 20px; border-radius: 50%; background: var(--soft); color: var(--mid); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+/* ============== QUIZ SECTION ============== */
+.quiz-section { padding: 72px 0 100px; background: var(--paper); border-top: 1px solid var(--line); position: relative; overflow: hidden; }
+.quiz-section::before { content: ''; position: absolute; top: 80px; left: -140px; width: 380px; height: 380px; background: radial-gradient(circle, rgba(59,91,255,0.06) 0%, transparent 70%); pointer-events: none; }
+.quiz-section::after { content: ''; position: absolute; bottom: 120px; right: -140px; width: 380px; height: 380px; background: radial-gradient(circle, rgba(23,166,115,0.06) 0%, transparent 70%); pointer-events: none; }
+.quiz-section .container { position: relative; z-index: 1; }
+
+.progress-wrap { margin-bottom: 32px; max-width: 760px; margin-left: auto; margin-right: auto; }
+.progress-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 14px; font-weight: 500; }
+.progress-meta .step { color: var(--mid); }
+.progress-meta .step strong { font-family: var(--font-display); font-weight: 600; font-size: 16px; }
+.progress-meta .percent { color: var(--muted); }
+.progress-bar { height: 6px; background: var(--soft); border-radius: 100px; overflow: hidden; position: relative; }
+.progress-fill { height: 100%; background: linear-gradient(90deg, var(--mid) 0%, var(--accent) 100%); border-radius: 100px; width: 0%; transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+
+.section-label { max-width: 760px; margin: 0 auto 26px; display: flex; justify-content: center; }
+.section-label.hidden { display: none; }
+.section-badge { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: 100px; font-size: 13px; font-weight: 600; letter-spacing: 0.01em; animation: badgePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
+@keyframes badgePop { 0% { opacity: 0; transform: scale(0.85) translateY(4px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
+
+.question-card { background: var(--paper); max-width: 760px; margin: 0 auto; }
+@keyframes slideInRight { from { opacity: 0; transform: translateX(38px); } to { opacity: 1; transform: translateX(0); } }
+@keyframes slideInLeft { from { opacity: 0; transform: translateX(-38px); } to { opacity: 1; transform: translateX(0); } }
+
+.question-card h2 { font-family: var(--font-display); font-weight: 500; font-size: clamp(23px, 3.1vw, 33px); line-height: 1.25; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 12px; }
+.question-hint { font-size: 14px; color: var(--muted); margin-bottom: 36px; }
+
+.options-list { display: flex; flex-direction: column; gap: 12px; }
+.option {
+  display: flex; align-items: center; gap: 16px; padding: 18px 22px; background: var(--paper);
+  border: 2px solid var(--line); border-radius: var(--radius-md); cursor: pointer; text-align: left;
+  width: 100%; font-size: 16.5px; font-weight: 500; color: var(--ink);
+  transition: transform 0.14s cubic-bezier(0.34, 1.4, 0.64, 1), border-color 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+  position: relative;
+}
+.option:hover { border-color: var(--mid); background: rgba(234, 240, 255, 0.5); transform: translateX(3px); }
+.option:active { transform: scale(0.985); }
+.option.selected { border-color: var(--mid); background: var(--soft); color: var(--deep); box-shadow: 0 6px 18px -6px rgba(59,91,255,0.3); }
+.opt-label { flex: 1; line-height: 1.35; }
+.option .check { width: 26px; height: 26px; border: 2px solid var(--line); border-radius: 50%; flex-shrink: 0; margin-left: auto; display: flex; align-items: center; justify-content: center; transition: all 0.18s ease; background: var(--paper); }
+.option.selected .check { border-color: var(--mid); background: var(--mid); animation: checkPop 0.32s cubic-bezier(0.34, 1.56, 0.64, 1); }
+@keyframes checkPop { 0% { transform: scale(0.55); } 60% { transform: scale(1.12); } 100% { transform: scale(1); } }
+.option.selected .check::after { content: ''; width: 10px; height: 10px; background: white; border-radius: 50%; }
+
+.quiz-nav { display: flex; justify-content: space-between; align-items: center; margin-top: 40px; gap: 16px; }
+.btn-back { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 15px; font-weight: 500; padding: 12px 16px; border-radius: 100px; transition: all 0.2s ease; }
+.btn-back:hover { color: var(--mid); background: var(--soft); }
+.btn-back:disabled { opacity: 0.3; cursor: not-allowed; }
+.btn-back:disabled:hover { background: none; color: var(--muted); }
+.btn-next { display: inline-flex; align-items: center; gap: 10px; background: var(--deep); color: white; padding: 16px 28px; border-radius: 100px; font-weight: 600; font-size: 16px; transition: all 0.2s ease; }
+.btn-next:hover { background: var(--mid); transform: translateX(2px); }
+.btn-next:disabled { opacity: 0.4; cursor: not-allowed; }
+.btn-next:disabled:hover { background: var(--deep); transform: none; }
+.btn-next svg { transition: transform 0.2s ease; }
+.btn-next:hover:not(:disabled) svg { transform: translateX(3px); }
+
+/* ============== RESULT ============== */
+.result-section { padding: 76px 0 100px; background: linear-gradient(180deg, var(--paper) 0%, var(--cream) 100%); display: none; }
+.result-section.active { display: block; animation: fadeIn 0.6s ease; }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+.result-header { text-align: center; max-width: 720px; margin: 0 auto 44px; }
+.result-eyebrow { display: inline-block; font-size: 13px; font-weight: 600; color: var(--accent-dark); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 16px; }
+.result-header h2 { font-family: var(--font-display); font-weight: 500; font-size: clamp(30px, 4.3vw, 46px); line-height: 1.12; letter-spacing: -0.02em; margin-bottom: 14px; }
+.result-header p { color: var(--ink-soft); font-size: 18px; line-height: 1.5; }
+
+/* ============== BOOKING FORM ============== */
+.booking { background: var(--deep); border-radius: var(--radius-lg); padding: 56px 48px; max-width: 820px; margin: 0 auto; color: white; position: relative; overflow: hidden; }
+.booking::before { content: ''; position: absolute; top: -100px; right: -100px; width: 300px; height: 300px; background: radial-gradient(circle, rgba(23,166,115,0.25) 0%, transparent 70%); pointer-events: none; }
+.booking::after { content: ''; position: absolute; bottom: -120px; left: -80px; width: 260px; height: 260px; background: radial-gradient(circle, rgba(59,91,255,0.2) 0%, transparent 70%); pointer-events: none; }
+.booking-inner { position: relative; z-index: 1; }
+.booking-eyebrow { font-size: 13px; font-weight: 600; color: var(--accent); text-transform: uppercase; letter-spacing: 0.12em; margin-bottom: 14px; }
+.booking h3 { font-family: var(--font-display); font-weight: 500; font-size: clamp(26px, 3.4vw, 34px); line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 16px; color: white; }
+.booking h3 em { font-style: italic; color: var(--accent); }
+.booking .lead-text { color: rgba(255,255,255,0.78); font-size: 16px; line-height: 1.6; margin-bottom: 28px; max-width: 560px; }
+
+.booking-list { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; }
+.booking-item { display: flex; align-items: center; gap: 12px; font-size: 15px; color: rgba(255,255,255,0.92); }
+.check-icon { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); display: flex; align-items: center; justify-content: center; }
+
+.booking-form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+.field { display: flex; }
+.field-full { grid-column: 1 / -1; }
+.field input, .field select { width: 100%; padding: 15px 18px; border-radius: var(--radius-sm); border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.08); color: white; font-size: 15.5px; }
+.field input::placeholder { color: rgba(255,255,255,0.5); }
+.field input:focus, .field select:focus { outline: none; border-color: var(--accent); background: rgba(255,255,255,0.13); }
+.booking-submit { grid-column: 1 / -1; display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--accent); color: white; padding: 17px 28px; border-radius: 100px; font-weight: 600; font-size: 16.5px; box-shadow: var(--shadow-accent); transition: all 0.2s ease; }
+.booking-submit:hover { background: var(--accent-dark); transform: translateY(-2px); }
+.booking-meta { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; }
+.booking-meta a { color: rgba(255,255,255,0.8); }
+
+@media (max-width: 640px) {
+  .booking { padding: 40px 26px; }
+  .booking-form { grid-template-columns: 1fr; }
+}
+
+/* ============== FOOTER ============== */
+.site-footer { padding: 32px 0; border-top: 1px solid var(--line); font-size: 14px; color: var(--muted); }
+.site-footer .container { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.site-footer a { color: var(--muted); text-decoration: none; }
+.site-footer a:hover { color: var(--mid); }
+.site-footer .links { display: flex; gap: 18px; flex-wrap: wrap; }
+</style>
+</head>
+<body>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header">
+  <div class="container">
+    <div class="brand">
+      <span class="mark"><svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="#17A673" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12 L7 7 L10.5 10 L15 4"/></svg></span>
+      Werbe-Check
+    </div>
+    <div class="header-meta">Google Ads vs. Meta Ads · <strong>kostenlos</strong></div>
+  </div>
+</header>
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="start">
+  <div class="container">
+    <div class="hero-inner">
+      <div class="eyebrow"><span class="dot"></span> Für Unternehmen, die Werbung testen wollen</div>
+      <h1>Lohnt sich Werbung für dich – und <em>welche Plattform</em> <span class="highlight">passt wirklich?</span></h1>
+      <p class="lead">
+        12 Fragen zu deiner Zielgruppe und deinem Angebot. Am Ende trägst du deine E-Mail-Adresse ein und
+        bekommst deine persönliche Empfehlung – Google Ads, Meta Ads oder eine konkrete Budget-Aufteilung
+        zwischen beiden – direkt in dein Postfach.
+      </p>
+      <div class="cta-row">
+        <a href="#quiz" class="btn-primary" onclick="startQuiz()">
+          Kostenlosen Werbe-Check starten
+          <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="9" x2="14" y2="9"/><polyline points="9,4 14,9 9,14"/></svg>
+        </a>
+      </div>
+      <div class="trust-row">
+        <div class="trust-item"><span class="icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg></span>100% kostenfrei</div>
+        <div class="trust-item"><span class="icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg></span>Nur 3 Minuten</div>
+        <div class="trust-item"><span class="icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg></span>Auswertung per E-Mail</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUIZ ============ -->
+<section class="quiz-section" id="quiz">
+  <div class="container">
+    <div class="progress-wrap">
+      <div class="progress-meta">
+        <span class="step">Frage <strong id="currentStep">1</strong> von 12</span>
+        <span class="percent" id="percentLabel">0% abgeschlossen</span>
+      </div>
+      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+    </div>
+
+    <div class="section-label hidden" id="sectionLabel"></div>
+
+    <div class="question-card" id="questionCard">
+      <h2 id="questionText"></h2>
+      <div class="question-hint" id="questionHint"></div>
+      <div class="options-list" id="optionsList"></div>
+
+      <div class="quiz-nav">
+        <button class="btn-back" id="btnBack" onclick="prevQuestion()" disabled>
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,2 4,7 9,12"/></svg>
+          Zurück
+        </button>
+        <button class="btn-next" id="btnNext" onclick="nextQuestion()" disabled>
+          <span id="nextLabel">Weiter</span>
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="8" x2="12" y2="8"/><polyline points="8,3 12,8 8,13"/></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ RESULT / KONTAKT ============ -->
+<section class="result-section" id="result">
+  <div class="container">
+    <div class="result-header">
+      <div class="result-eyebrow">Fast geschafft</div>
+      <h2>Wohin dürfen wir deine Auswertung schicken?</h2>
+      <p>Wir werten deine Antworten jetzt aus und schicken dir deine persönliche Google-Ads-vs.-Meta-Ads-Empfehlung direkt per E-Mail.</p>
+    </div>
+
+    <!-- Kontaktformular -->
+    <div class="booking" id="bookingAnchor">
+      <div class="booking-inner">
+        <div class="booking-eyebrow">Letzter Schritt</div>
+        <h3>Trag dich ein – wir schicken dir deine <em>Auswertung.</em></h3>
+        <p class="lead-text">
+          Du bekommst deine persönliche Empfehlung (Google Ads, Meta Ads oder eine konkrete Budget-Aufteilung)
+          direkt in dein Postfach. Bei Interesse melden wir uns außerdem für ein kurzes, unverbindliches Gespräch.
+        </p>
+
+        <div class="booking-list">
+          <div class="booking-item"><span class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg></span>Persönliche Auswertung direkt per E-Mail</div>
+          <div class="booking-item"><span class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg></span>Konkrete Empfehlung für Plattform & Budget-Aufteilung</div>
+          <div class="booking-item"><span class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg></span>Kein Verkaufsdruck, keine Verpflichtung</div>
+        </div>
+
+        <form class="booking-form" id="bookingForm" onsubmit="submitBooking(event)">
+          <div class="field"><input type="text" name="name" placeholder="Vor- und Nachname" required autocomplete="name"></div>
+          <div class="field"><input type="text" name="firma" placeholder="Firma" required autocomplete="organization"></div>
+          <div class="field"><input type="email" name="email" placeholder="E-Mail-Adresse" required autocomplete="email"></div>
+          <div class="field"><input type="tel" name="telefon" placeholder="Telefonnummer" autocomplete="tel"></div>
+          <button type="submit" class="booking-submit field-full">
+            <span id="submitLabel">Auswertung per E-Mail anfordern</span>
+            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="9" x2="14" y2="9"/><polyline points="9,4 14,9 9,14"/></svg>
+          </button>
+        </form>
+
+        <p class="booking-meta">Wir melden uns innerhalb von 24 Stunden bei dir. Mit dem Absenden stimmst du unserer <a href="/datenschutz.html" target="_blank" rel="noopener">Datenschutzerklärung</a> zu.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+  <div class="container">
+    <div>© <span id="year"></span> Werbe-Check</div>
+    <div class="links">
+      <a href="index.html">Startseite</a>
+      <a href="/impressum.html">Impressum</a>
+      <a href="/datenschutz.html">Datenschutz</a>
+    </div>
+  </div>
+</footer>
+
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+// ============== BADGES (für section-label über der Frage) ==============
+const gateBadge = { name: 'Qualifizierung', text: '#0E7F57', soft: '#E3F7EF' };
+const contextBadge = { name: 'Kurz zu deinem Angebot', text: '#6B7280', soft: '#F0EEE8' };
+const fitBadge = { name: 'Plattform-Fit', text: '#2A63C7', soft: '#E5EEFD' };
+
+// ============== FRAGEN ==============
+// Reine Anzeige-Daten (Text/Optionen) fürs Rendering des Quiz. Die Scoring-Logik (Punkte je Option,
+// Disqualifizierung, Empfehlungstexte) lebt ausschließlich serverseitig in api/send-result.js – das
+// Ergebnis wird nie auf der Seite angezeigt, sondern nur per E-Mail verschickt. Wichtig: Die
+// Options-REIHENFOLGE muss mit der Tabelle in api/send-result.js übereinstimmen, da die Antwort als
+// Options-Index übertragen wird.
+const questions = [
+  {
+    id: 'budget',
+    text: 'Wie hoch ist euer monatliches Werbebudget aktuell (bzw. das, was ihr investieren würdet)?',
+    hint: 'Nur für die Einschätzung, ob sich ein Test aktuell lohnt',
+    badge: gateBadge,
+    options: [
+      { label: 'Unter 500 €' },
+      { label: '500 – 1.500 €' },
+      { label: '1.500 – 5.000 €' },
+      { label: 'Über 5.000 €' }
+    ]
+  },
+  {
+    id: 'margin',
+    text: 'Wie hoch ist der durchschnittliche Gewinn (nicht Umsatz!), den euch ein neuer Kunde bringt?',
+    hint: 'Gewinn = Umsatz abzüglich eurer Kosten – nicht der Verkaufspreis',
+    badge: gateBadge,
+    options: [
+      { label: 'Unter 500 €' },
+      { label: '500 – 2.000 €' },
+      { label: '2.000 – 10.000 €' },
+      { label: 'Über 10.000 € oder wiederkehrend/Abo' }
+    ]
+  },
+  {
+    id: 'branche',
+    text: 'Was beschreibt euer Angebot am besten?',
+    badge: contextBadge,
+    options: [
+      { label: 'Lokale Dienstleistung (z. B. Handwerk, Praxis, Beratung vor Ort)' },
+      { label: 'Online-Shop / E-Commerce' },
+      { label: 'B2B-Dienstleistung oder Beratung' },
+      { label: 'Sonstiges' }
+    ]
+  },
+  {
+    id: 'suche',
+    text: 'Suchen potenzielle Kunden aktiv und gezielt nach eurem Angebot, wenn ein Bedarf entsteht?',
+    badge: fitBadge,
+    options: [
+      { label: 'Ja, sehr konkret (z. B. „Notdienst XY in [Stadt]“)' },
+      { label: 'Eher ja, aber mit allgemeineren Begriffen' },
+      { label: 'Eher nein, die meisten kennen unser Angebot noch nicht' },
+      { label: 'Nein, wir müssen die Nachfrage erst wecken' }
+    ]
+  },
+  {
+    id: 'entscheidung',
+    text: 'Ist der Kauf eher ein spontaner Impuls oder eine gut durchdachte, verglichene Entscheidung?',
+    badge: fitBadge,
+    options: [
+      { label: 'Spontaner Impuls-/Wunschkauf' },
+      { label: 'Meistens spontan, aber mit kurzem Vergleich' },
+      { label: 'Meist recherchiert, aber überschaubar' },
+      { label: 'Immer gut recherchiert & verglichen, geplante Anschaffung' }
+    ]
+  },
+  {
+    id: 'ansprache',
+    text: 'Lässt sich eure Zielgruppe gut über Interessen/Demografie eingrenzen – oder eher nur über konkrete Suchbegriffe?',
+    badge: fitBadge,
+    options: [
+      { label: 'Sehr gut über Interessen, Hobbys oder demografische Merkmale eingrenzbar' },
+      { label: 'Teils über Interessen, teils über Suchbegriffe' },
+      { label: 'Eher über konkrete Suchbegriffe fassbar' },
+      { label: 'Nur über sehr spezifische Fachbegriffe/Suchanfragen fassbar' }
+    ]
+  },
+  {
+    id: 'visuell',
+    text: 'Lässt sich euer Angebot durch Bilder oder Video emotional und ansprechend zeigen?',
+    badge: fitBadge,
+    options: [
+      { label: 'Ja, sehr gut – starke Fotos/Videos, emotional zeigbar' },
+      { label: 'Teilweise, geht mit guten Produktbildern' },
+      { label: 'Eher schwierig, wenig visuell darstellbar' },
+      { label: 'Nein, reine Text-/Fachleistung' }
+    ]
+  },
+  {
+    id: 'einzugsgebiet',
+    text: 'Wie groß ist euer Einzugsgebiet?',
+    badge: fitBadge,
+    options: [
+      { label: 'Sehr lokal begrenzt (ein Ort/Landkreis)' },
+      { label: 'Regional (mehrere Städte/Bundesland)' },
+      { label: 'Deutschlandweit' },
+      { label: 'International / mehrsprachig' }
+    ]
+  },
+  {
+    id: 'werbemittel',
+    text: 'Habt ihr bereits gute Fotos, Videos oder Kundenstimmen – oder eher nur Text/Leistungsbeschreibungen?',
+    badge: fitBadge,
+    options: [
+      { label: 'Ja, gute Fotos/Videos/Kundenstimmen vorhanden' },
+      { label: 'Ein bisschen vorhanden, müsste ergänzt werden' },
+      { label: 'Kaum vorhanden, eher Text/Leistungsbeschreibung' },
+      { label: 'Gar nichts vorhanden' }
+    ]
+  },
+  {
+    id: 'dringlichkeit',
+    text: 'Entsteht der Bedarf plötzlich/akut (z. B. Notfall) – oder ist er dauerhaft vorhanden und muss erst angestoßen werden?',
+    badge: fitBadge,
+    options: [
+      { label: 'Akuter, plötzlicher Bedarf (z. B. Notfall, Ausfall, Termindruck)' },
+      { label: 'Eher spontan, aber nicht akut' },
+      { label: 'Dauerhaft vorhanden, wird meist nicht von selbst gesucht' },
+      { label: 'Muss aktiv geweckt werden, sonst passiert nichts' }
+    ]
+  },
+  {
+    id: 'alter',
+    text: 'Wie alt ist eure Hauptzielgruppe überwiegend?',
+    badge: fitBadge,
+    options: [
+      { label: 'Überwiegend jünger (18–34)' },
+      { label: 'Gemischt, alle Altersgruppen' },
+      { label: 'Überwiegend 35–54' },
+      { label: 'Überwiegend 55+' }
+    ]
+  },
+  {
+    id: 'zielgruppe',
+    text: 'Wer trifft bei euch die Kaufentscheidung?',
+    badge: fitBadge,
+    options: [
+      { label: 'Privatpersonen (B2C)' },
+      { label: 'Kleine Unternehmen / Selbstständige' },
+      { label: 'Mittelständische oder größere Unternehmen' },
+      { label: 'Gemischt / beides' }
+    ]
+  }
+];
+
+// ============== STATE ==============
+let currentIdx = 0;
+let navDirection = 'forward';
+let answers = {};
+let quizStarted = false;
+
+function startQuiz() {
+  if (!quizStarted) { quizStarted = true; renderQuestion(0); }
+}
+
+// ============== RENDER ==============
+function renderQuestion(idx) {
+  const q = questions[idx];
+  currentIdx = idx;
+
+  const card = document.getElementById('questionCard');
+  card.style.animation = 'none';
+  card.offsetHeight;
+  const anim = navDirection === 'back' ? 'slideInLeft' : 'slideInRight';
+  card.style.animation = anim + ' 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
+
+  const sectionLabel = document.getElementById('sectionLabel');
+  if (q.badge) {
+    sectionLabel.innerHTML = `<span class="section-badge" style="background:${q.badge.soft}; color:${q.badge.text};">${q.badge.name}</span>`;
+    sectionLabel.classList.remove('hidden');
+  } else {
+    sectionLabel.classList.add('hidden');
+  }
+
+  document.getElementById('questionText').textContent = q.text;
+  const hintEl = document.getElementById('questionHint');
+  hintEl.textContent = q.hint || '';
+  hintEl.style.display = q.hint ? 'block' : 'none';
+
+  document.getElementById('currentStep').textContent = idx + 1;
+  const pct = Math.round(idx / questions.length * 100);
+  document.getElementById('percentLabel').textContent = `${pct}% abgeschlossen`;
+  document.getElementById('progressFill').style.width = pct + '%';
+
+  const list = document.getElementById('optionsList');
+  list.innerHTML = '';
+  q.options.forEach((opt, i) => {
+    const btn = document.createElement('button');
+    btn.className = 'option';
+    btn.setAttribute('data-idx', i);
+    btn.innerHTML = `<span class="opt-label">${opt.label}</span><span class="check"></span>`;
+    btn.onclick = () => selectOption(i);
+    if (answers[q.id] === i) btn.classList.add('selected');
+    list.appendChild(btn);
+  });
+
+  document.getElementById('btnBack').disabled = idx === 0;
+  document.getElementById('btnNext').disabled = answers[q.id] === undefined;
+  document.getElementById('nextLabel').textContent = idx === questions.length - 1 ? 'Ergebnis anzeigen' : 'Weiter';
+}
+
+function selectOption(optIdx) {
+  const q = questions[currentIdx];
+  answers[q.id] = optIdx;
+  document.querySelectorAll('.option').forEach((el, i) => el.classList.toggle('selected', i === optIdx));
+  document.getElementById('btnNext').disabled = false;
+  setTimeout(() => {
+    if (currentIdx < questions.length - 1) nextQuestion();
+    else goToContactStep();
+  }, 280);
+}
+
+function nextQuestion() {
+  if (currentIdx < questions.length - 1) {
+    navDirection = 'forward';
+    renderQuestion(currentIdx + 1);
+    document.getElementById('quiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  } else {
+    goToContactStep();
+  }
+}
+
+function prevQuestion() {
+  if (currentIdx > 0) {
+    navDirection = 'back';
+    renderQuestion(currentIdx - 1);
+    document.getElementById('quiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+// Die Auswertung (Score, Plattform-Empfehlung, Disqualifizierung) wird bewusst NIE auf der Seite
+// gezeigt – nur per E-Mail (siehe api/send-result.js). Hier wird nur zum Kontaktformular gewechselt.
+function goToContactStep() {
+  document.getElementById('quiz').style.display = 'none';
+  document.getElementById('result').classList.add('active');
+  document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
+// ============== FORM SUBMIT ==============
+const API_ENDPOINT = '/api/werbecheck/send-result';
+const THANK_YOU_URL = 'danke.html';
+
+function submitBooking(e) {
+  e.preventDefault();
+  const form = e.target;
+  const fd = new FormData(form);
+  const contact = {
+    name: (fd.get('name') || '').trim(),
+    firma: (fd.get('firma') || '').trim(),
+    email: (fd.get('email') || '').trim(),
+    telefon: (fd.get('telefon') || '').trim()
+  };
+
+  const btn = form.querySelector('.booking-submit');
+  const originalLabel = document.getElementById('submitLabel').textContent;
+  if (btn) { btn.disabled = true; btn.style.opacity = '0.7'; document.getElementById('submitLabel').textContent = 'Wird gesendet …'; }
+
+  const payload = { contact: contact, answers: answers };
+
+  fetch(API_ENDPOINT, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(payload)
+  })
+  .then(res => { if (!res.ok) console.error('send-result responded with status', res.status); })
+  .catch(err => console.error('Lead submit error:', err))
+  .finally(() => {
+    window.location.href = THANK_YOU_URL;
+  });
+
+  return false;
+}
+
+// Erste Frage sofort vorrendern, damit die Karte nicht leer ist, falls jemand ohne Klick auf den
+// CTA direkt zum Quiz scrollt.
+renderQuestion(0);
+</script>
+
+</body>
+</html>
