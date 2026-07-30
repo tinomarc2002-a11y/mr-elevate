@@ -18,3 +18,6 @@ Hero Dresden.avif
 
 # Fremder Ordner, nicht Teil der Seite
 ads/
+
+.vercel
+.env*

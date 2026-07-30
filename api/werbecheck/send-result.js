@@ -131,7 +131,45 @@ function computeResult(answers) {
 
   const topInsights = scoredAnswers.sort((a, b) => b.diff - a.diff).slice(0, 3);
 
-  return { qualified, reasons, metaPct, googlePct, budgetBucket, topInsights, readable };
+  // zielgruppeIdx: 0=B2C, 1=Kleinunternehmen/Selbstständige, 2=Mittelstand/größere Unternehmen, 3=gemischt
+  const zielgruppeIdx = answers['zielgruppe'];
+  // alterIdx: 0=jünger 18–34, 1=gemischt, 2=35–54, 3=55+
+  const alterIdx = answers['alter'];
+  const extraChannels = buildExtraChannels({ zielgruppeIdx, alterIdx, budgetBucket });
+
+  return { qualified, reasons, metaPct, googlePct, budgetBucket, topInsights, readable, extraChannels };
+}
+
+// LinkedIn und TikTok laufen bewusst NICHT als dritter/vierter Posten im Meta/Google-Prozent-Split mit:
+// LinkedIns Zielgruppe ist im Kern eine Teilmenge dessen, was man auch über Meta erreicht (nur mit
+// präziserem B2B-Filter wie Jobtitel/Branche/Senioritätslevel) – ein eigener Prozentanteil würde das
+// verzerren. Stattdessen werden beide als ergänzende Kanalempfehlung ausgegeben, wenn die Signale klar
+// genug sind (B2B-Zielgruppe → LinkedIn, junge Zielgruppe → TikTok).
+function buildExtraChannels({ zielgruppeIdx, alterIdx, budgetBucket }) {
+  const channels = [];
+
+  if (zielgruppeIdx === 2) {
+    channels.push({
+      name: 'LinkedIn Ads',
+      text: budgetBucket >= 2
+        ? 'Ihr sprecht Unternehmen mit mehreren Entscheidern an – dafür ist LinkedIn besonders stark: Ihr könnt gezielt nach Jobtitel, Branche und Senioritätslevel targetieren. Die Menschen, die ihr dort erreicht, erreicht ihr technisch auch über Meta – LinkedIn punktet aber mit der präziseren B2B-Filterung, ist dafür pro Klick spürbar teurer. Bei eurem Budget würden wir LinkedIn ergänzend zu eurem Hauptkanal einplanen.'
+        : 'Ihr sprecht Unternehmen mit mehreren Entscheidern an – eigentlich ideales LinkedIn-Terrain (präzises Jobtitel-Targeting). LinkedIn-Klicks sind aber deutlich teurer als auf Google oder Meta. Bei eurem aktuellen Budget würden wir zuerst mit eurem Hauptkanal starten und LinkedIn ergänzen, sobald das Budget wächst.'
+    });
+  } else if (zielgruppeIdx === 1) {
+    channels.push({
+      name: 'LinkedIn Ads',
+      text: 'Als Kleinunternehmen oder Selbstständige könnte LinkedIn interessant sein, wenn eure Kunden selbst Entscheider in Unternehmen sind – die Klickpreise liegen dort aber deutlich über Google oder Meta. Für den Einstieg würden wir uns zunächst auf euren Hauptkanal konzentrieren und LinkedIn bei Bedarf ergänzen.'
+    });
+  }
+
+  if (alterIdx === 0) {
+    channels.push({
+      name: 'TikTok Ads',
+      text: 'Eure Zielgruppe ist überwiegend jung (18–34) – TikTok ist dort aktuell einer der günstigsten Wege, Aufmerksamkeit und Reichweite aufzubauen, wenn ihr unterhaltsamen, authentischen Video-Content liefern könnt. Wir würden TikTok ergänzend zu eurem Hauptkanal testen.'
+    });
+  }
+
+  return channels;
 }
 
 function buildRecommendation(metaPct, googlePct, budgetBucket) {
@@ -171,7 +209,7 @@ function escapeHtml(str) {
   }[ch]));
 }
 
-function buildLeadEmailHtml({ name, qualified, reasons, metaPct, googlePct, budgetBucket, topInsights }) {
+function buildLeadEmailHtml({ name, qualified, reasons, metaPct, googlePct, budgetBucket, topInsights, extraChannels }) {
   const firstName = escapeHtml((name || '').split(' ')[0] || 'zusammen');
 
   if (!qualified) {
@@ -194,6 +232,11 @@ function buildLeadEmailHtml({ name, qualified, reasons, metaPct, googlePct, budg
     <li style="margin-bottom:14px;">
       <strong>${escapeHtml(item.shortTitle)}:</strong> ${escapeHtml(item.opt.insight)}
     </li>`).join('');
+  const extraChannelsHtml = (extraChannels && extraChannels.length) ? `
+      <h3 style="color:#14203A;">Zusätzlich für euch interessant</h3>
+      <ul style="padding-left:20px;color:#3B4A60;">
+        ${extraChannels.map(c => `<li style="margin-bottom:14px;"><strong>${escapeHtml(c.name)}:</strong> ${escapeHtml(c.text)}</li>`).join('')}
+      </ul>` : '';
 
   return `
     <div style="font-family:Arial,sans-serif;max-width:560px;margin:0 auto;color:#14203A;">
@@ -215,18 +258,22 @@ function buildLeadEmailHtml({ name, qualified, reasons, metaPct, googlePct, budg
       <p>${escapeHtml(reco.text)}</p>
       <h3 style="color:#14203A;">Die wichtigsten Gründe für diese Empfehlung</h3>
       <ul style="padding-left:20px;color:#3B4A60;">${insightItems}</ul>
+      ${extraChannelsHtml}
       <p>Wir melden uns innerhalb von 24 Stunden bei dir, um zu besprechen, wie eine erste Kampagne
       für dich konkret aussehen könnte.</p>
       <p>Viele Grüße<br>Dein Werbe-Check-Team</p>
     </div>`;
 }
 
-function buildAgencyEmailHtml({ name, firma, email, telefon, qualified, metaPct, googlePct, budgetBucket, readable }) {
+function buildAgencyEmailHtml({ name, firma, email, telefon, qualified, metaPct, googlePct, budgetBucket, readable, extraChannels }) {
   const rows = readable.map(r =>
     `<tr><td style="padding:6px 10px;border-bottom:1px solid #E7E2D8;color:#3B4A60;">${escapeHtml(r.frage)}</td>` +
     `<td style="padding:6px 10px;border-bottom:1px solid #E7E2D8;font-weight:600;">${escapeHtml(r.antwort)}</td></tr>`
   ).join('');
   const reco = qualified ? buildRecommendation(metaPct, googlePct, budgetBucket) : null;
+  const extraChannelsText = (extraChannels && extraChannels.length)
+    ? `<p><strong>Zusätzlich empfohlen:</strong> ${extraChannels.map(c => escapeHtml(c.name)).join(', ')}</p>`
+    : '';
 
   return `
     <div style="font-family:Arial,sans-serif;max-width:640px;margin:0 auto;color:#14203A;">
@@ -241,6 +288,7 @@ function buildAgencyEmailHtml({ name, firma, email, telefon, qualified, metaPct,
       </p>
       <p><strong>Plattform-Split:</strong> ${googlePct}% Google / ${metaPct}% Meta</p>
       ${reco ? `<p><strong>${escapeHtml(reco.title)}</strong><br>${escapeHtml(reco.text)}</p>` : ''}
+      ${extraChannelsText}
       <table style="width:100%;border-collapse:collapse;margin-top:16px;">${rows}</table>
     </div>`;
 }
@@ -306,7 +354,7 @@ module.exports = async function handler(req, res) {
     return;
   }
 
-  const { qualified, reasons, metaPct, googlePct, budgetBucket, topInsights, readable } = computeResult(body.answers);
+  const { qualified, reasons, metaPct, googlePct, budgetBucket, topInsights, readable, extraChannels } = computeResult(body.answers);
 
   const BREVO_API_KEY = process.env.BREVO_API_KEY;
   const AGENCY_NOTIFY_EMAIL = process.env.AGENCY_NOTIFY_EMAIL;
@@ -332,7 +380,7 @@ module.exports = async function handler(req, res) {
       to: email,
       toName: name,
       subject: leadSubject,
-      htmlContent: buildLeadEmailHtml({ name, qualified, reasons, metaPct, googlePct, budgetBucket, topInsights })
+      htmlContent: buildLeadEmailHtml({ name, qualified, reasons, metaPct, googlePct, budgetBucket, topInsights, extraChannels })
     })
   ];
 
@@ -344,7 +392,7 @@ module.exports = async function handler(req, res) {
       fromName: RESULT_FROM_NAME,
       to: AGENCY_NOTIFY_EMAIL,
       subject: agencySubject,
-      htmlContent: buildAgencyEmailHtml({ name, firma, email, telefon, qualified, metaPct, googlePct, budgetBucket, readable })
+      htmlContent: buildAgencyEmailHtml({ name, firma, email, telefon, qualified, metaPct, googlePct, budgetBucket, readable, extraChannels })
     }));
   } else {
     console.error('AGENCY_NOTIFY_EMAIL fehlt – interne Benachrichtigung übersprungen. Siehe SETUP.md.');
