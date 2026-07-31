@@ -147,6 +147,22 @@ input { font: inherit; }
 
 /* ============== QUIZ SECTION ============== */
 .quiz-section { padding: 72px 0 100px; background: var(--paper); border-top: 1px solid var(--line); position: relative; overflow: hidden; }
+
+/* Qualifizierungs-Gate: ehrliche Absage direkt nach Frage 1 oder 2, statt
+   den Nutzer zwoelf Fragen und seine Kontaktdaten investieren zu lassen. */
+.gate-out { max-width: 640px; margin: 0 auto; text-align: center; }
+.gate-eyebrow { display: inline-block; font-family: var(--font-display); font-size: 12px; font-weight: 600;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--mid);
+  background: var(--accent-soft); padding: 6px 14px; border-radius: 100px; margin-bottom: 20px; }
+.gate-out h2 { font-family: var(--font-display); font-size: clamp(26px, 5vw, 36px); line-height: 1.15;
+  letter-spacing: -0.02em; color: var(--ink); margin: 0 0 18px; }
+.gate-out p { color: var(--ink-soft); font-size: 17px; line-height: 1.65; margin: 0 0 16px; }
+.gate-next { background: var(--cream); border: 1px solid var(--line); border-radius: var(--radius-md);
+  padding: 18px 22px; text-align: left; }
+.gate-next b { color: var(--ink); }
+.gate-actions { display: flex; flex-wrap: wrap; gap: 14px; justify-content: center; align-items: center; margin: 26px 0 18px; }
+.gate-link { color: var(--mid); font-weight: 500; text-decoration: underline; text-underline-offset: 3px; }
+.gate-note { font-size: 14px; color: var(--muted); }
 .quiz-section::before { content: ''; position: absolute; top: 80px; left: -140px; width: 380px; height: 380px; background: radial-gradient(circle, rgba(168,201,62,0.06) 0%, transparent 70%); pointer-events: none; }
 .quiz-section::after { content: ''; position: absolute; bottom: 120px; right: -140px; width: 380px; height: 380px; background: radial-gradient(circle, rgba(168,201,62,0.05) 0%, transparent 70%); pointer-events: none; }
 .quiz-section .container { position: relative; z-index: 1; }
@@ -592,12 +608,58 @@ function renderQuestion(idx) {
   document.getElementById('nextLabel').textContent = idx === questions.length - 1 ? 'Ergebnis anzeigen' : 'Weiter';
 }
 
+/* ---------- Qualifizierungs-Gate ----------
+   Budget und Gewinn pro Neukunde sind bewusst die ersten beiden Fragen.
+   Wer unter 500 € liegt, erfährt das sofort, statt erst nach zwölf Fragen
+   und der Herausgabe seiner Kontaktdaten. Dieselben Schwellen prüft
+   api/werbecheck/send-result.js noch einmal serverseitig, falls jemand
+   direkt an die Schnittstelle sendet. */
+const GATES = {
+  budget: {
+    grenzeIdx: 0,
+    titel: 'Ehrlich gesagt: dafür ist es noch zu früh.',
+    text: 'Mit einem Werbebudget unter 500 € im Monat lässt sich in den meisten Branchen kein aussagekräftiger Test fahren. Das Geld verpufft in der Lernphase der Plattformen, bevor sich überhaupt zeigt, ob eine Anzeige funktioniert. Wir könnten dir jetzt trotzdem etwas verkaufen. Machen wir aber nicht.'
+  },
+  margin: {
+    grenzeIdx: 0,
+    titel: 'Ehrlich gesagt: die Rechnung geht so nicht auf.',
+    text: 'Wenn ein neuer Kunde unter 500 € Gewinn bringt, fressen die Werbekosten die Marge meist auf, bevor sich eine Kampagne rechnet. Bezahlte Anzeigen wären hier der teuerste Weg zu neuen Kunden. Das ist keine Absage an dich, sondern an den Kanal.'
+  }
+};
+
+function pruefeGate(frageId, optIdx) {
+  const g = GATES[frageId];
+  return (g && optIdx === g.grenzeIdx) ? g : null;
+}
+
+function zeigeGateErgebnis(g) {
+  const quiz = document.getElementById('quiz');
+  quiz.innerHTML =
+    '<div class="container">' +
+      '<div class="gate-out">' +
+        '<span class="gate-eyebrow">Dein Ergebnis</span>' +
+        '<h2>' + g.titel + '</h2>' +
+        '<p>' + g.text + '</p>' +
+        '<p class="gate-next"><b>Was jetzt wirklich hilft:</b> zuerst die Grundlagen bauen, dann lohnt sich Werbung. ' +
+        'Wie das geht, steht vollständig und kostenlos im Ads-Leitfaden. Ohne Anmeldung, ohne Haken.</p>' +
+        '<div class="gate-actions">' +
+          '<a class="btn-primary" href="/leitfaden">Zum kostenlosen Ads-Leitfaden</a>' +
+          '<a class="gate-link" href="/">Mehr über MR Elevate</a>' +
+        '</div>' +
+        '<p class="gate-note">Wenn sich deine Zahlen ändern, komm gern wieder. Der Check ist jederzeit offen.</p>' +
+      '</div>' +
+    '</div>';
+  quiz.scrollIntoView({ behavior: 'smooth', block: 'start' });
+}
+
 function selectOption(optIdx) {
   const q = questions[currentIdx];
   answers[q.id] = optIdx;
   document.querySelectorAll('.option').forEach((el, i) => el.classList.toggle('selected', i === optIdx));
   document.getElementById('btnNext').disabled = false;
   setTimeout(() => {
+    const gate = pruefeGate(q.id, optIdx);
+    if (gate) { zeigeGateErgebnis(gate); return; }
     if (currentIdx < questions.length - 1) nextQuestion();
     else goToContactStep();
   }, 280);
