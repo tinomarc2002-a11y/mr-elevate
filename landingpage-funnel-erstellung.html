@@ -307,6 +307,19 @@ section{ position:relative; }
   .phase-body p,.kpi-card p{ color:#333; }
   a{ color:#111; }
 }
+/* Werbe-Check-Teaser: seitenuebergreifender Einstieg fuer Unentschlossene */
+.wc-teaser{ display:flex; align-items:center; justify-content:space-between; gap:22px;
+  max-width:var(--maxw-read); margin:34px 0 0; padding:22px 26px;
+  border:1px solid var(--line-strong); border-radius:var(--radius);
+  background:rgba(168,201,62,.04); text-decoration:none;
+  transition:border-color var(--t), background var(--t), transform var(--t); }
+.wc-teaser:hover{ border-color:var(--accent); background:rgba(168,201,62,.08); transform:translateY(-2px); }
+.wc-teaser b{ display:block; font-family:var(--font-display); font-size:1.05rem; color:var(--fg); margin-bottom:4px; }
+.wc-teaser span.wc-sub{ font-size:.92rem; color:var(--fg-muted); line-height:1.55; }
+.wc-arrow{ flex-shrink:0; width:40px; height:40px; border-radius:50%; display:grid; place-items:center;
+  border:1px solid var(--line-strong); color:var(--accent); transition:transform var(--t), border-color var(--t); }
+.wc-teaser:hover .wc-arrow{ transform:translateX(4px); border-color:var(--accent); }
+@media(max-width:640px){ .wc-teaser{ flex-direction:column; align-items:flex-start; } }
 </style>
 </head>
 <body>
@@ -468,6 +481,18 @@ section{ position:relative; }
   </div>
 </section>
 
+<section class="phase" id="werbecheck-teaser" style="border-bottom:none;padding-top:0;">
+  <div class="container">
+    <a class="wc-teaser reveal" href="/werbecheck">
+      <span>
+        <b>Unsicher, ob Marketing für dich überhaupt funktioniert?</b>
+        <span class="wc-sub">Mach den kostenlosen Werbe-Check: ein paar Fragen, eine ehrliche Einschätzung und die Antwort, ob Google oder Meta zu dir passt. Auch wenn sie „noch nicht" lautet.</span>
+      </span>
+      <span class="wc-arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+  </div>
+</section>
+
 <section class="closing">
   <div class="container">
     <span class="eyebrow" style="justify-content:center;"><i>Und jetzt?</i></span>
@@ -504,6 +529,7 @@ section{ position:relative; }
           <a href="/#modell">Das Modell</a>
           <a href="/#faq">FAQ</a>
           <a href="/ratgeber">Ratgeber</a>
+          <a href="/werbecheck">Werbe-Check</a>
         </div>
         <div class="footer-col">
           <h5>Rechtliches</h5>
