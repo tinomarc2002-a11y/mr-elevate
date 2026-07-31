@@ -149,6 +149,15 @@ Die drei anderen Serviceseiten sind gebaut. Hier das Briefing für die fehlende.
 
 **Bewertungen, richtlinienkonform:** Nach einem konkreten Erfolgsmoment persönlich fragen, nie incentivieren, auf jede Bewertung antworten. Details in `seo-strategie.md`, Teil 8c.
 
+**Direkter Bewertungslink** (geprüft, führt auf den Bewertungsdialog des Profils):
+`https://g.page/r/CSIG-sMz-vQUEBI/review`
+
+Diesen Link in der 1:1-Ansprache verwenden (E-Mail, WhatsApp), nicht als öffentlichen
+Button auf der Website. Website-Besucher sind Interessenten, keine Kunden — ein
+„Bewerte uns"-Button ins Leere wirkt unglücklich, solange keine Bewertungen da sind.
+Sobald die ersten Bewertungen stehen, lohnt stattdessen ein Bewertungs-Abschnitt mit
+echten Zitaten auf der Startseite.
+
 **Lokale Keywords sinnvoll einbinden:** „Dresden" gehört in Title, H1 und ein bis zwei H2 der Kanalseiten sowie in die NAP-Angaben. Nicht in jeden Absatz. Für bundesweite Seiten (Leadgenerierung, Erfolgsbasiert) bewusst ohne Ortsbezug, sonst konkurrieren sie mit den lokalen Seiten.
 
 ---
