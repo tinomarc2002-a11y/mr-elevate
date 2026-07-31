@@ -338,11 +338,6 @@ section{ position:relative; }
 .hero-actions{ display:flex; flex-wrap:wrap; gap:14px; align-items:center; margin-top:34px; }
 .hero-actions .note{ font-size:.85rem; color:var(--fg-dim); }
 
-.scroll-cue{ display:inline-flex; flex-direction:row; align-items:center; gap:12px; margin-top:24px; z-index:2; color:var(--fg-dim); font-size:.72rem; letter-spacing:.15em; text-transform:uppercase; }
-.scroll-cue .mouse{ width:22px; height:36px; border:1.5px solid var(--line-strong); border-radius:12px; position:relative; }
-.scroll-cue .mouse::after{ content:""; position:absolute; top:7px; left:50%; transform:translateX(-50%); width:3px; height:7px; border-radius:2px; background:var(--accent); animation:scrolldot 1.8s infinite; }
-@keyframes scrolldot{ 0%{opacity:0; transform:translate(-50%,0);} 40%{opacity:1;} 80%{opacity:0; transform:translate(-50%,10px);} }
-
 /* =================================================================
    GENERIC SECTION HEADER + REVEAL
    ================================================================= */
@@ -360,7 +355,6 @@ section{ position:relative; }
 .reveal.d3{ transition-delay:.24s; } .reveal.d4{ transition-delay:.32s; }
 @media (prefers-reduced-motion:reduce){
   .reveal{ opacity:1 !important; transform:none !important; transition:none; }
-  .scroll-cue .mouse::after{ animation:none !important; }
 }
 
 
@@ -1105,8 +1099,6 @@ body{
       </a>
       <a href="#system" class="btn btn-ghost" data-cursor>So funktioniert's</a>
     </div>
-
-    <div class="scroll-cue reveal in d3"><span class="mouse"></span> Scrollen</div>
   </div>
 </header>
 
