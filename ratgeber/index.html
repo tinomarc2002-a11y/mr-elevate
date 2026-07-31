@@ -254,6 +254,41 @@ section{ position:relative; }
 .footer-bottom{ display:flex; justify-content:space-between; gap:16px; flex-wrap:wrap; padding-top:26px;
   border-top:1px solid var(--line); color:var(--fg-dim); font-size:.85rem; }
 
+/* ── Illustrierte Artikel-Karten: verspielt im Stil der Rakete, aber ruhig ── */
+.art-grid{ display:grid; grid-template-columns:1fr 1fr; gap:22px; margin:8px 0; }
+@media(max-width:680px){ .art-grid{ grid-template-columns:1fr; } }
+.art-card{ display:flex; flex-direction:column; text-decoration:none; overflow:hidden;
+  border:1px solid var(--line-strong); border-radius:var(--radius); background:var(--bg-card);
+  transition:transform var(--t), border-color var(--t), box-shadow var(--t); }
+.art-card:hover{ transform:translateY(-4px); border-color:var(--accent);
+  box-shadow:0 22px 44px -26px rgba(33,28,23,.4); }
+.art-illu{ background:linear-gradient(180deg, var(--bg-elev), var(--bg-card));
+  border-bottom:1px solid var(--line); }
+.art-illu svg{ display:block; width:100%; height:auto; }
+.art-body{ padding:20px 22px 24px; display:flex; flex-direction:column; gap:8px; }
+.art-body b{ font-family:var(--font-display); font-size:1.15rem; line-height:1.25; color:var(--fg); }
+.art-body > span{ color:var(--fg-muted); font-size:.92rem; line-height:1.55; }
+.art-cta{ margin-top:6px; display:inline-flex; align-items:center; gap:8px;
+  color:var(--accent); font-weight:600; font-size:.92rem; }
+.art-cta svg{ transition:transform var(--t); }
+.art-card:hover .art-cta svg{ transform:translateX(4px); }
+/* Funken in den Illustrationen, wie an der Rakete */
+.rg-spark{ transform-box:fill-box; transform-origin:50% 50%; animation:rgSpark 2.6s ease-in-out infinite; }
+.rg-spark.k2{ animation-delay:.8s; } .rg-spark.k3{ animation-delay:1.5s; }
+@keyframes rgSpark{ 0%,100%{ transform:scale(.55) rotate(0deg); opacity:.35; } 50%{ transform:scale(1.1) rotate(30deg); opacity:1; } }
+/* Schwebende Sterne im Hero, rechts neben dem Text */
+.g-hero{ position:relative; overflow:hidden; }
+.rg-twinkle{ position:absolute; width:14px; height:14px; background:var(--accent-fill); pointer-events:none;
+  clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);
+  animation:rgTwk 2.4s ease-in-out infinite; }
+.rg-twinkle.t1{ right:11%; top:26%; }
+.rg-twinkle.t2{ right:21%; top:56%; width:10px; height:10px; animation-delay:-.9s; }
+.rg-twinkle.t3{ right:6%; top:68%; animation-delay:-1.6s; }
+@media(max-width:900px){ .rg-twinkle{ display:none; } }
+@keyframes rgTwk{ 0%,100%{ transform:scale(.35) rotate(0deg); opacity:.2; } 50%{ transform:scale(1.1) rotate(35deg); opacity:.9; } }
+@media(prefers-reduced-motion:reduce){ .rg-spark,.rg-twinkle{ animation:none !important; }
+  .art-card,.art-cta svg{ transition:none !important; } }
+
 @media print{
   .nav,.scroll-progress,.closing-actions{ display:none !important; }
   body{ background:#fff; color:#111; }
@@ -289,21 +324,76 @@ section{ position:relative; }
     <p class="g-lead">Kein Verkaufstext, keine Zahlen aus der Luft. Hier stehen die Fragen, die mir im Erstgespräch am häufigsten gestellt werden, und zwar so beantwortet, wie ich sie auch am Telefon beantworte.</p>
     <p class="g-lead">Wenn du den kompletten Prozess suchst, statt einzelner Fragen: Der steht vollständig und kostenlos im <a href="/leitfaden">Ads-Leitfaden</a>.</p>
   </div>
+  <span class="rg-twinkle t1" aria-hidden="true"></span>
+  <span class="rg-twinkle t2" aria-hidden="true"></span>
+  <span class="rg-twinkle t3" aria-hidden="true"></span>
 </header>
 
 <section class="phase" id="artikel">
   <div class="container">
     <div class="phase-body reveal">
-      <div class="kpi-grid">
-      <a class="kpi-card" href="/ratgeber/was-kostet-google-ads" style="text-decoration:none;">
-        <b>Was kostet Google Ads wirklich?</b>
-        <span>Warum es keinen Festpreis gibt, woraus sich deine Kosten zusammensetzen und warum der Klickpreis die falsche Frage ist. Ohne Fantasiezahlen.</span>
-        <span style="margin-top:10px;color:var(--accent);font-weight:600;">Lesen · 6 Minuten</span>
+      <div class="art-grid">
+      <a class="art-card" href="/ratgeber/was-kostet-google-ads">
+        <span class="art-illu">
+          <svg viewBox="0 0 260 150" role="img" aria-label="Illustration: eine Münze mit Eurozeichen und ein Preisschild mit Fragezeichen">
+            <ellipse cx="118" cy="88" rx="66" ry="40" fill="rgba(168,201,62,.16)"/>
+            <circle cx="154" cy="98" r="27" fill="rgba(149,85,26,.14)"/>
+            <circle cx="154" cy="98" r="20" fill="none" stroke="rgba(149,85,26,.35)" stroke-width="2"/>
+            <circle style="fill:var(--accent-fill)" cx="104" cy="84" r="36"/>
+            <circle style="stroke:var(--accent-ink)" cx="104" cy="84" r="28" fill="none" stroke-width="2" opacity=".3"/>
+            <text style="fill:var(--accent-ink);font-family:var(--font-ui)" x="104" y="97" text-anchor="middle" font-size="36" font-weight="700">&euro;</text>
+            <g transform="translate(176,30) rotate(12)">
+              <rect style="fill:var(--bg-card);stroke:var(--amber)" x="0" y="0" width="50" height="30" rx="8" stroke-width="2"/>
+              <circle style="stroke:var(--amber)" cx="9" cy="15" r="3" fill="none" stroke-width="2"/>
+              <text style="fill:var(--amber);font-family:var(--font-ui)" x="31" y="22" text-anchor="middle" font-size="19" font-weight="700">?</text>
+            </g>
+            <g class="rg-spark" transform="translate(36,26)"><path style="fill:var(--accent-fill)" d="M12 0C13.5 7 15 8.5 22 10C15 11.5 13.5 13 12 20C10.5 13 9 11.5 2 10C9 8.5 10.5 7 12 0Z"/></g>
+            <g class="rg-spark k2" transform="translate(206,100) scale(.8)"><path style="fill:var(--amber)" d="M12 0C13.5 7 15 8.5 22 10C15 11.5 13.5 13 12 20C10.5 13 9 11.5 2 10C9 8.5 10.5 7 12 0Z"/></g>
+          </svg>
+        </span>
+        <span class="art-body">
+          <b>Was kostet Google Ads wirklich?</b>
+          <span>Warum es keinen Festpreis gibt, woraus sich deine Kosten zusammensetzen und warum der Klickpreis die falsche Frage ist. Ohne Fantasiezahlen.</span>
+          <span class="art-cta">Lesen · 6 Minuten <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </span>
       </a>
-      <a class="kpi-card" href="/ratgeber/agentur-oder-selbst-schalten" style="text-decoration:none;">
-        <b>Selbst schalten oder eine Agentur beauftragen?</b>
-        <span>Wann Selbermachen die richtige Entscheidung ist, was es wirklich kostet und woran du eine schlechte Agentur erkennst.</span>
-        <span style="margin-top:10px;color:var(--accent);font-weight:600;">Lesen · 7 Minuten</span>
+      <a class="art-card" href="/ratgeber/agentur-oder-selbst-schalten">
+        <span class="art-illu">
+          <svg viewBox="0 0 260 150" role="img" aria-label="Illustration: ein Weg gabelt sich, links ein Zahnrad für Selbermachen, rechts eine kleine Rakete für die Agentur">
+            <ellipse cx="130" cy="80" rx="72" ry="42" fill="rgba(168,201,62,.12)"/>
+            <path style="stroke:var(--line-strong)" d="M130 132 L130 98" fill="none" stroke-width="5" stroke-linecap="round"/>
+            <path style="stroke:var(--amber)" d="M130 98 C130 76 102 74 86 62" fill="none" stroke-width="5" stroke-linecap="round"/>
+            <path style="stroke:var(--accent)" d="M130 98 C130 76 158 74 174 62" fill="none" stroke-width="5" stroke-linecap="round"/>
+            <g transform="translate(72,42)">
+              <line style="stroke:var(--amber)" x1="0" y1="-16" x2="0" y2="-10" stroke-width="4" stroke-linecap="round"/>
+              <line style="stroke:var(--amber)" x1="0" y1="16" x2="0" y2="10" stroke-width="4" stroke-linecap="round"/>
+              <line style="stroke:var(--amber)" x1="-16" y1="0" x2="-10" y2="0" stroke-width="4" stroke-linecap="round"/>
+              <line style="stroke:var(--amber)" x1="16" y1="0" x2="10" y2="0" stroke-width="4" stroke-linecap="round"/>
+              <line style="stroke:var(--amber)" x1="-11.5" y1="-11.5" x2="-7" y2="-7" stroke-width="4" stroke-linecap="round"/>
+              <line style="stroke:var(--amber)" x1="11.5" y1="11.5" x2="7" y2="7" stroke-width="4" stroke-linecap="round"/>
+              <line style="stroke:var(--amber)" x1="-11.5" y1="11.5" x2="-7" y2="7" stroke-width="4" stroke-linecap="round"/>
+              <line style="stroke:var(--amber)" x1="11.5" y1="-11.5" x2="7" y2="-7" stroke-width="4" stroke-linecap="round"/>
+              <circle style="fill:var(--bg-card);stroke:var(--amber)" r="9" stroke-width="4"/>
+              <circle style="fill:var(--amber)" r="3"/>
+            </g>
+            <g transform="translate(186,34)">
+              <path style="fill:var(--accent-fill)" d="M0 -20 C-8 -12 -10 0 -8 14 L8 14 C10 0 8 -12 0 -20 Z"/>
+              <circle style="fill:var(--bg-card);stroke:var(--accent-ink)" cy="-2" r="4.5" stroke-width="2" opacity=".85"/>
+              <path style="fill:var(--amber)" d="M-8 8 L-16 20 L-7 16 Z"/>
+              <path style="fill:var(--amber)" d="M8 8 L16 20 L7 16 Z"/>
+              <path style="fill:var(--amber)" d="M-4 15 L0 26 L4 15 Z" opacity=".8"/>
+            </g>
+            <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="72" y="78" text-anchor="middle" font-size="11">Selbst</text>
+            <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="186" y="78" text-anchor="middle" font-size="11">Agentur</text>
+            <g class="rg-spark k3" transform="translate(212,16) scale(.75)"><path style="fill:var(--accent-fill)" d="M12 0C13.5 7 15 8.5 22 10C15 11.5 13.5 13 12 20C10.5 13 9 11.5 2 10C9 8.5 10.5 7 12 0Z"/></g>
+            <g class="rg-spark" transform="translate(42,104) scale(.7)"><path style="fill:var(--amber)" d="M12 0C13.5 7 15 8.5 22 10C15 11.5 13.5 13 12 20C10.5 13 9 11.5 2 10C9 8.5 10.5 7 12 0Z"/></g>
+          </svg>
+        </span>
+        <span class="art-body">
+          <b>Selbst schalten oder eine Agentur beauftragen?</b>
+          <span>Wann Selbermachen die richtige Entscheidung ist, was es wirklich kostet und woran du eine schlechte Agentur erkennst.</span>
+          <span class="art-cta">Lesen · 7 Minuten <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+        </span>
       </a>
       </div>
     </div>
