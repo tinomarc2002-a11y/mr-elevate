@@ -319,7 +319,19 @@ section{ position:relative; }
 .hero{ position:relative; min-height:100svh; display:flex; align-items:center; padding:120px 0 40px; overflow:hidden; }
 @media (max-width:900px){ .hero{ align-items:flex-start; padding-top:104px; } }
 .hero-bg{ position:absolute; inset:0; z-index:0; }
-.hero-photo{ width:100%; height:100%; object-fit:cover; object-position:50% 42%; display:block; }
+/* 114 % Hoehe = Reserve nach unten, damit der Parallax-Versatz (max 55 px
+   nach oben) nie eine Kante freigibt. Ueberstand schneidet .hero ab. */
+.hero-photo{ width:100%; height:114%; object-fit:cover; object-position:50% 42%; display:block; }
+/* Schwebende Sterne im Hero-Himmel, wie an der Raketen-Animation */
+.hero-twinkle{ position:absolute; width:14px; height:14px; background:var(--accent-fill); pointer-events:none; z-index:1;
+  clip-path:polygon(50% 0,62% 38%,100% 50%,62% 62%,50% 100%,38% 62%,0 50%,38% 38%);
+  animation:heroTwk 2.6s ease-in-out infinite; }
+.hero-twinkle.t1{ right:14%; top:22%; }
+.hero-twinkle.t2{ right:28%; top:38%; width:10px; height:10px; background:#e7a24b; animation-delay:-.9s; }
+.hero-twinkle.t3{ right:7%; top:52%; animation-delay:-1.7s; }
+@media(max-width:900px){ .hero-twinkle{ display:none; } }
+@keyframes heroTwk{ 0%,100%{ transform:scale(.35) rotate(0deg); opacity:.25; } 50%{ transform:scale(1.15) rotate(35deg); opacity:.95; } }
+@media(prefers-reduced-motion:reduce){ .hero-twinkle{ animation:none; } }
 .hero-bg::after{ /* heller Verlauf für Lesbarkeit auf der papierhellen Illustration (links stark, rechts mehr Bild) */
   content:""; position:absolute; inset:0;
   background:
@@ -642,7 +654,26 @@ section{ position:relative; }
 /* Weicher Verlauf statt harter Kante zum hellen Content darueber */
 .final::before{ content:""; position:absolute; top:-1px; left:0; right:0; height:120px;
   background:linear-gradient(180deg, var(--bg-light) 0%, transparent 100%); pointer-events:none; }
+.final{ overflow:hidden; }
 .final-card{ position:relative; padding:clamp(40px,7vw,80px) 0; }
+/* Aurora: zwei traege driftende Farbnebel hinter dem Abschluss-CTA */
+.final-card::before,.final-card::after{ content:""; position:absolute; border-radius:50%;
+  pointer-events:none; filter:blur(70px); }
+.final-card::before{ width:520px; height:520px; left:-160px; top:-180px;
+  background:radial-gradient(circle, rgba(168,201,62,.22), transparent 60%);
+  animation:auroA 16s ease-in-out infinite alternate; }
+.final-card::after{ width:460px; height:460px; right:-140px; bottom:-160px;
+  background:radial-gradient(circle, rgba(231,162,75,.16), transparent 60%);
+  animation:auroB 21s ease-in-out infinite alternate; }
+.final-card > *{ position:relative; z-index:1; }
+@keyframes auroA{ from{ transform:translate(0,0) scale(1); } to{ transform:translate(90px,60px) scale(1.18); } }
+@keyframes auroB{ from{ transform:translate(0,0) scale(1.1); } to{ transform:translate(-80px,-50px) scale(.95); } }
+/* Sanft pulsierender Glow am Haupt-CTA im dunklen Abschnitt */
+.final .btn-primary{ animation:ctaGlow 3.2s ease-in-out infinite; }
+@keyframes ctaGlow{ 0%,100%{ box-shadow:0 0 0 rgba(168,201,62,0); } 50%{ box-shadow:0 0 34px rgba(168,201,62,.35); } }
+@media(prefers-reduced-motion:reduce){
+  .final-card::before,.final-card::after,.final .btn-primary{ animation:none; }
+}
 .final h2{ font-size:clamp(2.6rem,6.5vw,5.2rem); letter-spacing:-.03em; line-height:1; margin-bottom:24px; }
 .final p{ color:var(--fg-muted); max-width:50ch; margin:0 auto 40px; font-size:1.1rem; }
 .final-actions{ display:flex; gap:14px; justify-content:center; flex-wrap:wrap; }
@@ -1075,7 +1106,11 @@ body{
   <div class="hero-bg">
     <!-- Handgezeichnete Dresden-Skyline (Frauenkirche) als Hero-Hintergrund,
          warm und papierhell wie die Cremetoene der restlichen Seite. -->
-    <img class="hero-photo" src="hero-pastel.webp" width="1920" height="1024" alt="" aria-hidden="true" fetchpriority="high" />
+    <img class="hero-photo" src="hero-pastel.webp" width="1920" height="1024" alt="" aria-hidden="true" fetchpriority="high" data-parallax="55" />
+    <!-- Schwebende Sterne ueber der Illustration, gleiche Formsprache wie an der Rakete -->
+    <span class="hero-twinkle t1" aria-hidden="true"></span>
+    <span class="hero-twinkle t2" aria-hidden="true"></span>
+    <span class="hero-twinkle t3" aria-hidden="true"></span>
   </div>
 
   <div class="container hero-inner">
@@ -1132,7 +1167,7 @@ body{
           <span class="fn-arrow" aria-hidden="true"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
         </a>
       </div>
-      <div class="sol-visual sol-engine eng-dash reveal d2">
+      <div class="sol-visual sol-engine eng-dash reveal d2" data-tilt>
         <svg class="engine-diagram" viewBox="0 0 520 440" role="img" aria-label="Illustration des Akquise-Motors: Meta Ads und Google Ads fuellen oben einen Trichter mit den Stufen Anzeige, Klick und Quizformular, aus dem unten eine Anfrage kommt. Ein Kreislaufpfeil, verbunden mit einer Optimieren-Markierung, fuehrt zurueck zu den Kampagnen, um daraus qualifizierte Anfragen zu machen.">
           <!-- Funken wie bei der Rakete, fuer denselben lebendigen Look -->
           <g transform="translate(16,33)"><path d="M96 78 C98.25 88.5 101.5 90.75 111 93 C101.5 95.25 98.25 97.5 96 108 C93.75 97.5 90.5 95.25 81 93 C90.5 90.75 93.75 88.5 96 78 Z" class="il-lime il-spark"/></g>
@@ -1365,7 +1400,7 @@ body{
 <section class="sec-pad section-mid" id="founder">
   <div class="container">
     <div class="founder">
-      <div class="founder-photo reveal">
+      <div class="founder-photo reveal" data-tilt>
         <img src="founder.jpg" alt="Marc Richter, Gründer von MR Elevate" width="760" height="949" loading="lazy" />
         <div class="founder-tag"><b>Marc Richter</b><span>Gründer</span></div>
       </div>
@@ -1586,6 +1621,7 @@ body{
 <!-- Cookie-Consent: seitenuebergreifend in /consent.js.
      Laedt Microsoft Clarity ausschliesslich nach aktiver Einwilligung. -->
 <script defer src="/consent.js"></script>
+<script defer src="/fx.js"></script>
 
 <!-- ============================================================= -->
 <!-- JAVASCRIPT                                                     -->
