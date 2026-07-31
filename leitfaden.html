@@ -384,7 +384,7 @@ section{ position:relative; }
 
 <div class="scroll-progress" id="scrollProgress"></div>
 
-<nav class="nav zone-dark" id="nav">
+<nav class="nav" id="nav">
   <div class="container nav-inner">
     <a href="/" class="brand" aria-label="MR Elevate Startseite">
       <span class="brand-stack">
@@ -561,7 +561,7 @@ section{ position:relative; }
     </div>
     <div class="phase-body reveal">
       <p>Schick deine Werbung <b>niemals</b> auf deine normale Startseite. Deine Website hat ein Menü, zehn Unterseiten, vielleicht einen Blog, lauter Ausgänge, durch die der Besucher wieder verschwindet. Für Werbung brauchst du eine eigene Seite mit genau einem Ziel: der Anfrage.</p>
-      <p>Und das ist kein Detail. Die Zahlen sind eindeutig: Eine gute, dedizierte Landingpage konvertiert im Schnitt bei rund <b>4&nbsp;%</b>, fast doppelt so viel wie eine normale Website-Seite mit etwa 2,35&nbsp;%.<a href="#q5" class="ref">5</a> Allein das Entfernen der Navigation kann die Conversion-Rate um 16 bis 28&nbsp;% steigern.<a href="#q8" class="ref">8</a> In einem dokumentierten Fall fielen die Kosten pro Anfrage um 63&nbsp;%, nachdem die Anzeigen statt auf die Startseite auf eine eigene Landingpage führten.<a href="#q5" class="ref">5</a></p>
+      <p>Und das ist kein Detail. Die Zahlen sind eindeutig: Eine gute, dedizierte Landingpage konvertiert im Schnitt bei rund <b>4&nbsp;%</b>, fast doppelt so viel wie eine normale Website-Seite mit etwa 2,35&nbsp;%.<a href="#q5" class="ref">5</a> Allein das Entfernen der Navigation kann die Conversion-Rate um 16 bis 28&nbsp;% steigern.<a href="#q8" class="ref">8</a></p>
 
       <h3>Was auf die Seite muss, in dieser Reihenfolge:</h3>
       <ol class="do-list">
@@ -985,7 +985,7 @@ section{ position:relative; }
       <li id="q3">ARD/ZDF-Medienstudie 2025 (wöchentliche Facebook-Nutzung in Deutschland), <a href="https://www.ard-zdf-medienstudie.de/" target="_blank" rel="noopener">ard-zdf-medienstudie.de</a></li>
       <li id="q4">Statista / luna-park, Marktanteile Suchmaschinen in Deutschland 2025, <a href="https://www.luna-park.de/ressourcen/seo-ratgeber/suchmaschinen-in-deutschland/" target="_blank" rel="noopener">luna-park.de</a></li>
       <li id="q5">WordStream, „What Is a Good Conversion Rate?“ (Median-Conversion-Rate 2,35&nbsp;% über alle Branchen), <a href="https://www.wordstream.com/blog/ws/2014/03/17/what-is-a-good-conversion-rate" target="_blank" rel="noopener">wordstream.com</a></li>
-      <li id="q8">digitalapplied, „Landing Page Statistics 2026“ (dedizierte Landingpage vs. Website, Navigation entfernen, Fallbeispiel −63&nbsp;% Cost-per-Lead), <a href="https://www.digitalapplied.com/blog/landing-page-statistics-2026-conversion-data-points" target="_blank" rel="noopener">digitalapplied.com</a>. Sekundärquelle: fasst Zahlen aus verschiedenen Studien zusammen.</li>
+      <li id="q8">digitalapplied, „Landing Page Statistics 2026“ (dedizierte Landingpage vs. Website, Navigation entfernen), <a href="https://www.digitalapplied.com/blog/landing-page-statistics-2026-conversion-data-points" target="_blank" rel="noopener">digitalapplied.com</a>. Sekundärquelle: fasst Zahlen aus verschiedenen Studien zusammen.</li>
       <li id="q6">netgrade, „Google Ads vs. Facebook Ads im Marketing Funnel“ (Suchintention vs. Discovery), <a href="https://netgrade.de/wissen/sea/google-ads-vs-facebook-ads/" target="_blank" rel="noopener">netgrade.de</a></li>
       <li id="q7">adheart / marketing.ch, Video- vs. Bild-Anzeigen auf Meta 2025 (CTR- und Conversion-Unterschiede), <a href="https://marketing.ch/social-media-marketing/bild-ads-vs-video-ads-liliana-milhais-alves-zeigt-welches-format-wirklich-besser-performt/" target="_blank" rel="noopener">marketing.ch</a></li>
     </ol>
@@ -1031,7 +1031,13 @@ section{ position:relative; }
 (function(){
   "use strict";
   var nav = document.getElementById('nav');
-  var onScroll = function(){ nav.classList.toggle('scrolled', window.scrollY > 20); };
+  var onScroll = function(){
+      /* zone-dark erst ab dem Scrollen: bis dahin steht die Nav ohne eigenen
+         Hintergrund auf dem hellen Hero, heller Text waere dort unlesbar (1.08:1). */
+      var isScrolled = window.scrollY > 20;
+      nav.classList.toggle('scrolled', isScrolled);
+      nav.classList.toggle('zone-dark', isScrolled);
+    };
   onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
 
   var sp = document.getElementById('scrollProgress');

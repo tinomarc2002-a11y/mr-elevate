@@ -292,7 +292,7 @@ section{ position:relative; }
 
 <div class="scroll-progress" id="scrollProgress"></div>
 
-<nav class="nav zone-dark" id="nav">
+<nav class="nav" id="nav">
   <div class="container nav-inner">
     <a href="/" class="brand" aria-label="MR Elevate Startseite">
       <span class="brand-stack">
@@ -541,7 +541,13 @@ section{ position:relative; }
 (function(){
   "use strict";
   var nav = document.getElementById('nav');
-  var onScroll = function(){ nav.classList.toggle('scrolled', window.scrollY > 20); };
+  var onScroll = function(){
+      /* zone-dark erst ab dem Scrollen: bis dahin steht die Nav ohne eigenen
+         Hintergrund auf dem hellen Hero, heller Text waere dort unlesbar (1.08:1). */
+      var isScrolled = window.scrollY > 20;
+      nav.classList.toggle('scrolled', isScrolled);
+      nav.classList.toggle('zone-dark', isScrolled);
+    };
   onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
 
   var sp = document.getElementById('scrollProgress');

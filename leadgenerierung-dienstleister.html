@@ -90,7 +90,7 @@
     {
       "@type": "Question",
       "name": "Was ist der Unterschied zwischen einem Lead und einer qualifizierten Anfrage?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Ein Lead ist ein Kontakt: Name, E-Mail-Adresse, vielleicht eine Telefonnummer. Eine qualifizierte Anfrage ist ein Kontakt, bei dem schon klar ist, dass die Leistung passt, die Region stimmt, das Budget realistisch ist und die Person entscheiden darf. Der Unterschied entsteht vorher, durch klare Anzeigentexte und ein Formular mit den richtigen Fragen." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Ein Lead ist ein Kontakt: Name, E-Mail-Adresse, vielleicht eine Telefonnummer. Eine qualifizierte Anfrage ist ein Kontakt, bei dem schon klar ist, dass die Leistung passt, die Region stimmt, das Budget realistisch ist und die Person entscheiden darf. Der Unterschied entsteht vorher, durch klare Anzeigentexte und ein Formular mit den richtigen Fragen. Abrechnungsrelevant wird eine Anfrage bei uns erst, wenn wir den Interessenten tatsächlich erreicht und ein Erstgespräch vereinbart haben." }
     },
     {
       "@type": "Question",
@@ -294,7 +294,7 @@ section{ position:relative; }
 
 <div class="scroll-progress" id="scrollProgress"></div>
 
-<nav class="nav zone-dark" id="nav">
+<nav class="nav" id="nav">
   <div class="container nav-inner">
     <a href="/" class="brand" aria-label="MR Elevate Startseite">
       <span class="brand-stack">
@@ -477,7 +477,7 @@ section{ position:relative; }
     <dl>
       <div>
         <dt>Was ist der Unterschied zwischen einem Lead und einer qualifizierten Anfrage?</dt>
-        <dd>Ein Lead ist ein Kontakt: Name, E-Mail-Adresse, vielleicht eine Telefonnummer. Eine qualifizierte Anfrage ist ein Kontakt, bei dem schon klar ist, dass die Leistung passt, die Region stimmt, das Budget realistisch ist und die Person entscheiden darf. Der Unterschied entsteht vorher, durch klare Anzeigentexte und ein Formular mit den richtigen Fragen.</dd>
+        <dd>Ein Lead ist ein Kontakt: Name, E-Mail-Adresse, vielleicht eine Telefonnummer. Eine qualifizierte Anfrage ist ein Kontakt, bei dem schon klar ist, dass die Leistung passt, die Region stimmt, das Budget realistisch ist und die Person entscheiden darf. Der Unterschied entsteht vorher, durch klare Anzeigentexte und ein Formular mit den richtigen Fragen. Abrechnungsrelevant wird eine Anfrage bei uns erst, wenn wir den Interessenten tatsächlich erreicht und ein Erstgespräch vereinbart haben.</dd>
       </div>
       <div>
         <dt>Wie viele Anfragen kann ich realistisch pro Monat erwarten?</dt>
@@ -547,7 +547,13 @@ section{ position:relative; }
 (function(){
   "use strict";
   var nav = document.getElementById('nav');
-  var onScroll = function(){ nav.classList.toggle('scrolled', window.scrollY > 20); };
+  var onScroll = function(){
+      /* zone-dark erst ab dem Scrollen: bis dahin steht die Nav ohne eigenen
+         Hintergrund auf dem hellen Hero, heller Text waere dort unlesbar (1.08:1). */
+      var isScrolled = window.scrollY > 20;
+      nav.classList.toggle('scrolled', isScrolled);
+      nav.classList.toggle('zone-dark', isScrolled);
+    };
   onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
 
   var sp = document.getElementById('scrollProgress');

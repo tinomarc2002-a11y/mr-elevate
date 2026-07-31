@@ -21,3 +21,9 @@ ads/
 
 .vercel
 .env*
+
+# Interne Strategie- und Arbeitsdokumente.
+# NIEMALS committen: Vercel liefert jede Datei im Repo oeffentlich aus,
+# eine getrackte .md war unter ihrer URL mit HTTP 200 abrufbar.
+*.md
+!llms.txt
