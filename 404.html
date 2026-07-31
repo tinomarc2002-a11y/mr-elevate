@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Seite nicht gefunden | MR Elevate</title>
+<meta name="robots" content="noindex, follow" />
+<link rel="stylesheet" href="fonts.css" />
+<link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png" />
+<style>
+:root{
+  /* Helle, warme Basis – identisch zur Startseite */
+  --bg:#f7f3ec; --bg-card:#fffdf8; --line:#e4dbc9; --line-strong:#cfc2a8;
+  --fg:#211c17; --fg-muted:#5c5349; --fg-dim:#675e51; --accent:#3e6810;
+  --font-display:'Fraunces',Georgia,serif; --font-body:'Inter',system-ui,sans-serif;
+}
+*,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
+body{ font-family:var(--font-body); background:var(--bg); color:var(--fg); line-height:1.7; -webkit-font-smoothing:antialiased; }
+.wrap{ max-width:680px; margin-inline:auto; padding:clamp(56px,10vw,110px) 24px 80px; }
+a{ color:var(--accent); text-decoration:none; }
+a:hover{ text-decoration:underline; }
+.brand{ display:flex; align-items:center; gap:12px; margin-bottom:40px; }
+.brand img{ height:40px; width:auto; filter:drop-shadow(0 2px 6px rgba(33,28,23,.18)); }
+.brand b{ font-family:var(--font-display); font-weight:700; font-size:1.15rem; }
+.brand .we{ color:var(--accent); }
+.code{ font-family:var(--font-display); font-weight:700; font-size:.8rem; letter-spacing:.16em; text-transform:uppercase; color:var(--fg-dim); margin-bottom:14px; display:block; }
+h1{ font-family:var(--font-display); font-weight:700; font-size:clamp(2rem,5vw,2.9rem); letter-spacing:-.02em; line-height:1.1; margin-bottom:20px; }
+p{ color:var(--fg-muted); margin-bottom:16px; }
+.links{ background:var(--bg-card); border:1px solid var(--line-strong); border-radius:14px; padding:24px 28px; margin-top:34px; }
+.links h2{ font-family:var(--font-display); font-weight:600; font-size:1.05rem; margin-bottom:14px; }
+.links ul{ list-style:none; display:flex; flex-direction:column; gap:9px; }
+.links li::before{ content:"→ "; color:var(--accent); }
+.btn{ display:inline-flex; align-items:center; gap:10px; margin-top:32px; padding:15px 28px; min-height:52px;
+  border-radius:100px; font-family:var(--font-display); font-weight:500;
+  background:var(--bg-card); color:var(--accent); border:2px solid var(--accent); transition:background .2s, color .2s; }
+.btn:hover{ background:var(--accent); color:#f7f3ec; text-decoration:none; }
+footer{ border-top:1px solid var(--line); margin-top:64px; padding-top:24px; font-size:.85rem; color:var(--fg-dim); }
+footer a{ color:var(--fg-dim); }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <a class="brand" href="/">
+    <img src="logo-gruen.png" alt="MR Elevate Logo" width="283" height="280" />
+    <b>MR <span class="we">Elevate</span></b>
+  </a>
+
+  <span class="code">Fehler 404</span>
+  <h1>Diese Seite gibt es nicht.</h1>
+  <p>Entweder der Link ist alt, oder es hat sich ein Tippfehler in die Adresse geschlichen. Beides halb so wild.</p>
+  <p>Hier kommst du zu den Seiten, die es tatsächlich gibt:</p>
+
+  <div class="links">
+    <h2>Meistgesucht</h2>
+    <ul>
+      <li><a href="/">Startseite: erfolgsbasierte Neukundengewinnung</a></li>
+      <li><a href="/leitfaden">Der komplette Meta- &amp; Google-Ads-Leitfaden, kostenlos</a></li>
+      <li><a href="/google-ads-agentur-dresden">Google Ads Agentur Dresden</a></li>
+      <li><a href="/meta-ads-agentur-dresden">Meta Ads Agentur Dresden</a></li>
+      <li><a href="/leadgenerierung-dienstleister">Leadgenerierung für Dienstleister</a></li>
+      <li><a href="/erfolgsbasiertes-marketing">Erfolgsbasiertes Marketing</a></li>
+    </ul>
+  </div>
+
+  <a class="btn" href="/#quiz">Kostenloses Analysegespräch sichern</a>
+
+  <footer>
+    MR Elevate · Marc Richter · Briesnitzer Höhe 24, 01157 Dresden ·
+    <a href="/impressum">Impressum</a> ·
+    <a href="/datenschutz">Datenschutz</a>
+  </footer>
+</div>
+</body>
+</html>
