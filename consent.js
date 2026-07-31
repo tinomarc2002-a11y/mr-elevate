@@ -101,11 +101,39 @@
       var btn = e.target.closest("[data-cc]");
       if (!btn) return;
       var all = btn.getAttribute("data-cc") === "all";
+      var vorher = read();
+      var warAktiv = !!(vorher && vorher.marketing);
       save(all);
-      if (all) loadMarketing();
       banner.hidden = true;
+
+      if (all) { loadMarketing(); return; }
+
+      /* Echter Widerruf: Wer die Einwilligung zurueckzieht, erwartet, dass die
+         Messung endet. Das bereits eingehaengte Clarity-Skript laesst sich nicht
+         zuverlaessig entladen, deshalb Cookies loeschen und Seite neu laden. */
+      if (warAktiv) {
+        loescheClarityCookies();
+        location.reload();
+      }
     });
     return banner;
+  }
+
+  /* Loescht die von Clarity gesetzten Cookies auf allen plausiblen Domain-/Pfad-Kombinationen. */
+  function loescheClarityCookies() {
+    var namen = ["_clck", "_clsk", "CLID", "ANONCHK", "MR", "MUID", "SM"];
+    var host = location.hostname;
+    var domains = ["", host, "." + host];
+    var teile = host.split(".");
+    if (teile.length > 2) domains.push("." + teile.slice(-2).join("."));
+    namen.forEach(function (n) {
+      domains.forEach(function (d) {
+        ["/", location.pathname].forEach(function (p) {
+          document.cookie = n + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT; path=" + p +
+            (d ? "; domain=" + d : "") + "; SameSite=Lax";
+        });
+      });
+    });
   }
 
   function init() {

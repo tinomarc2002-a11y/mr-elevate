@@ -163,7 +163,7 @@
      Oliv-Lime statt Neon-Highlighter, naeher am tatsaechlichen Logo-Gruen */
   --accent-fill:   #a8c93e;
   --accent-deep:   #8fae2e;   /* für Verlaufs-Balken (Scroll-/Quiz-Progress) */
-  --accent-ink:    #0a0d00;   /* Text/Icon auf der Lime-Fläche */
+  --accent-ink:    #0a0d00; --on-accent:#f7f3ec; /* Text auf gefuelltem Accent-Button, AA-sicher */   /* Text/Icon auf der Lime-Fläche */
   --accent-glow:   rgba(168,201,62,.35);
 
   /* Kontext-Token: auf hellem Papier lesbare, gedeckte Variante –
@@ -219,7 +219,7 @@ img,video{ display:block; max-width:100%; }
   --line:#332b2d; --line-strong:#4a4043;
   /* Neutrale in derselben warmen Achse wie die helle Seite, statt kühler Graustufen */
   --fg:#f7f3ec; --fg-muted:#c0b6a8; --fg-dim:#a2988a;
-  --accent:#a8c93e; --amber:#e7a24b; --teal:#3fb0a4; --clay:#d76a4c;
+  --accent:#a8c93e; --on-accent:var(--accent-ink); --amber:#e7a24b; --teal:#3fb0a4; --clay:#d76a4c;
   color:var(--fg);
 }
 a{ color:inherit; text-decoration:none; }
@@ -266,7 +266,7 @@ section{ position:relative; }
 }
 .btn:active{ transform:scale(.97); }
 .btn-primary{ background:var(--bg-card); color:var(--accent); border:2px solid var(--accent); }
-.btn-primary:hover{ background:var(--accent); color:var(--accent-ink); transform:translateY(-2px); }
+.btn-primary:hover{ background:var(--accent); color:var(--on-accent); transform:translateY(-2px); }
 .btn-ghost{ background:rgba(255,255,255,.04); color:var(--fg); border:1px solid var(--line-strong); }
 .btn-ghost:hover{ background:rgba(255,255,255,.08); border-color:var(--fg-dim); transform:translateY(-2px); }
 .btn .arrow{ transition:transform var(--t); }

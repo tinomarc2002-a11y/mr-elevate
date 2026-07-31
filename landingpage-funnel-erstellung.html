@@ -143,7 +143,7 @@
   --line:#e4dbc9; --line-strong:#cfc2a8;
   --fg:#211c17; --fg-muted:#5c5349; --fg-dim:#675e51;
   /* Lime bleibt als Flaeche immer lebhaft, als Text/Linie gedeckt und AA-sicher */
-  --accent-fill:#a8c93e; --accent-deep:#8fae2e; --accent-ink:#0a0d00; --accent-glow:rgba(168,201,62,.35);
+  --accent-fill:#a8c93e; --accent-deep:#8fae2e; --accent-ink:#0a0d00; --on-accent:#f7f3ec; /* Text auf gefuelltem Accent-Button, AA-sicher */ --accent-glow:rgba(168,201,62,.35);
   --accent:#3e6810; --amber:#95551a; --teal:#196b62; --clay:#923d24;
   --ink:#0c0a0b; --ink-rgb:12,10,11;
   --meta:#2f5fbf; --google:#b8860b; --radius:16px; --radius-sm:10px; --maxw:1180px; --maxw-read:760px;
@@ -157,7 +157,7 @@
   --bg:var(--ink); --bg-elev:#161213; --bg-card:#1b1618;
   --line:#332b2d; --line-strong:#4a4043;
   --fg:#f7f3ec; --fg-muted:#c0b6a8; --fg-dim:#a2988a;
-  --accent:#a8c93e; --amber:#e7a24b; --teal:#3fb0a4; --clay:#d76a4c;
+  --accent:#a8c93e; --on-accent:var(--accent-ink); --amber:#e7a24b; --teal:#3fb0a4; --clay:#d76a4c;
   color:var(--fg);
 }
 *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
@@ -184,7 +184,7 @@ section{ position:relative; }
   border-radius:100px; transition:transform var(--t-fast), background var(--t), color var(--t); }
 .btn:active{ transform:scale(.97); }
 .btn-primary{ background:var(--bg-card); color:var(--accent); border:2px solid var(--accent); }
-.btn-primary:hover{ background:var(--accent); color:var(--accent-ink); transform:translateY(-2px); }
+.btn-primary:hover{ background:var(--accent); color:var(--on-accent); transform:translateY(-2px); }
 .btn-ghost{ background:rgba(0,0,0,.035); color:var(--fg); border:1px solid var(--line-strong); }
 .btn-ghost:hover{ background:rgba(0,0,0,.07); border-color:var(--fg-dim); transform:translateY(-2px); }
 .btn .arrow{ transition:transform var(--t); }
@@ -354,7 +354,7 @@ section{ position:relative; }
     <div class="phase-body reveal">
       <p>Eine Startseite hat einen Job: einen Überblick geben. Sie erzählt, wer du bist, was du alles anbietest, wo du sitzt, wen du schon betreut hast. Das ist richtig so, für Besucher, die sich in Ruhe umsehen wollen.</p>
       <p>Wer über eine Anzeige kommt, will sich aber nicht umsehen. Er hat gerade nach einer konkreten Sache gesucht, geklickt, und erwartet genau darauf eine Antwort. Stattdessen landet er in einem Menü mit acht Punkten und muss selbst herausfinden, wo es weitergeht. Die meisten machen das nicht. Sie gehen zurück.</p>
-      <p>Die Zahlen dazu sind eindeutig: Eine dedizierte Landingpage konvertiert im Schnitt rund 4&nbsp;%, eine normale Website-Seite etwa 2,35&nbsp;% (<a href="/leitfaden#q5">Quellen im Leitfaden</a>). Allein das Entfernen der Navigation kann die Conversion-Rate um 16 bis 28&nbsp;% steigern (<a href="/leitfaden#q8">Quelle</a>). Dieselben Anzeigen, dasselbe Budget, deutlich mehr Anfragen.</p>
+      <p>Die Zahlen dazu sind eindeutig: Eine dedizierte Landingpage konvertiert im Schnitt rund 4&nbsp;%, eine normale Website-Seite etwa 2,35&nbsp;% (<a href="/leitfaden#q5">Quellen im Leitfaden</a>). Allein das Entfernen der Navigation kann die Klicks auf den Haupt-Call-to-Action um rund 16&nbsp;% erhöhen (<a href="/leitfaden#q8">Quelle</a>). Dieselben Anzeigen, dasselbe Budget, deutlich mehr Anfragen.</p>
       <div class="aside">
         <span class="m-label">Merksatz</span>
         <p>Jeder zusätzliche Link auf der Zielseite ist eine weitere Möglichkeit, etwas anderes zu tun als das, wofür du bezahlt hast.</p>
@@ -569,7 +569,6 @@ section{ position:relative; }
   revealSweep();
 })();
 </script>
-<script defer src="/consent.js"></script>
 <script defer src="/consent.js"></script>
 </body>
 </html>

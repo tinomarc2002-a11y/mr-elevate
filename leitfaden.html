@@ -103,7 +103,7 @@
     {
       "@type": "Question",
       "name": "Brauche ich für Werbeanzeigen eine eigene Landingpage?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Ja. Eine dedizierte Landingpage mit einem einzigen Ziel konvertiert deutlich besser als die normale Website-Startseite. Allein das Entfernen der Navigation kann die Conversion-Rate um 16 bis 28 % steigern." }
+      "acceptedAnswer": { "@type": "Answer", "text": "Ja. Eine dedizierte Landingpage mit einem einzigen Ziel konvertiert deutlich besser als die normale Website-Startseite. Allein das Entfernen der Navigation kann die Klicks auf den Haupt-Call-to-Action um rund 16 % erhöhen." }
     },
     {
       "@type": "Question",
@@ -137,7 +137,7 @@
   --line:#e4dbc9; --line-strong:#cfc2a8;
   --fg:#211c17; --fg-muted:#5c5349; --fg-dim:#675e51;
   /* Lime bleibt als Flaeche immer lebhaft, als Text/Linie gedeckt und AA-sicher */
-  --accent-fill:#a8c93e; --accent-deep:#8fae2e; --accent-ink:#0a0d00; --accent-glow:rgba(168,201,62,.35);
+  --accent-fill:#a8c93e; --accent-deep:#8fae2e; --accent-ink:#0a0d00; --on-accent:#f7f3ec; /* Text auf gefuelltem Accent-Button, AA-sicher */ --accent-glow:rgba(168,201,62,.35);
   --accent:#3e6810; --amber:#95551a; --teal:#196b62; --clay:#923d24;
   --ink:#0c0a0b; --ink-rgb:12,10,11;
   --meta:#2f5fbf; --google:#b8860b; --radius:16px; --radius-sm:10px; --maxw:1180px; --maxw-read:760px;
@@ -151,7 +151,7 @@
   --bg:var(--ink); --bg-elev:#161213; --bg-card:#1b1618;
   --line:#332b2d; --line-strong:#4a4043;
   --fg:#f7f3ec; --fg-muted:#c0b6a8; --fg-dim:#a2988a;
-  --accent:#a8c93e; --amber:#e7a24b; --teal:#3fb0a4; --clay:#d76a4c;
+  --accent:#a8c93e; --on-accent:var(--accent-ink); --amber:#e7a24b; --teal:#3fb0a4; --clay:#d76a4c;
   color:var(--fg);
 }
 *,*::before,*::after{ box-sizing:border-box; margin:0; padding:0; }
@@ -178,7 +178,7 @@ section{ position:relative; }
   border-radius:100px; transition:transform var(--t-fast), background var(--t), color var(--t); }
 .btn:active{ transform:scale(.97); }
 .btn-primary{ background:var(--bg-card); color:var(--accent); border:2px solid var(--accent); }
-.btn-primary:hover{ background:var(--accent); color:var(--accent-ink); transform:translateY(-2px); }
+.btn-primary:hover{ background:var(--accent); color:var(--on-accent); transform:translateY(-2px); }
 .btn-ghost{ background:rgba(0,0,0,.035); color:var(--fg); border:1px solid var(--line-strong); }
 .btn-ghost:hover{ background:rgba(0,0,0,.07); border-color:var(--fg-dim); transform:translateY(-2px); }
 .btn .arrow{ transition:transform var(--t); }
@@ -561,7 +561,7 @@ section{ position:relative; }
     </div>
     <div class="phase-body reveal">
       <p>Schick deine Werbung <b>niemals</b> auf deine normale Startseite. Deine Website hat ein Menü, zehn Unterseiten, vielleicht einen Blog, lauter Ausgänge, durch die der Besucher wieder verschwindet. Für Werbung brauchst du eine eigene Seite mit genau einem Ziel: der Anfrage.</p>
-      <p>Und das ist kein Detail. Die Zahlen sind eindeutig: Eine gute, dedizierte Landingpage konvertiert im Schnitt bei rund <b>4&nbsp;%</b>, fast doppelt so viel wie eine normale Website-Seite mit etwa 2,35&nbsp;%.<a href="#q5" class="ref">5</a> Allein das Entfernen der Navigation kann die Conversion-Rate um 16 bis 28&nbsp;% steigern.<a href="#q8" class="ref">8</a></p>
+      <p>Und das ist kein Detail. Die Zahlen sind eindeutig: Eine gute, dedizierte Landingpage konvertiert im Schnitt bei rund <b>4&nbsp;%</b>, fast doppelt so viel wie eine normale Website-Seite mit etwa 2,35&nbsp;%.<a href="#q5" class="ref">5</a> Allein das Entfernen der Navigation kann die Klicks auf den Haupt-Call-to-Action um rund 16&nbsp;% erhöhen.<a href="#q8" class="ref">8</a></p>
 
       <h3>Was auf die Seite muss, in dieser Reihenfolge:</h3>
       <ol class="do-list">
@@ -949,7 +949,7 @@ section{ position:relative; }
       </div>
       <div>
         <dt>Brauche ich für Werbeanzeigen eine eigene Landingpage?</dt>
-        <dd>Ja. Eine dedizierte Landingpage mit einem einzigen Ziel konvertiert deutlich besser als die normale Website-Startseite. Allein das Entfernen der Navigation kann die Conversion-Rate um 16 bis 28&nbsp;% steigern.</dd>
+        <dd>Ja. Eine dedizierte Landingpage mit einem einzigen Ziel konvertiert deutlich besser als die normale Website-Startseite. Allein das Entfernen der Navigation kann die Klicks auf den Haupt-Call-to-Action um rund 16&nbsp;% erhöhen.</dd>
       </div>
       <div>
         <dt>Um wie viel darf ich das Budget erhöhen, ohne die Kampagne zu zerstören?</dt>
@@ -985,9 +985,9 @@ section{ position:relative; }
       <li id="q3">ARD/ZDF-Medienstudie 2025 (wöchentliche Facebook-Nutzung in Deutschland), <a href="https://www.ard-zdf-medienstudie.de/" target="_blank" rel="noopener">ard-zdf-medienstudie.de</a></li>
       <li id="q4">Statista / luna-park, Marktanteile Suchmaschinen in Deutschland 2025, <a href="https://www.luna-park.de/ressourcen/seo-ratgeber/suchmaschinen-in-deutschland/" target="_blank" rel="noopener">luna-park.de</a></li>
       <li id="q5">WordStream, „What Is a Good Conversion Rate?“ (Median-Conversion-Rate 2,35&nbsp;% über alle Branchen), <a href="https://www.wordstream.com/blog/ws/2014/03/17/what-is-a-good-conversion-rate" target="_blank" rel="noopener">wordstream.com</a></li>
-      <li id="q8">digitalapplied, „Landing Page Statistics 2026“ (dedizierte Landingpage vs. Website, Navigation entfernen), <a href="https://www.digitalapplied.com/blog/landing-page-statistics-2026-conversion-data-points" target="_blank" rel="noopener">digitalapplied.com</a>. Sekundärquelle: fasst Zahlen aus verschiedenen Studien zusammen.</li>
       <li id="q6">netgrade, „Google Ads vs. Facebook Ads im Marketing Funnel“ (Suchintention vs. Discovery), <a href="https://netgrade.de/wissen/sea/google-ads-vs-facebook-ads/" target="_blank" rel="noopener">netgrade.de</a></li>
       <li id="q7">adheart / marketing.ch, Video- vs. Bild-Anzeigen auf Meta 2025 (CTR- und Conversion-Unterschiede), <a href="https://marketing.ch/social-media-marketing/bild-ads-vs-video-ads-liliana-milhais-alves-zeigt-welches-format-wirklich-besser-performt/" target="_blank" rel="noopener">marketing.ch</a></li>
+      <li id="q8">digitalapplied, „Landing Page Statistics 2026“ (dedizierte Landingpage vs. Website, Navigation entfernen), <a href="https://www.digitalapplied.com/blog/landing-page-statistics-2026-conversion-data-points" target="_blank" rel="noopener">digitalapplied.com</a>. Sekundärquelle: fasst Zahlen aus verschiedenen Studien zusammen.</li>
     </ol>
   </div>
 </section>
