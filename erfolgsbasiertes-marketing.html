@@ -80,18 +80,35 @@
   "mainEntity": [
     {
       "@type": "Question",
+      "name": "Was zählt bei MR Elevate als qualifizierte Anfrage?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ein Interessent, den wir tatsächlich erreicht haben und mit dem ein Erstgespräch vereinbart ist. Ein Klick auf die Anzeige zählt nicht, ein ausgefülltes Formular allein auch nicht. Erst wenn ein Termin steht, fällt eine Vergütung an."
+      }
+    },
+    {
+      "@type": "Question",
       "name": "Trage ich als Kunde wirklich kein Risiko?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Ganz risikofrei ist es nicht, und das sagen wir offen. Die Werbekosten trägst du, sie fließen direkt an Meta oder Google. Dazu kommt die kleine Setup-Gebühr zum Start. Was du nicht zahlst, ist ein monatlicher Retainer für unsere Arbeit: Unsere Vergütung wird erst fällig, wenn die vorher definierten Ergebnisse entstehen." }
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Ganz risikofrei ist es nicht, und das sagen wir offen. Die Werbekosten trägst du, sie fließen direkt an Meta oder Google. Dazu kommt die kleine Setup-Gebühr zum Start. Was du nicht zahlst, ist ein monatlicher Retainer für unsere Arbeit: Unsere Vergütung wird erst fällig, wenn die vorher definierten Ergebnisse entstehen."
+      }
     },
     {
       "@type": "Question",
       "name": "Gibt es eine Mindestlaufzeit?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Wir arbeiten mit Vertrag, aber ohne lange Bindung. Erstverträge laufen bei uns maximal 3 bis 6 Monate, damit du das Modell mit überschaubarem Risiko testen kannst. Längere Laufzeiten vereinbaren wir nur, wenn sie für dich Sinn ergeben." }
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Wir arbeiten mit Vertrag, aber ohne lange Bindung. Erstverträge laufen bei uns maximal 3 bis 6 Monate, damit du das Modell mit überschaubarem Risiko testen kannst. Längere Laufzeiten vereinbaren wir nur, wenn sie für dich Sinn ergeben."
+      }
     },
     {
       "@type": "Question",
       "name": "Für wen eignet sich erfolgsbasiertes Marketing nicht?",
-      "acceptedAnswer": { "@type": "Answer", "text": "Für Unternehmen ohne ausreichende Marge pro Kunde, weil sich dann weder Werbebudget noch Erfolgsvergütung sauber darstellen lassen. Genauso wenig passt es, wenn das Angebot noch unklar ist oder niemand die eingehenden Anfragen zeitnah bearbeitet. In diesen Fällen sagen wir im Analysegespräch ab." }
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Für Unternehmen ohne ausreichende Marge pro Kunde, weil sich dann weder Werbebudget noch Erfolgsvergütung sauber darstellen lassen. Genauso wenig passt es, wenn das Angebot noch unklar ist oder niemand die eingehenden Anfragen zeitnah bearbeitet. In diesen Fällen sagen wir im Analysegespräch ab."
+      }
     }
   ]
 }
@@ -370,6 +387,10 @@ section{ position:relative; }
       </div>
     </div>
     <div class="phase-body reveal">
+      <h3>Was als qualifizierte Anfrage zählt</h3>
+      <p>Die wichtigste Definition im ganzen Modell, weil daran die Vergütung hängt. Deshalb steht sie hier offen und nicht im Kleingedruckten:</p>
+      <p><b>Eine qualifizierte Anfrage ist ein Interessent, den wir tatsächlich erreicht haben und mit dem ein Erstgespräch vereinbart ist.</b> Nicht der Klick auf die Anzeige. Nicht das ausgefüllte Formular allein. Nicht die Telefonnummer, unter der nie jemand rangeht. Erst wenn ein Termin steht, ist es eine Anfrage, für die eine Vergütung anfällt.</p>
+      <p>Das heißt im Klartext: Formulare, die im Nichts enden, gehen zu unseren Lasten, nicht zu deinen. Genau deshalb optimieren wir auf Gesprächstermine und nicht auf Klickzahlen, denn an Klicks verdienen wir nichts.</p>
       <p>Vier Schritte, in dieser Reihenfolge. Die gleiche Übersicht findest du auch kompakt im Abschnitt <a href="/#modell">Das Modell auf der Startseite</a>.</p>
       <ol class="do-list">
         <li><b>Setup-Gebühr.</b> Einmalig, fair kalkuliert, vor Projektstart schriftlich fixiert. Deckt Funnel, Tracking und Kampagnen-Aufbau.</li>
@@ -433,6 +454,10 @@ section{ position:relative; }
     <h2>Häufige Fragen zum erfolgsbasierten Modell</h2>
     <dl>
       <div>
+        <dt>Was zählt bei MR Elevate als qualifizierte Anfrage?</dt>
+        <dd>Ein Interessent, den wir tatsächlich erreicht haben und mit dem ein Erstgespräch vereinbart ist. Ein Klick auf die Anzeige zählt nicht, ein ausgefülltes Formular allein auch nicht. Erst wenn ein Termin steht, fällt eine Vergütung an.</dd>
+      </div>
+      <div>
         <dt>Trage ich als Kunde wirklich kein Risiko?</dt>
         <dd>Ganz risikofrei ist es nicht, und das sagen wir offen. Die Werbekosten trägst du, sie fließen direkt an Meta oder Google. Dazu kommt die kleine Setup-Gebühr zum Start. Was du nicht zahlst, ist ein monatlicher Retainer für unsere Arbeit: Unsere Vergütung wird erst fällig, wenn die vorher definierten Ergebnisse entstehen.</dd>
       </div>
@@ -488,6 +513,7 @@ section{ position:relative; }
           <h5>Rechtliches</h5>
           <a href="/impressum">Impressum</a>
           <a href="/datenschutz">Datenschutz</a>
+          <a href="#" data-cc-open>Cookie-Einstellungen</a>
         </div>
       </div>
     </div>
@@ -542,5 +568,6 @@ section{ position:relative; }
   revealSweep();
 })();
 </script>
+<script defer src="/consent.js"></script>
 </body>
 </html>

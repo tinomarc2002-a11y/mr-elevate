@@ -1580,61 +1580,9 @@ body{
   </div>
 </div>
 
-<!-- ============================================================= -->
-<!-- COOKIE CONSENT BANNER                                          -->
-<!-- ============================================================= -->
-<div class="cc" id="cookieConsent" role="dialog" aria-live="polite" aria-label="Hinweis zu Cookies" hidden>
-  <div class="cc-inner">
-    <div class="cc-text">
-      <strong>Cookies &amp; Datenschutz</strong>
-      <p>Wir nutzen nur technisch notwendige Mittel und eine <b>cookielose</b> Reichweitenmessung ohne persönliche Profile. Analyse- und Marketing-Dienste mit Cookies (z.&nbsp;B. Microsoft&nbsp;Clarity, Meta-Pixel) laden wir <b>ausschließlich mit deiner Einwilligung</b>. Mehr in der <a href="/datenschutz">Datenschutzerklärung</a>.</p>
-    </div>
-    <div class="cc-actions">
-      <button class="btn-cc btn-cc-ghost" type="button" data-cc="necessary">Nur notwendige</button>
-      <button class="btn-cc btn-cc-accept" type="button" data-cc="all">Alle akzeptieren</button>
-    </div>
-  </div>
-</div>
-
-<script>
-/* Cookie-Consent: Opt-in. Vor Einwilligung wird KEIN Marketing-Skript geladen. */
-(function(){
-  "use strict";
-  var KEY = 'mre_consent_v1';
-  var el = document.getElementById('cookieConsent');
-  if(!el) return;
-  function read(){ try{ return JSON.parse(localStorage.getItem(KEY)); }catch(e){ return null; } }
-  function save(marketing){ try{ localStorage.setItem(KEY, JSON.stringify({ necessary:true, marketing:!!marketing, ts:Date.now() })); }catch(e){} }
-  function loadMarketing(){
-    if(window.__mreMarketing) return; window.__mreMarketing = true;
-    /* Dieser Block läuft NUR, wenn der Nutzer "Alle akzeptieren" gewählt hat
-       (jetzt oder in einem früheren Besuch). Ohne Einwilligung wird nichts geladen. */
-
-    /* Microsoft Clarity (Heatmaps & Sitzungsanalyse) – erst nach Einwilligung */
-    (function(c,l,a,r,i,t,y){
-      c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
-      t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
-      y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
-    })(window, document, "clarity", "script", "xritxdmsli");
-
-    /* TODO[META-PIXEL]: Hier ggf. den Meta-/Facebook-Pixel-Code einsetzen. */
-  }
-  function show(){ el.hidden = false; }
-  function hide(){ el.hidden = true; }
-  var saved = read();
-  if(saved){ if(saved.marketing) loadMarketing(); }
-  else { show(); }
-  el.addEventListener('click', function(e){
-    var btn = e.target.closest('[data-cc]'); if(!btn) return;
-    var all = btn.getAttribute('data-cc') === 'all';
-    save(all); if(all) loadMarketing(); hide();
-  });
-  document.addEventListener('click', function(e){
-    var opener = e.target.closest('[data-cc-open]'); if(!opener) return;
-    e.preventDefault(); show();
-  });
-})();
-</script>
+<!-- Cookie-Consent: seitenuebergreifend in /consent.js.
+     Laedt Microsoft Clarity ausschliesslich nach aktiver Einwilligung. -->
+<script defer src="/consent.js"></script>
 
 <!-- ============================================================= -->
 <!-- JAVASCRIPT                                                     -->

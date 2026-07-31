@@ -241,6 +241,15 @@ input { font: inherit; }
 .booking-meta { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; }
 .booking-meta a { color: rgba(255,255,255,0.8); }
 
+/* Einwilligung: bewusst NICHT vorausgewählt (Opt-in) – eine vorangekreuzte Box wäre nach
+   DSGVO/EuGH-Rechtsprechung keine wirksame Einwilligung. */
+.consent { grid-column: 1 / -1; display: flex; align-items: flex-start; gap: 12px; margin: 4px 0 4px; cursor: pointer; }
+.consent input[type="checkbox"] { flex-shrink: 0; width: 20px; height: 20px; margin-top: 2px; accent-color: var(--accent); cursor: pointer; }
+.consent span { font-size: 13.5px; line-height: 1.55; color: rgba(255,255,255,0.72); }
+.consent a { color: rgba(255,255,255,0.92); }
+.consent-error { grid-column: 1 / -1; display: none; font-size: 13.5px; color: #ffc9c9; margin: -4px 0 2px; }
+.consent-error.show { display: block; }
+
 @media (max-width: 640px) {
   .booking { padding: 40px 26px; }
   .booking-form { grid-template-columns: 1fr; }
@@ -356,14 +365,21 @@ input { font: inherit; }
           <div class="field"><input type="text" name="name" placeholder="Vor- und Nachname" required autocomplete="name"></div>
           <div class="field"><input type="text" name="firma" placeholder="Firma" required autocomplete="organization"></div>
           <div class="field"><input type="email" name="email" placeholder="E-Mail-Adresse" required autocomplete="email"></div>
-          <div class="field"><input type="tel" name="telefon" placeholder="Telefonnummer" autocomplete="tel"></div>
+          <div class="field"><input type="tel" name="telefon" placeholder="Telefonnummer" required autocomplete="tel"></div>
+
+          <label class="consent" for="consentContact">
+            <input type="checkbox" name="consent" id="consentContact" required>
+            <span id="consentText">Ja, MR Elevate darf mich zu meiner Auswertung per E-Mail und telefonisch kontaktieren. Diese Einwilligung kann ich jederzeit formlos widerrufen, z.&nbsp;B. per E-Mail an <a href="mailto:info@mr-elevate.de">info@mr-elevate.de</a>.</span>
+          </label>
+          <p class="consent-error" id="consentError">Bitte bestätige die Einwilligung – ohne sie dürfen wir dich nicht kontaktieren.</p>
+
           <button type="submit" class="booking-submit field-full">
             <span id="submitLabel">Auswertung per E-Mail anfordern</span>
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="9" x2="14" y2="9"/><polyline points="9,4 14,9 9,14"/></svg>
           </button>
         </form>
 
-        <p class="booking-meta">Wir melden uns innerhalb von 24 Stunden bei dir. Mit dem Absenden stimmst du unserer <a href="/datenschutz" target="_blank" rel="noopener">Datenschutzerklärung</a> zu.</p>
+        <p class="booking-meta">Wir melden uns innerhalb von 24 Stunden bei dir. Wie wir deine Daten verarbeiten, steht in unserer <a href="/datenschutz" target="_blank" rel="noopener">Datenschutzerklärung</a>.</p>
       </div>
     </div>
   </div>
@@ -378,6 +394,7 @@ input { font: inherit; }
       <a href="/werbecheck">Werbe-Check</a>
       <a href="/impressum">Impressum</a>
       <a href="/datenschutz">Datenschutz</a>
+          <a href="#" data-cc-open>Cookie-Einstellungen</a>
     </div>
   </div>
 </footer>
@@ -628,12 +645,26 @@ function goToContactStep() {
 
 // ============== FORM SUBMIT ==============
 const API_ENDPOINT = '/api/werbecheck/send-result';
-const THANK_YOU_URL = 'danke.html';
+// Absoluter Pfad, nicht relativ: die Seite läuft unter /werbecheck (cleanUrls, kein Trailing Slash),
+// ein relatives 'danke.html' würde der Browser deshalb zu /danke.html auflösen und ins Leere laufen.
+const THANK_YOU_URL = '/werbecheck/danke';
 
 function submitBooking(e) {
   e.preventDefault();
   const form = e.target;
   const fd = new FormData(form);
+
+  // Einwilligung ist Pflicht. Das required-Attribut fängt das im Normalfall schon ab; diese Prüfung
+  // ist der Sicherheitsgurt, falls die Validierung im Browser umgangen wird.
+  const consentBox = document.getElementById('consentContact');
+  const consentError = document.getElementById('consentError');
+  if (!consentBox.checked) {
+    consentError.classList.add('show');
+    consentBox.focus();
+    return false;
+  }
+  consentError.classList.remove('show');
+
   const contact = {
     name: (fd.get('name') || '').trim(),
     firma: (fd.get('firma') || '').trim(),
@@ -641,11 +672,18 @@ function submitBooking(e) {
     telefon: (fd.get('telefon') || '').trim()
   };
 
+  // Der exakte Wortlaut wird mitgeschickt, nicht nur ein "true": Für den Nachweis nach Art. 7 DSGVO
+  // muss belegbar sein, WORIN eingewilligt wurde – auch wenn der Text hier später geändert wird.
+  const consent = {
+    given: true,
+    text: (document.getElementById('consentText').innerText || '').replace(/\s+/g, ' ').trim()
+  };
+
   const btn = form.querySelector('.booking-submit');
   const originalLabel = document.getElementById('submitLabel').textContent;
   if (btn) { btn.disabled = true; btn.style.opacity = '0.7'; document.getElementById('submitLabel').textContent = 'Wird gesendet …'; }
 
-  const payload = { contact: contact, answers: answers };
+  const payload = { contact: contact, answers: answers, consent: consent };
 
   fetch(API_ENDPOINT, {
     method: 'POST',
@@ -666,5 +704,6 @@ function submitBooking(e) {
 renderQuestion(0);
 </script>
 
+<script defer src="/consent.js"></script>
 </body>
 </html>
