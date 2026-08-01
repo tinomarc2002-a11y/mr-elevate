@@ -681,7 +681,7 @@ section{ position:relative; }
    FOOTER
    ================================================================= */
 .footer{ border-top:1px solid var(--line); padding:48px 0 28px; }
-.footer-top{ display:flex; justify-content:space-between; align-items:center; gap:24px; flex-wrap:wrap; margin-bottom:28px; }
+.footer-top{ display:flex; justify-content:space-between; align-items:flex-start; gap:24px; flex-wrap:wrap; margin-bottom:28px; }
 .footer-brand{ max-width:400px; }
 .footer-brand p{ color:var(--fg-muted); font-size:.92rem; margin-top:16px; }
 /* Sichtbare NAP-Daten (Name/Adresse/Telefon) – Local-SEO-Signal, muss mit
@@ -689,6 +689,11 @@ section{ position:relative; }
 .footer-nap{ display:flex; flex-direction:column; gap:3px; margin-top:16px; font-size:.88rem; color:var(--fg-muted); font-style:normal; }
 .footer-nap a{ color:var(--fg-muted); }
 .footer-nap a:hover{ color:var(--accent); }
+.footer-cols{ display:flex; gap:44px; flex-wrap:wrap; }
+.footer-col h5{ font-family:var(--font-display); font-size:.78rem; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--fg); margin-bottom:10px; font-weight:600; }
+.footer-col a{ display:block; color:var(--fg-muted); font-size:.92rem; padding:5px 0; transition:color var(--t-fast); }
+.footer-col a:hover{ color:var(--accent); }
 .footer-social{ display:flex; gap:10px; }
 .footer-social a{ display:flex; align-items:center; justify-content:center; width:40px; height:40px;
   border:1px solid var(--line-strong); border-radius:50%; color:var(--fg-muted);
@@ -1563,6 +1568,16 @@ body{
           <span>Briesnitzer Höhe 24, 01157 Dresden</span>
           <span><a href="tel:+4915510657637">+49 1551 0657637</a> &middot; <a href="mailto:info@mr-elevate.de">info@mr-elevate.de</a></span>
         </address>
+      </div>
+      <div class="footer-cols">
+        <div class="footer-col">
+          <h5>Leistungen</h5>
+          <a href="/google-ads-agentur-dresden">Google Ads Agentur Dresden</a>
+          <a href="/meta-ads-agentur-dresden">Meta Ads Agentur Dresden</a>
+          <a href="/leadgenerierung-dienstleister">Leadgenerierung f&uuml;r Dienstleister</a>
+          <a href="/landingpage-funnel-erstellung">Landingpage &amp; Funnel</a>
+          <a href="/erfolgsbasiertes-marketing">Erfolgsbasiertes Marketing</a>
+        </div>
       </div>
       <div class="footer-social">
         <a href="https://www.linkedin.com/in/marc-richter-043a90412/" target="_blank" rel="noopener me" aria-label="Marc Richter auf LinkedIn">
