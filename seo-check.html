@@ -1,0 +1,1330 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="robots" content="noindex, nofollow">
+<title>SEO Checker · MR Elevate</title>
+<link rel="icon" href="/favicon-32.png">
+<style>
+  :root{
+    --bg:#f7f3ec; --bg-elev:#efe7d8; --bg-card:#fffdf8;
+    --line:#e4dbc9; --line-strong:#cfc2a8;
+    --fg:#211c17; --fg-muted:#5c5349; --fg-dim:#675e51;
+    --accent-fill:#a8c93e; --accent-deep:#8fae2e; --accent:#3e6810;
+    --amber:#95551a; --teal:#196b62; --clay:#923d24;
+    --ok:#3e6810; --ok-bg:#eef3d9;
+    --warn:#95551a; --warn-bg:#f7ead8;
+    --fail:#923d24; --fail-bg:#f6e2da;
+    --info:#196b62; --info-bg:#dfeeec;
+    --radius:14px;
+    --shadow:0 1px 2px rgba(33,28,23,.05), 0 8px 24px rgba(33,28,23,.07);
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Segoe UI', system-ui, -apple-system, sans-serif;
+    background:var(--bg); color:var(--fg);
+    line-height:1.55; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1060px; margin:0 auto; padding:0 20px 80px;}
+
+  header.site{
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+    padding:22px 0 18px; border-bottom:1px solid var(--line); margin-bottom:36px;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-weight:700; letter-spacing:.2px;}
+  .brand .dot{width:12px; height:12px; border-radius:50%; background:var(--accent-fill); box-shadow:0 0 0 4px rgba(168,201,62,.25);}
+  .brand small{font-weight:500; color:var(--fg-dim);}
+
+  h1.title{font-size:clamp(1.7rem,4vw,2.4rem); line-height:1.15; letter-spacing:-.02em; margin-bottom:10px;}
+  p.sub{color:var(--fg-muted); max-width:640px; margin-bottom:28px;}
+
+  /* ---------- Eingabe ---------- */
+  form.checker{
+    background:var(--bg-card); border:1px solid var(--line);
+    border-radius:var(--radius); box-shadow:var(--shadow);
+    padding:22px; margin-bottom:36px;
+  }
+  .row{display:flex; gap:12px; flex-wrap:wrap;}
+  .field{flex:1 1 260px; display:flex; flex-direction:column; gap:6px;}
+  .field label{font-size:.82rem; font-weight:600; color:var(--fg-muted);}
+  .field input{
+    border:1px solid var(--line-strong); border-radius:10px;
+    padding:12px 14px; font-size:1rem; background:#fff; color:var(--fg);
+    outline:none; transition:border-color .15s, box-shadow .15s; width:100%;
+  }
+  .field input:focus{border-color:var(--accent-deep); box-shadow:0 0 0 3px rgba(168,201,62,.25);}
+  .controls{display:flex; align-items:flex-end; gap:12px; flex-wrap:wrap; margin-top:14px;}
+  .seg{display:inline-flex; border:1px solid var(--line-strong); border-radius:10px; overflow:hidden;}
+  .seg button{
+    border:0; background:#fff; padding:11px 16px; font-size:.9rem; cursor:pointer;
+    color:var(--fg-muted); font-weight:600;
+  }
+  .seg button.active{background:var(--fg); color:var(--bg);}
+  .go{
+    margin-left:auto; border:0; cursor:pointer;
+    background:var(--fg); color:var(--bg);
+    font-size:1rem; font-weight:700; letter-spacing:.2px;
+    padding:13px 28px; border-radius:10px;
+    transition:transform .1s, background .15s;
+  }
+  .go:hover{background:#000;}
+  .go:active{transform:scale(.98);}
+  .go[disabled]{opacity:.55; cursor:wait;}
+  .hint{font-size:.78rem; color:var(--fg-dim); margin-top:10px;}
+  .hint a{color:var(--teal);}
+  details.adv{margin-top:14px; border-top:1px dashed var(--line); padding-top:12px;}
+  details.adv summary{font-size:.82rem; font-weight:600; color:var(--fg-muted); cursor:pointer; user-select:none;}
+  details.adv summary:hover{color:var(--fg);}
+  .advbody{margin-top:12px;}
+  .keystate{font-size:.75rem; font-weight:700; margin-left:6px;}
+  .keystate.on{color:var(--ok);}
+  .keystate.off{color:var(--warn);}
+
+  /* ---------- Fortschritt ---------- */
+  #progress{display:none; margin-bottom:36px;}
+  #progress.on{display:block;}
+  .steps{display:flex; flex-direction:column; gap:8px;}
+  .step{display:flex; align-items:center; gap:10px; font-size:.92rem; color:var(--fg-dim);}
+  .step .sicon{width:20px; height:20px; border-radius:50%; border:2px solid var(--line-strong); flex:none;
+    display:grid; place-items:center; font-size:.7rem; font-weight:800;}
+  .step.run{color:var(--fg);}
+  .step.run .sicon{border-color:var(--accent-deep); animation:pulse 1s infinite;}
+  .step.done{color:var(--fg-muted);}
+  .step.done .sicon{border-color:var(--accent-deep); background:var(--accent-fill); color:#0a0d00;}
+  .step.skip .sicon{border-style:dashed;}
+  @keyframes pulse{0%,100%{transform:scale(1);}50%{transform:scale(1.18);}}
+
+  /* ---------- Ergebnis ---------- */
+  #result{display:none;}
+  #result.on{display:block; animation:fadein .4s ease;}
+  @keyframes fadein{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:none;}}
+
+  .scoreboard{
+    display:grid; grid-template-columns:auto 1fr; gap:28px; align-items:center;
+    background:var(--bg-card); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:28px; margin-bottom:16px;
+  }
+  @media(max-width:640px){.scoreboard{grid-template-columns:1fr; justify-items:center; text-align:center;}}
+  .gauge{position:relative; width:190px; height:190px;}
+  .gauge svg{transform:rotate(-90deg);}
+  .gauge .track{stroke:var(--bg-elev);}
+  .gauge .bar{stroke-linecap:round; transition:stroke-dashoffset 1.2s cubic-bezier(.22,1,.36,1);}
+  .gauge .num{position:absolute; inset:0; display:flex; flex-direction:column; align-items:center; justify-content:center;}
+  .gauge .num b{font-size:3rem; letter-spacing:-.03em; line-height:1;}
+  .gauge .num span{font-size:.78rem; color:var(--fg-dim); margin-top:4px;}
+  .verdict h2{font-size:1.5rem; margin-bottom:6px; letter-spacing:-.01em;}
+  .verdict p{color:var(--fg-muted); max-width:520px;}
+  .verdict .checked-url{
+    display:inline-block; margin-top:12px; font-size:.82rem; color:var(--fg-dim);
+    background:var(--bg-elev); border-radius:8px; padding:4px 10px; word-break:break-all;
+  }
+  .quickstats{display:flex; gap:10px; flex-wrap:wrap; margin-top:14px;}
+  .chip{font-size:.8rem; font-weight:600; border-radius:999px; padding:5px 12px; background:var(--bg-elev); color:var(--fg-muted);}
+  .chip.ok{background:var(--ok-bg); color:var(--ok);}
+  .chip.warn{background:var(--warn-bg); color:var(--warn);}
+  .chip.fail{background:var(--fail-bg); color:var(--fail);}
+
+  .notice{
+    display:none; align-items:flex-start; gap:10px;
+    background:var(--warn-bg); border:1px solid #e8d3b4; color:#6d3f14;
+    border-radius:12px; padding:12px 16px; margin-bottom:22px; font-size:.88rem;
+  }
+  .notice.on{display:flex;}
+  .notice b{color:#54300f;}
+
+  /* Top-Prioritäten */
+  .todo{
+    background:var(--bg-card); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); padding:20px 22px; margin-bottom:26px;
+  }
+  .todo h3{font-size:1.05rem; margin-bottom:4px;}
+  .todo p.lead{font-size:.85rem; color:var(--fg-dim); margin-bottom:14px;}
+  .todo ol{list-style:none; counter-reset:t; display:flex; flex-direction:column; gap:10px;}
+  .todo li{counter-increment:t; display:flex; gap:12px; align-items:flex-start; font-size:.92rem;}
+  .todo li::before{
+    content:counter(t); flex:none; width:24px; height:24px; border-radius:50%;
+    background:var(--fg); color:var(--bg); font-size:.75rem; font-weight:800;
+    display:grid; place-items:center; margin-top:1px;
+  }
+  .todo li em{font-style:normal; color:var(--fg-dim); font-size:.85rem; display:block;}
+
+  /* Kategorien-Übersicht */
+  .catgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(215px,1fr)); gap:12px; margin-bottom:30px;}
+  .catcard{
+    background:var(--bg-card); border:1px solid var(--line); border-radius:12px;
+    padding:14px 16px; cursor:pointer; transition:border-color .15s, transform .1s;
+  }
+  .catcard:hover{border-color:var(--line-strong); transform:translateY(-1px);}
+  .catcard .cathead{display:flex; justify-content:space-between; align-items:baseline; margin-bottom:8px; gap:8px;}
+  .catcard .catname{font-weight:700; font-size:.92rem;}
+  .catcard .catscore{font-weight:800; font-size:1.05rem;}
+  .catcard .catweight{font-size:.72rem; color:var(--fg-dim); margin-top:6px;}
+  .meter{height:6px; border-radius:99px; background:var(--bg-elev); overflow:hidden;}
+  .meter i{display:block; height:100%; border-radius:99px; transition:width 1s cubic-bezier(.22,1,.36,1);}
+
+  /* Detail-Sektionen */
+  section.cat{
+    background:var(--bg-card); border:1px solid var(--line); border-radius:var(--radius);
+    box-shadow:var(--shadow); margin-bottom:18px; overflow:hidden;
+  }
+  section.cat > .head{display:flex; align-items:center; gap:14px; padding:18px 22px; border-bottom:1px solid var(--line);}
+  section.cat > .head h3{font-size:1.05rem; flex:1;}
+  section.cat > .head .score-pill{font-weight:800; font-size:.95rem; padding:4px 12px; border-radius:999px; white-space:nowrap;}
+  .checklist{list-style:none;}
+  .check{border-bottom:1px solid var(--line); padding:14px 22px;}
+  .check:last-child{border-bottom:0;}
+  .check .line{display:flex; align-items:flex-start; gap:12px;}
+  .badge{flex:none; width:24px; height:24px; border-radius:50%; display:grid; place-items:center; font-size:.78rem; font-weight:900; margin-top:1px;}
+  .badge.ok{background:var(--ok-bg); color:var(--ok);}
+  .badge.warn{background:var(--warn-bg); color:var(--warn);}
+  .badge.fail{background:var(--fail-bg); color:var(--fail);}
+  .badge.info{background:var(--info-bg); color:var(--info);}
+  .check .body{flex:1; min-width:0;}
+  .check .name{font-weight:650; font-size:.95rem;}
+  .check .detail{font-size:.87rem; color:var(--fg-muted); margin-top:2px; word-break:break-word;}
+  .check .detail code{background:var(--bg-elev); border-radius:6px; padding:1px 6px; font-size:.82rem; font-family:Consolas,'Courier New',monospace;}
+  .tip{
+    display:none; margin-top:10px; font-size:.85rem; color:var(--fg);
+    background:var(--bg-elev); border-left:3px solid var(--accent-fill);
+    border-radius:0 8px 8px 0; padding:10px 14px;
+  }
+  .tip.on{display:block;}
+  .tip code{background:rgba(255,255,255,.7); border-radius:5px; padding:1px 5px; font-family:Consolas,'Courier New',monospace; font-size:.82rem;}
+  .tipbtn{border:0; background:none; cursor:pointer; color:var(--teal); font-size:.8rem; font-weight:700; padding:0; margin-top:6px;}
+  .tipbtn:hover{text-decoration:underline;}
+
+  /* Core Web Vitals */
+  .cwv{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:12px; padding:18px 22px;}
+  .vital{border:1px solid var(--line); border-radius:12px; padding:14px; text-align:center;}
+  .vital .vname{font-size:.75rem; font-weight:700; letter-spacing:.06em; color:var(--fg-dim); text-transform:uppercase;}
+  .vital .vval{font-size:1.5rem; font-weight:800; margin:4px 0 2px;}
+  .vital .vlabel{font-size:.75rem; font-weight:600;}
+  .vital.ok .vval,.vital.ok .vlabel{color:var(--ok);}
+  .vital.warn .vval,.vital.warn .vlabel{color:var(--warn);}
+  .vital.fail .vval,.vital.fail .vlabel{color:var(--fail);}
+
+  /* Aktionen */
+  .actions{display:flex; gap:12px; margin:8px 0 30px; flex-wrap:wrap;}
+  .actions button{
+    border:1px solid var(--line-strong); background:var(--bg-card); color:var(--fg);
+    padding:10px 20px; border-radius:10px; font-weight:650; font-size:.9rem; cursor:pointer;
+  }
+  .actions button:hover{border-color:var(--fg);}
+
+  .error-box{
+    display:none; background:var(--fail-bg); color:var(--fail); border:1px solid #e5c4b8;
+    border-radius:12px; padding:16px 20px; margin-bottom:30px; font-size:.92rem;
+  }
+  .error-box.on{display:block;}
+
+  footer.site{margin-top:60px; padding-top:20px; border-top:1px solid var(--line);
+    font-size:.8rem; color:var(--fg-dim); display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px;}
+
+  @media print{
+    body{background:#fff;}
+    form.checker,.actions,.tipbtn,header.site,#progress{display:none !important;}
+    section.cat,.scoreboard,.todo{box-shadow:none; break-inside:avoid;}
+    .tip{display:block;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="site">
+    <div class="brand"><span class="dot"></span> MR&nbsp;Elevate <small>· SEO Checker</small></div>
+    <div style="font-size:.8rem;color:var(--fg-dim)">Internes Analyse-Tool</div>
+  </header>
+
+  <h1 class="title">Wie fit ist deine Seite für Google?</h1>
+  <p class="sub">Vollständiger On-Page-, Technik- und Performance-Check mit gewichtetem Gesamt-Score. Die Performance-Daten kommen live von Google Lighthouse (PageSpeed Insights).</p>
+
+  <form class="checker" id="form">
+    <div class="row">
+      <div class="field" style="flex:2 1 340px">
+        <label for="url">URL der Seite</label>
+        <input id="url" type="text" placeholder="https://www.mr-elevate.de" autocomplete="url" required>
+      </div>
+      <div class="field">
+        <label for="kw">Fokus-Keyword <span style="font-weight:400">(optional)</span></label>
+        <input id="kw" type="text" placeholder="z. B. google ads agentur dresden">
+      </div>
+    </div>
+    <div class="controls">
+      <div class="seg" id="strategy">
+        <button type="button" data-v="mobile" class="active">📱 Mobil</button>
+        <button type="button" data-v="desktop">🖥️ Desktop</button>
+      </div>
+      <button class="go" id="go" type="submit">Analyse starten</button>
+    </div>
+    <p class="hint">Der Abruf läuft über einen öffentlichen CORS-Proxy. Seiten hinter Login oder mit Bot-Schutz können evtl. nicht geladen werden.</p>
+    <details class="adv" id="advbox">
+      <summary>⚙️ Erweitert: PageSpeed-API-Key <span class="keystate off" id="keystate">– nicht hinterlegt</span></summary>
+      <div class="advbody">
+        <div class="field">
+          <label for="apikey">Google-API-Key für PageSpeed Insights</label>
+          <input id="apikey" type="text" placeholder="AIza…" autocomplete="off" spellcheck="false">
+        </div>
+        <p class="hint">Ohne Key limitiert Google die Lighthouse-Abfragen stark (Fehler 429) – die Performance-Kategorie fällt dann aus der Wertung. Kostenlosen Key holen: <a href="https://console.cloud.google.com/apis/library/pagespeedonline.googleapis.com" target="_blank" rel="noopener noreferrer">Cloud Console → „PageSpeed Insights API“ aktivieren → Anmeldedaten → API-Schlüssel</a>. Der Key wird ausschließlich lokal in deinem Browser gespeichert und nur an Google gesendet.</p>
+      </div>
+    </details>
+  </form>
+
+  <div class="error-box" id="errbox"></div>
+
+  <div id="progress">
+    <div class="steps">
+      <div class="step" data-s="fetch"><span class="sicon"></span> HTML der Seite laden</div>
+      <div class="step" data-s="parse"><span class="sicon"></span> On-Page-Faktoren analysieren</div>
+      <div class="step" data-s="tech"><span class="sicon"></span> robots.txt &amp; Sitemap prüfen</div>
+      <div class="step" data-s="psi"><span class="sicon"></span> Google Lighthouse abfragen (dauert 20–40&nbsp;s)</div>
+    </div>
+  </div>
+
+  <div id="result">
+    <div class="scoreboard">
+      <div class="gauge">
+        <svg width="190" height="190" viewBox="0 0 190 190">
+          <circle class="track" cx="95" cy="95" r="82" fill="none" stroke-width="14"/>
+          <circle class="bar" id="gaugebar" cx="95" cy="95" r="82" fill="none" stroke-width="14"
+                  stroke="var(--accent-deep)" stroke-dasharray="515.2" stroke-dashoffset="515.2"/>
+        </svg>
+        <div class="num"><b id="scorenum">0</b><span id="scorescale">von 100</span></div>
+      </div>
+      <div class="verdict">
+        <h2 id="verdicttitle"></h2>
+        <p id="verdicttext"></p>
+        <span class="checked-url" id="checkedurl"></span>
+        <div class="quickstats" id="quickstats"></div>
+      </div>
+    </div>
+
+    <div class="notice" id="scorenotice"></div>
+
+    <div class="todo" id="todo">
+      <h3>🎯 Deine Top-Prioritäten</h3>
+      <p class="lead">Diese Punkte bringen aktuell den größten Hebel – in dieser Reihenfolge abarbeiten.</p>
+      <ol id="todolist"></ol>
+    </div>
+
+    <div class="actions">
+      <button type="button" onclick="window.print()">🖨️ Als PDF / Bericht drucken</button>
+      <button type="button" id="expandall">📖 Alle Tipps ausklappen</button>
+      <button type="button" id="rerun">↻ Neu prüfen</button>
+    </div>
+
+    <div class="catgrid" id="catgrid"></div>
+    <div id="sections"></div>
+  </div>
+
+  <footer class="site">
+    <span>© MR Elevate · SEO Checker</span>
+    <span>Performance-Daten: Google PageSpeed Insights API</span>
+  </footer>
+</div>
+
+<script>
+'use strict';
+
+/* ============================================================
+   Konfiguration
+   ============================================================ */
+const PROXIES = [
+  u => 'https://api.allorigins.win/raw?url=' + encodeURIComponent(u),
+  u => 'https://corsproxy.io/?url=' + encodeURIComponent(u),
+  u => 'https://api.codetabs.com/v1/proxy?quest=' + encodeURIComponent(u),
+];
+const PSI_ENDPOINT = 'https://www.googleapis.com/pagespeedonline/v5/runPagespeed';
+
+const CATEGORIES = [
+  {id:'meta',    name:'Meta & Snippet',           weight:17},
+  {id:'content', name:'Inhalt & Struktur',        weight:18},
+  {id:'images',  name:'Bilder',                   weight:8},
+  {id:'links',   name:'Links & URL',              weight:10},
+  {id:'social',  name:'Social / Open Graph',      weight:6},
+  {id:'schema',  name:'Strukturierte Daten',      weight:6},
+  {id:'trust',   name:'Vertrauen & Recht',        weight:7},
+  {id:'tech',    name:'Technik & Indexierung',    weight:14},
+  {id:'perf',    name:'Performance (Lighthouse)', weight:18},
+];
+
+/* ============================================================
+   Hilfsfunktionen
+   ============================================================ */
+const $ = s => document.querySelector(s);
+
+function fetchWithTimeout(url, ms, opts={}){
+  const ctrl = new AbortController();
+  const t = setTimeout(() => ctrl.abort(), ms);
+  return fetch(url, {...opts, signal:ctrl.signal, redirect:'follow'})
+    .finally(() => clearTimeout(t));
+}
+
+/* Erkennt Fehlerseiten der Proxy-Dienste, die als 200 durchkommen. */
+function looksLikeProxyError(text){
+  const head = text.slice(0, 600).toLowerCase();
+  return /"error"\s*:|rate ?limit|too many requests|forbidden by proxy|allorigins.*error|quota exceeded/.test(head)
+      && head.length < 600 && !/<!doctype|<html/i.test(head);
+}
+
+/* Lädt eine Ressource als Text – erst direkt, dann über Proxys. */
+async function fetchText(url, timeout=15000, expectHtml=false){
+  const attempts = [u => u, ...PROXIES];
+  let lastErr = null;
+  for (const wrap of attempts){
+    try {
+      const res = await fetchWithTimeout(wrap(url), timeout);
+      if (!res.ok) { lastErr = new Error('HTTP ' + res.status); continue; }
+      const text = await res.text();
+      if (!text) { lastErr = new Error('Leere Antwort'); continue; }
+      if (looksLikeProxyError(text)) { lastErr = new Error('Proxy-Fehler'); continue; }
+      if (expectHtml && !/<html[\s>]|<head[\s>]|<body[\s>]/i.test(text)){
+        lastErr = new Error('Antwort enthält kein HTML-Dokument'); continue;
+      }
+      return {text, status:res.status};
+    } catch(e){ lastErr = e; }
+  }
+  throw lastErr || new Error('Konnte ' + url + ' nicht laden.');
+}
+
+/* Prüft nur die Existenz einer Ressource (robots.txt, sitemap). */
+async function probe(url){
+  try { return (await fetchText(url, 10000)).text; }
+  catch(e){ return null; }
+}
+
+function escapeHtml(s){
+  return String(s ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function normalizeUrl(raw){
+  let u = raw.trim();
+  if (!/^https?:\/\//i.test(u)) u = 'https://' + u;
+  const parsed = new URL(u);
+  if (!/^https?:$/.test(parsed.protocol)) throw new Error('Nur http/https werden unterstützt.');
+  return parsed;
+}
+
+/* Grobe Pixelbreite eines Snippets (Google rendert Titles in ~20px Arial). */
+function approxPixelWidth(str, fontSize){
+  let w = 0;
+  for (const ch of str){
+    if ('iIl.,:;|!\'’'.includes(ch)) w += fontSize * 0.28;
+    else if ('mwMW@'.includes(ch)) w += fontSize * 0.85;
+    else if (ch === ' ') w += fontSize * 0.3;
+    else if (/[A-ZÄÖÜ]/.test(ch)) w += fontSize * 0.68;
+    else w += fontSize * 0.52;
+  }
+  return Math.round(w);
+}
+
+function statusFromRatio(r){ return r >= 0.9 ? 'ok' : r >= 0.5 ? 'warn' : 'fail'; }
+function colorFor(pct){ return pct >= 80 ? 'var(--accent-deep)' : pct >= 50 ? '#d59b45' : '#c96a4e'; }
+
+/* Zerlegt robots.txt in User-agent-Blöcke – nur so lässt sich sauber
+   feststellen, ob wirklich ALLE Crawler ausgesperrt sind. */
+function parseRobots(txt){
+  const lines = txt.split(/\r?\n/).map(l => l.replace(/#.*$/,'').trim()).filter(Boolean);
+  const blocks = []; let current = null;
+  const sitemaps = [];
+  for (const line of lines){
+    const m = line.match(/^([a-z-]+)\s*:\s*(.*)$/i);
+    if (!m) continue;
+    const key = m[1].toLowerCase(), val = m[2].trim();
+    if (key === 'sitemap'){ sitemaps.push(val); continue; }
+    if (key === 'user-agent'){
+      if (!current || current.rules.length) { current = {agents:[], rules:[]}; blocks.push(current); }
+      current.agents.push(val.toLowerCase());
+    } else if (current && (key === 'disallow' || key === 'allow')){
+      current.rules.push({type:key, path:val});
+    }
+  }
+  return {blocks, sitemaps};
+}
+
+/* Blockt die robots.txt alle Crawler von der gesamten Seite aus? */
+function robotsBlocksEverything(parsed, path){
+  const wildcard = parsed.blocks.filter(b => b.agents.includes('*'));
+  if (!wildcard.length) return false;
+  for (const b of wildcard){
+    const allowsRoot = b.rules.some(r => r.type === 'allow' && (r.path === '/' || (r.path && path.startsWith(r.path))));
+    const blocksRoot = b.rules.some(r => r.type === 'disallow' && r.path === '/');
+    if (blocksRoot && !allowsRoot) return true;
+  }
+  return false;
+}
+
+/* Blockt die robots.txt gezielt diese eine URL? */
+function robotsBlocksPath(parsed, path){
+  const wildcard = parsed.blocks.filter(b => b.agents.includes('*'));
+  let blocked = false, longestBlock = -1, longestAllow = -1;
+  for (const b of wildcard){
+    for (const r of b.rules){
+      if (!r.path) continue;
+      const prefix = r.path.replace(/\*.*$/,'');
+      if (!path.startsWith(prefix)) continue;
+      if (r.type === 'disallow' && prefix.length > longestBlock) longestBlock = prefix.length;
+      if (r.type === 'allow' && prefix.length > longestAllow) longestAllow = prefix.length;
+    }
+  }
+  /* Googles Regel: bei gleich langem Treffer gewinnt die erlaubende Regel. */
+  if (longestBlock >= 0 && longestBlock > longestAllow) blocked = true;
+  return blocked;
+}
+
+/* ============================================================
+   Check-Sammlung
+   Jeder Check: {cat, name, status, pts, max, detail, tip, prio}
+   prio = Hebelwirkung für die Prioritätenliste (höher = wichtiger)
+   ============================================================ */
+function makeCollector(){
+  const checks = [];
+  return {
+    checks,
+    add(cat, name, status, pts, max, detail, tip, prio){
+      checks.push({cat, name, status, pts, max, detail: detail||'', tip: tip||'', prio: prio ?? max});
+    },
+    info(cat, name, detail, tip){
+      checks.push({cat, name, status:'info', pts:0, max:0, detail: detail||'', tip: tip||'', prio:0});
+    }
+  };
+}
+
+/* ============================================================
+   On-Page-Analyse
+   ============================================================ */
+function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
+  const kw = keyword ? keyword.toLowerCase().trim() : null;
+  const contains = s => kw && (s||'').toLowerCase().includes(kw);
+
+  /* ---------- META ---------- */
+  const title = doc.querySelector('title')?.textContent.trim().replace(/\s+/g,' ') || '';
+  if (!title){
+    /* Volle Punktzahl der Title-Gruppe verlieren, damit ein fehlender Title
+       nicht besser bewertet wird als ein vorhandener mit Mängeln. */
+    C.add('meta','Title-Tag','fail',0,5,'Kein <code>&lt;title&gt;</code> vorhanden.',
+      'Der Title ist der wichtigste On-Page-Faktor. Füge einen einzigartigen, beschreibenden Titel mit deinem Hauptkeyword ein: <code>&lt;title&gt;Keyword – Nutzen | Marke&lt;/title&gt;</code>', 12);
+  } else {
+    C.add('meta','Title-Tag','ok',3,3,`„${escapeHtml(title)}“`);
+    const px = approxPixelWidth(title, 20);
+    if (title.length < 30)
+      C.add('meta','Title-Länge','warn',1,2,`${title.length} Zeichen (~${px}px) – recht kurz, verschenkter Platz.`,
+        'Nutze 40–60 Zeichen: Hauptkeyword vorn, Marke hinten, z. B. „Google Ads Agentur Dresden – mehr Anfragen | MR Elevate“.', 4);
+    else if (px > 580 || title.length > 65)
+      C.add('meta','Title-Länge','warn',1,2,`${title.length} Zeichen (~${px}px) – wird in den Suchergebnissen abgeschnitten (Limit ≈ 580px).`,
+        'Kürze auf ca. 60 Zeichen. Alles Wichtige gehört in die ersten 50 Zeichen.', 4);
+    else
+      C.add('meta','Title-Länge','ok',2,2,`${title.length} Zeichen (~${px}px) – optimal.`);
+    if (kw) C.add('meta','Keyword im Title', contains(title)?'ok':'fail', contains(title)?2:0, 2,
+      contains(title) ? 'Fokus-Keyword ist im Title enthalten.' : 'Fokus-Keyword fehlt im Title.',
+      'Platziere das Keyword möglichst weit vorn im Title – das ist einer der stärksten Einzelfaktoren.', 10);
+  }
+
+  const desc = doc.querySelector('meta[name="description" i]')?.getAttribute('content')?.trim().replace(/\s+/g,' ') || '';
+  if (!desc){
+    C.add('meta','Meta-Description','fail',0,5,'Keine Meta-Description vorhanden.',
+      'Schreibe 120–160 Zeichen mit Keyword und klarem Klick-Anreiz. Ohne Description bastelt Google selbst einen Textausschnitt zusammen – meist deutlich schlechter.', 8);
+  } else {
+    C.add('meta','Meta-Description','ok',3,3,`„${escapeHtml(desc.slice(0,180))}${desc.length>180?'…':''}“`);
+    if (desc.length < 70)
+      C.add('meta','Description-Länge','warn',1,2,`${desc.length} Zeichen – zu kurz, verschenkter Platz im Snippet.`,
+        'Nutze 120–160 Zeichen inkl. Nutzenversprechen und Handlungsaufforderung.', 3);
+    else if (desc.length > 165)
+      C.add('meta','Description-Länge','warn',1,2,`${desc.length} Zeichen – wird abgeschnitten.`,
+        'Kürze auf ca. 160 Zeichen; die Kernbotschaft nach vorn.', 3);
+    else
+      C.add('meta','Description-Länge','ok',2,2,`${desc.length} Zeichen – optimal.`);
+    if (kw) C.add('meta','Keyword in Description', contains(desc)?'ok':'warn', contains(desc)?1:0, 1,
+      contains(desc) ? 'Fokus-Keyword ist enthalten.' : 'Fokus-Keyword fehlt in der Description.',
+      'Google fettet Suchbegriffe im Snippet – das erhöht die Klickrate spürbar.', 4);
+  }
+
+  const canonicalRaw = doc.querySelector('link[rel="canonical" i]')?.getAttribute('href') || '';
+  if (canonicalRaw){
+    let canonAbs = canonicalRaw, same = false;
+    try {
+      const c = new URL(canonicalRaw, pageUrl.href);
+      canonAbs = c.href;
+      const norm = u => u.replace(/\/$/,'').replace(/^https?:\/\/(www\.)?/,'').toLowerCase();
+      same = norm(c.href) === norm(pageUrl.href);
+    } catch(e){}
+    if (same)
+      C.add('meta','Canonical-Tag','ok',2,2,'Vorhanden und selbstreferenzierend – so soll es sein.');
+    else
+      /* Ein fremder Canonical bedeutet: Google indexiert diese Seite NICHT.
+         Das darf keine volle Punktzahl geben. */
+      C.add('meta','Canonical-Tag','warn',0.5,2,
+        `Zeigt auf eine <b>andere</b> URL: <code>${escapeHtml(canonAbs)}</code>`,
+        'Damit sagst du Google: „Indexiere nicht diese, sondern jene Seite.“ Wenn das nicht beabsichtigt ist (z. B. bei Varianten oder Paginierung), setze den Canonical auf die Seite selbst.', 9);
+  } else {
+    C.add('meta','Canonical-Tag','warn',0,2,'Kein Canonical-Tag gesetzt.',
+      'Setze <code>&lt;link rel="canonical" href="https://…"&gt;</code>, um Duplicate Content (mit/ohne www, Parameter, Trailing Slash) zu vermeiden.', 5);
+  }
+
+  const robotsMeta = doc.querySelector('meta[name="robots" i]')?.getAttribute('content')?.toLowerCase() || '';
+  if (/noindex/.test(robotsMeta))
+    C.add('meta','Robots-Meta','fail',0,3,`<code>${escapeHtml(robotsMeta)}</code> – die Seite ist für Google gesperrt!`,
+      'Entferne „noindex“, sonst erscheint die Seite nie in den Suchergebnissen. (Bei Test-, Danke- oder Rechtsseiten ist das natürlich gewollt.)', 15);
+  else if (/nofollow/.test(robotsMeta))
+    C.add('meta','Robots-Meta','warn',1.5,3,`<code>${escapeHtml(robotsMeta)}</code> – Indexierung erlaubt, aber Links werden nicht verfolgt.`,
+      'Ohne „nofollow“ vererben deine internen Links Rankingkraft weiter.', 5);
+  else
+    C.add('meta','Robots-Meta','ok',3,3, robotsMeta ? `<code>${escapeHtml(robotsMeta)}</code> – Indexierung erlaubt.` : 'Kein einschränkendes Robots-Meta – Indexierung erlaubt.');
+
+  const lang = doc.documentElement.getAttribute('lang');
+  C.add('meta','Sprachangabe (lang)', lang?'ok':'warn', lang?1:0, 1,
+    lang ? `<code>lang="${escapeHtml(lang)}"</code>` : 'Kein lang-Attribut am <code>&lt;html&gt;</code>-Tag.',
+    'Setze <code>&lt;html lang="de"&gt;</code> – wichtig für Screenreader und die Sprachzuordnung durch Google.', 2);
+
+  const viewport = doc.querySelector('meta[name="viewport" i]');
+  C.add('meta','Viewport (Mobile)', viewport?'ok':'fail', viewport?2:0, 2,
+    viewport ? `<code>${escapeHtml(viewport.getAttribute('content')||'')}</code>` : 'Kein Viewport-Meta – Seite ist nicht mobiloptimiert.',
+    'Füge <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code> ein. Google indexiert ausschließlich Mobile-First.', 11);
+
+  const charset = doc.querySelector('meta[charset], meta[http-equiv="Content-Type" i]');
+  C.add('meta','Zeichensatz', charset?'ok':'warn', charset?1:0, 1,
+    charset ? 'Zeichensatz ist deklariert.' : 'Kein Charset-Meta gefunden.',
+    'Füge <code>&lt;meta charset="UTF-8"&gt;</code> als erstes Element im <code>&lt;head&gt;</code> ein – sonst drohen kaputte Umlaute.', 3);
+
+  const favicon = doc.querySelector('link[rel~="icon" i], link[rel="shortcut icon" i], link[rel="apple-touch-icon" i]');
+  C.add('meta','Favicon', favicon?'ok':'warn', favicon?1:0, 1,
+    favicon ? 'Favicon ist verlinkt.' : 'Kein Favicon verlinkt.',
+    'Google zeigt das Favicon in den mobilen Suchergebnissen direkt neben deinem Treffer – kleiner Aufwand, mehr Klicks.', 2);
+
+  /* ---------- INHALT ---------- */
+  const h1Els = [...doc.querySelectorAll('h1')];
+  const h1s = h1Els.map(h => h.textContent.trim().replace(/\s+/g,' ')).filter(Boolean);
+  if (h1s.length === 1){
+    C.add('content','H1-Überschrift','ok',3,3,`Genau eine H1: „${escapeHtml(h1s[0].slice(0,100))}“`);
+  } else if (h1s.length === 0){
+    C.add('content','H1-Überschrift','fail',0,3,'Keine H1 gefunden.',
+      'Jede Seite braucht genau eine H1, die das Hauptthema benennt. Sie ist nach dem Title das stärkste Inhaltssignal.', 11);
+  } else {
+    C.add('content','H1-Überschrift','warn',1,3,`${h1s.length} H1-Überschriften gefunden: „${escapeHtml(h1s.slice(0,2).join('“ / „').slice(0,120))}“ …`,
+      'Nutze genau eine H1 pro Seite; alle weiteren Abschnitte bekommen H2/H3. Mehrere H1 verwässern das Themensignal.', 6);
+  }
+  if (kw && h1s.length) C.add('content','Keyword in H1', h1s.some(contains)?'ok':'warn', h1s.some(contains)?2:0, 2,
+    h1s.some(contains) ? 'Fokus-Keyword ist in der H1 enthalten.' : 'Fokus-Keyword fehlt in der H1.',
+    'H1 und Title sollten beide das Hauptkeyword tragen – aber unterschiedlich formuliert.', 8);
+  if (title && h1s.length === 1){
+    const identical = title.toLowerCase().trim() === h1s[0].toLowerCase().trim();
+    C.add('content','Title ≠ H1', identical?'warn':'ok', identical?0:1, 1,
+      identical ? 'Title und H1 sind wortgleich.' : 'Title und H1 sind unterschiedlich formuliert – gut.',
+      'Zwei identische Texte verschenken Platz für Synonyme und Nebenkeywords. Formuliere die H1 als Nutzenversprechen, den Title suchmaschinenorientiert.', 3);
+  }
+
+  const headings = [...doc.querySelectorAll('h1,h2,h3,h4,h5,h6')];
+  let skips = 0, prev = 0;
+  for (const h of headings){
+    const lvl = +h.tagName[1];
+    if (prev && lvl > prev + 1) skips++;
+    prev = lvl;
+  }
+  const hCounts = [1,2,3,4,5,6].map(i => doc.querySelectorAll('h'+i).length);
+  C.add('content','Überschriften-Hierarchie', skips===0?'ok':'warn', skips===0?2:1, 2,
+    `H1:${hCounts[0]} · H2:${hCounts[1]} · H3:${hCounts[2]} · H4:${hCounts[3]}${skips?` – ${skips}× Ebene übersprungen`:' – saubere Struktur'}`,
+    'Überspringe keine Ebenen (z. B. H2 → H4). Die Hierarchie sagt Google, wie dein Inhalt gegliedert ist.', 4);
+  C.add('content','Zwischenüberschriften (H2)', hCounts[1] >= 2 ? 'ok' : hCounts[1] === 1 ? 'warn' : 'fail',
+    hCounts[1] >= 2 ? 2 : hCounts[1] === 1 ? 1 : 0, 2,
+    `${hCounts[1]} H2-Überschriften gefunden.`,
+    'Gliedere längere Texte mit mindestens 2–3 H2. Das verbessert Lesbarkeit, Verweildauer und die Chance auf Featured Snippets.', 5);
+
+  /* Hauptinhalt isolieren – sonst zählen Navigation und Footer als „Content“.
+     Achtung: <header> ist nicht automatisch der Seitenkopf. Viele Layouts
+     packen die Hero-Section (H1 + Einstiegstext) in ein <header>. Deshalb
+     wird ein header nur dann verworfen, wenn er eine Navigation enthält. */
+  const mainEl = doc.querySelector('main, article, [role="main"]') || doc.body;
+  let words = 0, bodyText = '', firstPara = '';
+  if (mainEl){
+    const clone = mainEl.cloneNode(true);
+    clone.querySelectorAll('script,style,noscript,svg,template,nav,footer,iframe').forEach(n => n.remove());
+    clone.querySelectorAll('header').forEach(h => { if (h.querySelector('nav') || h.querySelector('a[href="/"], a[href="#"]')?.closest('ul')) h.remove(); });
+    bodyText = clone.textContent.replace(/\s+/g,' ').trim();
+    words = bodyText ? bodyText.split(' ').filter(w => /[a-zA-ZÄÖÜäöüß0-9]/.test(w)).length : 0;
+    const p = [...clone.querySelectorAll('p')].map(x => x.textContent.trim()).find(t => t.length > 60);
+    firstPara = p || bodyText.slice(0, 400);
+  }
+  const scopeNote = ' (ohne Navigation und Footer)';
+  if (words >= 600) C.add('content','Textumfang','ok',3,3,`${words.toLocaleString('de-DE')} Wörter${scopeNote} – guter Umfang.`);
+  else if (words >= 300) C.add('content','Textumfang','warn',2,3,`${words.toLocaleString('de-DE')} Wörter${scopeNote} – solide Basis, für umkämpfte Keywords eher knapp.`,
+    'Top-Rankings haben meist 600+ Wörter. Wichtiger als die reine Zahl: Beantworte die Fragen der Zielgruppe vollständig (FAQ, Ablauf, Preise, Beispiele).', 5);
+  else C.add('content','Textumfang','fail',0,3,`Nur ${words} Wörter sichtbarer Text${scopeNote} – zu wenig („Thin Content“).`,
+    'Seiten mit sehr wenig Text ranken selten. Baue relevante Inhalte auf: Leistungsbeschreibung, Ablauf, Referenzen, FAQ.', 9);
+
+  if (kw){
+    const rx = new RegExp(kw.replace(/[.*+?^${}()|[\]\\]/g,'\\$&'), 'gi');
+    const occurrences = (bodyText.match(rx) || []).length;
+    const density = words ? (occurrences * kw.split(/\s+/).length / words * 100) : 0;
+    if (occurrences === 0)
+      C.add('content','Keyword im Text','fail',0,2,'Das Fokus-Keyword kommt im Fließtext nicht vor.',
+        'Verwende das Keyword natürlich im ersten Absatz, in einer H2 und im weiteren Text.', 8);
+    else if (density > 3.5)
+      C.add('content','Keyword im Text','warn',1,2,`${occurrences}× gefunden (Dichte ~${density.toFixed(1)} %) – wirkt überoptimiert.`,
+        'Reduziere Wiederholungen und nutze Synonyme sowie verwandte Begriffe. Keyword-Stuffing wird von Google abgestraft.', 5);
+    else
+      C.add('content','Keyword im Text','ok',2,2,`${occurrences}× im Text (Dichte ~${density.toFixed(1)} %) – natürlich eingesetzt.`);
+
+    const inFirst = firstPara.toLowerCase().includes(kw);
+    C.add('content','Keyword im Einstieg', inFirst?'ok':'warn', inFirst?1:0, 1,
+      inFirst ? 'Das Keyword steht bereits im ersten Absatz.' : 'Das Keyword fehlt im ersten Absatz.',
+      'Die ersten 100 Wörter wiegen besonders schwer – nenne dort dein Hauptthema.', 4);
+  }
+
+  const ratio = rawHtml.length ? (bodyText.length / rawHtml.length * 100) : 0;
+  C.add('content','Text-zu-Code-Verhältnis', ratio >= 8 ? 'ok' : 'warn', ratio >= 8 ? 1 : 0, 1,
+    `${ratio.toFixed(1)} % Text-Anteil am Quellcode.`,
+    'Unter ~8 % deutet auf viel Code-Ballast hin. Lagere Inline-CSS/JS in externe Dateien aus.', 2);
+
+  const semantic = doc.querySelector('main, article, [role="main"]');
+  C.add('content','Semantisches HTML', semantic?'ok':'warn', semantic?1:0, 1,
+    semantic ? 'Semantische Container (main/article) vorhanden.' : 'Kein <code>&lt;main&gt;</code>/<code>&lt;article&gt;</code> gefunden.',
+    'Semantische Tags helfen Google, Hauptinhalt von Navigation und Footer zu trennen.', 3);
+
+  const lists = doc.querySelectorAll('ul li, ol li').length;
+  const tables = doc.querySelectorAll('table').length;
+  if (lists >= 3 || tables > 0)
+    C.add('content','Strukturierte Textelemente','ok',1,1,`${lists} Listenpunkte${tables?`, ${tables} Tabelle(n)`:''} – gut für Featured Snippets.`);
+  else
+    C.add('content','Strukturierte Textelemente','warn',0,1,'Kaum Listen oder Tabellen im Inhalt.',
+      'Aufzählungen und Tabellen werden von Google überdurchschnittlich oft als Featured Snippet („Position 0“) ausgespielt.', 3);
+
+  /* ---------- BILDER ---------- */
+  const imgs = [...doc.querySelectorAll('img')];
+  if (imgs.length === 0){
+    C.info('images','Bilder','Keine <code>&lt;img&gt;</code>-Elemente gefunden. Bilder lockern Texte auf und bringen Traffic über die Google-Bildersuche.');
+  } else {
+    /* alt="" ist bei dekorativen Bildern KORREKT – nur ein komplett
+       fehlendes alt-Attribut ist ein echter Fehler. */
+    const missingAlt = imgs.filter(i => i.getAttribute('alt') === null);
+    const decorative = imgs.filter(i => i.getAttribute('alt') !== null && !i.getAttribute('alt').trim()).length;
+    const describedRatio = (imgs.length - missingAlt.length) / imgs.length;
+    C.add('images','Alt-Attribute', statusFromRatio(describedRatio), +(describedRatio*4).toFixed(2), 4,
+      `${imgs.length - missingAlt.length} von ${imgs.length} Bildern haben ein alt-Attribut` +
+      (decorative ? ` (davon ${decorative} bewusst leer = dekorativ, das ist korrekt)` : '') + '.' +
+      (missingAlt.length ? ` Fehlt z. B. bei <code>${escapeHtml(((missingAlt[0].getAttribute('src')||'').split('/').pop()||'unbekannt').slice(0,60))}</code>` : ''),
+      'Beschreibe im alt-Text, was zu sehen ist (mit Keyword, wenn es passt). Rein dekorative Bilder bekommen <code>alt=""</code> – aber nie gar kein alt.', 6);
+
+    const lazy = imgs.filter(i => (i.getAttribute('loading')||'').toLowerCase() === 'lazy').length;
+    const eager = imgs.length - lazy;
+    C.add('images','Lazy Loading', lazy > 0 ? 'ok' : 'warn', lazy > 0 ? 2 : 0, 2,
+      lazy ? `${lazy} von ${imgs.length} Bildern laden verzögert.` : 'Kein Bild nutzt <code>loading="lazy"</code>.',
+      'Setze <code>loading="lazy"</code> auf alle Bilder unterhalb des sichtbaren Bereichs. Wichtig: das erste große Bild (LCP-Element) ausdrücklich NICHT lazy laden.', 4);
+    if (lazy > 0 && eager === 0)
+      C.info('images','Hinweis zum LCP-Bild','Alle Bilder laden verzögert – prüfe, ob auch dein Hero-Bild betroffen ist. Das verschlechtert den LCP-Wert messbar.');
+
+    const modern = imgs.filter(i =>
+      /\.(webp|avif)(\?|#|$)/i.test(i.getAttribute('src')||'') ||
+      /\.(webp|avif)/i.test(i.getAttribute('srcset')||'') ||
+      i.closest('picture')?.querySelector('source[type*="webp"],source[type*="avif"],source[srcset*=".webp"],source[srcset*=".avif"]')
+    ).length;
+    const modRatio = modern / imgs.length;
+    C.add('images','Moderne Formate (WebP/AVIF)', modRatio >= 0.6 ? 'ok' : modern > 0 ? 'warn' : 'fail',
+      modRatio >= 0.6 ? 2 : modern > 0 ? 1 : 0, 2,
+      `${modern} von ${imgs.length} Bildern in WebP/AVIF.`,
+      'WebP/AVIF sparen 30–70 % Dateigröße gegenüber JPG/PNG – der mit Abstand größte Performance-Hebel bei bildlastigen Seiten. Konvertieren z. B. über squoosh.app.', 7);
+
+    const dims = imgs.filter(i => (i.getAttribute('width') && i.getAttribute('height')) || i.style.aspectRatio).length;
+    const dimRatio = dims / imgs.length;
+    C.add('images','Größenangaben (width/height)', dimRatio >= 0.8 ? 'ok' : 'warn',
+      dimRatio >= 0.8 ? 2 : dimRatio >= 0.3 ? 1 : 0, 2,
+      `${dims} von ${imgs.length} Bildern mit festen Größenangaben.`,
+      'Feste width/height verhindern Layout-Sprünge beim Laden (CLS) – einer der drei Core Web Vitals und direkter Rankingfaktor.', 5);
+
+    const responsive = imgs.filter(i => i.getAttribute('srcset') || i.closest('picture')).length;
+    C.add('images','Responsive Bilder', responsive > 0 ? 'ok' : 'warn', responsive > 0 ? 1 : 0, 1,
+      responsive ? `${responsive} von ${imgs.length} Bildern liefern mehrere Auflösungen aus.` : 'Kein <code>srcset</code>/<code>&lt;picture&gt;</code> im Einsatz.',
+      'Mit <code>srcset</code> laden Handys kleinere Dateien als Desktops – spürbar bessere Ladezeit im Mobile-Ranking.', 3);
+  }
+
+  /* ---------- LINKS & URL ---------- */
+  const anchors = [...doc.querySelectorAll('a[href]')];
+  const host = pageUrl.hostname.replace(/^www\./,'');
+  let internal = 0, external = 0, generic = 0, insecureExt = 0, extNoNoopener = 0, emptyAnchor = 0;
+  const genericWords = ['hier','hier klicken','klick hier','klicken sie hier','mehr','mehr erfahren','mehr lesen','weiterlesen','weiter','link','click here','read more','learn more','details'];
+  for (const a of anchors){
+    const href = a.getAttribute('href') || '';
+    if (/^(#|javascript:|mailto:|tel:)/i.test(href)) continue;
+    let u;
+    try { u = new URL(href, pageUrl.href); } catch(e){ continue; }
+    if (!/^https?:$/.test(u.protocol)) continue;
+    const isInternal = u.hostname.replace(/^www\./,'') === host;
+    if (isInternal) internal++; else external++;
+    const txt = a.textContent.trim().replace(/\s+/g,' ').toLowerCase();
+    if (!txt && !a.querySelector('img[alt]:not([alt=""])')) emptyAnchor++;
+    else if (genericWords.includes(txt)) generic++;
+    if (!isInternal && u.protocol === 'http:') insecureExt++;
+    if (!isInternal && a.getAttribute('target') === '_blank' && !/noopener|noreferrer/i.test(a.getAttribute('rel')||'')) extNoNoopener++;
+  }
+  C.add('links','Interne Verlinkung', internal >= 8 ? 'ok' : internal >= 3 ? 'warn' : 'fail',
+    internal >= 8 ? 3 : internal >= 3 ? 2 : internal > 0 ? 1 : 0, 3,
+    `${internal} interne Links gefunden.`,
+    'Interne Links verteilen Rankingkraft und helfen Google beim Crawlen. Verlinke aus dem Fließtext heraus auf thematisch verwandte Unterseiten – mit sprechendem Ankertext.', 6);
+  C.info('links','Externe Links', `${external} externe Links.` + (external === 0 ? ' Keine ausgehenden Links.' : ''),
+    'Ausgehende Links zu vertrauenswürdigen Quellen sind ein positives Qualitätssignal (E-E-A-T).');
+  C.add('links','Ankertexte', generic === 0 ? 'ok' : generic <= 2 ? 'warn' : 'fail',
+    generic === 0 ? 2 : generic <= 2 ? 1 : 0, 2,
+    generic === 0 ? 'Keine generischen Ankertexte gefunden.' : `${generic} Links mit generischem Ankertext („mehr“, „hier klicken“ …).`,
+    'Der Ankertext sagt Google, worum es auf der Zielseite geht. Statt „mehr erfahren“ lieber „Google Ads Betreuung ansehen“.', 4);
+  if (emptyAnchor)
+    C.add('links','Links ohne Text','warn',0,1,`${emptyAnchor} Links ohne erkennbaren Text oder Bild-Alt.`,
+      'Leere Links (z. B. reine Icon-Links) brauchen ein <code>aria-label</code> – sonst versteht weder Google noch ein Screenreader das Ziel.', 3);
+  else
+    C.add('links','Links ohne Text','ok',1,1,'Alle Links haben erkennbaren Text.');
+  if (pageUrl.protocol === 'https:')
+    C.add('links','Mixed Content (Links)', insecureExt === 0 ? 'ok' : 'warn', insecureExt === 0 ? 1 : 0, 1,
+      insecureExt === 0 ? 'Keine unsicheren http://-Links.' : `${insecureExt} Links zeigen auf unverschlüsselte http://-Adressen.`, undefined, 3);
+  C.add('links','target="_blank" abgesichert', extNoNoopener === 0 ? 'ok' : 'warn', extNoNoopener === 0 ? 1 : 0, 1,
+    extNoNoopener === 0 ? 'Alle _blank-Links sind abgesichert.' : `${extNoNoopener} externe _blank-Links ohne <code>rel="noopener"</code>.`,
+    'Ergänze <code>rel="noopener noreferrer"</code> – schützt vor Tabnabbing und verhindert Performance-Einbußen.', 2);
+
+  const path = pageUrl.pathname;
+  const urlIssues = [];
+  if (path.length > 75) urlIssues.push('sehr lang');
+  if (/[A-Z]/.test(path)) urlIssues.push('Großbuchstaben');
+  if (/_/.test(path)) urlIssues.push('Unterstriche statt Bindestriche');
+  try { if (/[äöüßÄÖÜ]/.test(decodeURIComponent(path))) urlIssues.push('Umlaute'); } catch(e){}
+  if (pageUrl.search.length > 40) urlIssues.push('viele URL-Parameter');
+  if ((path.match(/\//g)||[]).length > 4) urlIssues.push('sehr tiefe Verschachtelung');
+  C.add('links','URL-Struktur', urlIssues.length === 0 ? 'ok' : 'warn', urlIssues.length === 0 ? 2 : 1, 2,
+    urlIssues.length === 0 ? `<code>${escapeHtml(path)}</code> – kurz und sauber.` : `Auffällig: ${urlIssues.join(', ')} (<code>${escapeHtml(path.slice(0,80))}</code>)`,
+    'Ideal: kurze Kleinbuchstaben-URLs mit Bindestrichen, z. B. <code>/google-ads-agentur-dresden</code>. Bestehende URLs nur mit 301-Weiterleitung ändern!', 4);
+  if (kw){
+    const slug = kw.replace(/\s+/g,'-');
+    let decoded = pageUrl.href.toLowerCase();
+    try { decoded = decodeURIComponent(decoded); } catch(e){}
+    const inUrl = decoded.includes(slug) || decoded.includes(kw.replace(/\s+/g,''));
+    C.add('links','Keyword in der URL', inUrl?'ok':'warn', inUrl?1:0, 1,
+      inUrl ? 'Fokus-Keyword ist Teil der URL.' : 'Fokus-Keyword kommt in der URL nicht vor.',
+      'Ein Keyword im URL-Pfad ist ein kleiner, aber leicht mitzunehmender Faktor – und erhöht die Klickrate im Snippet.', 3);
+  }
+
+  /* ---------- SOCIAL ---------- */
+  const og = p => doc.querySelector(`meta[property="og:${p}" i], meta[name="og:${p}" i]`)?.getAttribute('content')?.trim() || '';
+  for (const [p, label, weightPts] of [['title','og:title',1.5],['description','og:description',1.5],['image','og:image',2],['url','og:url',1]]){
+    const v = og(p);
+    C.add('social', label, v ? 'ok' : 'warn', v ? weightPts : 0, weightPts,
+      v ? `<code>${escapeHtml(v.slice(0,110))}${v.length>110?'…':''}</code>` : `${label} fehlt.`,
+      p === 'image'
+        ? 'Ohne <code>og:image</code> zeigen Facebook, LinkedIn und WhatsApp beim Teilen keine Bildvorschau – die Klickrate bricht dadurch massiv ein. Empfohlen: 1200×630 px.'
+        : 'Open-Graph-Tags steuern, wie deine Seite beim Teilen in sozialen Netzwerken und Messengern aussieht.', p === 'image' ? 4 : 2);
+  }
+  const twCard = doc.querySelector('meta[name="twitter:card" i]')?.getAttribute('content') || '';
+  C.add('social','Twitter Card', twCard ? 'ok' : 'warn', twCard ? 1.5 : 0, 1.5,
+    twCard ? `<code>${escapeHtml(twCard)}</code>` : 'Kein twitter:card-Tag.',
+    'Setze <code>&lt;meta name="twitter:card" content="summary_large_image"&gt;</code> für große Bildvorschauen auf X.', 2);
+
+  /* ---------- STRUKTURIERTE DATEN ---------- */
+  const ldScripts = [...doc.querySelectorAll('script[type="application/ld+json" i]')];
+  const microdata = doc.querySelector('[itemscope][itemtype]');
+  if (ldScripts.length === 0){
+    if (microdata)
+      C.add('schema','Strukturierte Daten','warn',2,5,'Kein JSON-LD, aber Microdata-Auszeichnung gefunden.',
+        'Google empfiehlt ausdrücklich JSON-LD statt Microdata – es ist einfacher zu pflegen und weniger fehleranfällig.', 4);
+    else
+      C.add('schema','Strukturierte Daten','fail',0,5,'Keine strukturierten Daten (JSON-LD) gefunden.',
+        'Mit Schema.org-Markup qualifizierst du dich für Rich Snippets (Sterne, FAQ-Aufklapper, Öffnungszeiten). Für lokale Dienstleister sind <code>LocalBusiness</code> + <code>FAQPage</code> Pflicht. Generator: technicalseo.com/tools/schema-markup-generator', 8);
+  } else {
+    const types = []; let parseErrors = 0;
+    for (const s of ldScripts){
+      try {
+        const collect = o => {
+          if (Array.isArray(o)) return o.forEach(collect);
+          if (o && typeof o === 'object'){
+            if (o['@type']) types.push(...[].concat(o['@type']));
+            if (o['@graph']) collect(o['@graph']);
+            for (const k of Object.keys(o)) if (o[k] && typeof o[k] === 'object') collect(o[k]);
+          }
+        };
+        collect(JSON.parse(s.textContent));
+      } catch(e){ parseErrors++; }
+    }
+    const uniq = [...new Set(types)];
+    C.add('schema','JSON-LD vorhanden','ok',3,3,
+      `${ldScripts.length} Block/Blöcke. Typen: <code>${escapeHtml(uniq.join(', ') || 'unbekannt')}</code>`);
+    C.add('schema','JSON-LD gültig (Syntax)', parseErrors === 0 ? 'ok' : 'fail', parseErrors === 0 ? 2 : 0, 2,
+      parseErrors === 0 ? 'Alle Blöcke sind valides JSON.' : `${parseErrors} Block/Blöcke mit JSON-Syntaxfehler – Google ignoriert diese komplett!`,
+      'Prüfe mit validator.schema.org oder Googles Rich-Results-Test.', 7);
+    const richTypes = ['LocalBusiness','Organization','FAQPage','Service','Product','Article','BreadcrumbList','Review','AggregateRating','HowTo','Event','JobPosting'];
+    const hasRich = uniq.some(t => richTypes.includes(t));
+    C.add('schema','Rich-Snippet-Potenzial', hasRich ? 'ok' : 'warn', hasRich ? 2 : 0.5, 2,
+      hasRich ? `Typen mit Rich-Snippet-Potenzial vorhanden: <code>${escapeHtml(uniq.filter(t => richTypes.includes(t)).join(', '))}</code>`
+              : 'Nur Basis-Typen ausgezeichnet.',
+      'Ergänze <code>FAQPage</code> (Aufklapper direkt im Suchergebnis), <code>LocalBusiness</code> (Öffnungszeiten, Karte) oder <code>BreadcrumbList</code> (Pfad statt URL im Snippet).', 4);
+    if (!uniq.includes('BreadcrumbList'))
+      C.info('schema','Breadcrumbs','Kein <code>BreadcrumbList</code>-Markup – damit ersetzt Google die URL im Snippet durch einen lesbaren Pfad.');
+  }
+
+  /* ---------- VERTRAUEN & RECHT (DACH-spezifisch) ---------- */
+  const linkTexts = anchors.map(a => (a.textContent + ' ' + (a.getAttribute('href')||'')).toLowerCase());
+  const hasImpressum = linkTexts.some(t => /impressum|imprint/.test(t));
+  const hasPrivacy = linkTexts.some(t => /datenschutz|privacy/.test(t));
+  C.add('trust','Impressum verlinkt', hasImpressum?'ok':'fail', hasImpressum?3:0, 3,
+    hasImpressum ? 'Impressum ist von dieser Seite aus verlinkt.' : 'Kein Impressums-Link gefunden.',
+    'In Deutschland ist ein leicht erreichbares Impressum gesetzlich Pflicht (§ 5 DDG) – Abmahnrisiko. Google wertet es zusätzlich als Vertrauenssignal (E-E-A-T).', 10);
+  C.add('trust','Datenschutzerklärung verlinkt', hasPrivacy?'ok':'fail', hasPrivacy?3:0, 3,
+    hasPrivacy ? 'Datenschutzerklärung ist verlinkt.' : 'Kein Datenschutz-Link gefunden.',
+    'Nach DSGVO Art. 13 verpflichtend, sobald personenbezogene Daten verarbeitet werden (auch schon durch Server-Logs oder Kontaktformulare).', 10);
+
+  const fullText = (doc.body?.textContent || '').replace(/\s+/g,' ');
+  const hasPhone = /(\+49|0\d{2,5})[\s\/\-()]?\d[\d\s\/\-()]{5,}/.test(fullText) || !!doc.querySelector('a[href^="tel:"]');
+  const hasMail = /@[\w.-]+\.[a-z]{2,}/i.test(fullText) || !!doc.querySelector('a[href^="mailto:"]');
+  const hasAddress = /\b\d{5}\s+[A-ZÄÖÜ][a-zäöüß]+/.test(fullText) || !!doc.querySelector('address, [itemtype*="PostalAddress"]');
+  const nap = [hasPhone, hasMail, hasAddress].filter(Boolean).length;
+  C.add('trust','Kontaktdaten (NAP)', nap === 3 ? 'ok' : nap >= 1 ? 'warn' : 'fail', nap, 3,
+    `Gefunden: ${[hasPhone?'Telefon':null, hasMail?'E-Mail':null, hasAddress?'Adresse':null].filter(Boolean).join(', ') || 'keine'}.`,
+    'Name, Adresse, Telefon („NAP“) sichtbar auf der Seite sind ein starkes Signal für lokale Rankings und Google Business – und senken die Absprungrate.', 6);
+
+  const ctaWords = /termin|kontakt|anfrag|berat|angebot|buchen|gespräch|gespraech|erstgespräch|demo|call|jetzt (starten|sichern|anfragen|testen)|sichern|anfordern|analyse|check|kennenlernen|loslegen|starten/i;
+  const hasCta = anchors.some(a => /^(tel:|mailto:)/i.test(a.getAttribute('href')||'')) ||
+                 !!doc.querySelector('form') ||
+                 anchors.some(a => ctaWords.test(a.textContent)) ||
+                 [...doc.querySelectorAll('button')].some(b => ctaWords.test(b.textContent));
+  C.add('trust','Handlungsaufforderung (CTA)', hasCta?'ok':'warn', hasCta?1:0, 1,
+    hasCta ? 'Kontaktmöglichkeit oder CTA vorhanden.' : 'Kein erkennbarer Call-to-Action (Formular, Telefon-Link, Terminbutton).',
+    'Rankings ohne Conversion bringen nichts. Ein klarer CTA pro Bildschirmseite ist der Standard.', 4);
+
+  /* ---------- TECHNIK (On-Page-Teil) ---------- */
+  C.add('tech','HTTPS-Verschlüsselung', pageUrl.protocol === 'https:' ? 'ok' : 'fail', pageUrl.protocol === 'https:' ? 4 : 0, 4,
+    pageUrl.protocol === 'https:' ? 'Seite läuft über HTTPS.' : 'Seite läuft unverschlüsselt über HTTP!',
+    'HTTPS ist seit 2014 offizieller Rankingfaktor und Browser warnen Besucher aktiv. Kostenloses Zertifikat über Let’s Encrypt.', 14);
+
+  if (pageUrl.protocol === 'https:'){
+    const insecureRes = (rawHtml.match(/(?:src|href)\s*=\s*["']http:\/\/(?!localhost)/gi) || []).length;
+    C.add('tech','Mixed Content (Ressourcen)', insecureRes === 0 ? 'ok' : 'fail', insecureRes === 0 ? 2 : 0, 2,
+      insecureRes === 0 ? 'Alle Bilder/Skripte/Styles werden verschlüsselt geladen.' : `${insecureRes} Ressourcen werden über unsicheres http:// eingebunden.`,
+      'Browser blockieren unsichere Skripte und Styles auf HTTPS-Seiten komplett – das kann die Seite kaputt machen. Stelle alle Pfade auf https:// oder relative URLs um.', 9);
+  }
+
+  C.add('tech','HTML5-Doctype', /^\s*<!doctype html/i.test(rawHtml) ? 'ok' : 'warn', /^\s*<!doctype html/i.test(rawHtml) ? 1 : 0, 1,
+    /^\s*<!doctype html/i.test(rawHtml) ? '<code>&lt;!DOCTYPE html&gt;</code> vorhanden.' : 'Kein oder veralteter Doctype – Browser rendern dann im Quirks-Modus.', undefined, 3);
+
+  const kb = Math.round(rawHtml.length / 1024);
+  C.add('tech','HTML-Dokumentgröße', kb <= 300 ? 'ok' : kb <= 700 ? 'warn' : 'fail', kb <= 300 ? 2 : kb <= 700 ? 1 : 0, 2,
+    `${kb.toLocaleString('de-DE')} KB HTML.`,
+    'Große HTML-Dokumente verlangsamen Parsing und Crawling. Inline-CSS/JS auslagern und Kommentare entfernen.', 4);
+
+  const scripts = doc.querySelectorAll('script[src]').length;
+  const styles = doc.querySelectorAll('link[rel="stylesheet"]').length;
+  const blocking = [...doc.querySelectorAll('head script[src]')].filter(s => !s.hasAttribute('defer') && !s.hasAttribute('async')).length;
+  C.add('tech','Render-blockierende Skripte', blocking === 0 ? 'ok' : blocking <= 2 ? 'warn' : 'fail',
+    blocking === 0 ? 2 : blocking <= 2 ? 1 : 0, 2,
+    `${scripts} externe Skripte, ${styles} Stylesheets – davon ${blocking} render-blockierend im <code>&lt;head&gt;</code>.`,
+    'Ergänze <code>defer</code> (oder <code>async</code>) bei Skripten im head. Blockierende Skripte verzögern den First Contentful Paint direkt.', 6);
+
+  const preconnect = doc.querySelectorAll('link[rel="preconnect"], link[rel="dns-prefetch"], link[rel="preload"]').length;
+  C.add('tech','Ressourcen-Hints', preconnect > 0 ? 'ok' : 'warn', preconnect > 0 ? 1 : 0, 1,
+    preconnect > 0 ? `${preconnect} preconnect/preload-Hints gesetzt.` : 'Keine <code>preconnect</code>/<code>preload</code>-Hints.',
+    'Mit <code>&lt;link rel="preconnect"&gt;</code> zu Fremddomains (Fonts, Analytics) und <code>preload</code> für das LCP-Bild sparst du 100–300 ms.', 3);
+
+  const deprecated = doc.querySelectorAll('font, center, marquee, blink, frame, frameset, big, strike');
+  C.add('tech','Veraltete HTML-Tags', deprecated.length === 0 ? 'ok' : 'warn', deprecated.length === 0 ? 1 : 0, 1,
+    deprecated.length === 0 ? 'Keine veralteten Tags gefunden.' : `${deprecated.length} veraltete Elemente (font, center, frame …).`, undefined, 2);
+
+  const iframes = doc.querySelectorAll('iframe').length;
+  if (iframes > 0) C.info('tech','iFrames', `${iframes} iFrame(s) eingebunden – Inhalte darin zählen nicht zum Seiteninhalt und werden nicht mitindexiert.`);
+  const hreflangs = doc.querySelectorAll('link[rel="alternate"][hreflang]').length;
+  if (hreflangs) C.info('tech','hreflang', `${hreflangs} hreflang-Verweise für Sprachversionen gefunden.`);
+  if (doc.querySelector('meta[name="keywords" i]'))
+    C.info('tech','Meta-Keywords','Ein <code>meta name="keywords"</code> ist vorhanden. Google ignoriert das seit 2009 – es schadet nicht, bringt aber auch nichts.');
+
+  return {title, desc, words, imgCount: imgs.length, internal, external};
+}
+
+/* ============================================================
+   robots.txt & Sitemap
+   ============================================================ */
+async function analyzeTech(pageUrl, C){
+  const origin = pageUrl.origin;
+  const robotsTxt = await probe(origin + '/robots.txt');
+  const isRobots = robotsTxt && /user-agent\s*:/i.test(robotsTxt) && !/<html|<!doctype/i.test(robotsTxt.slice(0,400));
+  let parsed = null;
+
+  if (isRobots){
+    parsed = parseRobots(robotsTxt);
+    if (robotsBlocksEverything(parsed, pageUrl.pathname)){
+      C.add('tech','robots.txt','fail',0,3,'robots.txt sperrt mit <code>User-agent: *  Disallow: /</code> die komplette Website!',
+        'Entferne die Sperre – so crawlt Google gar nichts. Häufige Ursache: eine Staging-robots.txt ist versehentlich live gegangen.', 15);
+    } else if (robotsBlocksPath(parsed, pageUrl.pathname)){
+      C.add('tech','robots.txt','fail',0.5,3,`robots.txt vorhanden, aber der Pfad <code>${escapeHtml(pageUrl.pathname)}</code> ist für Crawler gesperrt.`,
+        'Diese konkrete Seite wird nicht gecrawlt. Prüfe die Disallow-Regeln, falls die Seite ranken soll.', 13);
+    } else {
+      C.add('tech','robots.txt','ok',3,3,
+        `robots.txt vorhanden, diese Seite ist zum Crawlen freigegeben.${parsed.sitemaps.length ? ` Sitemap-Verweis: ${parsed.sitemaps.length}×.` : ' Allerdings ohne Sitemap-Verweis.'}`);
+      if (!parsed.sitemaps.length)
+        C.add('tech','Sitemap-Verweis in robots.txt','warn',0,1,'Die robots.txt verweist nicht auf die Sitemap.',
+          `Ergänze am Ende der robots.txt: <code>Sitemap: ${escapeHtml(origin)}/sitemap.xml</code>`, 4);
+      else
+        C.add('tech','Sitemap-Verweis in robots.txt','ok',1,1,'Sitemap ist in der robots.txt hinterlegt.');
+    }
+  } else {
+    C.add('tech','robots.txt','warn',1,3,'Keine auswertbare robots.txt gefunden.',
+      `Lege eine robots.txt im Stammverzeichnis an – mindestens mit <code>User-agent: *</code>, <code>Allow: /</code> und <code>Sitemap: ${escapeHtml(origin)}/sitemap.xml</code>`, 6);
+  }
+
+  /* Sitemap: robots.txt-Verweis bevorzugen, sonst gängige Standardpfade testen */
+  const candidates = [];
+  if (parsed?.sitemaps?.length) candidates.push(...parsed.sitemaps);
+  candidates.push(origin + '/sitemap.xml', origin + '/sitemap_index.xml', origin + '/sitemap-index.xml', origin + '/wp-sitemap.xml');
+
+  let found = null;
+  for (const c of candidates.slice(0, 5)){
+    const body = await probe(c);
+    if (body && /<(urlset|sitemapindex)[\s>]/i.test(body)) { found = {url:c, body}; break; }
+  }
+  if (found){
+    const urlCount = (found.body.match(/<loc>/gi) || []).length;
+    const isIndex = /<sitemapindex/i.test(found.body);
+    C.add('tech','XML-Sitemap','ok',3,3,
+      `Gefunden unter <code>${escapeHtml(found.url)}</code> – ${isIndex ? `Sitemap-Index mit ${urlCount} Sitemaps` : `${urlCount} URLs`}.`);
+  } else {
+    C.add('tech','XML-Sitemap','warn',0,3,'Keine XML-Sitemap unter den gängigen Pfaden gefunden.',
+      'Erstelle eine sitemap.xml, verlinke sie in der robots.txt und reiche sie in der Google Search Console ein – so findet Google neue Seiten deutlich schneller.', 7);
+  }
+}
+
+/* ============================================================
+   PageSpeed Insights (Lighthouse)
+   ============================================================ */
+async function analyzePerformance(pageUrl, strategy, C){
+  const apiKey = ($('#apikey')?.value || '').trim();
+  const api = `${PSI_ENDPOINT}?url=${encodeURIComponent(pageUrl.href)}&strategy=${strategy}` +
+              '&category=performance&category=seo&category=best-practices&category=accessibility' +
+              (apiKey ? '&key=' + encodeURIComponent(apiKey) : '');
+  let data = null, lastStatus = null;
+  for (let attempt = 0; attempt < 2 && !data; attempt++){
+    try {
+      const res = await fetchWithTimeout(api, 70000);
+      lastStatus = res.status;
+      if (res.status === 429 && attempt === 0){ await new Promise(r => setTimeout(r, 4000)); continue; }
+      if (!res.ok) throw new Error('PSI HTTP ' + res.status);
+      data = await res.json();
+    } catch(e){
+      if (attempt === 0){ await new Promise(r => setTimeout(r, 3000)); continue; }
+    }
+  }
+  if (!data || !data.lighthouseResult){
+    C.info('perf','Lighthouse nicht verfügbar',
+      lastStatus === 429
+        ? 'Google limitiert Abfragen ohne API-Key stark (Fehler 429). Hinterlege oben unter „⚙️ Erweitert“ einen kostenlosen API-Key – dann läuft der Performance-Check zuverlässig.'
+        : 'Die PageSpeed-Insights-API hat nicht geantwortet (Timeout oder Fehler ' + (lastStatus ?? '–') + '). Häufigste Ursache: die Seite ist von Googles Servern aus nicht erreichbar.');
+    return null;
+  }
+
+  const lr = data.lighthouseResult;
+  const cat = id => Math.round((lr.categories?.[id]?.score ?? 0) * 100);
+  const perfScore = cat('performance'), seoScore = cat('seo'), bpScore = cat('best-practices'), a11yScore = cat('accessibility');
+  const label = strategy === 'mobile' ? 'Mobil' : 'Desktop';
+
+  C.add('perf', `Lighthouse Performance (${label})`,
+    perfScore >= 90 ? 'ok' : perfScore >= 50 ? 'warn' : 'fail', perfScore / 100 * 8, 8, `${perfScore} / 100`,
+    'Größte Hebel: Bilder in WebP/AVIF komprimieren, render-blockierendes CSS/JS entfernen, Server-Antwortzeit (TTFB) senken, Browser-Caching aktivieren.',
+    perfScore >= 90 ? 0 : perfScore >= 50 ? 8 : 12);
+  C.add('perf','Lighthouse SEO-Audit', seoScore >= 90 ? 'ok' : seoScore >= 70 ? 'warn' : 'fail', seoScore / 100 * 4, 4, `${seoScore} / 100`,
+    'Googles eigener technischer SEO-Basischeck (Crawlbarkeit, Meta-Tags, Mobile-Tauglichkeit, Linktexte).', seoScore >= 90 ? 0 : 9);
+  C.add('perf','Best Practices', bpScore >= 90 ? 'ok' : bpScore >= 70 ? 'warn' : 'fail', bpScore / 100 * 2, 2, `${bpScore} / 100`,
+    'Prüft u. a. HTTPS, Konsolenfehler, veraltete Bibliotheken und Bildauflösungen.', bpScore >= 90 ? 0 : 4);
+  C.add('perf','Barrierefreiheit', a11yScore >= 90 ? 'ok' : a11yScore >= 70 ? 'warn' : 'fail', a11yScore / 100 * 2, 2, `${a11yScore} / 100`,
+    'Barrierefreiheit korreliert stark mit sauberem, SEO-freundlichem Markup – und ist seit Juni 2025 (BFSG) für viele Unternehmen ohnehin Pflicht.',
+    a11yScore >= 90 ? 0 : 5);
+
+  /* Core Web Vitals: echte Nutzerdaten (CrUX) bevorzugt, sonst Labormessung */
+  const audits = lr.audits || {};
+  const field = data.loadingExperience?.metrics || {};
+  const ms = v => v >= 1000 ? (v/1000).toFixed(1).replace('.',',') + ' s' : Math.round(v) + ' ms';
+  const vitals = [];
+  const push = (name, v, good, poor, src, fmt) => {
+    if (v == null) return;
+    vitals.push({name, val: fmt ? fmt(v) : ms(v), src,
+      status: v <= good ? 'ok' : v <= poor ? 'warn' : 'fail',
+      label: v <= good ? 'gut' : v <= poor ? 'verbesserungswürdig' : 'schlecht'});
+  };
+  const lcpF = field.LARGEST_CONTENTFUL_PAINT_MS?.percentile;
+  push('LCP', lcpF ?? audits['largest-contentful-paint']?.numericValue, 2500, 4000, lcpF != null ? 'Felddaten' : 'Labor');
+  const inpF = field.INTERACTION_TO_NEXT_PAINT?.percentile;
+  if (inpF != null) push('INP', inpF, 200, 500, 'Felddaten');
+  else push('TBT', audits['total-blocking-time']?.numericValue, 200, 600, 'Labor');
+  const clsF = field.CUMULATIVE_LAYOUT_SHIFT_SCORE?.percentile;
+  push('CLS', clsF != null ? clsF / 100 : audits['cumulative-layout-shift']?.numericValue, 0.1, 0.25,
+       clsF != null ? 'Felddaten' : 'Labor', v => v.toFixed(2).replace('.',','));
+  push('FCP', field.FIRST_CONTENTFUL_PAINT_MS?.percentile ?? audits['first-contentful-paint']?.numericValue, 1800, 3000,
+       field.FIRST_CONTENTFUL_PAINT_MS ? 'Felddaten' : 'Labor');
+  push('TTFB', audits['server-response-time']?.numericValue, 600, 1500, 'Labor');
+
+  if (!data.loadingExperience?.metrics)
+    C.info('perf','Hinweis zu den Messwerten','Für diese URL liegen Google keine echten Nutzerdaten (CrUX) vor – meist wegen zu wenig Traffic. Angezeigt werden dann Labormessungen, die real oft etwas abweichen.');
+
+  const opportunities = Object.values(audits)
+    .filter(a => (a.details?.type === 'opportunity' || a.details?.overallSavingsMs) && a.numericValue > 150 && a.score != null && a.score < 0.9)
+    .sort((a,b) => (b.numericValue||0) - (a.numericValue||0)).slice(0,5);
+  for (const o of opportunities)
+    C.info('perf','💡 ' + escapeHtml(o.title), `Einsparpotenzial laut Lighthouse: ca. ${ms(o.numericValue)}.`);
+
+  return {vitals, perfScore};
+}
+
+/* ============================================================
+   Rendering
+   ============================================================ */
+function setStep(id, state){
+  const el = document.querySelector(`.step[data-s="${id}"]`);
+  if (!el) return;
+  el.classList.remove('run','done','skip');
+  if (state) el.classList.add(state);
+  el.querySelector('.sicon').textContent = state === 'done' ? '✓' : state === 'skip' ? '–' : '';
+}
+
+const BADGE = {ok:'✓', warn:'!', fail:'✕', info:'i'};
+
+function render(checks, vitals, pageUrl, meta, perfAvailable){
+  const catData = {};
+  for (const c of CATEGORIES) catData[c.id] = {pts:0, max:0, checks:[]};
+  for (const ch of checks){
+    if (!catData[ch.cat]) continue;
+    catData[ch.cat].pts += ch.pts;
+    catData[ch.cat].max += ch.max;
+    catData[ch.cat].checks.push(ch);
+  }
+
+  let weighted = 0, weightSum = 0;
+  for (const c of CATEGORIES){
+    const d = catData[c.id];
+    if (d.max > 0){
+      d.pct = Math.round(d.pts / d.max * 100);
+      weighted += d.pct * c.weight;
+      weightSum += c.weight;
+    } else d.pct = null;
+  }
+  const total = weightSum ? Math.round(weighted / weightSum) : 0;
+  const coverage = Math.round(weightSum / CATEGORIES.reduce((s,c) => s + c.weight, 0) * 100);
+
+  /* Gauge */
+  const circumference = 2 * Math.PI * 82;
+  const bar = $('#gaugebar');
+  bar.style.stroke = colorFor(total);
+  bar.style.strokeDashoffset = circumference;
+  requestAnimationFrame(() => { bar.style.strokeDashoffset = circumference * (1 - total / 100); });
+  let n = 0;
+  const numEl = $('#scorenum');
+  const step = Math.max(1, Math.round(total / 50));
+  const timer = setInterval(() => {
+    n = Math.min(total, n + step);
+    numEl.textContent = n;
+    if (n >= total) clearInterval(timer);
+  }, 24);
+
+  const verdict =
+    total >= 90 ? ['Sehr stark 🚀','Diese Seite ist technisch und inhaltlich hervorragend aufgestellt. Der Feinschliff bei den verbliebenen Warnungen holt die letzten Punkte.'] :
+    total >= 75 ? ['Gut aufgestellt','Solide Basis mit klarem Potenzial. Die markierten Warnungen sind meist schnell behoben und bringen spürbar Punkte.'] :
+    total >= 50 ? ['Ausbaufähig','Es gibt mehrere relevante Baustellen. Arbeite die roten Punkte zuerst ab – dort liegt der größte Hebel.'] :
+                  ['Kritisch','Die Seite verschenkt massiv Ranking-Potenzial. Die rot markierten Grundlagen sollten zuerst behoben werden.'];
+  $('#verdicttitle').textContent = verdict[0];
+  $('#verdicttext').textContent = verdict[1];
+  $('#checkedurl').textContent = pageUrl.href;
+
+  /* Ehrlichkeitshinweis: fehlende Kategorien verzerren den Score nach oben. */
+  const notice = $('#scorenotice');
+  if (!perfAvailable){
+    notice.innerHTML = `<span>⚠️</span><div><b>Score ohne Performance-Wertung.</b> Google Lighthouse war nicht abrufbar, daher fehlen 18 % der Gesamtwertung (Ladezeit &amp; Core Web Vitals). Der angezeigte Wert basiert auf ${coverage} % der Kriterien und liegt dadurch tendenziell zu hoch. Für ein vollständiges Bild oben einen kostenlosen PageSpeed-API-Key hinterlegen.</div>`;
+    notice.classList.add('on');
+    $('#scorescale').textContent = `von 100 · ${coverage} % geprüft`;
+  } else {
+    notice.classList.remove('on');
+    $('#scorescale').textContent = 'von 100';
+  }
+
+  const counts = {ok:0, warn:0, fail:0};
+  checks.forEach(c => { if (counts[c.status] != null) counts[c.status]++; });
+  $('#quickstats').innerHTML =
+    `<span class="chip ok">✓ ${counts.ok} bestanden</span>` +
+    `<span class="chip warn">! ${counts.warn} Warnungen</span>` +
+    `<span class="chip fail">✕ ${counts.fail} Fehler</span>` +
+    (meta.words ? `<span class="chip">${meta.words.toLocaleString('de-DE')} Wörter</span>` : '') +
+    (meta.imgCount ? `<span class="chip">${meta.imgCount} Bilder</span>` : '');
+
+  /* Top-Prioritäten: nach Hebelwirkung sortiert */
+  const catName = id => CATEGORIES.find(c => c.id === id)?.name || id;
+  const todos = checks
+    .filter(c => (c.status === 'fail' || c.status === 'warn') && c.prio > 0)
+    .sort((a,b) => (b.prio - a.prio) || (a.status === 'fail' ? -1 : 1))
+    .slice(0, 6);
+  const todoBox = $('#todo');
+  if (todos.length){
+    $('#todolist').innerHTML = todos.map(t =>
+      `<li><div><b>${escapeHtml(t.name)}</b> <span style="color:var(--fg-dim);font-size:.82rem">· ${escapeHtml(catName(t.cat))}</span>
+       <em>${t.tip || t.detail}</em></div></li>`).join('');
+    todoBox.style.display = '';
+  } else {
+    $('#todolist').innerHTML = '<li><div><b>Keine offenen Punkte</b><em>Alle geprüften Kriterien sind erfüllt – sehr sauber.</em></div></li>';
+    todoBox.style.display = '';
+  }
+
+  /* Kategorie-Karten */
+  const grid = $('#catgrid');
+  grid.innerHTML = '';
+  for (const c of CATEGORIES){
+    const d = catData[c.id], pct = d.pct;
+    const card = document.createElement('div');
+    card.className = 'catcard';
+    card.innerHTML = `
+      <div class="cathead">
+        <span class="catname">${c.name}</span>
+        <span class="catscore" style="color:${pct==null?'var(--fg-dim)':colorFor(pct)}">${pct==null?'–':pct}</span>
+      </div>
+      <div class="meter"><i style="width:0;background:${pct==null?'var(--line-strong)':colorFor(pct)}"></i></div>
+      <div class="catweight">${pct==null?'nicht gewertet':`Gewicht ${c.weight} % am Gesamtscore`}</div>`;
+    card.onclick = () => document.getElementById('sec-'+c.id)?.scrollIntoView({behavior:'smooth', block:'start'});
+    grid.appendChild(card);
+    requestAnimationFrame(() => requestAnimationFrame(() => {
+      card.querySelector('.meter i').style.width = (pct ?? 0) + '%';
+    }));
+  }
+
+  /* Detail-Sektionen */
+  const sections = $('#sections');
+  sections.innerHTML = '';
+  for (const c of CATEGORIES){
+    const d = catData[c.id];
+    if (!d.checks.length) continue;
+    const sec = document.createElement('section');
+    sec.className = 'cat';
+    sec.id = 'sec-' + c.id;
+    const pct = d.pct;
+    let html = `<div class="head"><h3>${c.name}</h3>
+      <span class="score-pill" style="color:${pct==null?'var(--fg-dim)':colorFor(pct)};background:${pct==null?'var(--bg-elev)':pct>=80?'var(--ok-bg)':pct>=50?'var(--warn-bg)':'var(--fail-bg)'}">${pct==null?'ohne Wertung':pct + ' / 100'}</span></div>`;
+
+    if (c.id === 'perf' && vitals && vitals.length){
+      html += '<div class="cwv">' + vitals.map(v => `
+        <div class="vital ${v.status}">
+          <div class="vname">${v.name} <span style="font-weight:400;opacity:.7">(${v.src})</span></div>
+          <div class="vval">${v.val}</div>
+          <div class="vlabel">${v.label}</div>
+        </div>`).join('') + '</div>';
+    }
+
+    html += '<ul class="checklist">';
+    const order = {fail:0, warn:1, ok:2, info:3};
+    for (const ch of [...d.checks].sort((a,b) => order[a.status] - order[b.status] || b.prio - a.prio)){
+      html += `<li class="check">
+        <div class="line">
+          <span class="badge ${ch.status}">${BADGE[ch.status]}</span>
+          <div class="body">
+            <div class="name">${ch.name}</div>
+            ${ch.detail ? `<div class="detail">${ch.detail}</div>` : ''}
+            ${ch.tip && ch.status !== 'ok' ? `<button type="button" class="tipbtn">So behebst du das ↓</button><div class="tip">${ch.tip}</div>` : ''}
+          </div>
+        </div>
+      </li>`;
+    }
+    sec.innerHTML = html + '</ul>';
+    sections.appendChild(sec);
+  }
+
+  sections.querySelectorAll('.tipbtn').forEach(b => {
+    b.addEventListener('click', () => b.nextElementSibling.classList.toggle('on'));
+  });
+
+  $('#result').classList.add('on');
+}
+
+/* ============================================================
+   Ablaufsteuerung
+   ============================================================ */
+const KEY_STORE = 'mre-seo-psi-key';
+function refreshKeyState(){
+  const has = !!$('#apikey').value.trim();
+  const el = $('#keystate');
+  el.textContent = has ? '✓ hinterlegt' : '– nicht hinterlegt';
+  el.className = 'keystate ' + (has ? 'on' : 'off');
+}
+try {
+  const saved = localStorage.getItem(KEY_STORE);
+  if (saved) $('#apikey').value = saved;
+} catch(e){}
+refreshKeyState();
+$('#apikey').addEventListener('input', () => {
+  try { localStorage.setItem(KEY_STORE, $('#apikey').value.trim()); } catch(e){}
+  refreshKeyState();
+});
+
+let strategy = 'mobile';
+$('#strategy').addEventListener('click', e => {
+  const b = e.target.closest('button'); if (!b) return;
+  strategy = b.dataset.v;
+  $('#strategy').querySelectorAll('button').forEach(x => x.classList.toggle('active', x === b));
+});
+
+$('#rerun').addEventListener('click', () => {
+  $('#result').classList.remove('on');
+  window.scrollTo({top:0, behavior:'smooth'});
+  $('#url').focus();
+});
+
+$('#expandall').addEventListener('click', e => {
+  const tips = [...document.querySelectorAll('.tip')];
+  const anyClosed = tips.some(t => !t.classList.contains('on'));
+  tips.forEach(t => t.classList.toggle('on', anyClosed));
+  e.target.textContent = anyClosed ? '📕 Alle Tipps einklappen' : '📖 Alle Tipps ausklappen';
+});
+
+/* URL aus dem Query-String vorbefüllen: ?url=…&kw=… */
+(function prefill(){
+  const p = new URLSearchParams(location.search);
+  if (p.get('url')) $('#url').value = p.get('url');
+  if (p.get('kw')) $('#kw').value = p.get('kw');
+})();
+
+$('#form').addEventListener('submit', async e => {
+  e.preventDefault();
+  const errbox = $('#errbox');
+  errbox.classList.remove('on');
+  $('#result').classList.remove('on');
+
+  let pageUrl;
+  try { pageUrl = normalizeUrl($('#url').value); }
+  catch(err){
+    errbox.textContent = 'Das sieht nicht nach einer gültigen URL aus.';
+    errbox.classList.add('on');
+    return;
+  }
+  const keyword = $('#kw').value.trim();
+  const go = $('#go');
+  go.disabled = true; go.textContent = 'Analysiere …';
+  const prog = $('#progress');
+  prog.classList.add('on');
+  ['fetch','parse','tech','psi'].forEach(s => setStep(s, null));
+
+  const C = makeCollector();
+  try {
+    setStep('fetch','run');
+    const {text: rawHtml} = await fetchText(pageUrl.href, 20000, true);
+    setStep('fetch','done');
+
+    setStep('parse','run');
+    const doc = new DOMParser().parseFromString(rawHtml, 'text/html');
+    if (!doc.body) throw new Error('Das HTML konnte nicht ausgewertet werden.');
+    const meta = analyzeOnPage(doc, pageUrl, rawHtml, keyword, C);
+    setStep('parse','done');
+
+    setStep('tech','run'); setStep('psi','run');
+    const [, psi] = await Promise.all([
+      analyzeTech(pageUrl, C).then(() => setStep('tech','done')),
+      analyzePerformance(pageUrl, strategy, C).then(r => { setStep('psi', r ? 'done' : 'skip'); return r; }),
+    ]);
+
+    prog.classList.remove('on');
+    render(C.checks, psi?.vitals || [], pageUrl, meta, !!psi);
+    document.querySelector('.scoreboard').scrollIntoView({behavior:'smooth', block:'start'});
+  } catch(err){
+    prog.classList.remove('on');
+    errbox.innerHTML = '<b>Analyse fehlgeschlagen:</b> ' + escapeHtml(err.message || String(err)) +
+      '<br><br>Mögliche Ursachen: die Seite blockiert Bots und Proxys (z. B. Cloudflare-Schutz), ein Tippfehler in der URL, oder der CORS-Proxy ist gerade überlastet – dann hilft ein zweiter Versuch in ein paar Sekunden.';
+    errbox.classList.add('on');
+  } finally {
+    go.disabled = false; go.textContent = 'Analyse starten';
+  }
+});
+</script>
+</body>
+</html>
