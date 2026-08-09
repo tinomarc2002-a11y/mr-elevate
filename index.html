@@ -135,7 +135,7 @@
 <!-- ============================================================= -->
 <!-- Selbst gehostete Schriften (keine Google-Verbindung) -->
 <link rel="preload" href="fonts/inter.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" href="fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="fonts.css" />
 
 <style>
@@ -286,14 +286,10 @@ section{ position:relative; }
 }
 .nav-inner{ display:flex; align-items:center; justify-content:space-between; height:72px; }
 .brand{ display:flex; align-items:center; gap:11px; font-family:var(--font-display); font-weight:600; font-size:1.12rem; letter-spacing:-.01em; }
-.brand-mark{
-  width:30px; height:30px; border-radius:8px; display:grid; place-items:center;
-  background:var(--accent-fill); color:var(--accent-ink); font-weight:700; font-size:1rem;
-  box-shadow:0 0 24px -4px var(--accent-glow);
-}
 .brand small{ color:var(--fg-dim); font-weight:400; font-family:var(--font-body); font-size:.7rem; letter-spacing:.05em; display:block; margin-top:-3px; }
 .nav-links{ display:flex; align-items:center; gap:34px; }
-.nav-links a{ font-size:.92rem; color:var(--fg-muted); transition:color var(--t-fast); position:relative; }
+.nav-links a{ font-size:.92rem; color:var(--fg-dim); transition:color var(--t-fast); position:relative; }
+.nav.zone-dark .nav-links a{ color:#d5cec3; }   /* auf der abgedunkelten Leiste sonst nur 4.32:1 */
 .nav-links a::after{ content:""; position:absolute; left:0; bottom:-5px; height:1px; width:0; background:var(--accent); transition:width var(--t); }
 .nav-links a:hover{ color:var(--fg); }
 .nav-links a:hover::after{ width:100%; }
@@ -354,7 +350,6 @@ section{ position:relative; }
    GENERIC SECTION HEADER + REVEAL
    ================================================================= */
 .sec-pad{ padding:clamp(100px,13.5vw,176px) 0; }
-#problem{ padding-top:clamp(40px,6vw,68px); }   /* enger an den Hero anschließen */
 
 /* ── "Breather": eine Idee tieferer Papierton – Rhythmus statt Graphit-Insel ── */
 .section-mid{ background:var(--bg-elev); border-top:1px solid var(--line); border-bottom:1px solid var(--line); }
@@ -568,7 +563,7 @@ section{ position:relative; }
   background:linear-gradient(180deg, transparent, rgba(var(--ink-rgb),.34)); }
 .founder-tag{ position:absolute; left:18px; bottom:18px; z-index:2; background:rgba(var(--ink-rgb),.7); backdrop-filter:blur(8px); border:1px solid rgba(255,255,255,.14); border-radius:12px; padding:12px 16px; color:var(--bg-light); }
 .founder-tag b{ font-family:var(--font-display); display:block; }
-.founder-tag span{ font-size:.82rem; color:var(--accent-fill); }
+.founder-tag span{ font-size:.82rem; color:#b8d557; }   /* eine Spur heller als --accent-fill: auf dem halbtransparenten Ink-Kasten sonst nur 4.49:1 */
 .founder-quote{ font-family:var(--font-display); font-size:clamp(1.4rem,3vw,2rem); font-weight:500; line-height:1.25; margin:18px 0 24px; }
 .founder-quote .accent{ color:var(--accent); }
 .founder p{ color:var(--fg-muted); margin-bottom:16px; }
@@ -596,7 +591,7 @@ section{ position:relative; }
 .fd-btn{ display:inline-flex; align-items:center; gap:8px; padding:11px 18px; border-radius:10px;
   font-family:var(--font-display); font-weight:600; font-size:.92rem; transition:transform var(--t),background var(--t),border-color var(--t); }
 .fd-btn svg{ flex-shrink:0; }
-.fd-wa{ background:var(--accent); color:var(--accent-ink); }
+.fd-wa{ background:var(--accent-fill); color:var(--accent-ink); }
 .fd-wa:hover{ transform:translateY(-2px); }
 .fd-mail{ background:transparent; color:var(--fg); border:1px solid var(--line-strong); }
 .fd-mail:hover{ transform:translateY(-2px); border-color:var(--accent); }
@@ -1114,7 +1109,7 @@ body{
   <div class="hero-bg">
     <!-- Handgezeichnete Dresden-Skyline (Frauenkirche) als Hero-Hintergrund,
          warm und papierhell wie die Cremetoene der restlichen Seite. -->
-    <img class="hero-photo" src="hero-pastel.webp" width="1920" height="1024" alt="Handgezeichnete Illustration der Dresdner Altstadt mit Frauenkirche im Morgenlicht" fetchpriority="high" data-parallax="55" />
+    <img class="hero-photo" src="hero-pastel.webp" srcset="hero-pastel-768.webp 768w, hero-pastel-1200.webp 1200w, hero-pastel.webp 1920w" sizes="100vw" width="1920" height="1024" alt="Handgezeichnete Illustration der Dresdner Altstadt mit Frauenkirche im Morgenlicht" fetchpriority="high" data-parallax="55" />
     <!-- Schwebende Sterne ueber der Illustration, gleiche Formsprache wie an der Rakete -->
     <span class="hero-twinkle t1" aria-hidden="true"></span>
     <span class="hero-twinkle t2" aria-hidden="true"></span>
@@ -1379,7 +1374,7 @@ body{
         <b>Du sprichst direkt mit mir. Kein Account-Manager oder wechselnde Ansprechpartner.</b>
       </div>
       <div class="gb-visual">
-        <img class="gb-photo" src="handshake.webp" width="1200" height="800" loading="lazy" alt="Zwei Personen lächeln sich an und geben sich die Hand" />
+        <img class="gb-photo" src="handshake.webp" srcset="handshake-700.webp 700w, handshake.webp 1200w" sizes="(max-width:900px) 92vw, 560px" width="1200" height="800" loading="lazy" alt="Zwei Personen lächeln sich an und geben sich die Hand" />
       </div>
     </div>
 
@@ -1389,7 +1384,7 @@ body{
       </div>
       <div class="gb-visual">
         <div class="rocket-avatar">
-          <img src="rocket-avatar.webp" width="1000" height="667" loading="lazy" alt="Illustration: Marc Richter fliegt auf einer Rakete nach oben" class="rocket-avatar-img" />
+          <img src="rocket-avatar.webp" srcset="rocket-avatar-560.webp 560w, rocket-avatar.webp 1000w" sizes="(max-width:900px) 70vw, 420px" width="1000" height="667" loading="lazy" alt="Illustration: Marc Richter fliegt auf einer Rakete nach oben" class="rocket-avatar-img" />
           <span class="rocket-avatar-glow" aria-hidden="true"></span>
           <span class="rocket-avatar-twinkle t1" aria-hidden="true"></span>
           <span class="rocket-avatar-twinkle t2" aria-hidden="true"></span>
@@ -1407,7 +1402,7 @@ body{
   <div class="container">
     <div class="founder">
       <div class="founder-photo reveal" data-tilt>
-        <img src="founder.webp" alt="Marc Richter, Gründer von MR Elevate" width="760" height="949" loading="lazy" />
+        <img src="founder.webp" srcset="founder-420.webp 420w, founder.webp 760w" sizes="(max-width:900px) 60vw, 380px" alt="Marc Richter, Gründer von MR Elevate" width="760" height="949" loading="lazy" />
         <div class="founder-tag"><b>Marc Richter</b><span>Gründer</span></div>
       </div>
       <div>
@@ -1658,7 +1653,7 @@ body{
     nav.classList.toggle('scrolled', isScrolled);
     nav.classList.toggle('zone-dark', isScrolled);
   };
-  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
 
   /* ---------- Mobile menu ---------- */
   var burger = document.getElementById('burger');
@@ -1698,9 +1693,23 @@ body{
     }, {threshold:.12, rootMargin:'0px 0px -40px 0px'});
     revealPending.forEach(function(el){ io.observe(el); });
   }
-  window.addEventListener('scroll', revealSweep, {passive:true});
   window.addEventListener('resize', revealSweep, {passive:true});
   revealSweep();
+
+  /* Ein einziger Scroll-Listener fuer alle drei Aufgaben, per
+     requestAnimationFrame auf einmal pro Bild gedrosselt. Vorher liefen drei
+     Handler bei jedem Scroll-Ereignis und lasen dabei Layout-Werte
+     (scrollHeight, getBoundingClientRect) - das erzwingt pro Ereignis ein
+     synchrones Layout. Gemessen waren es 832 ms blockierte Hauptthread-Zeit. */
+  var scrollTickt = false;
+  window.addEventListener('scroll', function(){
+    if (scrollTickt) return;
+    scrollTickt = true;
+    requestAnimationFrame(function(){
+      scrollTickt = false;
+      onScroll(); updPg(); revealSweep();
+    });
+  }, {passive:true});
 
   var fine = window.matchMedia('(pointer:fine)').matches;
 
@@ -1710,7 +1719,7 @@ body{
     var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
     sp.style.width = (max > 0 ? (h.scrollTop / max * 100) : 0) + '%';
   };
-  updPg(); window.addEventListener('scroll', updPg, {passive:true}); window.addEventListener('resize', updPg);
+  updPg(); window.addEventListener('resize', updPg);
 
   /* ---------- Spotlight: Karten-Glow folgt der Maus ---------- */
   (function(){

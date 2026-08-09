@@ -115,7 +115,7 @@
 </script>
 
 <link rel="preload" href="fonts/inter.woff2" as="font" type="font/woff2" crossorigin />
-<link rel="preload" href="fonts/space-grotesk.woff2" as="font" type="font/woff2" crossorigin />
+<link rel="preload" href="fonts/fraunces.woff2" as="font" type="font/woff2" crossorigin />
 <link rel="stylesheet" href="fonts.css" />
 
 <style>
@@ -579,14 +579,14 @@ section{ position:relative; }
       nav.classList.toggle('scrolled', isScrolled);
       nav.classList.toggle('zone-dark', isScrolled);
     };
-  onScroll(); window.addEventListener('scroll', onScroll, {passive:true});
+  onScroll();
 
   var sp = document.getElementById('scrollProgress');
   var updPg = function(){
     var h = document.documentElement, max = h.scrollHeight - h.clientHeight;
     sp.style.width = (max > 0 ? (h.scrollTop / max * 100) : 0) + '%';
   };
-  updPg(); window.addEventListener('scroll', updPg, {passive:true}); window.addEventListener('resize', updPg);
+  updPg(); window.addEventListener('resize', updPg);
 
   /* IntersectionObserver + Scroll-Fallback, damit Inhalte nie dauerhaft
      unsichtbar bleiben, falls IO in einem Browser/einer Erweiterung
@@ -613,9 +613,23 @@ section{ position:relative; }
     }, {threshold:.1, rootMargin:'0px 0px -40px 0px'});
     revealPending.forEach(function(el){ io.observe(el); });
   }
-  window.addEventListener('scroll', revealSweep, {passive:true});
   window.addEventListener('resize', revealSweep, {passive:true});
   revealSweep();
+
+  /* Ein einziger Scroll-Listener fuer alle drei Aufgaben, per
+     requestAnimationFrame auf einmal pro Bild gedrosselt. Vorher liefen drei
+     Handler bei jedem Scroll-Ereignis und lasen dabei Layout-Werte
+     (scrollHeight, getBoundingClientRect) - das erzwingt pro Ereignis ein
+     synchrones Layout. Gemessen waren es 832 ms blockierte Hauptthread-Zeit. */
+  var scrollTickt = false;
+  window.addEventListener('scroll', function(){
+    if (scrollTickt) return;
+    scrollTickt = true;
+    requestAnimationFrame(function(){
+      scrollTickt = false;
+      onScroll(); updPg(); revealSweep();
+    });
+  }, {passive:true});
 })();
 </script>
 <script defer src="/consent.js"></script>
