@@ -864,15 +864,22 @@ body{
    ================================================================= */
 /* Offene Bildbaender: kein Rahmen, kein Kasten, keine Trennlinie – die
    Illustration steht frei im Abschnitt, der Text daneben gehoert zu ihr. */
-.graphic-band{ display:grid; grid-template-columns:1fr 1.45fr; align-items:center;
+.graphic-band{ display:grid; grid-template-columns:1fr 1.15fr; align-items:center;
   gap:clamp(22px,4vw,60px); margin-top:60px; }
 .gb-text{ display:flex; flex-direction:column; justify-content:center; gap:10px; }
 .gb-text b{ font-family:var(--font-display); font-size:clamp(1.3rem,2.4vw,1.75rem); font-weight:600;
   letter-spacing:-.015em; line-height:1.25; }
-.gb-text span{ font-size:.98rem; color:var(--fg-muted); max-width:34ch; }
+.gb-text span{ font-size:.98rem; color:var(--fg-muted); max-width:46ch; }
+.gb-text span a{ color:var(--accent); text-decoration:underline; text-underline-offset:3px; }
+/* Jedes zweite Band spiegeln, damit die Reihe nicht mechanisch wirkt. */
+.graphic-band.gespiegelt{ grid-template-columns:1.15fr 1fr; }
+.graphic-band.gespiegelt .gb-text{ order:2; }
+.graphic-band.gespiegelt .gb-visual{ order:1; }
 .gb-visual{ display:flex; align-items:center; }
 .gb-visual svg{ width:100%; height:auto; display:block; overflow:visible; }
-@media(max-width:760px){ .graphic-band{ grid-template-columns:1fr; gap:22px; } }
+@media(max-width:760px){ .graphic-band,.graphic-band.gespiegelt{ grid-template-columns:1fr; gap:22px; }
+  /* Auf schmalen Displays fuehrt immer der Text, egal ob gespiegelt. */
+  .graphic-band.gespiegelt .gb-text{ order:0; } .graphic-band.gespiegelt .gb-visual{ order:1; } }
 
 /* SVG-Vokabular (Linien, Events, Kacheln) */
 .mk-line{ stroke:var(--line); }
@@ -1265,7 +1272,7 @@ body{
     <div class="graphic-band reveal" style="margin-top:0;">
       <div class="gb-text">
         <b>Ein leerer Kalender ist selten Zufall.</b>
-        <span>Wer planbar Anfragen bekommt, hat ein System dahinter.</span>
+        <span>Bei den meisten Betrieben kommen Aufträge über Empfehlungen. Das funktioniert, bis es das nicht mehr tut: Auf drei gute Monate folgt einer, in dem nichts nachkommt, und niemand kann sagen, woran es lag. Wer dagegen planbar Anfragen bekommt, hat ein System dahinter, das sich nachvollziehen und wiederholen lässt.</span>
       </div>
       <div class="gb-visual">
         <svg viewBox="0 0 520 330" fill="none" role="img" aria-label="Wandkalender: die Kalenderwochen 32 bis 35 sind zu sehen, kein einziger Tag ist belegt">
@@ -1372,27 +1379,13 @@ body{
       </div>
     </div>
 
-    <div class="graphic-band reveal">
+    <div class="graphic-band gespiegelt reveal">
       <div class="gb-text">
-        <b>Du sprichst direkt mit mir. Kein Account-Manager oder wechselnde Ansprechpartner.</b>
+        <b>Du sprichst direkt mit mir.</b>
+            <span>Kein Account-Manager, keine wechselnden Ansprechpartner. Wer anruft, bekommt die Person ans Telefon, die auch die Kampagne gebaut hat. Eine Rückfrage zu einer Anzeige ist damit eine Frage und kein Ticket.</span>
       </div>
       <div class="gb-visual">
         <img class="gb-photo" src="handshake.webp" srcset="handshake-700.webp 700w, handshake.webp 1200w" sizes="(max-width:900px) 92vw, 560px" width="1200" height="800" loading="lazy" alt="Zwei Personen lächeln sich an und geben sich die Hand" />
-      </div>
-    </div>
-
-    <div class="graphic-band reveal">
-      <div class="gb-text">
-        <b>Von planbaren Anfragen zu planbarem Wachstum.</b>
-      </div>
-      <div class="gb-visual">
-        <div class="rocket-avatar">
-          <img src="rocket-avatar.webp" srcset="rocket-avatar-560.webp 560w, rocket-avatar.webp 1000w" sizes="(max-width:900px) 70vw, 420px" width="1000" height="667" loading="lazy" alt="Illustration: Marc Richter fliegt auf einer Rakete nach oben" class="rocket-avatar-img" />
-          <span class="rocket-avatar-glow" aria-hidden="true"></span>
-          <span class="rocket-avatar-twinkle t1" aria-hidden="true"></span>
-          <span class="rocket-avatar-twinkle t2" aria-hidden="true"></span>
-          <span class="rocket-avatar-twinkle t3" aria-hidden="true"></span>
-        </div>
       </div>
     </div>
   </div>
@@ -1477,7 +1470,22 @@ body{
           <p>Erstverträge laufen bei mir maximal 3–6 Monate, bewusst überschaubar. Andere Laufzeiten besprechen wir individuell.</p>
         </div>
       </div>
-    </div>
+    <div class="graphic-band reveal">
+        <div class="gb-text">
+          <b>Von planbaren Anfragen zu planbarem Wachstum.</b>
+              <span>Wenn das Modell greift, verschiebt sich der Engpass: weg von der Nachfrage, hin zur Kapazität. Ab da geht es nicht mehr um Anzeigen, sondern um Menschen und Abläufe. <a href="/mitarbeitergewinnung">Auch dabei unterstütze ich dich.</a></span>
+        </div>
+        <div class="gb-visual">
+          <div class="rocket-avatar">
+            <img src="rocket-avatar.webp" srcset="rocket-avatar-560.webp 560w, rocket-avatar.webp 1000w" sizes="(max-width:900px) 70vw, 420px" width="1000" height="667" loading="lazy" alt="Illustration: Marc Richter fliegt auf einer Rakete nach oben" class="rocket-avatar-img" />
+            <span class="rocket-avatar-glow" aria-hidden="true"></span>
+            <span class="rocket-avatar-twinkle t1" aria-hidden="true"></span>
+            <span class="rocket-avatar-twinkle t2" aria-hidden="true"></span>
+            <span class="rocket-avatar-twinkle t3" aria-hidden="true"></span>
+          </div>
+        </div>
+      </div>
+      </div>
   </div>
 </section>
 
