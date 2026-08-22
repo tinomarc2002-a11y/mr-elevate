@@ -1100,7 +1100,7 @@ body{
     </div>
     <div class="nav-cta">
       <a href="#founder" class="btn btn-ghost">Über mich</a>
-      <a href="#quiz" class="btn btn-primary" data-quiz-cta>Kostenlos beraten</a>
+      <a href="/analysegespraech" class="btn btn-primary" data-quiz-cta>Kostenlos beraten</a>
       <button class="burger" id="burger" aria-label="Menü öffnen" aria-expanded="false">
         <span></span><span></span><span></span>
       </button>
@@ -1116,7 +1116,7 @@ body{
   <a href="#faq">FAQ</a>
   <a href="/leitfaden">Leitfaden</a>
   <a href="/werbecheck">Werbe-Check</a>
-  <a href="#quiz" class="btn btn-primary" data-quiz-cta>Kostenlos beraten</a>
+  <a href="/analysegespraech" class="btn btn-primary" data-quiz-cta>Kostenlos beraten</a>
 </div>
 
 <span id="top"></span>
@@ -1150,7 +1150,7 @@ body{
 
     <div class="hero-actions reveal in d2">
       <!-- CONVERSION-CRITICAL: Primary CTA -->
-      <a href="#quiz" class="btn btn-primary" data-magnetic data-cursor data-quiz-cta>
+      <a href="/analysegespraech" class="btn btn-primary" data-magnetic data-cursor data-quiz-cta>
         Kostenloses Analysegespräch sichern
         <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
@@ -1450,7 +1450,7 @@ body{
     <div class="sec-head center reveal">
       <h2 class="h-sec">Erfolgsbasiert</h2>
       <p class="sec-sub">Du zahlst nur für echte Ergebnisse.</p>
-      <a href="#quiz" class="btn btn-primary" data-magnetic data-cursor data-quiz-cta style="margin-top:28px;">Passt das zu mir? Jetzt prüfen
+      <a href="/analysegespraech" class="btn btn-primary" data-magnetic data-cursor data-quiz-cta style="margin-top:28px;">Passt das zu mir? Jetzt prüfen
         <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
       </a>
     </div>
@@ -1555,7 +1555,7 @@ body{
       <h2 class="h-sec">Lass uns prüfen, ob es passt.</h2>
       <p>Kostenloses Analysegespräch. Du erfährst ehrlich, ob planbare, erfolgsbasierte Neukundengewinnung für dein Geschäft funktioniert, ohne Verpflichtung. Und ohne den Verkaufsteil, den du erwartest.</p>
       <div class="final-actions">
-        <a href="#quiz" class="btn btn-primary" data-magnetic data-cursor data-quiz-cta>
+        <a href="/analysegespraech" class="btn btn-primary" data-magnetic data-cursor data-quiz-cta>
           Kostenloses Analysegespräch sichern
           <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
         </a>
@@ -1845,8 +1845,7 @@ body{
         {v:'Dienstleister', icon:ICON.briefcase},
         {v:'Handwerk', icon:ICON.gear},
         {v:'Coaching / Beratung', icon:ICON.chat},
-        {v:'E-Commerce / Handel', icon:ICON.cart},
-        {v:'Sonstiges', icon:ICON.spark}
+                  {v:'Sonstiges', icon:ICON.spark}
       ]
     },
     {
@@ -2053,11 +2052,11 @@ body{
     document.body.style.overflow = '';
   }
   document.addEventListener('click', function(e){
-    var opener = e.target.closest('[data-quiz-cta]');
-    if(opener){ e.preventDefault(); openQuizModal(); return; }
+    /* Die CTAs sind seit dem Umzug echte Links auf /analysegespraech.
+       Der Klick wird deshalb nicht mehr abgefangen. */
     if(e.target.closest('[data-quiz-close]')){ closeQuizModal(); }
   });
-  if(window.location.hash === '#quiz'){ openQuizModal(); }
+  if(window.location.hash === '#quiz'){ window.location.replace('/analysegespraech'); }
   document.addEventListener('keydown', function(e){
     if(e.key === 'Escape' && quizModal && !quizModal.hidden){ closeQuizModal(); }
   });
