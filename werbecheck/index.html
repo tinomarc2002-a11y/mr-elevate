@@ -370,6 +370,35 @@ input { font: inherit; }
 .question-hint { font-size: 14px; color: var(--muted); margin-bottom: 36px; }
 
 .options-list { display: flex; flex-direction: column; gap: 12px; }
+/* ============== ANTWORTKACHELN ==============
+   Nur fuer Fragen, die sich ehrlich bebildern lassen (Branche, Zielgruppe,
+   Einzugsgebiet, visuelle Darstellbarkeit, Website-Stand). Aufbau wie im
+   Referenzfunnel: heller Symbolbereich oben, farbiges Band mit der
+   Beschriftung darunter. */
+.options-list.kachel-raster { display: grid; grid-template-columns: repeat(auto-fit, minmax(156px, 1fr)); gap: 12px; }
+.option.kachel {
+  flex-direction: column; align-items: stretch; gap: 0;
+  padding: 0; overflow: hidden; text-align: center; background: var(--accent-soft);
+}
+.option.kachel:hover { transform: translateY(-3px); }
+@media (hover: none) { .option.kachel:hover { transform: none; } }
+.kachel-symbol { display: grid; place-items: center; height: 78px; color: var(--mid); }
+.option.kachel.selected .kachel-symbol { color: var(--deep); }
+.kachel-band {
+  display: block; background: var(--mid); color: #fff; padding: 11px 9px 12px;
+  transition: background 0.16s ease, color 0.16s ease;
+}
+.kachel-band b { display: block; font-size: 14.5px; font-weight: 600; line-height: 1.25; }
+.kachel-band span { display: block; font-size: 12px; font-weight: 400; opacity: .82; margin-top: 2px; line-height: 1.3; }
+.option.kachel.selected { background: #fff; }
+.option.kachel.selected .kachel-band { background: var(--accent); color: var(--accent-ink); }
+.option.kachel.selected .kachel-band span { opacity: .75; }
+@media (max-width: 520px) {
+  .options-list.kachel-raster { grid-template-columns: 1fr 1fr; gap: 10px; }
+  .kachel-symbol { height: 58px; }
+  .kachel-band b { font-size: 13.5px; }
+  .kachel-band span { display: none; }
+}
 .option {
   display: flex; align-items: center; gap: 16px; padding: 18px 22px; background: var(--paper);
   border: 2px solid var(--line); border-radius: var(--radius-md); cursor: pointer; text-align: left;
@@ -778,6 +807,8 @@ const fitBadge = { name: 'Plattform-Fit', text: '#2A63C7', soft: '#E5EEFD' };
 // Jede Frage hat bewusst einen entlastenden Hint ("Schätzung reicht", konkretes Beispiel):
 // Die häufigste Abbruchursache in Quiz-Funnels ist nicht Desinteresse, sondern das Gefühl,
 // eine Frage nicht sicher beantworten zu können.
+const KACHEL_OPTIONEN = {"branche":[["Lokale Dienstleistung","Handwerk, Praxis, Beratung vor Ort","<path d=\"M3 9h18l-1.6-4.5a1 1 0 0 0-.9-.7H5.5a1 1 0 0 0-.9.7Z\"/><path d=\"M5 9v10h14V9\"/><path d=\"M9 19v-5h6v5\"/>"],["Online-Shop","E-Commerce","<path d=\"M3 4h2l2.2 10.4a1.5 1.5 0 0 0 1.5 1.2h7.9a1.5 1.5 0 0 0 1.5-1.2L20 7H6\"/><circle cx=\"9.5\" cy=\"19.5\" r=\"1.4\"/><circle cx=\"16.5\" cy=\"19.5\" r=\"1.4\"/>"],["B2B-Dienstleistung","oder Beratung","<path d=\"M4 21V6a1 1 0 0 1 1-1h8a1 1 0 0 1 1 1v15\"/><path d=\"M14 10h5a1 1 0 0 1 1 1v10\"/><path d=\"M2 21h20\"/><path d=\"M7 9h3M7 13h3M7 17h3M17 14h1M17 18h1\"/>"],["Sonstiges","","<circle cx=\"5.5\" cy=\"12\" r=\"1.6\"/><circle cx=\"12\" cy=\"12\" r=\"1.6\"/><circle cx=\"18.5\" cy=\"12\" r=\"1.6\"/>"]],"zielgruppe":[["Privatpersonen","B2C","<circle cx=\"12\" cy=\"8\" r=\"3.6\"/><path d=\"M4.5 21a7.5 7.5 0 0 1 15 0\"/>"],["Kleine Unternehmen","und Selbstständige","<path d=\"M4 10h16v10H4Z\"/><path d=\"M4 10 5.6 5h12.8L20 10\"/><path d=\"M10 20v-5h4v5\"/>"],["Mittelstand","oder größere Unternehmen","<path d=\"M3 21V8l6-3v16\"/><path d=\"M9 21V11l7-3v13\"/><path d=\"M16 21V10l5-2v13\"/><path d=\"M2 21h20\"/>"],["Gemischt","beides","<circle cx=\"8.5\" cy=\"9\" r=\"3\"/><circle cx=\"16.5\" cy=\"10.5\" r=\"2.4\"/><path d=\"M2.5 20a6 6 0 0 1 12 0\"/><path d=\"M15 15.5a5 5 0 0 1 6.5 4.5\"/>"]],"einzugsgebiet":[["Sehr lokal","ein Ort oder Landkreis","<path d=\"M12 21s7-5.4 7-11a7 7 0 1 0-14 0c0 5.6 7 11 7 11Z\"/><circle cx=\"12\" cy=\"10\" r=\"2.4\"/>"],["Regional","mehrere Städte, Bundesland","<path d=\"M7 13.5s3.6-2.8 3.6-5.7A3.6 3.6 0 1 0 3.4 7.8c0 2.9 3.6 5.7 3.6 5.7Z\"/><path d=\"M16.5 21s3.8-3 3.8-6.1a3.8 3.8 0 1 0-7.6 0c0 3.1 3.8 6.1 3.8 6.1Z\"/><circle cx=\"7\" cy=\"7.8\" r=\"1.2\"/><circle cx=\"16.5\" cy=\"14.9\" r=\"1.3\"/>"],["Deutschlandweit","","<path d=\"M9 3 3.5 5.2v13L9 16l6 2.6 5.5-2.4V3.2L15 5.6Z\"/><path d=\"M9 3v13M15 5.6v13\"/>"],["International","mehrsprachig","<circle cx=\"12\" cy=\"12\" r=\"9\"/><path d=\"M3 12h18\"/><path d=\"M12 3a14 14 0 0 1 0 18a14 14 0 0 1 0-18Z\"/>"]],"visuell":[["Sehr gut","starke Fotos und Videos","<path d=\"M3 8.5A1.5 1.5 0 0 1 4.5 7h2.2l1.2-2h8.2l1.2 2h2.2A1.5 1.5 0 0 1 21 8.5v9A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5Z\"/><circle cx=\"12\" cy=\"13\" r=\"3.6\"/>"],["Teilweise","mit guten Produktbildern","<rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2\"/><circle cx=\"8.5\" cy=\"10\" r=\"1.6\"/><path d=\"m4 17 5-4.5 4 3.5 3-2.5 4 3.5\"/>"],["Eher schwierig","wenig visuell darstellbar","<rect x=\"3\" y=\"5\" width=\"18\" height=\"14\" rx=\"2\"/><path d=\"m4 17 5-4.5 3 2.6\"/><path d=\"m14.5 10.5 5 5M19.5 10.5l-5 5\"/>"],["Nein","reine Text- oder Fachleistung","<path d=\"M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8Z\"/><path d=\"M14 3v5h5M8.5 13h7M8.5 17h5\"/>"]],"website":[["Professionelle Website","mit klarer Anfrage-Möglichkeit","<rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M3 9h18\"/><circle cx=\"6.5\" cy=\"6.5\" r=\".9\"/><path d=\"M8 13h8M8 16.5h5\"/>"],["In die Jahre gekommen","Website vorhanden","<rect x=\"3\" y=\"4\" width=\"18\" height=\"16\" rx=\"2\"/><path d=\"M3 9h18\"/><circle cx=\"6.5\" cy=\"6.5\" r=\".9\"/><path d=\"M9 12.5 12 16l-3 .5M15.5 12.5 14 16.5\"/>"],["Nur Social Media","Instagram, Facebook & Co.","<path d=\"M4 5.5A1.5 1.5 0 0 1 5.5 4h8A1.5 1.5 0 0 1 15 5.5v5A1.5 1.5 0 0 1 13.5 12H8l-4 3Z\"/><path d=\"M18 9h.5A1.5 1.5 0 0 1 20 10.5v5A1.5 1.5 0 0 1 18.5 17H17l-3 2.5V17\"/>"],["Noch nichts davon","müsste erst entstehen","<rect x=\"3.5\" y=\"5\" width=\"17\" height=\"14\" rx=\"2\" stroke-dasharray=\"4 3.5\"/><path d=\"M12 10v4M10 12h4\"/>"]]};
+
 const questions = [
   {
     id: 'branche',
@@ -1219,11 +1250,23 @@ function renderQuestion(idx) {
     list.appendChild(feld);
     setTimeout(() => feld.focus({ preventScroll: true }), 60);
   } else {
+    const kacheln = KACHEL_OPTIONEN[q.id];
+    if (kacheln) list.classList.add('kachel-raster'); else list.classList.remove('kachel-raster');
     q.options.forEach((opt, i) => {
       const btn = document.createElement('button');
-      btn.className = 'option';
       btn.setAttribute('data-idx', i);
-      btn.innerHTML = `<span class="opt-key">${String.fromCharCode(65 + i)}</span><span class="opt-label">${opt.label}</span><span class="check"></span>`;
+      if (kacheln && kacheln[i]) {
+        /* Kurztext nur fuer die Kachel. Nach hinten geht der Index, die
+           Auswertungs-Mail nutzt weiterhin den vollen Wortlaut. */
+        const [titel, unter, symbol] = kacheln[i];
+        btn.className = 'option kachel';
+        btn.innerHTML = '<span class="kachel-symbol" aria-hidden="true"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">' + symbol + '</svg></span>' +
+          '<span class="kachel-band"><b>' + titel + '</b>' + (unter ? '<span>' + unter + '</span>' : '') + '</span>';
+        btn.setAttribute('aria-label', opt.label);
+      } else {
+        btn.className = 'option';
+        btn.innerHTML = `<span class="opt-key">${String.fromCharCode(65 + i)}</span><span class="opt-label">${opt.label}</span><span class="check"></span>`;
+      }
       btn.style.animationDelay = (i * 40) + 'ms';
       btn.onclick = () => selectOption(i);
       if (answers[q.id] === i) btn.classList.add('selected');
