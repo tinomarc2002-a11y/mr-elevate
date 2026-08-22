@@ -20,6 +20,7 @@
 
   var KEY = "mre_consent_v1";
   var CLARITY_ID = "xritxdmsli";
+  var META_PIXEL_ID = "1032721282806447";
 
   /* --- Styles: nutzen die Design-Tokens der jeweiligen Seite, mit
          Fallbacks fuer Seiten mit reduziertem Token-Satz (404, Rechtstexte). --- */
@@ -51,7 +52,8 @@
       '<div class="cc-text">' +
         "<strong>Cookies &amp; Datenschutz</strong>" +
         "<p>Wir nutzen nur technisch notwendige Mittel und eine <b>cookielose</b> Reichweitenmessung ohne " +
-        "pers&ouml;nliche Profile. Analyse-Dienste mit Cookies (Microsoft&nbsp;Clarity) laden wir " +
+        "pers&ouml;nliche Profile. Analyse- und Marketing-Dienste mit Cookies (Microsoft&nbsp;Clarity, " +
+        "Meta&nbsp;Pixel) laden wir " +
         '<b>ausschlie&szlig;lich mit deiner Einwilligung</b>. Mehr in der <a href="/datenschutz">Datenschutzerkl&auml;rung</a>.</p>' +
       "</div>" +
       '<div class="cc-actions">' +
@@ -69,7 +71,8 @@
     } catch (e) {}
   }
 
-  /* Laedt Microsoft Clarity. Nur von hier aufgerufen, nur nach Einwilligung. */
+  /* Laedt Microsoft Clarity + Meta Pixel. Nur von hier aufgerufen, nur nach Einwilligung.
+     Bewusst KEIN <noscript>-Fallback-Pixel im HTML: der wuerde ohne Einwilligung feuern. */
   function loadMarketing() {
     if (window.__mreMarketing) return;
     window.__mreMarketing = true;
@@ -78,6 +81,25 @@
       t = l.createElement(r); t.async = 1; t.src = "https://www.clarity.ms/tag/" + i;
       y = l.getElementsByTagName(r)[0]; y.parentNode.insertBefore(t, y);
     })(window, document, "clarity", "script", CLARITY_ID);
+
+    (function (f, b, e, v, n, t, s) {
+      if (f.fbq) return; n = f.fbq = function () {
+        n.callMethod ? n.callMethod.apply(n, arguments) : n.queue.push(arguments);
+      };
+      if (!f._fbq) f._fbq = n; n.push = n; n.loaded = !0; n.version = "2.0";
+      n.queue = []; t = b.createElement(e); t.async = !0;
+      t.src = v; s = b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t, s);
+    })(window, document, "script", "https://connect.facebook.net/en_US/fbevents.js");
+    window.fbq("init", META_PIXEL_ID);
+    window.fbq("track", "PageView");
+
+    /* Signal fuer Seiten, die eigene Ereignisse messen (z. B. der Werbe-Check-Funnel):
+       Sie sammeln bis hierher in einer Warteschlange und schicken erst nach diesem
+       Ereignis los. Ohne Einwilligung wird die Warteschlange schlicht verworfen. */
+    try {
+      window.dispatchEvent(new CustomEvent("mre:marketing-bereit"));
+    } catch (e) { /* aeltere Browser ohne CustomEvent-Konstruktor: kein Nachsenden */ }
   }
 
   var banner = null;
@@ -109,19 +131,20 @@
       if (all) { loadMarketing(); return; }
 
       /* Echter Widerruf: Wer die Einwilligung zurueckzieht, erwartet, dass die
-         Messung endet. Das bereits eingehaengte Clarity-Skript laesst sich nicht
-         zuverlaessig entladen, deshalb Cookies loeschen und Seite neu laden. */
+         Messung endet. Die bereits eingehaengten Skripte (Clarity, Meta Pixel) lassen
+         sich nicht zuverlaessig entladen, deshalb Cookies loeschen und Seite neu laden. */
       if (warAktiv) {
-        loescheClarityCookies();
+        loescheMarketingCookies();
         location.reload();
       }
     });
     return banner;
   }
 
-  /* Loescht die von Clarity gesetzten Cookies auf allen plausiblen Domain-/Pfad-Kombinationen. */
-  function loescheClarityCookies() {
-    var namen = ["_clck", "_clsk", "CLID", "ANONCHK", "MR", "MUID", "SM"];
+  /* Loescht die von Clarity und dem Meta Pixel gesetzten Cookies auf allen plausiblen
+     Domain-/Pfad-Kombinationen. */
+  function loescheMarketingCookies() {
+    var namen = ["_clck", "_clsk", "CLID", "ANONCHK", "MR", "MUID", "SM", "_fbp", "_fbc"];
     var host = location.hostname;
     var domains = ["", host, "." + host];
     var teile = host.split(".");

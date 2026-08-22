@@ -106,10 +106,18 @@ input { font: inherit; }
 .hero::before {
   content: ''; position: absolute; top: -100px; right: -100px; width: 480px; height: 480px;
   background: radial-gradient(circle, rgba(168,201,62,0.1) 0%, transparent 70%); pointer-events: none;
+  animation: lichtDrift 16s ease-in-out infinite;
 }
 .hero::after {
   content: ''; position: absolute; bottom: -150px; left: -100px; width: 400px; height: 400px;
   background: radial-gradient(circle, rgba(168,201,62,0.06) 0%, transparent 70%); pointer-events: none;
+  animation: lichtDrift 21s ease-in-out infinite reverse;
+}
+/* Sehr langsames Wandern der Hintergrund-Lichter: erzeugt Tiefe, ohne die Aufmerksamkeit
+   vom Text wegzuziehen. Nur transform/scale, also GPU-schonend. */
+@keyframes lichtDrift {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50%      { transform: translate(-30px, 22px) scale(1.1); }
 }
 .hero-inner { position: relative; z-index: 1; max-width: 780px; }
 
@@ -122,7 +130,20 @@ input { font: inherit; }
 .hero h1 .highlight::after {
   content: ''; position: absolute; left: -4px; right: -4px; bottom: 4px; height: 14px;
   background: var(--accent); opacity: 0.28; z-index: -1; border-radius: 2px;
+  /* Wird beim Laden von links nach rechts "gezogen" wie mit einem Textmarker. */
+  transform-origin: left center;
+  animation: markerZiehen 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both;
 }
+@keyframes markerZiehen { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+
+/* Gestaffelter Auftritt des Hero-Inhalts: baut sich in der Lesereihenfolge auf, statt
+   als fertiger Block dazustehen. */
+@keyframes heroAuftritt { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+.hero-kicker { animation: heroAuftritt 0.6s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.hero h1     { animation: heroAuftritt 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.08s both; }
+.hero p.lead { animation: heroAuftritt 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.18s both; }
+.cta-row     { animation: heroAuftritt 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.28s both; }
+.trust-row   { animation: heroAuftritt 0.6s cubic-bezier(0.22, 1, 0.36, 1) 0.38s both; }
 .hero p.lead { font-size: clamp(15.5px, 2vw, 19px); color: var(--ink-soft); line-height: 1.45; margin-bottom: 22px; max-width: 560px; }
 
 .cta-row { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
@@ -144,6 +165,108 @@ input { font: inherit; }
 /* Auf Mobile ausgeblendet: nicht kriegsentscheidend, kostet aber Höhe, die für den CTA über dem Fold
    gebraucht wird. Auf Desktop (mehr Platz, weniger "above the fold"-Druck) bleibt sie sichtbar. */
 @media (max-width: 640px) { .trust-row { display: none; } }
+
+/* Kurzfassung des Vorspanns nur auf Mobile – auf dem Handy zählt jede Zeile, die zwischen
+   Landen und erster Frage steht. */
+.lead-kurz { display: none; }
+
+/* ---- Mobile: direkt in die erste Frage ----
+   Auf dem Handy (fast der gesamte Traffic kommt aus Meta-Anzeigen) gibt es keinen
+   Startknopf und keine Zwischenseite: kurzer Kicker, Headline, ein Satz Erklärung –
+   und darunter steht sofort Frage 1. Der CTA entfällt, weil er nur einen zusätzlichen
+   Klick zwischen Interesse und Beantworten setzen würde. */
+@media (max-width: 640px) {
+  .lead-lang { display: none; }
+  .lead-kurz { display: block; }
+
+  .hero { padding: 18px 0 4px; }
+  .hero::before, .hero::after { display: none; }   /* keine Deko, keine Ablenkung */
+  .hero-kicker { font-size: 12px; margin-bottom: 6px; }
+  .hero h1 { font-size: 25px; line-height: 1.18; margin-bottom: 10px; }
+  .hero p.lead { font-size: 15px; line-height: 1.45; margin-bottom: 0; }
+  .cta-row { display: none; }
+
+  /* Die Mobile-Regeln zum Fortschrittsbalken stehen bewusst weiter unten im Stylesheet
+     (hinter den Basis-Regeln von .progress-wrap), sonst würden sie davon überschrieben. */
+  /* Kategorie-Badge ("Qualifizierung"/"Plattform-Fit") kostet auf dem Handy rund 50 px
+     Höhe über dem Fold und sagt dem Nutzer wenig – auf Desktop bleibt es. */
+  .section-label { display: none; }
+}
+
+/* Dekorative Vorschau der Auswertung, nur Desktop: füllt die leere rechte Hero-Hälfte und zeigt,
+   was man am Ende bekommt. Rein illustrativ (aria-hidden), auf Mobile bewusst weg – dort zählt
+   jeder Pixel über dem Fold. */
+.hero .container { position: relative; }
+.hero-preview { display: none; position: absolute; right: 40px; top: 50%; transform: translateY(-50%) rotate(-3deg); width: 310px; z-index: 1; }
+/* Erst ab 1180px einblenden und die Textspalte gleichzeitig begrenzen: Bei schmaleren Fenstern
+   würden Karte und schwebende Chips sonst in die Überschrift ragen. */
+@media (min-width: 1180px) {
+  .hero-preview { display: block; }
+  .hero-inner { max-width: 620px; }
+}
+.hp-card { background: var(--paper); border: 1px solid var(--line); border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); padding: 22px 22px 18px; }
+/* Auftritt liegt auf der inneren Karte, das Schweben auf dem äußeren Element – sonst würden sich
+   beide Animationen dieselbe transform-Eigenschaft streitig machen. */
+@keyframes hpKarteAuftritt { from { opacity: 0; transform: translateY(24px) scale(0.96); } to { opacity: 1; transform: none; } }
+.hp-card { animation: hpKarteAuftritt 0.7s cubic-bezier(0.22, 1, 0.36, 1) 0.3s both; }
+
+/* ---- Bewegung in der Auswertungs-Vorschau ----
+   Die Karte schwebt dauerhaft leicht auf und ab, die Balken fahren beim Laden ein und die
+   Zeilen erscheinen nacheinander. Alles rein dekorativ; der globale prefers-reduced-motion-Block
+   am Ende der Datei schaltet sämtliche Animationen für empfindliche Nutzer ab. */
+@keyframes hpFloat {
+  0%, 100% { transform: translateY(-50%) rotate(-3deg); }
+  50%      { transform: translateY(calc(-50% - 16px)) rotate(-1.2deg); }
+}
+.hero-preview { animation: hpFloat 6.5s ease-in-out infinite; }
+
+@keyframes hpBarGoogle { from { width: 0; } to { width: 62%; } }
+@keyframes hpBarMeta   { from { width: 0; } to { width: 38%; } }
+.hp-bar .hp-google { animation: hpBarGoogle 1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.4s both; }
+.hp-bar .hp-meta   { animation: hpBarMeta   1.2s cubic-bezier(0.22, 1, 0.36, 1) 0.55s both; }
+
+@keyframes hpFadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+.hp-legend { animation: hpFadeIn 0.5s ease-out 1.15s both; }
+.hp-row:nth-of-type(1) { animation: hpFadeIn 0.5s ease-out 1.35s both; }
+.hp-row:nth-of-type(2) { animation: hpFadeIn 0.5s ease-out 1.5s both; }
+.hp-row:nth-of-type(3) { animation: hpFadeIn 0.5s ease-out 1.65s both; }
+.hp-chip { animation: hpFadeIn 0.5s ease-out 1.85s both; }
+
+/* Frei schwebende Plattform-Chips um die Karte herum – tragen das "Google gegen Meta"-Thema
+   sichtbar in den Hero, mit versetztem Rhythmus zur Karte, damit es lebendig statt mechanisch wirkt. */
+.hp-badge {
+  position: absolute; display: inline-flex; align-items: center; gap: 7px;
+  background: var(--paper); border: 1px solid var(--line); border-radius: 100px;
+  padding: 8px 15px; font-size: 13px; font-weight: 600; color: var(--ink);
+  box-shadow: var(--shadow-md); white-space: nowrap;
+}
+.hp-badge::before { content: ''; width: 9px; height: 9px; border-radius: 50%; }
+.hp-badge-g { top: -18px; left: -34px; }
+.hp-badge-g::before { background: var(--google); }
+.hp-badge-m { bottom: -14px; right: -18px; }
+.hp-badge-m::before { background: var(--meta); }
+
+@keyframes badgeFloatA {
+  0%, 100% { transform: translateY(0) rotate(2deg); }
+  50%      { transform: translateY(-13px) rotate(-1deg); }
+}
+@keyframes badgeFloatB {
+  0%, 100% { transform: translateY(0) rotate(-2deg); }
+  50%      { transform: translateY(11px) rotate(1.5deg); }
+}
+.hp-badge-g { animation: badgeFloatA 5s ease-in-out infinite 0.3s; }
+.hp-badge-m { animation: badgeFloatB 5.8s ease-in-out infinite 0.9s; }
+.hp-title { font-family: var(--font-display); font-weight: 600; font-size: 15px; color: var(--ink); margin-bottom: 14px; }
+.hp-bar { display: flex; height: 14px; border-radius: 100px; overflow: hidden; margin-bottom: 10px; }
+.hp-bar .hp-google { background: var(--google); }
+.hp-bar .hp-meta { background: var(--meta); }
+.hp-legend { display: flex; justify-content: space-between; font-size: 12.5px; font-weight: 600; color: var(--ink-soft); margin-bottom: 16px; }
+.hp-legend .dot { display: inline-block; width: 8px; height: 8px; border-radius: 50%; margin-right: 6px; }
+.hp-legend .dot.g { background: var(--google); }
+.hp-legend .dot.m { background: var(--meta); }
+.hp-row { display: flex; align-items: center; gap: 9px; font-size: 13px; color: var(--ink-soft); padding: 7px 0; border-top: 1px solid var(--soft); }
+.hp-row svg { flex-shrink: 0; color: var(--mid); }
+.hp-chip { display: inline-block; margin-top: 12px; font-size: 11px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--mid); background: var(--soft); border-radius: 100px; padding: 5px 12px; }
 
 /* ============== QUIZ SECTION ============== */
 .quiz-section { padding: 72px 0 100px; background: var(--paper); border-top: 1px solid var(--line); position: relative; overflow: hidden; }
@@ -167,20 +290,79 @@ input { font: inherit; }
 .quiz-section::after { content: ''; position: absolute; bottom: 120px; right: -140px; width: 380px; height: 380px; background: radial-gradient(circle, rgba(168,201,62,0.05) 0%, transparent 70%); pointer-events: none; }
 .quiz-section .container { position: relative; z-index: 1; }
 
+/* ---- Fortschrittsbalken ----
+   Die einzige Motivationsanzeige im Quiz. Auf dem Handy klebt er deshalb unter dem Header
+   (siehe Media-Query weiter unten), damit er beim Scrollen durch die Antworten neben der Frage
+   stehen bleibt statt nach oben aus dem Bild zu laufen. */
 .progress-wrap { margin-bottom: 32px; max-width: 760px; margin-left: auto; margin-right: auto; }
-.progress-meta { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 14px; font-weight: 500; }
-.progress-meta .step { color: var(--mid); }
+.progress-meta { display: flex; justify-content: space-between; align-items: center; gap: 14px; margin-bottom: 11px; font-size: 14px; font-weight: 500; }
+.progress-meta .step { color: var(--mid); white-space: nowrap; }
 .progress-meta .step strong { font-family: var(--font-display); font-weight: 600; font-size: 16px; }
-.progress-meta .percent { color: var(--muted); }
-.progress-bar { height: 6px; background: var(--soft); border-radius: 100px; overflow: hidden; position: relative; }
-.progress-fill { height: 100%; background: linear-gradient(90deg, var(--mid) 0%, var(--accent) 100%); border-radius: 100px; width: 0%; transition: width 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+.progress-meta .percent { color: var(--muted); text-align: right; line-height: 1.35; }
+/* Meilensteine heben sich farblich vom nüchternen Prozentwert ab und werden beim Erreichen kurz betont. */
+.progress-meta .percent.meilenstein { color: var(--mid); font-weight: 600; }
+.progress-meta .percent.blitz { animation: meilensteinPop .55s cubic-bezier(.34,1.56,.64,1); }
+@keyframes meilensteinPop { 0% { transform: scale(1); } 35% { transform: scale(1.07); } 100% { transform: scale(1); } }
+
+.progress-bar { height: 10px; background: var(--soft); border-radius: 100px; position: relative;
+  box-shadow: inset 0 1px 2px rgba(33,28,23,.09); }
+/* Schrittmarken: machen sichtbar, dass nur noch abzählbar wenige Fragen kommen.
+   --steps setzt das Skript aus questions.length, damit die Teilung immer passt. */
+.progress-bar::after {
+  content: ''; position: absolute; inset: 0; border-radius: 100px; pointer-events: none;
+  background: repeating-linear-gradient(90deg,
+    transparent 0, transparent calc(100% / var(--steps, 12) - 2px),
+    rgba(255,253,248,.92) calc(100% / var(--steps, 12) - 2px), rgba(255,253,248,.92) calc(100% / var(--steps, 12)));
+}
+.progress-bar.gefeiert { animation: balkenFeier .8s ease-out; }
+@keyframes balkenFeier {
+  0%   { box-shadow: inset 0 1px 2px rgba(33,28,23,.09), 0 0 0 0 rgba(168,201,62,.5); }
+  55%  { box-shadow: inset 0 1px 2px rgba(33,28,23,.09), 0 0 0 7px rgba(168,201,62,.14); }
+  100% { box-shadow: inset 0 1px 2px rgba(33,28,23,.09), 0 0 0 0 rgba(168,201,62,0); }
+}
+
+.progress-fill { position: absolute; top: 0; left: 0; height: 100%; width: 0%; border-radius: 100px;
+  background: linear-gradient(90deg, var(--mid) 0%, var(--accent) 100%);
+  box-shadow: 0 0 12px -2px rgba(168,201,62,.8);
+  transition: width .55s cubic-bezier(.22, 1, .36, 1); }
+/* Lichtreflex, der über das Erreichte wandert – hält den Balken auch beim Nachdenken lebendig. */
+.progress-fill::before {
+  content: ''; position: absolute; inset: 0; border-radius: 100px;
+  background: linear-gradient(100deg, transparent 25%, rgba(255,255,255,.62) 50%, transparent 75%);
+  background-size: 240% 100%; background-repeat: no-repeat;
+  animation: fortschrittGlanz 2.8s ease-in-out infinite;
+}
+@keyframes fortschrittGlanz { 0% { background-position: -140% 0; } 60%, 100% { background-position: 240% 0; } }
+/* Pulsierender Kopf an der Spitze: markiert "hier stehst du gerade". */
+.progress-fill::after {
+  content: ''; position: absolute; right: -1px; top: 50%; z-index: 2;
+  width: 16px; height: 16px; transform: translateY(-50%); border-radius: 50%;
+  background: var(--accent); border: 3px solid var(--paper);
+  animation: fortschrittPuls 2.1s ease-out infinite;
+}
+@keyframes fortschrittPuls {
+  0%   { box-shadow: 0 1px 4px rgba(33,28,23,.28), 0 0 0 0 rgba(168,201,62,.55); }
+  70%  { box-shadow: 0 1px 4px rgba(33,28,23,.28), 0 0 0 11px rgba(168,201,62,0); }
+  100% { box-shadow: 0 1px 4px rgba(33,28,23,.28), 0 0 0 0 rgba(168,201,62,0); }
+}
 
 .section-label { max-width: 760px; margin: 0 auto 26px; display: flex; justify-content: center; }
 .section-label.hidden { display: none; }
 .section-badge { display: inline-flex; align-items: center; gap: 8px; padding: 9px 18px; border-radius: 100px; font-size: 13px; font-weight: 600; letter-spacing: 0.01em; animation: badgePop 0.4s cubic-bezier(0.34, 1.56, 0.64, 1); }
 @keyframes badgePop { 0% { opacity: 0; transform: scale(0.85) translateY(4px); } 100% { opacity: 1; transform: scale(1) translateY(0); } }
 
-.question-card { background: var(--paper); max-width: 760px; margin: 0 auto; }
+.question-card {
+  background: var(--paper); max-width: 760px; margin: 0 auto;
+  border: 1px solid var(--line); border-radius: var(--radius-lg);
+  padding: 34px 32px; box-shadow: var(--shadow-md);
+  position: relative; overflow: hidden;
+}
+/* Dieselbe Marken-Farbkante wie auf der Danke-Karte und der dunklen Kontaktkarte –
+   ein wiedererkennbares Element über alle Schritte des Funnels hinweg. */
+.question-card::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+  background: linear-gradient(90deg, var(--mid) 0%, var(--accent) 100%);
+}
 @keyframes slideInRight { from { opacity: 0; transform: translateX(38px); } to { opacity: 1; transform: translateX(0); } }
 @keyframes slideInLeft { from { opacity: 0; transform: translateX(-38px); } to { opacity: 1; transform: translateX(0); } }
 
@@ -199,6 +381,36 @@ input { font: inherit; }
 .option:active { transform: scale(0.985); }
 .option.selected { border-color: var(--mid); background: var(--soft); color: var(--deep); box-shadow: 0 6px 18px -6px rgba(168,201,62,0.25); }
 .opt-label { flex: 1; line-height: 1.35; }
+
+/* Eingabefeld der Freitext-Frage – optisch an die Antwortkarten angelehnt, damit der
+   Wechsel zwischen Auswahl- und Textfrage nicht wie ein Bruch wirkt.
+   16px Schriftgröße ist Absicht: Darunter zoomt iOS beim Fokus automatisch hinein. */
+.freitext {
+  width: 100%; padding: 18px 22px; font-size: 16.5px; font-family: inherit; color: var(--ink);
+  background: var(--paper); border: 2px solid var(--line); border-radius: var(--radius-md);
+  transition: border-color 0.16s ease, box-shadow 0.16s ease;
+}
+.freitext::placeholder { color: var(--muted); opacity: 0.75; }
+.freitext:focus {
+  outline: none; border-color: var(--mid);
+  box-shadow: 0 6px 18px -6px rgba(168,201,62,0.25);
+}
+/* A/B/C/D-Chips: geben den Antworten visuelle Struktur, ohne dass es (unpassende) Icons bräuchte. */
+.opt-key {
+  flex-shrink: 0; width: 28px; height: 28px; border-radius: 8px;
+  border: 1.5px solid var(--line); background: var(--paper);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 13px; font-weight: 600; color: var(--muted);
+  transition: all 0.16s ease;
+}
+.option:hover .opt-key { border-color: var(--mid); color: var(--mid); }
+.option.selected .opt-key { border-color: var(--mid); background: var(--mid); color: white; }
+@media (hover: none) { .option:hover .opt-key { border-color: var(--line); color: var(--muted); } .option.selected:hover .opt-key { border-color: var(--mid); background: var(--mid); color: white; } }
+
+/* Gestaffeltes Einblenden der Optionen (~40 ms Versatz) – wird über animation-delay im JS gesetzt
+   und über den globalen prefers-reduced-motion-Block automatisch deaktiviert. */
+@keyframes optIn { from { opacity: 0; transform: translateY(7px); } to { opacity: 1; transform: translateY(0); } }
+.option { animation: optIn 0.28s ease-out both; }
 .option .check { width: 26px; height: 26px; border: 2px solid var(--line); border-radius: 50%; flex-shrink: 0; margin-left: auto; display: flex; align-items: center; justify-content: center; transition: all 0.18s ease; background: var(--paper); }
 .option.selected .check { border-color: var(--mid); background: var(--mid); animation: checkPop 0.32s cubic-bezier(0.34, 1.56, 0.64, 1); }
 @keyframes checkPop { 0% { transform: scale(0.55); } 60% { transform: scale(1.12); } 100% { transform: scale(1); } }
@@ -215,6 +427,18 @@ input { font: inherit; }
 .btn-next:disabled:hover { background: var(--deep); transform: none; }
 .btn-next svg { transition: transform 0.2s ease; }
 .btn-next:hover:not(:disabled) svg { transform: translateX(3px); }
+
+/* ============== ANALYSE-ZWISCHENSCHRITT ============== */
+/* Kurze "wird berechnet"-Sequenz zwischen letzter Frage und Kontaktformular: macht sichtbar,
+   dass aus den Antworten tatsächlich etwas berechnet wird, bevor nach Kontaktdaten gefragt wird. */
+.analyzing { max-width: 760px; margin: 0 auto; padding: 24px 0 8px; }
+.analyzing h2 { font-family: var(--font-display); font-weight: 500; font-size: clamp(23px, 3.1vw, 33px); letter-spacing: -0.02em; color: var(--ink); margin-bottom: 28px; }
+.analyzing-step { display: flex; align-items: center; gap: 14px; font-size: 16px; font-weight: 500; color: var(--muted); padding: 10px 0; opacity: 0; transform: translateY(6px); transition: opacity 0.35s ease, transform 0.35s ease, color 0.35s ease; }
+.analyzing-step.visible { opacity: 1; transform: translateY(0); color: var(--ink); }
+.analyzing-step .step-icon { flex-shrink: 0; width: 26px; height: 26px; border-radius: 50%; border: 2px solid var(--line); display: flex; align-items: center; justify-content: center; background: var(--paper); transition: all 0.3s ease; }
+.analyzing-step.done .step-icon { border-color: var(--mid); background: var(--mid); }
+.analyzing-step .step-icon svg { opacity: 0; transform: scale(0.5); transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1); }
+.analyzing-step.done .step-icon svg { opacity: 1; transform: scale(1); }
 
 /* ============== RESULT ============== */
 .result-section { padding: 76px 0 100px; background: linear-gradient(180deg, var(--paper) 0%, var(--cream) 100%); display: none; }
@@ -240,29 +464,56 @@ input { font: inherit; }
 .booking-item { display: flex; align-items: center; gap: 12px; font-size: 15px; color: rgba(255,255,255,0.92); }
 .check-icon { flex-shrink: 0; width: 22px; height: 22px; border-radius: 50%; background: var(--mid); display: flex; align-items: center; justify-content: center; }
 
-.booking-form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
+/* Das Formular ist kein Raster mehr, sondern ein Stapel aus Schritten. Das Raster sitzt
+   jetzt in .step-felder, damit jeder Schritt sein eigenes Zweispalten-Layout hat. */
+.booking-form { margin-bottom: 18px; }
+.form-step { display: none; }
+.form-step.aktiv { display: block; animation: schrittRein 0.35s cubic-bezier(0.22, 1, 0.36, 1); }
+@keyframes schrittRein { from { opacity: 0; transform: translateX(22px); } to { opacity: 1; transform: translateX(0); } }
+.form-step.rueckwaerts.aktiv { animation-name: schrittReinZurueck; }
+@keyframes schrittReinZurueck { from { opacity: 0; transform: translateX(-22px); } to { opacity: 1; transform: translateX(0); } }
+
+.step-kopf { display: flex; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 14px; }
+.step-zaehler { font-size: 12.5px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent); }
+.step-zaehler b { font-weight: 700; }
+.step-titel { font-family: var(--font-display); font-size: 17px; color: rgba(255,255,255,0.9); }
+
+.step-felder { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-bottom: 18px; }
 .field { display: flex; }
 .field-full { grid-column: 1 / -1; }
+
+/* Zurueck bewusst unauffaellig: Es soll erreichbar sein, aber nicht mit dem Absende-Button
+   um Aufmerksamkeit konkurrieren. */
+/* Polsterung so gewählt, dass die Tippfläche die empfohlenen 44 px erreicht; der negative
+   linke Rand hält den Text trotzdem an der Kante der übrigen Elemente. */
+.step-zurueck { display: inline-flex; align-items: center; gap: 7px; margin: 10px 0 0 -10px; padding: 11px 10px;
+  background: none; border: none; color: rgba(255,255,255,0.55); font-size: 14px; cursor: pointer; transition: color 0.2s ease; }
+.step-zurueck:hover { color: rgba(255,255,255,0.85); }
 .field input, .field select { width: 100%; padding: 15px 18px; border-radius: var(--radius-sm); border: 1px solid rgba(255,255,255,0.18); background: rgba(255,255,255,0.08); color: white; font-size: 15.5px; }
 .field input::placeholder { color: rgba(255,255,255,0.5); }
 .field input:focus, .field select:focus { outline: none; border-color: var(--accent); background: rgba(255,255,255,0.13); }
-.booking-submit { grid-column: 1 / -1; display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--accent); color: var(--accent-ink); padding: 17px 28px; border-radius: 100px; font-family: var(--font-display); font-weight: 500; font-size: 16.5px; box-shadow: var(--shadow-accent); transition: all 0.2s ease; }
+.booking-submit { width: 100%; box-sizing: border-box; display: inline-flex; align-items: center; justify-content: center; gap: 10px; background: var(--accent); color: var(--accent-ink); padding: 17px 28px; border-radius: 100px; font-family: var(--font-display); font-weight: 500; font-size: 16.5px; box-shadow: var(--shadow-accent); transition: all 0.2s ease; }
 .booking-submit:hover { background: var(--accent-dark); color: white; transform: translateY(-2px); }
 .booking-meta { font-size: 13px; color: rgba(255,255,255,0.55); line-height: 1.5; }
 .booking-meta a { color: rgba(255,255,255,0.8); }
 
 /* Einwilligung: bewusst NICHT vorausgewählt (Opt-in) – eine vorangekreuzte Box wäre nach
    DSGVO/EuGH-Rechtsprechung keine wirksame Einwilligung. */
-.consent { grid-column: 1 / -1; display: flex; align-items: flex-start; gap: 12px; margin: 4px 0 4px; cursor: pointer; }
+.consent { display: flex; align-items: flex-start; gap: 12px; margin: 0 0 14px; cursor: pointer; }
 .consent input[type="checkbox"] { flex-shrink: 0; width: 20px; height: 20px; margin-top: 2px; accent-color: var(--accent); cursor: pointer; }
 .consent span { font-size: 13.5px; line-height: 1.55; color: rgba(255,255,255,0.72); }
 .consent a { color: rgba(255,255,255,0.92); }
-.consent-error { grid-column: 1 / -1; display: none; font-size: 13.5px; color: #ffc9c9; margin: -4px 0 2px; }
+.consent-error { display: none; font-size: 13.5px; color: #ffc9c9; margin: -8px 0 12px; }
 .consent-error.show { display: block; }
 
 @media (max-width: 640px) {
   .booking { padding: 40px 26px; }
-  .booking-form { grid-template-columns: 1fr; }
+  .step-felder { grid-template-columns: 1fr; }
+  .step-kopf { gap: 4px 12px; margin-bottom: 12px; }
+  .step-titel { font-size: 16px; }
+  /* Etwas enger, damit "Jetzt den Report anfordern" samt Pfeil auf eine Zeile passt –
+     ein zweizeiliger Haupt-Button wirkt auf dem Handy unruhig. */
+  .booking-submit { font-size: 15.5px; padding: 16px 18px; }
 }
 
 /* ============== FOOTER ============== */
@@ -271,6 +522,70 @@ input { font: inherit; }
 .site-footer a { color: var(--muted); text-decoration: none; }
 .site-footer a:hover { color: var(--mid); }
 .site-footer .links { display: flex; gap: 18px; flex-wrap: wrap; }
+
+/* ============== POLITUR: TOUCH, FOKUS, MOTION, MOBILE ============== */
+/* Entfernt die 300-ms-Tap-Verzögerung älterer Mobile-Browser und verhindert Doppeltipp-Zoom
+   auf den Antwort-Buttons – bei einem Funnel, der fast nur am Handy läuft, spürbar. */
+button, .option, .btn-primary, .booking-submit, .field select { touch-action: manipulation; }
+
+/* Sichtbarer Fokus-Ring nur bei Tastaturbedienung (nicht bei Maus/Touch-Klick). */
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+.booking :focus-visible { outline-color: var(--accent); }
+
+/* Hover-Effekte nur auf Geräten mit echtem Hover: Auf Touchscreens bleibt der letzte
+   Hover-Zustand sonst nach dem Tippen "kleben" (verschobene Karte, falsche Randfarbe). */
+@media (hover: none) {
+  .option:hover { border-color: var(--line); background: var(--paper); transform: none; }
+  .option.selected:hover { border-color: var(--mid); background: var(--soft); }
+  .btn-primary:hover { background: var(--paper); color: var(--mid); transform: none; }
+  .booking-submit:hover { background: var(--accent); color: var(--accent-ink); transform: none; }
+}
+
+/* Sticky-Header überdeckt sonst die Frage-Überschrift nach scrollIntoView. */
+#quiz, #result { scroll-margin-top: 72px; }
+
+/* Verhindert einzelne hängende Wörter in der Headline (Browser ohne Support ignorieren es). */
+.hero h1, .question-card h2, .booking h3 { text-wrap: balance; }
+
+@media (max-width: 640px) {
+  /* Quiz schließt ohne sichtbare Kante an den Hero an – der Fragekarten-Rahmen liefert
+     den Kontrast, nicht ein Farbwechsel über die volle Breite. */
+  /* overflow:hidden (Desktop, für die Deko-Blobs) würde position:sticky im Inneren des
+     Abschnitts wirkungslos machen – auf Mobile sind die Blobs ohnehin aus. */
+  .quiz-section { padding: 16px 0 64px; border-top: none; background: transparent; overflow: visible; }
+  .quiz-section::before, .quiz-section::after { display: none; }
+
+  /* Fortschritt klebt unter dem Header, statt oben aus dem Bild zu scrollen: Beim Durchgehen
+     der Antworten steht damit immer daneben, wie weit es noch ist. --header-h misst das Skript,
+     damit der Balken exakt an der Header-Unterkante andockt. Die negativen Ränder heben die
+     Container-Polsterung auf, damit die Leiste im angehefteten Zustand randlos sitzt. */
+  .progress-wrap {
+    position: sticky; top: var(--header-h, 58px); z-index: 40;
+    max-width: none; margin: 0 -24px 14px; padding: 11px 24px 13px;
+    background: rgba(247, 245, 240, .94);
+    -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+    border-bottom: 1px solid transparent;
+    transition: box-shadow .25s ease, border-color .25s ease;
+  }
+  .progress-wrap.angeheftet { box-shadow: 0 10px 20px -16px rgba(33,28,23,.55); border-bottom-color: rgba(231,226,216,.75); }
+  .progress-meta { font-size: 13.5px; margin-bottom: 9px; }
+  .progress-meta .step strong { font-size: 15.5px; }
+  .progress-bar { height: 11px; }
+  .result-section { padding: 32px 0 64px; }
+  .question-card { padding: 22px 18px; }
+  .question-card h2 { font-size: 20.5px; }
+  .question-hint { margin-bottom: 22px; }
+  .option { padding: 15px 16px; font-size: 15.5px; gap: 12px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
 </style>
 </head>
 <body>
@@ -290,7 +605,10 @@ input { font: inherit; }
     <div class="hero-inner">
       <div class="hero-kicker">Werbecheck</div>
       <h1>Lohnt sich Werbung für dich und <span class="highlight">welche Plattform passt wirklich?</span></h1>
-      <p class="lead">Beantworte zwölf Fragen zu deiner Zielgruppe und deinem Angebot und erfahre, welche Plattform für dich am besten geeignet ist.</p>
+      <p class="lead">
+        <span class="lead-lang">Google und Meta sind die Basis jeder Werbestrategie. Beantworte zwölf Fragen zu deiner Zielgruppe und deinem Angebot und erfahre, welche der beiden bei euch den Ton angibt – und ob TikTok oder LinkedIn als Ergänzung dazugehören.</span>
+        <span class="lead-kurz">Google oder Meta – was passt zu euch? 12 kurze Fragen, Auswertung per E-Mail.</span>
+      </p>
       <div class="cta-row">
         <a href="#quiz" class="btn-primary" onclick="startQuiz()">
           Kostenlosen Werbe-Check starten
@@ -303,18 +621,32 @@ input { font: inherit; }
         <div class="trust-item"><span class="icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg></span>Auswertung per E-Mail</div>
       </div>
     </div>
+
+    <div class="hero-preview" aria-hidden="true">
+      <span class="hp-badge hp-badge-g">Google Ads</span>
+      <span class="hp-badge hp-badge-m">Meta Ads</span>
+      <div class="hp-card">
+        <div class="hp-title">Deine Auswertung</div>
+        <div class="hp-bar"><span class="hp-google" style="width:62%"></span><span class="hp-meta" style="width:38%"></span></div>
+        <div class="hp-legend"><span><i class="dot g"></i>Google 62%</span><span><i class="dot m"></i>Meta 38%</span></div>
+        <div class="hp-row"><svg width="13" height="13" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg>Budget-Aufteilung in Euro</div>
+        <div class="hp-row"><svg width="13" height="13" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg>Die 3 wichtigsten Gründe</div>
+        <div class="hp-row"><svg width="13" height="13" viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg>Konkrete erste Schritte</div>
+        <div class="hp-chip">Per E-Mail · kostenlos</div>
+      </div>
+    </div>
   </div>
 </section>
 
 <!-- ============ QUIZ ============ -->
 <section class="quiz-section" id="quiz">
   <div class="container">
-    <div class="progress-wrap">
+    <div class="progress-wrap" id="progressWrap">
       <div class="progress-meta">
-        <span class="step">Frage <strong id="currentStep">1</strong> von 12</span>
-        <span class="percent" id="percentLabel">0% abgeschlossen</span>
+        <span class="step">Frage <strong id="currentStep">1</strong> von <span id="totalSteps">12</span></span>
+        <span class="percent" id="percentLabel">Dauert keine 3 Minuten</span>
       </div>
-      <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-bar" id="progressBar"><div class="progress-fill" id="progressFill"></div></div>
     </div>
 
     <div class="section-label hidden" id="sectionLabel"></div>
@@ -342,46 +674,74 @@ input { font: inherit; }
 <section class="result-section" id="result">
   <div class="container">
     <div class="result-header">
-      <div class="result-eyebrow">Fast geschafft</div>
-      <h2>Wohin dürfen wir deine Auswertung schicken?</h2>
-      <p>Wir werten deine Antworten jetzt aus und schicken dir deine persönliche Google-Ads-vs.-Meta-Ads-Empfehlung direkt per E-Mail.</p>
+      <div class="result-eyebrow">Report fertig berechnet</div>
+      <h2>Fertig. Dein Report ist berechnet.</h2>
+      <p>Wir haben analysiert, über welche Plattform ihr am günstigsten an Kundenanfragen kommt – inklusive Komplettanleitung zur Umsetzung.</p>
     </div>
 
     <!-- Kontaktformular -->
     <div class="booking" id="bookingAnchor">
       <div class="booking-inner">
-        <div class="booking-eyebrow">Letzter Schritt</div>
-        <h3>Trag dich ein – wir schicken dir deine <em>Auswertung.</em></h3>
-        <p class="lead-text">
-          Du bekommst deine persönliche Empfehlung (Google Ads, Meta Ads, ggf. plus LinkedIn oder TikTok)
-          direkt in dein Postfach. Bei Interesse melden wir uns außerdem für ein kurzes, unverbindliches Gespräch.
-        </p>
+        <div class="booking-eyebrow">Nur noch ein Schritt</div>
+        <h3>Dein <em>Report</em> liegt fertig bereit.</h3>
+        <p class="lead-text">Aus deinen zwölf Antworten haben wir berechnet, welche Plattform bei euch die günstigsten Kundenanfragen liefert – und wie ihr das konkret umsetzt.</p>
 
         <div class="booking-list">
-          <div class="booking-item"><span class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg></span>Persönliche Auswertung direkt per E-Mail</div>
-          <div class="booking-item"><span class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg></span>Konkrete Empfehlung für Plattform & Budget-Aufteilung</div>
-          <div class="booking-item"><span class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg></span>Kein Verkaufsdruck, keine Verpflichtung</div>
+          <div class="booking-item"><span class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg></span>Die günstigste Plattform für eure Anfragen: Google, Meta oder der richtige Mix</div>
+          <div class="booking-item"><span class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg></span>Eure Budget-Aufteilung in Euro – konkret durchgerechnet</div>
+          <div class="booking-item"><span class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg></span>Komplettanleitung zur Umsetzung: die vier Schritte, die Lernphase, die drei häufigsten Fehler</div>
         </div>
 
+
+        <!-- Zwei Schritte statt eines Blocks: Der Nutzer kommt aus zwölf Ein-Tipp-Fragen; ein
+             dichtes Vierfeld-Formular bricht diesen Rhythmus. Name und Firma sind harmlos und
+             erzeugen eine kleine Selbstverpflichtung, bevor nach der E-Mail gefragt wird.
+             Bleibt EIN <form>, damit FormData und der Absende-Weg unverändert funktionieren. -->
         <form class="booking-form" id="bookingForm" onsubmit="submitBooking(event)">
-          <div class="field"><input type="text" name="name" placeholder="Vor- und Nachname" required autocomplete="name"></div>
-          <div class="field"><input type="text" name="firma" placeholder="Firma" required autocomplete="organization"></div>
-          <div class="field"><input type="email" name="email" placeholder="E-Mail-Adresse" required autocomplete="email"></div>
-          <div class="field"><input type="tel" name="telefon" placeholder="Telefonnummer" required autocomplete="tel"></div>
 
-          <label class="consent" for="consentContact">
-            <input type="checkbox" name="consent" id="consentContact" required>
-            <span id="consentText">Ja, MR Elevate darf mich zu meiner Auswertung per E-Mail und telefonisch kontaktieren. Diese Einwilligung kann ich jederzeit formlos widerrufen, z.&nbsp;B. per E-Mail an <a href="mailto:info@mr-elevate.de">info@mr-elevate.de</a>.</span>
-          </label>
-          <p class="consent-error" id="consentError">Bitte bestätige die Einwilligung – ohne sie dürfen wir dich nicht kontaktieren.</p>
+          <div class="form-step aktiv" data-schritt="1">
+            <div class="step-kopf">
+              <span class="step-zaehler">Schritt <b>1</b> von 2</span>
+              <span class="step-titel">Wer bekommt den Report?</span>
+            </div>
+            <div class="step-felder">
+              <div class="field"><input type="text" name="name" placeholder="Name" required autocomplete="name"></div>
+              <div class="field"><input type="text" name="firma" placeholder="Firma" required autocomplete="organization"></div>
+            </div>
+            <button type="button" class="booking-submit" onclick="formularWeiter()">
+              Weiter
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="9" x2="14" y2="9"/><polyline points="9,4 14,9 9,14"/></svg>
+            </button>
+          </div>
 
-          <button type="submit" class="booking-submit field-full">
-            <span id="submitLabel">Auswertung per E-Mail anfordern</span>
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="9" x2="14" y2="9"/><polyline points="9,4 14,9 9,14"/></svg>
-          </button>
+          <div class="form-step" data-schritt="2">
+            <div class="step-kopf">
+              <span class="step-zaehler">Schritt <b>2</b> von 2</span>
+              <span class="step-titel">Wohin dürfen wir ihn schicken?</span>
+            </div>
+            <div class="step-felder">
+              <div class="field"><input type="email" name="email" placeholder="E-Mail-Adresse" required autocomplete="email"></div>
+              <div class="field"><input type="tel" name="telefon" placeholder="Telefonnummer (optional)" autocomplete="tel"></div>
+            </div>
+
+            <label class="consent" for="consentContact">
+              <input type="checkbox" name="consent" id="consentContact" required>
+              <span id="consentText">Ja, MR Elevate darf mich zu meiner Auswertung per E-Mail und – falls ich meine Telefonnummer angebe – auch telefonisch kontaktieren. Diese Einwilligung kann ich jederzeit formlos widerrufen, z.&nbsp;B. per E-Mail an <a href="mailto:info@mr-elevate.de">info@mr-elevate.de</a>.</span>
+            </label>
+            <p class="consent-error" id="consentError">Bitte bestätige die Einwilligung – ohne sie darf ich dich nicht kontaktieren.</p>
+
+            <button type="submit" class="booking-submit">
+              <span id="submitLabel">Jetzt den Report anfordern</span>
+              <svg width="18" height="18" viewBox="0 0 18 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="9" x2="14" y2="9"/><polyline points="9,4 14,9 9,14"/></svg>
+            </button>
+            <button type="button" class="step-zurueck" onclick="formularZurueck()">
+              <svg width="13" height="13" viewBox="0 0 14 14" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9,2 4,7 9,12"/></svg>
+              Zurück
+            </button>
+          </div>
         </form>
 
-        <p class="booking-meta">Wir melden uns innerhalb von 24 Stunden bei dir. Wie wir deine Daten verarbeiten, steht in unserer <a href="/datenschutz" target="_blank" rel="noopener">Datenschutzerklärung</a>.</p>
+        <p class="booking-meta">Der Report kommt per E-Mail, meist innerhalb weniger Minuten. Deine Antworten speichern wir erst, wenn du ihn anforderst – wie wir mit deinen Daten umgehen, steht in der <a href="/datenschutz" target="_blank" rel="noopener">Datenschutzerklärung</a>.</p>
       </div>
     </div>
   </div>
@@ -405,7 +765,7 @@ input { font: inherit; }
 document.getElementById('year').textContent = new Date().getFullYear();
 
 // ============== BADGES (für section-label über der Frage) ==============
-const gateBadge = { name: 'Qualifizierung', text: '#0E7F57', soft: '#E3F7EF' };
+const gateBadge = { name: 'Eure Zahlen', text: '#0E7F57', soft: '#E3F7EF' };
 const contextBadge = { name: 'Kurz zu deinem Angebot', text: '#6B7280', soft: '#F0EEE8' };
 const fitBadge = { name: 'Plattform-Fit', text: '#2A63C7', soft: '#E5EEFD' };
 
@@ -415,34 +775,14 @@ const fitBadge = { name: 'Plattform-Fit', text: '#2A63C7', soft: '#E5EEFD' };
 // Ergebnis wird nie auf der Seite angezeigt, sondern nur per E-Mail verschickt. Wichtig: Die
 // Options-REIHENFOLGE muss mit der Tabelle in api/send-result.js übereinstimmen, da die Antwort als
 // Options-Index übertragen wird.
+// Jede Frage hat bewusst einen entlastenden Hint ("Schätzung reicht", konkretes Beispiel):
+// Die häufigste Abbruchursache in Quiz-Funnels ist nicht Desinteresse, sondern das Gefühl,
+// eine Frage nicht sicher beantworten zu können.
 const questions = [
-  {
-    id: 'budget',
-    text: 'Wie hoch ist euer monatliches Werbebudget aktuell (bzw. das, was ihr investieren würdet)?',
-    hint: 'Nur für die Einschätzung, ob sich ein Test aktuell lohnt',
-    badge: gateBadge,
-    options: [
-      { label: 'Unter 500 €' },
-      { label: '500 – 1.500 €' },
-      { label: '1.500 – 5.000 €' },
-      { label: 'Über 5.000 €' }
-    ]
-  },
-  {
-    id: 'margin',
-    text: 'Wie hoch ist der durchschnittliche Gewinn (nicht Umsatz!), den euch ein neuer Kunde bringt?',
-    hint: 'Gewinn = Umsatz abzüglich eurer Kosten – nicht der Verkaufspreis',
-    badge: gateBadge,
-    options: [
-      { label: 'Unter 500 €' },
-      { label: '500 – 2.000 €' },
-      { label: '2.000 – 10.000 €' },
-      { label: 'Über 10.000 € oder wiederkehrend/Abo' }
-    ]
-  },
   {
     id: 'branche',
     text: 'Was beschreibt euer Angebot am besten?',
+    hint: 'Damit die Empfehlung zu eurem Geschäftsmodell passt.',
     badge: contextBadge,
     options: [
       { label: 'Lokale Dienstleistung (z. B. Handwerk, Praxis, Beratung vor Ort)' },
@@ -452,8 +792,57 @@ const questions = [
     ]
   },
   {
+    id: 'zielgruppe',
+    text: 'Wer trifft bei euch am Ende die Kaufentscheidung?',
+    hint: 'Wer unterschreibt bzw. bezahlt am Ende wirklich?',
+    badge: fitBadge,
+    options: [
+      { label: 'Privatpersonen (B2C)' },
+      { label: 'Kleine Unternehmen / Selbstständige' },
+      { label: 'Mittelständische oder größere Unternehmen' },
+      { label: 'Gemischt / beides' }
+    ]
+  },
+  {
+    id: 'alter',
+    text: 'Wie alt ist eure Hauptzielgruppe überwiegend?',
+    hint: 'Die Gruppe, mit der ihr das meiste Geld verdient.',
+    badge: fitBadge,
+    options: [
+      { label: 'Überwiegend jünger (18–34)' },
+      { label: 'Gemischt, alle Altersgruppen' },
+      { label: 'Überwiegend 35–54' },
+      { label: 'Überwiegend 55+' }
+    ]
+  },
+  {
+    id: 'einzugsgebiet',
+    text: 'Wie groß ist euer Einzugsgebiet?',
+    hint: 'Dort, wo eure Kunden tatsächlich herkommen – nicht, wo ihr theoretisch liefern könntet.',
+    badge: fitBadge,
+    options: [
+      { label: 'Sehr lokal begrenzt (ein Ort/Landkreis)' },
+      { label: 'Regional (mehrere Städte/Bundesland)' },
+      { label: 'Deutschlandweit' },
+      { label: 'International / mehrsprachig' }
+    ]
+  },
+  {
+    id: 'ziel',
+    text: 'Was soll Werbung bei euch in erster Linie erreichen?',
+    hint: 'Wenn mehreres zutrifft: das, was in den nächsten drei Monaten am wichtigsten ist.',
+    badge: fitBadge,
+    options: [
+      { label: 'Schnell konkrete Anfragen – wir haben freie Kapazitäten' },
+      { label: 'Planbar und dauerhaft neue Kunden gewinnen' },
+      { label: 'Bekannter werden und unsere Marke aufbauen' },
+      { label: 'Ein neues Angebot am Markt testen' }
+    ]
+  },
+  {
     id: 'suche',
     text: 'Suchen potenzielle Kunden aktiv und gezielt nach eurem Angebot, wenn ein Bedarf entsteht?',
+    hint: 'Denk an den Moment, in dem der Bedarf entsteht: Würde die Person googeln?',
     badge: fitBadge,
     options: [
       { label: 'Ja, sehr konkret (z. B. „Notdienst XY in [Stadt]“)' },
@@ -465,6 +854,7 @@ const questions = [
   {
     id: 'entscheidung',
     text: 'Ist der Kauf eher ein spontaner Impuls oder eine gut durchdachte, verglichene Entscheidung?',
+    hint: 'Aus Sicht eures typischen Kunden – nicht des Ausnahmefalls.',
     badge: fitBadge,
     options: [
       { label: 'Spontaner Impuls-/Wunschkauf' },
@@ -475,7 +865,8 @@ const questions = [
   },
   {
     id: 'ansprache',
-    text: 'Lässt sich eure Zielgruppe gut über Interessen/Demografie eingrenzen – oder eher nur über konkrete Suchbegriffe?',
+    text: 'Lässt sich eure Zielgruppe gut über Interessen und Merkmale eingrenzen – oder eher nur über konkrete Suchbegriffe?',
+    hint: 'Beispiel: „Hundebesitzer in Dresden“ = Interessen. „Rohrreinigung Kosten“ = Suchbegriff.',
     badge: fitBadge,
     options: [
       { label: 'Sehr gut über Interessen, Hobbys oder demografische Merkmale eingrenzbar' },
@@ -487,6 +878,7 @@ const questions = [
   {
     id: 'visuell',
     text: 'Lässt sich euer Angebot durch Bilder oder Video emotional und ansprechend zeigen?',
+    hint: 'Bauchgefühl reicht – es geht um die Tendenz.',
     badge: fitBadge,
     options: [
       { label: 'Ja, sehr gut – starke Fotos/Videos, emotional zeigbar' },
@@ -496,58 +888,39 @@ const questions = [
     ]
   },
   {
-    id: 'einzugsgebiet',
-    text: 'Wie groß ist euer Einzugsgebiet?',
+    id: 'website',
+    text: 'Wie gut ist die Seite, auf der Interessenten nach dem Klick landen würden?',
+    hint: 'Gemeint ist eure Website bzw. Landingpage – nicht die Anzeige selbst.',
     badge: fitBadge,
     options: [
-      { label: 'Sehr lokal begrenzt (ein Ort/Landkreis)' },
-      { label: 'Regional (mehrere Städte/Bundesland)' },
-      { label: 'Deutschlandweit' },
-      { label: 'International / mehrsprachig' }
+      { label: 'Professionelle Website mit klarer Anfrage-Möglichkeit' },
+      { label: 'Website vorhanden, aber in die Jahre gekommen' },
+      { label: 'Nur Social-Media-Profile (Instagram, Facebook & Co.)' },
+      { label: 'Noch nichts davon – müsste erst entstehen' }
     ]
   },
   {
-    id: 'werbemittel',
-    text: 'Habt ihr bereits gute Fotos, Videos oder Kundenstimmen – oder eher nur Text/Leistungsbeschreibungen?',
-    badge: fitBadge,
+    id: 'budget',
+    text: 'Wie hoch ist euer monatliches Werbebudget aktuell (bzw. das, was ihr investieren würdet)?',
+    hint: 'Damit die Budget-Aufteilung in Euro zu euch passt – nichts davon ist verbindlich.',
+    badge: gateBadge,
     options: [
-      { label: 'Ja, gute Fotos/Videos/Kundenstimmen vorhanden' },
-      { label: 'Ein bisschen vorhanden, müsste ergänzt werden' },
-      { label: 'Kaum vorhanden, eher Text/Leistungsbeschreibung' },
-      { label: 'Gar nichts vorhanden' }
+      { label: 'Unter 500 €' },
+      { label: '500 – 1.500 €' },
+      { label: '1.500 – 5.000 €' },
+      { label: 'Über 5.000 €' }
     ]
   },
   {
-    id: 'dringlichkeit',
-    text: 'Entsteht der Bedarf plötzlich/akut (z. B. Notfall) – oder ist er dauerhaft vorhanden und muss erst angestoßen werden?',
-    badge: fitBadge,
+    id: 'margin',
+    text: 'Wie viel Gewinn (nicht Umsatz!) bringt euch ein neuer Kunde im Schnitt?',
+    hint: 'Gewinn = Umsatz minus eure Kosten. Eine grobe Schätzung reicht völlig.',
+    badge: gateBadge,
     options: [
-      { label: 'Akuter, plötzlicher Bedarf (z. B. Notfall, Ausfall, Termindruck)' },
-      { label: 'Eher spontan, aber nicht akut' },
-      { label: 'Dauerhaft vorhanden, wird meist nicht von selbst gesucht' },
-      { label: 'Muss aktiv geweckt werden, sonst passiert nichts' }
-    ]
-  },
-  {
-    id: 'alter',
-    text: 'Wie alt ist eure Hauptzielgruppe überwiegend?',
-    badge: fitBadge,
-    options: [
-      { label: 'Überwiegend jünger (18–34)' },
-      { label: 'Gemischt, alle Altersgruppen' },
-      { label: 'Überwiegend 35–54' },
-      { label: 'Überwiegend 55+' }
-    ]
-  },
-  {
-    id: 'zielgruppe',
-    text: 'Wer trifft bei euch die Kaufentscheidung?',
-    badge: fitBadge,
-    options: [
-      { label: 'Privatpersonen (B2C)' },
-      { label: 'Kleine Unternehmen / Selbstständige' },
-      { label: 'Mittelständische oder größere Unternehmen' },
-      { label: 'Gemischt / beides' }
+      { label: 'Unter 500 €' },
+      { label: '500 – 2.000 €' },
+      { label: '2.000 – 10.000 €' },
+      { label: 'Über 10.000 € oder wiederkehrend/Abo' }
     ]
   }
 ];
@@ -558,6 +931,209 @@ let navDirection = 'forward';
 let answers = {};
 let quizStarted = false;
 
+// ============== FUNNEL-MESSUNG ==============
+// Misst, wie weit die Leute im Quiz kommen und wo sie aussteigen. Zwei Ziele:
+//   Clarity → Sitzungen lassen sich nach dem erreichten Schritt filtern und ansehen
+//   Meta    → Ereigniszähler je Schritt im Events Manager, außerdem für Zielgruppen nutzbar
+// Beides läuft erst nach Einwilligung. Was vorher passiert (jemand beantwortet Fragen, während
+// das Banner noch offen ist), wandert in eine Warteschlange im Arbeitsspeicher und geht erst
+// raus, wenn zugestimmt wurde – wird abgelehnt, verfällt sie ersatzlos.
+const funnel = {
+  warteschlange: [],
+  hoechsterSchritt: 0,      // 0 = Quiz nie begonnen
+  abgeschlossen: false,
+  abbruchGemeldet: false,
+  formularErreicht: false,  // ab hier zählt ein Absprung als Formular-, nicht als Quiz-Abbruch
+
+  bereit() { return window.__mreMarketing === true; },
+
+  // ziel: 'beide' | 'clarity'. Jeder einzelne Schritt geht nur an Clarity – dort lassen sich
+  // Sitzungen nach Tag-Wert filtern und zählen. Meta bekommt nur die Eckpunkte, weil der Events
+  // Manager sauber nach Ereignis-NAMEN zählt, aber kaum nach Parameterwerten aufschlüsselt.
+  melde(name, daten, ziel) {
+    const eintrag = [name, daten || {}, ziel || 'beide'];
+    if (this.bereit()) this.sende.apply(this, eintrag);
+    else this.warteschlange.push(eintrag);
+  },
+
+  sende(name, daten, ziel) {
+    // Beide Aufrufe einzeln absichern: Ein blockierter Anbieter darf den anderen nicht mitreißen.
+    try {
+      if (typeof window.clarity === 'function') window.clarity('set', 'wc_' + name, String(daten.wert || 'ja'));
+    } catch (e) {}
+    try {
+      if (ziel !== 'clarity' && typeof window.fbq === 'function') window.fbq('trackCustom', 'Werbecheck' + name, daten);
+    } catch (e) {}
+  },
+
+  entleeren() {
+    if (!this.bereit()) return;
+    this.warteschlange.splice(0).forEach(e => this.sende.apply(this, e));
+  },
+
+  // Ein Schritt gilt als erreicht, sobald die Frage angezeigt wird. Nur der jeweils höchste
+  // Schritt wird gemeldet – beim Zurückblättern entstünden sonst doppelte Zählungen.
+  schritt(idx) {
+    const nr = idx + 1;
+    if (nr <= this.hoechsterSchritt) return;
+    this.hoechsterSchritt = nr;
+    const frage = questions[idx] ? questions[idx].id : 'unbekannt';
+    this.melde('Schritt', {
+      schritt: nr,
+      frage: frage,
+      wert: String(nr).padStart(2, '0') + '_' + frage,   // z. B. "07_entscheidung"
+      von: questions.length
+    }, 'clarity');
+
+    // Nur zwei Eckpunkte zusätzlich an Meta – als Grundlage für Zielgruppen ("hat angefangen,
+    // aber nicht beendet") und um den Trichter im Events Manager grob ablesen zu können.
+    if (nr === 1) this.melde('Start', { wert: 'start', von: questions.length });
+    if (nr === Math.ceil(questions.length / 2)) this.melde('Halbzeit', { wert: 'halbzeit', schritt: nr });
+  },
+
+  // Beim Verlassen der Seite einmalig melden, wie weit derjenige gekommen ist. Genau daraus
+  // ergibt sich die Absprungstelle. pagehide statt unload – unload verhindert den bfcache und
+  // wird auf iOS oft gar nicht ausgelöst.
+  abbruch() {
+    if (this.abbruchGemeldet || this.abgeschlossen || this.hoechsterSchritt === 0) return;
+    this.abbruchGemeldet = true;
+
+    // Absprung IM Formular ist etwas völlig anderes als Absprung im Quiz: Diese Leute haben
+    // alle zwölf Fragen beantwortet und scheitern erst an der Dateneingabe. Deshalb eigenes
+    // Ereignis mit dem zuletzt angefassten Feld statt der Fragennummer.
+    if (this.formularErreicht) {
+      this.melde('AbbruchFormular', {
+        wert: 'schritt' + formularSchritt + '_' + (formularMessung.letztesFeld || 'nichts_angefasst'),
+        formularschritt: formularSchritt,
+        felder_ausgefuellt: Object.keys(formularMessung.gemeldeteFelder).length,
+        einwilligung: formularMessung.einwilligungGesetzt ? 'ja' : 'nein'
+      });
+      return;
+    }
+
+    const frage = questions[this.hoechsterSchritt - 1];
+    this.melde('Abbruch', {
+      schritt: this.hoechsterSchritt,
+      frage: frage ? frage.id : 'unbekannt',
+      wert: String(this.hoechsterSchritt).padStart(2, '0') + '_' + (frage ? frage.id : 'unbekannt'),
+      von: questions.length
+    });
+  }
+};
+
+// ============== VERSCHLEISS IM KONTAKTFORMULAR ==============
+// Zwischen "Formular gesehen" und "Report angefordert" gehen Leute verloren. Diese Messung
+// zeigt, an welchem Feld: Jedes Feld meldet sich einmal, sobald es AUSGEFÜLLT verlassen wird,
+// dazu die Einwilligung, blockierende Validierungsfehler und das zuletzt berührte Feld.
+const formularMessung = {
+  begonnen: false,
+  gemeldeteFelder: {},
+  letztesFeld: null,
+  einwilligungGesetzt: false,
+
+  // Nummeriert, damit die Werte in Clarity in der richtigen Reihenfolge stehen.
+  reihenfolge: { name: '01_name', firma: '02_firma', email: '03_email', telefon: '04_telefon', consent: '05_einwilligung' },
+
+  init() {
+    const form = document.getElementById('bookingForm');
+    if (!form) return;
+
+    form.querySelectorAll('input').forEach(feld => {
+      const schluessel = this.reihenfolge[feld.name] || feld.name;
+
+      feld.addEventListener('focus', () => {
+        this.letztesFeld = schluessel;
+        if (this.begonnen) return;
+        this.begonnen = true;
+        funnel.melde('FormularBegonnen', { wert: 'begonnen' });
+      });
+
+      // Leere Felder werden bewusst nicht gemeldet – sonst zählte bloßes Durchtabben
+      // schon als Fortschritt und der Trichter sähe besser aus, als er ist.
+      feld.addEventListener('blur', () => {
+        if (feld.type === 'checkbox' || !feld.value.trim() || this.gemeldeteFelder[schluessel]) return;
+        this.gemeldeteFelder[schluessel] = true;
+        funnel.melde('FormularFeld', { wert: schluessel, feld: feld.name }, 'clarity');
+      });
+
+      // Browser-Validierung: feuert beim Absendeversuch für jedes Pflichtfeld, das blockiert.
+      // Das ist der direkteste Hinweis darauf, woran ein Abschluss tatsächlich scheitert.
+      feld.addEventListener('invalid', () => {
+        funnel.melde('FormularFehler', { wert: 'blockiert_' + (feld.name || 'unbekannt'), feld: feld.name });
+      });
+    });
+
+    const box = document.getElementById('consentContact');
+    if (box) {
+      box.addEventListener('change', () => {
+        if (!box.checked || this.einwilligungGesetzt) return;
+        this.einwilligungGesetzt = true;
+        funnel.melde('FormularEinwilligung', { wert: 'gesetzt' }, 'clarity');
+      });
+    }
+  }
+};
+
+// ============== MEHRSTUFIGES KONTAKTFORMULAR ==============
+// Es bleibt EIN <form> – nur die Schritte werden ein- und ausgeblendet. Wichtig dabei:
+// Pflichtfelder aus ausgeblendeten Schritten würden das Absenden blockieren, wenn sie leer
+// wären ("not focusable"-Fehler). Deshalb wird jeder Schritt geprüft, BEVOR es weitergeht –
+// beim Absenden sind die früheren Felder damit garantiert gültig.
+let formularSchritt = 1;
+const FORMULAR_SCHRITTE = 2;
+
+function zeigeFormularSchritt(nr, rueckwaerts) {
+  document.querySelectorAll('.form-step').forEach(el => {
+    const treffer = Number(el.dataset.schritt) === nr;
+    el.classList.toggle('rueckwaerts', !!rueckwaerts);
+    el.classList.toggle('aktiv', treffer);
+  });
+  formularSchritt = nr;
+  funnel.melde('FormularSchritt', { wert: 'schritt_' + nr, schritt: nr, von: FORMULAR_SCHRITTE }, 'clarity');
+
+  // Fokus auf das erste Feld des Schritts, aber ohne die Seite zu verschieben.
+  const erstes = document.querySelector('.form-step.aktiv input');
+  if (erstes) setTimeout(() => erstes.focus({ preventScroll: true }), 80);
+}
+
+function formularWeiter() {
+  const aktiv = document.querySelector('.form-step.aktiv');
+  if (!aktiv) return;
+
+  // Nur die Felder DIESES Schritts prüfen. reportValidity zeigt die native Browser-Meldung
+  // und löst gleichzeitig das invalid-Ereignis aus, das die Verschleißmessung mitschreibt.
+  const felder = Array.from(aktiv.querySelectorAll('input'));
+  const ungueltig = felder.find(f => !f.checkValidity());
+  if (ungueltig) { ungueltig.reportValidity(); return; }
+
+  if (formularSchritt < FORMULAR_SCHRITTE) zeigeFormularSchritt(formularSchritt + 1, false);
+}
+
+function formularZurueck() {
+  if (formularSchritt > 1) zeigeFormularSchritt(formularSchritt - 1, true);
+}
+
+// Enter in Schritt 1 würde sonst das Formular absenden wollen (implizites Absenden greift auf
+// den Submit-Button in Schritt 2 zu). Das E-Mail-Pflichtfeld ist dann noch ausgeblendet und
+// leer – der Browser bricht ab, ohne dass der Nutzer etwas sieht. Also abfangen und weiterblättern.
+(function enterAbfangen() {
+  const form = document.getElementById('bookingForm');
+  if (!form) return;
+  form.addEventListener('keydown', e => {
+    if (e.key !== 'Enter' || e.target.type === 'checkbox') return;
+    if (formularSchritt >= FORMULAR_SCHRITTE) return;
+    e.preventDefault();
+    formularWeiter();
+  });
+})();
+
+window.addEventListener('mre:marketing-bereit', () => funnel.entleeren());
+window.addEventListener('pagehide', () => funnel.abbruch());
+// Auf iOS wird pagehide beim Tab-Wechsel nicht zuverlässig ausgelöst – visibilitychange schon.
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'hidden') funnel.abbruch();
+});
+
 function startQuiz() {
   if (!quizStarted) { quizStarted = true; renderQuestion(0); }
 }
@@ -566,6 +1142,7 @@ function startQuiz() {
 function renderQuestion(idx) {
   const q = questions[idx];
   currentIdx = idx;
+  funnel.schritt(idx);
 
   const card = document.getElementById('questionCard');
   card.style.animation = 'none';
@@ -587,41 +1164,99 @@ function renderQuestion(idx) {
   hintEl.style.display = q.hint ? 'block' : 'none';
 
   document.getElementById('currentStep').textContent = idx + 1;
+  // Aus der Fragenliste abgeleitet, damit der Zähler beim Ergänzen einer Frage nicht vergessen wird.
+  document.getElementById('totalSteps').textContent = questions.length;
   const pct = Math.round(idx / questions.length * 100);
-  document.getElementById('percentLabel').textContent = `${pct}% abgeschlossen`;
-  document.getElementById('progressFill').style.width = pct + '%';
+  // An Schlüsselstellen ersetzt eine kurze Ermutigung die nackte Prozentzahl – "0% abgeschlossen"
+  // auf Frage 1 wirkt wie ein Berg, "Los geht's" wie ein Spaziergang.
+  // Bewusst kurz gehalten: Der Balken klebt auf dem Handy oben fest, lange Texte würden ihn
+  // auf drei Zeilen aufblähen. Die Begründung für die Geldfragen steht im Hinweis der Frage selbst.
+  const MILESTONES = {
+    0: 'Dauert keine 3 Minuten',
+    3: 'Läuft gut!',
+    6: 'Halbzeit!',
+    9: 'Fast geschafft',
+    10: 'Nur noch zwei Zahlen',
+    11: 'Letzte Frage!'
+  };
+  const label = document.getElementById('percentLabel');
+  const istMeilenstein = MILESTONES[idx] !== undefined;
+  label.textContent = istMeilenstein ? MILESTONES[idx] : `${pct}% geschafft`;
+  label.classList.toggle('meilenstein', istMeilenstein);
+  // Balken startet nie bei 0 – ein leerer Balken auf Frage 1 signalisiert "noch alles vor dir".
+  document.getElementById('progressFill').style.width = Math.max(pct, 4) + '%';
+
+  // Erreichter Meilenstein wird kurz gefeiert (nicht bei Frage 1, da ist noch nichts geleistet).
+  if (istMeilenstein && idx > 0) {
+    const balken = document.getElementById('progressBar');
+    [[label, 'blitz'], [balken, 'gefeiert']].forEach(([el, klasse]) => {
+      el.classList.remove(klasse);
+      void el.offsetWidth;   // erzwingt den Neustart der Animation
+      el.classList.add(klasse);
+    });
+  }
 
   const list = document.getElementById('optionsList');
   list.innerHTML = '';
-  q.options.forEach((opt, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'option';
-    btn.setAttribute('data-idx', i);
-    btn.innerHTML = `<span class="opt-label">${opt.label}</span><span class="check"></span>`;
-    btn.onclick = () => selectOption(i);
-    if (answers[q.id] === i) btn.classList.add('selected');
-    list.appendChild(btn);
-  });
+
+  if (q.freitext) {
+    // Freitext-Frage: statt Antwortkarten ein Eingabefeld. Weiter bleibt gesperrt, solange
+    // nichts eingetragen ist; Enter springt direkt zur nächsten Frage.
+    const feld = document.createElement('input');
+    feld.type = 'text';
+    feld.className = 'freitext';
+    feld.placeholder = q.platzhalter || '';
+    feld.maxLength = 150;
+    feld.value = answers[q.id] || '';
+    feld.oninput = () => {
+      const wert = feld.value.trim();
+      answers[q.id] = wert;
+      document.getElementById('btnNext').disabled = wert.length === 0;
+    };
+    feld.onkeydown = (e) => {
+      if (e.key === 'Enter') { e.preventDefault(); if (feld.value.trim()) nextQuestion(); }
+    };
+    list.appendChild(feld);
+    setTimeout(() => feld.focus({ preventScroll: true }), 60);
+  } else {
+    q.options.forEach((opt, i) => {
+      const btn = document.createElement('button');
+      btn.className = 'option';
+      btn.setAttribute('data-idx', i);
+      btn.innerHTML = `<span class="opt-key">${String.fromCharCode(65 + i)}</span><span class="opt-label">${opt.label}</span><span class="check"></span>`;
+      btn.style.animationDelay = (i * 40) + 'ms';
+      btn.onclick = () => selectOption(i);
+      if (answers[q.id] === i) btn.classList.add('selected');
+      list.appendChild(btn);
+    });
+  }
 
   document.getElementById('btnBack').disabled = idx === 0;
-  document.getElementById('btnNext').disabled = answers[q.id] === undefined;
-  document.getElementById('nextLabel').textContent = idx === questions.length - 1 ? 'Ergebnis anzeigen' : 'Weiter';
+  document.getElementById('btnNext').disabled = q.freitext
+    ? !(answers[q.id] || '').trim()
+    : answers[q.id] === undefined;
+  // Kein "Ergebnis anzeigen" – auf der Seite wird nie ein Ergebnis angezeigt, das Label wäre eine
+  // gebrochene Zusage und genau der falsche Moment, Vertrauen zu verspielen.
+  document.getElementById('nextLabel').textContent = idx === questions.length - 1 ? 'Auswertung erstellen' : 'Weiter';
 }
 
 /* ---------- Qualifizierungs-Gate ----------
-   Budget und Gewinn pro Neukunde sind bewusst die ersten beiden Fragen.
-   Wer unter 500 € liegt, erfährt das sofort, statt erst nach zwölf Fragen
-   und der Herausgabe seiner Kontaktdaten. Dieselben Schwellen prüft
-   api/werbecheck/send-result.js noch einmal serverseitig, falls jemand
-   direkt an die Schnittstelle sendet. */
+   Budget und Gewinn pro Neukunde stehen bewusst am ENDE des Quiz: Geldfragen an
+   Position 1 waren die teuerste Abbruchstelle (sensible Fragen gehören in Umfragen
+   ans Ende, Momentum senkt die Hemmschwelle und erhöht die Ehrlichkeit). Der faire
+   Kern bleibt erhalten: Das Gate feuert weiterhin VOR dem Kontaktformular – wer
+   disqualifiziert ist, erfährt es, bevor er Kontaktdaten hergibt. Dieselben
+   Schwellen prüft api/werbecheck/send-result.js serverseitig nach. */
 const GATES = {
   budget: {
     grenzeIdx: 0,
+    grund: 'budget',          // nur für die Funnel-Messung, damit beide Absagegründe trennbar sind
     titel: 'Ehrlich gesagt: dafür ist es noch zu früh.',
-    text: 'Mit einem Werbebudget unter 500 € im Monat lässt sich in den meisten Branchen kein aussagekräftiger Test fahren. Das Geld verpufft in der Lernphase der Plattformen, bevor sich überhaupt zeigt, ob eine Anzeige funktioniert. Wir könnten dir jetzt trotzdem etwas verkaufen. Machen wir aber nicht.'
+    text: 'Mit einem Werbebudget unter 500 € im Monat lässt sich in den meisten Branchen kein aussagekräftiger Test fahren. Das Geld verpufft in der Lernphase der Plattformen, bevor sich überhaupt zeigt, ob eine Anzeige funktioniert. Ich könnte dir jetzt trotzdem etwas verkaufen. Mache ich aber nicht.'
   },
   margin: {
     grenzeIdx: 0,
+    grund: 'marge',
     titel: 'Ehrlich gesagt: die Rechnung geht so nicht auf.',
     text: 'Wenn ein neuer Kunde unter 500 € Gewinn bringt, fressen die Werbekosten die Marge meist auf, bevor sich eine Kampagne rechnet. Bezahlte Anzeigen wären hier der teuerste Weg zu neuen Kunden. Das ist keine Absage an dich, sondern an den Kanal.'
   }
@@ -633,6 +1268,11 @@ function pruefeGate(frageId, optIdx) {
 }
 
 function zeigeGateErgebnis(g) {
+  // Disqualifiziert ist ein gewolltes Ende, kein Absprung – sonst würde jede ehrliche Absage
+  // in der Statistik wie ein verlorener Interessent aussehen.
+  funnel.abgeschlossen = true;
+  funnel.melde('Disqualifiziert', { schritt: funnel.hoechsterSchritt, grund: g.grund || 'zahlen', wert: g.grund || 'zahlen' });
+
   const quiz = document.getElementById('quiz');
   quiz.innerHTML =
     '<div class="container">' +
@@ -665,11 +1305,12 @@ function selectOption(optIdx) {
   }, 280);
 }
 
+// Bewusst KEIN scrollIntoView beim Frage-Wechsel: Das automatische Hochspringen nach jeder Antwort
+// hat den Lesefluss unterbrochen. Die Seite bleibt jetzt einfach stehen, wo der Nutzer ist.
 function nextQuestion() {
   if (currentIdx < questions.length - 1) {
     navDirection = 'forward';
     renderQuestion(currentIdx + 1);
-    document.getElementById('quiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
   } else {
     goToContactStep();
   }
@@ -679,16 +1320,45 @@ function prevQuestion() {
   if (currentIdx > 0) {
     navDirection = 'back';
     renderQuestion(currentIdx - 1);
-    document.getElementById('quiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
   }
 }
 
 // Die Auswertung (Score, Plattform-Empfehlung, Disqualifizierung) wird bewusst NIE auf der Seite
-// gezeigt – nur per E-Mail (siehe api/send-result.js). Hier wird nur zum Kontaktformular gewechselt.
+// gezeigt – nur per E-Mail (siehe api/send-result.js). Vor dem Kontaktformular läuft eine kurze
+// Berechnungs-Sequenz: Sie macht sichtbar, dass die zwölf Antworten tatsächlich zu etwas verrechnet
+// werden – erst danach wird nach Kontaktdaten gefragt.
 function goToContactStep() {
-  document.getElementById('quiz').style.display = 'none';
-  document.getElementById('result').classList.add('active');
-  document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Alle Fragen durch. Der Abstand zwischen diesem Zähler und "Abgeschlossen" zeigt, wie viele
+  // trotz komplett ausgefülltem Quiz am Kontaktformular noch abspringen.
+  funnel.formularErreicht = true;
+  funnel.melde('Kontaktformular', { schritt: questions.length, wert: 'erreicht' });
+
+  const card = document.getElementById('questionCard');
+  card.style.animation = 'none';
+  card.innerHTML =
+    '<div class="analyzing">' +
+      '<h2>Deine Auswertung wird erstellt …</h2>' +
+      ['Antworten analysiert', 'Google-Ads-Eignung berechnet', 'Meta-Ads-Eignung berechnet', 'Empfehlung erstellt'].map(t =>
+        '<div class="analyzing-step"><span class="step-icon"><svg width="13" height="13" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg></span><span>' + t + '</span></div>'
+      ).join('') +
+    '</div>';
+
+  document.getElementById('sectionLabel').classList.add('hidden');
+  document.getElementById('percentLabel').textContent = 'Wird ausgewertet …';
+  document.getElementById('progressFill').style.width = '100%';
+  document.getElementById('quiz').scrollIntoView({ behavior: 'smooth', block: 'start' });
+
+  const steps = card.querySelectorAll('.analyzing-step');
+  steps.forEach((el, i) => {
+    setTimeout(() => el.classList.add('visible'), 150 + i * 450);
+    setTimeout(() => el.classList.add('done'), 450 + i * 450);
+  });
+
+  setTimeout(() => {
+    document.getElementById('quiz').style.display = 'none';
+    document.getElementById('result').classList.add('active');
+    document.getElementById('result').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }, 450 + steps.length * 450 + 350);
 }
 
 // ============== FORM SUBMIT ==============
@@ -707,6 +1377,7 @@ function submitBooking(e) {
   const consentBox = document.getElementById('consentContact');
   const consentError = document.getElementById('consentError');
   if (!consentBox.checked) {
+    funnel.melde('FormularFehler', { wert: 'blockiert_einwilligung', feld: 'consent' });
     consentError.classList.add('show');
     consentBox.focus();
     return false;
@@ -733,19 +1404,76 @@ function submitBooking(e) {
 
   const payload = { contact: contact, answers: answers, consent: consent };
 
-  fetch(API_ENDPOINT, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(payload)
-  })
-  .then(res => { if (!res.ok) console.error('send-result responded with status', res.status); })
-  .catch(err => console.error('Lead submit error:', err))
-  .finally(() => {
-    window.location.href = THANK_YOU_URL;
-  });
+  // Meta-Standard-Event "Lead" für die Kampagnen-Optimierung. fbq existiert nur, wenn der
+  // Besucher im Cookie-Banner eingewilligt hat (siehe /consent.js) – sonst passiert hier nichts.
+  if (typeof fbq === 'function') fbq('track', 'Lead');
 
+  // Endpunkt des Funnels. Muss vor dem Weiterleiten gesetzt werden, sonst meldet der
+  // pagehide-Auslöser den Seitenwechsel fälschlich als Absprung.
+  funnel.abgeschlossen = true;
+  funnel.melde('Abgeschlossen', { schritt: questions.length, wert: 'lead' });
+
+  // Absenden, ohne auf die Antwort zu warten: Der Server braucht 2–4 Sekunden, weil er beide
+  // Brevo-Mails und den Google-Tabellen-Webhook abarbeitet, bevor er antwortet. Für den Nutzer
+  // ist dieses Ergebnis irrelevant – er wird ohnehin immer zur Danke-Seite geschickt.
+  //
+  // sendBeacon ist genau dafür gebaut: Der Browser stellt die Anfrage zu und liefert sie auch
+  // dann aus, wenn die Seite direkt danach verlassen wird. Fallback ist fetch mit keepalive,
+  // das dieselbe Zusage macht.
+  const koerper = JSON.stringify(payload);
+  let abgeschickt = false;
+
+  if (navigator.sendBeacon) {
+    abgeschickt = navigator.sendBeacon(
+      API_ENDPOINT,
+      new Blob([koerper], { type: 'application/json' })
+    );
+  }
+
+  if (!abgeschickt) {
+    fetch(API_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: koerper,
+      keepalive: true
+    }).catch(err => console.error('Lead submit error:', err));
+  }
+
+  window.location.href = THANK_YOU_URL;
   return false;
 }
+
+// ============== FORTSCHRITTSBALKEN: SCHRITTMARKEN & ANDOCKEN ==============
+
+// Teilung der Schrittmarken aus der Fragenzahl ableiten, damit sie beim Ergänzen oder
+// Streichen einer Frage automatisch passt.
+document.documentElement.style.setProperty('--steps', questions.length);
+
+// Der Balken dockt auf dem Handy unter dem Header an. Dessen Höhe hängt an Schriftgröße und
+// Logo, wird also gemessen statt geraten.
+const kopf = document.querySelector('.site-header');
+const fortschrittWrap = document.getElementById('progressWrap');
+
+function aktualisiereKopfhoehe() {
+  if (kopf) document.documentElement.style.setProperty('--header-h', kopf.offsetHeight + 'px');
+}
+
+// Schatten und Trennlinie erst zeigen, wenn die Leiste wirklich klebt – vorher sähe sie wie ein
+// zufälliger Kasten mitten auf der Seite aus. Bewusst über die Scrollposition gelöst statt über
+// einen IntersectionObserver: Der hängt am Frame-Lifecycle und liefert in Hintergrund-Tabs und
+// nicht gerenderten Ansichten keine Rückmeldung. getBoundingClientRect kostet beim reinen
+// Scrollen nichts, weil das Layout dabei ohnehin schon aktuell ist.
+function pruefeAndocken() {
+  if (!fortschrittWrap || !kopf) return;
+  const klebt = fortschrittWrap.getBoundingClientRect().top <= kopf.offsetHeight + 1;
+  fortschrittWrap.classList.toggle('angeheftet', klebt);
+}
+
+formularMessung.init();
+aktualisiereKopfhoehe();
+pruefeAndocken();
+window.addEventListener('scroll', pruefeAndocken, { passive: true });
+window.addEventListener('resize', () => { aktualisiereKopfhoehe(); pruefeAndocken(); }, { passive: true });
 
 // Erste Frage sofort vorrendern, damit die Karte nicht leer ist, falls jemand ohne Klick auf den
 // CTA direkt zum Quiz scrollt.

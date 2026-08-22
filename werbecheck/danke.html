@@ -27,59 +27,75 @@ body{font-family:var(--font-body);font-size:17px;line-height:1.55;color:var(--in
 img{max-width:100%;display:block;}
 a{color:inherit;}
 .container{max-width:1180px;margin:0 auto;padding:0 24px;width:100%;}
-.site-header{padding:24px 0;border-bottom:1px solid rgba(228,219,201,.6);}
+.site-header{padding:16px 0;border-bottom:1px solid rgba(228,219,201,.6);}
 .site-header .container{display:flex;align-items:center;}
-.brand{display:flex;align-items:center;gap:12px;font-family:var(--font-display);font-weight:700;font-size:19px;color:var(--ink);text-decoration:none;}
+.brand{display:flex;align-items:center;text-decoration:none;}
 .brand img{height:34px;width:auto;}
-.brand .we{color:var(--mid);}
-.tool-badge{font-family:var(--font-display);font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--mid);border:1px solid #cfc2a8;border-radius:100px;padding:4px 12px;}
-main{flex:1;display:flex;align-items:center;justify-content:center;padding:56px 0;}
+main{flex:1;display:flex;align-items:center;justify-content:center;padding:36px 0;}
 .thanks-card{
   background:var(--paper);border:1px solid var(--soft);border-radius:20px;
-  max-width:680px;width:100%;text-align:center;padding:56px 44px;
+  max-width:540px;width:100%;text-align:center;padding:40px 32px;
   box-shadow:0 20px 40px -10px rgba(33,28,23,.16), 0 8px 16px -8px rgba(33,28,23,.08);
   position:relative;overflow:hidden;
 }
 .thanks-card::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;
   background:linear-gradient(90deg,var(--mid) 0%,var(--accent) 100%);}
-.success-icon{width:76px;height:76px;background:var(--mid);border-radius:50%;
-  margin:0 auto 28px;display:flex;align-items:center;justify-content:center;
+.success-icon{width:64px;height:64px;background:var(--mid);border-radius:50%;
+  margin:0 auto 20px;display:flex;align-items:center;justify-content:center;
   box-shadow:0 10px 26px -8px rgba(62,104,16,.5);animation:pop .5s cubic-bezier(.34,1.56,.64,1);}
 @keyframes pop{0%{transform:scale(.6);opacity:0;}100%{transform:scale(1);opacity:1;}}
-.eyebrow{display:inline-block;font-size:13px;font-weight:600;color:var(--accent-dark);
-  text-transform:uppercase;letter-spacing:.12em;margin-bottom:14px;}
-.thanks-card h1{font-family:var(--font-display);font-weight:500;font-size:clamp(30px,5vw,42px);
-  line-height:1.1;letter-spacing:-.02em;margin-bottom:16px;}
-.thanks-card p{color:var(--ink-soft);font-size:17px;line-height:1.6;max-width:460px;margin:0 auto 10px;}
-.next-list{text-align:left;max-width:520px;margin:20px auto 0;display:grid;gap:18px;}
-.next-item{display:flex;gap:14px;align-items:flex-start;font-size:15px;color:var(--ink-soft);line-height:1.55;}
-.next-num{flex-shrink:0;width:26px;height:26px;border-radius:50%;background:var(--soft);
-  color:var(--mid);font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center;}
-.next-item strong{color:var(--ink);display:block;margin-bottom:2px;}
+.thanks-card h1{font-family:var(--font-display);font-weight:500;font-size:clamp(26px,6vw,36px);
+  line-height:1.1;letter-spacing:-.02em;margin-bottom:12px;}
+.thanks-card p{color:var(--ink-soft);font-size:16px;line-height:1.55;max-width:420px;margin:0 auto;}
+.next-list{text-align:left;max-width:420px;margin:22px auto 0;display:grid;gap:14px;}
+.next-item{display:flex;gap:12px;align-items:flex-start;font-size:14.5px;color:var(--ink-soft);line-height:1.5;}
+.next-num{flex-shrink:0;width:24px;height:24px;border-radius:50%;background:var(--soft);
+  color:var(--mid);font-weight:700;font-size:12.5px;display:flex;align-items:center;justify-content:center;margin-top:1px;}
+.next-item strong{color:var(--ink);}
 
-.section-title{text-align:left;max-width:520px;margin:38px auto 0;font-family:var(--font-display);
-  font-weight:500;font-size:20px;color:var(--ink);}
-.divider{max-width:520px;margin:36px auto 0;border-top:1px solid var(--line);}
-
-/* Spam-Hinweis bewusst hervorgehoben: Wenn die Auswertung im Junk-Ordner landet, bricht der
-   komplette Funnel an dieser Stelle ab – das ist der häufigste stille Abbruchgrund. */
-.notice{text-align:left;max-width:520px;margin:28px auto 0;background:var(--soft);
-  border-left:4px solid var(--mid);border-radius:0 12px 12px 0;padding:20px 22px;}
-.notice h2{font-family:var(--font-display);font-weight:500;font-size:18px;color:var(--ink);
-  margin-bottom:8px;display:flex;align-items:center;gap:9px;}
-.notice p{font-size:14.5px;color:var(--ink-soft);line-height:1.6;margin:0 0 8px;max-width:none;}
-.notice p:last-child{margin-bottom:0;}
-.notice code{background:var(--paper);border:1px solid var(--line);border-radius:6px;
-  padding:2px 7px;font-size:13.5px;color:var(--mid);font-weight:600;white-space:nowrap;}
+/* Spam-Hinweis bewusst hervorgehoben statt gestrichen: Wenn die Auswertung im Junk-Ordner landet,
+   bricht der komplette Funnel genau hier still ab – aber knapp gehalten, nicht als Textwand. */
+.notice{text-align:left;max-width:420px;margin:22px auto 0;background:var(--soft);
+  border-left:3px solid var(--mid);border-radius:0 10px 10px 0;padding:14px 16px;}
+.notice p{font-size:13.5px;color:var(--ink-soft);line-height:1.55;margin:0;max-width:none;}
+.notice code{background:var(--paper);border:1px solid var(--line);border-radius:5px;
+  padding:1px 6px;font-size:12.5px;color:var(--mid);font-weight:600;}
 .btn-primary{display:inline-flex;align-items:center;gap:10px;background:var(--paper);color:var(--mid);
-  border:2px solid var(--mid);padding:14px 28px;border-radius:100px;font-family:var(--font-display);
-  font-weight:500;font-size:16px;text-decoration:none;margin-top:36px;transition:all .2s ease;}
+  border:2px solid var(--mid);padding:13px 26px;border-radius:100px;font-family:var(--font-display);
+  font-weight:500;font-size:15.5px;text-decoration:none;margin-top:26px;transition:all .2s ease;}
 .btn-primary:hover{background:var(--mid);color:white;transform:translateY(-2px);}
-.site-footer{padding:32px 0;border-top:1px solid var(--line);font-size:14px;color:var(--muted);}
+
+/* ---- Potenzialanalyse-Block ----
+   Bewusst der optisch stärkste Bereich der Seite: Wer bis hierher gescrollt ist, hat den Check
+   abgeschlossen – das ist der Moment mit der höchsten Bereitschaft für einen Termin. */
+.analyse{text-align:left;max-width:460px;margin:26px auto 0;}
+.analyse-eyebrow{font-size:12px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--mid);margin-bottom:8px;}
+.analyse h2{font-family:var(--font-display);font-weight:500;font-size:21px;line-height:1.25;
+  color:var(--ink);margin-bottom:10px;}
+.analyse p{font-size:14.5px;line-height:1.6;color:var(--ink-soft);margin:0 0 10px;max-width:none;}
+.analyse-klar{background:var(--soft);border-left:3px solid var(--mid);border-radius:0 10px 10px 0;
+  padding:12px 14px;}
+.analyse-klar strong{color:var(--ink);}
+.btn-analyse{display:inline-flex;align-items:center;justify-content:center;gap:10px;width:100%;
+  background:var(--accent);color:var(--accent-ink);border:none;padding:16px 26px;border-radius:100px;
+  font-family:var(--font-display);font-weight:500;font-size:16.5px;cursor:pointer;margin-top:18px;
+  text-decoration:none;box-sizing:border-box;
+  box-shadow:0 8px 24px -8px rgba(168,201,62,.55);transition:all .2s ease;touch-action:manipulation;}
+.btn-analyse:hover{background:var(--accent-dark);color:#fff;transform:translateY(-2px);}
+.analyse-hinweis{font-size:12.5px;color:var(--muted);margin-top:10px;text-align:center;}
+
+.btn-zurueck{display:inline-block;margin-top:28px;font-size:14px;color:var(--muted);
+  text-decoration:underline;text-underline-offset:3px;}
+.btn-zurueck:hover{color:var(--mid);}
+.site-footer{padding:28px 0;border-top:1px solid var(--line);font-size:13.5px;color:var(--muted);}
 .site-footer .container{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
 .site-footer a{color:var(--muted);text-decoration:none;margin-left:18px;}
 .site-footer a:hover{color:var(--mid);}
-@media(max-width:560px){.thanks-card{padding:40px 24px;}.site-footer a{margin-left:0;margin-right:16px;}}
+@media(max-width:560px){.thanks-card{padding:32px 22px;}.site-footer a{margin-left:0;margin-right:16px;}}
+.btn-primary{touch-action:manipulation;}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
 </style>
 </head>
 <body>
@@ -87,8 +103,6 @@ main{flex:1;display:flex;align-items:center;justify-content:center;padding:56px 
   <div class="container">
     <a class="brand" href="/werbecheck">
       <img src="../logo-gruen.png" alt="MR Elevate Logo">
-      MR <span class="we">Elevate</span>
-      <span class="tool-badge">Werbe-Check</span>
     </a>
   </div>
 </header>
@@ -97,58 +111,41 @@ main{flex:1;display:flex;align-items:center;justify-content:center;padding:56px 
   <div class="container">
     <div class="thanks-card">
       <div class="success-icon">
-        <svg width="34" height="34" viewBox="0 0 34 34" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,18 14,25 27,9"/></svg>
+        <svg width="30" height="30" viewBox="0 0 34 34" fill="none" stroke="#fff" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"><polyline points="7,18 14,25 27,9"/></svg>
       </div>
-      <div class="eyebrow">Anfrage erhalten</div>
       <h1>Vielen Dank!</h1>
-      <p>Deine persönliche Auswertung ist unterwegs und sollte <strong>innerhalb weniger Minuten</strong> in deinem Postfach liegen.</p>
+      <p>Deine Auswertung ist unterwegs – sie liegt <strong>in wenigen Minuten</strong> in deinem Postfach.</p>
+
+      <!-- Der Termin steht bewusst ganz oben: Wer bis hierher gekommen ist, ist genau jetzt
+           am ehesten bereit – weiter unten würde ihn kaum noch jemand sehen. -->
+      <div class="analyse">
+        <div class="analyse-eyebrow">Optional &amp; kostenlos</div>
+        <h2>Und jetzt? Lass uns 30 Minuten drübergehen.</h2>
+        <p>Wir schauen uns eure Antworten konkret an und klären eine einzige Frage: Lässt sich bei
+        euch mit Werbung sinnvoll etwas bewegen – und wenn ja, womit fängt man an?</p>
+        <p class="analyse-klar"><strong>Kein Verkaufsgespräch.</strong> Wenn ich sehe, dass es bei
+        euch gerade nicht passt, sage ich dir das im Termin.</p>
+
+        <a class="btn-analyse" href="https://calendly.com/mr-elevate/30min" target="_blank" rel="noopener">
+          Termin auswählen
+          <svg width="17" height="17" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="8" x2="12" y2="8"/><polyline points="8,3 12,8 8,13"/></svg>
+        </a>
+        <p class="analyse-hinweis">Öffnet den Kalender in einem neuen Tab.</p>
+      </div>
+
+      <div class="divider"></div>
 
       <div class="notice">
-        <h2>
-          <svg width="19" height="19" viewBox="0 0 20 20" fill="none" stroke="#3e6810" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10 6.5v4"/><path d="M10 14h.01"/><circle cx="10" cy="10" r="8"/></svg>
-          Keine E-Mail bekommen?
-        </h2>
-        <p>Dann schau bitte zuerst im <strong>Spam- oder Werbung-Ordner</strong> nach. Automatisch versendete Auswertungen landen dort erfahrungsgemäß am häufigsten – besonders bei Gmail und Outlook.</p>
-        <p>Die E-Mail kommt von <code>info@mr-elevate.de</code>. Wenn du diese Adresse zu deinen Kontakten hinzufügst, landen auch künftige Nachrichten zuverlässig im Posteingang.</p>
-        <p>Ist nach 15 Minuten immer noch nichts da? Schreib uns kurz an <a href="mailto:info@mr-elevate.de">info@mr-elevate.de</a> – dann schicken wir die Auswertung von Hand nach.</p>
+        <p><strong>Nichts angekommen?</strong> Schau zuerst im Spam-Ordner nach – die Mail kommt von <code>info@mr-elevate.de</code>. Immer noch nichts nach 15 Minuten? Schreib uns kurz an <a href="mailto:info@mr-elevate.de">info@mr-elevate.de</a>.</p>
       </div>
 
-      <div class="divider"></div>
-
-      <div class="section-title">Wie es jetzt weitergeht</div>
       <div class="next-list">
-        <div class="next-item">
-          <span class="next-num">1</span>
-          <span><strong>Deine Auswertung lesen</strong>In der E-Mail steht, welche Plattform zu euch passt, wie ihr das Budget aufteilen solltet und welche drei Antworten den Ausschlag gegeben haben – dazu die ersten Schritte in der richtigen Reihenfolge.</span>
-        </div>
-        <div class="next-item">
-          <span class="next-num">2</span>
-          <span><strong>Wir melden uns innerhalb von 24 Stunden</strong>Per Anruf oder E-Mail, um kurz zu klären, ob noch Fragen offen sind und ob ein Gespräch für euch überhaupt Sinn ergibt. Kein Verkaufsdruck – wenn es nicht passt, sagen wir das offen.</span>
-        </div>
-        <div class="next-item">
-          <span class="next-num">3</span>
-          <span><strong>15 Minuten, konkret</strong>Falls ihr mögt: ein kurzes Gespräch, in dem wir eure Auswertung durchgehen und einen realistischen Fahrplan skizzieren – inklusive dem, was ihr auch ohne uns umsetzen könnt.</span>
-        </div>
+        <div class="next-item"><span class="next-num">1</span><span><strong>Auswertung lesen</strong> – Plattform-Empfehlung, Budget-Vorschlag und erste Schritte.</span></div>
+        <div class="next-item"><span class="next-num">2</span><span><strong>Wir melden uns</strong> – innerhalb von 24 Stunden per E-Mail, unverbindlich.</span></div>
+        <div class="next-item"><span class="next-num">3</span><span><strong>Fragen?</strong> – Antworte einfach auf die Auswertungs-E-Mail.</span></div>
       </div>
 
-      <div class="divider"></div>
-
-      <div class="section-title">Damit das Gespräch etwas bringt</div>
-      <div class="next-list">
-        <div class="next-item">
-          <span class="next-num">→</span>
-          <span>Überleg dir vorab, <strong>was ein neuer Kunde euch im Schnitt wert ist</strong> – daran entscheidet sich, welches Budget überhaupt sinnvoll ist.</span>
-        </div>
-        <div class="next-item">
-          <span class="next-num">→</span>
-          <span>Schau kurz nach, ob ihr schon <strong>Zugänge zu Google Ads oder dem Meta Business Manager</strong> habt. Falls nicht, ist das kein Problem – es spart nur Zeit.</span>
-        </div>
-      </div>
-
-      <a class="btn-primary" href="/werbecheck">
-        Zurück zum Werbe-Check
-        <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="8" x2="12" y2="8"/><polyline points="8,3 12,8 8,13"/></svg>
-      </a>
+      <a class="btn-zurueck" href="/werbecheck">Zurück zum Werbe-Check</a>
     </div>
   </div>
 </main>
@@ -163,7 +160,10 @@ main{flex:1;display:flex;align-items:center;justify-content:center;padding:56px 
     </div>
   </div>
 </footer>
-<script>document.getElementById('year').textContent=new Date().getFullYear();</script>
+<script>
+document.getElementById('year').textContent = new Date().getFullYear();
+
+</script>
 <script defer src="/consent.js"></script>
 </body>
 </html>
