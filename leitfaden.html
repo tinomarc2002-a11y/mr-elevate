@@ -376,11 +376,22 @@ section{ position:relative; }
 .print-hint{ display:inline-flex; align-items:center; gap:8px; font-family:var(--font-display);
   font-size:.85rem; font-weight:600; color:var(--accent); cursor:pointer; }
 .print-hint svg{ flex-shrink:0; }
+.print-hint:hover{ color:var(--accent-deep); }
+.pdf-meta{ font-family:var(--font-body); font-weight:400; font-size:.78rem; color:var(--fg-dim); }
 @media print{
   .figure{ background:#fff; break-inside:avoid; }
   .figure-scroll{ overflow:visible; }
   .figure-scroll svg{ min-width:0; }
-  .nav,.scroll-progress,.closing-actions,.print-hint{ display:none !important; }
+  .nav,.scroll-progress,.closing-actions,.print-hint,.wc-teaser,.footer,.reveal-cta,.cc,.closing{ display:none !important; }
+  /* Seitenumbrueche: kein Abschnitt soll mitten in einer Grafik oder
+     einer Ueberschrift getrennt werden. */
+  @page{ size:A4; margin:16mm 14mm; }
+  h1,h2,h3{ break-after:avoid; }
+  .phase,.compare,.do-list li,.aside,.mistake,.g-faq div{ break-inside:avoid; }
+  .phase{ padding:18px 0 !important; }
+  .g-hero{ padding:0 0 18px !important; }
+  .reveal{ opacity:1 !important; transform:none !important; }
+  .quellen a{ word-break:break-all; }
   body{ background:#fff; color:#111; }
   .phase,.stats,.roadmap,.g-hero{ border-color:#ddd; background:#fff; }
   .phase-body p,.stat-tile .slabel,.compare-card li{ color:#333; }
@@ -441,7 +452,7 @@ section{ position:relative; }
       <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg> aktualisiert <time datetime="2026-07-30">30. Juli 2026</time></span>
       <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> ca. 15 Minuten Lesezeit</span>
       <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6 9 17l-5-5"/></svg> 10 Phasen, komplett offen</span>
-      <span class="print-hint" onclick="window.print()"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9V2h12v7M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2M6 14h12v8H6z"/></svg> Als PDF speichern</span>
+      <a class="print-hint" href="/Ads-Leitfaden-MR-Elevate.pdf" download><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5M12 15V3"/></svg> Als PDF herunterladen <span class="pdf-meta">23 Seiten, 1,1&nbsp;MB</span></a>
     </div>
   </div>
 </header>
