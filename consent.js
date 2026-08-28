@@ -148,9 +148,13 @@
     return '<div class="cc-inner">' +
         '<div class="cc-text">' +
           "<strong>Cookies &amp; Datenschutz</strong>" +
-          "<p>Technisch notwendige Mittel und eine <b>cookielose</b> Reichweitenmessung ohne persönliche " +
-          "Profile laufen immer. Alles darüber hinaus nur, wenn du zustimmst. Du kannst einzeln auswählen " +
-          'und deine Auswahl jederzeit unten links ändern. Mehr in der <a href="/datenschutz">Datenschutzerklärung</a>.</p>' +
+          /* Erste Ebene nennt Empfaenger, Zweck und Drittlandtransfer. Wer sofort
+             ablehnen will, soll dafuer nicht erst aufklappen muessen. */
+          "<p>Technisch notwendige Mittel laufen immer. Darüber hinaus setze ich " +
+          "<b>Microsoft Clarity</b> (Statistik) und den <b>Meta-Pixel</b> (Marketing) ein. Beide " +
+          "verwenden Cookies und übertragen Daten in die USA, und beide laufen nur mit deiner " +
+          "Einwilligung. Du kannst jeden Zweck einzeln erlauben und deine Auswahl jederzeit unten " +
+          'links ändern. Einzelheiten in der <a href="/datenschutz">Datenschutzerklärung</a>.</p>' +
         "</div>" +
         '<div class="cc-detail">' + ZWECKE.map(function (z) {
           return zweckMarkup(z, z.pflicht ? true : !!(stand && stand[z.id]));
@@ -163,17 +167,26 @@
       "</div>";
   }
 
+  /* Eine Einwilligung gilt nicht unbegrenzt. Nach zwoelf Monaten wird erneut
+     gefragt, statt eine Jahre alte Entscheidung weiterlaufen zu lassen. */
+  var GUELTIG_MS = 365 * 24 * 60 * 60 * 1000;
+
   /* ---------- Speicher ---------- */
+  function abgelaufen(stand) {
+    return !stand || typeof stand.ts !== "number" || (Date.now() - stand.ts) > GUELTIG_MS;
+  }
+
   function read() {
     try {
       var neu = JSON.parse(localStorage.getItem(KEY));
-      if (neu && typeof neu === "object") return neu;
+      if (neu && typeof neu === "object") return abgelaufen(neu) ? null : neu;
       /* Aus der alten Fassung uebernehmen: dort deckte ein einziges Ja
          beide Zwecke ab, ein Nein keinen. Das bleibt inhaltlich richtig,
          deshalb wird nicht erneut gefragt. */
       var alt = JSON.parse(localStorage.getItem(ALT_KEY));
       if (alt && typeof alt === "object") {
-        return { necessary: true, statistik: !!alt.marketing, marketing: !!alt.marketing, ts: alt.ts || Date.now(), aus_v1: true };
+        var uebernommen = { necessary: true, statistik: !!alt.marketing, marketing: !!alt.marketing, ts: alt.ts || 0, aus_v1: true };
+        return abgelaufen(uebernommen) ? null : uebernommen;
       }
     } catch (e) {}
     return null;
