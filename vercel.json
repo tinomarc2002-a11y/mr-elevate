@@ -2,7 +2,22 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "cleanUrls": true,
   "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/neukundengewinnung-solarbetriebe",
+      "destination": "/solar-leads",
+      "permanent": true
+    }
+  ],
   "headers": [
+    {
+      "source": "/solar-leads/img/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/solar-leads/fonts/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
     {
       "source": "/(.*).md",
       "headers": [
