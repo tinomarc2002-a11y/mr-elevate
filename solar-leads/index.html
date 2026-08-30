@@ -8,7 +8,7 @@
 <link rel="canonical" href="https://www.mr-elevate.de/solar-leads" />
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1" />
 <meta name="author" content="MR Elevate – Marc Richter" />
-<meta name="theme-color" content="#313f52" />
+<meta name="theme-color" content="#0c0a0b" />
 
 <!-- Open Graph / Social -->
 <meta property="og:type" content="website" />
@@ -34,26 +34,34 @@
 <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
 <style>
 :root{
-  --navy:#313f52;
-  --deep:#161e29;
-  --card:#1c2532;
-  --card-2:#222c3b;
-  --line:rgba(255,255,255,.11);
-  --line-ink:#e6ddd0;
-  --amber:#ffb53e;
-  --amber-dark:#e79f2b;
-  --amber-ink:#a9760d;
-  --cream:#fffaf2;
-  --ink:#26313f;
-  --ink-muted:#5b6779;
-  --muted:#a6aebb;
+  /* Farben 1:1 aus dem Token-System der Startseite – dunkle Flächen aus
+     .zone-dark, helle aus der Papier-Basis. Keine eigenen Farbwerte. */
+  --navy:#0c0a0b;        /* --ink: eine Grundschwärze für alle dunklen Flächen */
+  --deep:#161213;        /* --bg-elev dark */
+  --card:#1b1618;        /* --bg-card dark */
+  --card-2:#221c1e;
+  --line:#332b2d;        /* --line dark */
+  --line-ink:#e4dbc9;    /* --line hell (Papier) */
+  --amber:#a8c93e;       /* --accent-fill: gedecktes Oliv-Lime */
+  --amber-dark:#8fae2e;  /* --accent-deep für Hover */
+  --amber-ink:#3e6810;   /* --accent: AA-sicher auf Papier */
+  --on-accent:#0a0d00;   /* --accent-ink: Text auf der Lime-Fläche */
+  --cream:#f7f3ec;       /* --bg */
+  --card-light:#fffdf8;  /* --bg-card hell */
+  --ink:#211c17;         /* --fg: warmes Beinahe-Schwarz */
+  --ink-muted:#5c5349;   /* --fg-muted */
+  --ink-dim:#675e51;     /* --fg-dim */
+  --fg-light:#f7f3ec;    /* --fg auf dunklem Grund */
+  --muted:#c0b6a8;       /* --fg-muted dark */
+  --dim:#a2988a;         /* --fg-dim dark */
+  --clay:#d76a4c;        /* --clay dark, für Fehlermeldungen */
   --display:'Syne',system-ui,sans-serif;
   --body:'Inter',system-ui,-apple-system,sans-serif;
   --shell:1180px;
 }
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
 html{scroll-behavior:smooth;scroll-padding-top:110px;}
-body{font-family:var(--body);background:var(--navy);color:#fff;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+body{font-family:var(--body);background:var(--navy);color:var(--fg-light);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
 img{max-width:100%;height:auto;display:block;}
 a{color:inherit;text-decoration:none;}
 .shell{max-width:var(--shell);margin-inline:auto;padding-inline:24px;}
@@ -64,45 +72,50 @@ h1{font-size:clamp(2.7rem,7.2vw,5rem);}
 h2{font-size:clamp(1.85rem,3.7vw,2.9rem);line-height:1.1;letter-spacing:-.03em;}
 h3{font-size:clamp(1.15rem,2vw,1.45rem);letter-spacing:-.02em;line-height:1.25;}
 .eyebrow{font-family:var(--display);font-weight:700;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;color:var(--amber);margin-bottom:16px;display:block;}
-.lead{font-size:clamp(1.02rem,1.5vw,1.18rem);color:#d6dbe3;}
+.lead{font-size:clamp(1.02rem,1.5vw,1.18rem);color:var(--muted);}
 p{margin-bottom:16px;}
 
 /* ---------- Buttons ---------- */
 .btn{display:inline-flex;align-items:center;gap:10px;font-family:var(--display);font-weight:600;font-size:1rem;
   padding:17px 34px;border-radius:100px;border:1px solid transparent;transition:.2s ease;cursor:pointer;}
-.btn-amber{background:var(--amber);color:var(--navy);}
+.btn-amber{background:var(--amber);color:var(--on-accent);}
 .btn-amber:hover{background:var(--amber-dark);transform:translateY(-2px);}
 .btn-amber:disabled{opacity:.6;transform:none;cursor:default;}
 .btn-sm{padding:12px 26px;font-size:.94rem;}
 
 /* ---------- Nav ---------- */
 .nav-outer{position:fixed;inset:14px 0 auto;z-index:80;pointer-events:none;}
-.nav{position:relative;pointer-events:auto;display:flex;align-items:center;gap:14px;background:rgba(22,30,41,.92);
+.nav{position:relative;pointer-events:auto;display:flex;align-items:center;gap:14px;background:rgba(12,10,11,.92);
   backdrop-filter:blur(14px);border:1px solid var(--line);border-radius:100px;padding:9px 9px 9px 22px;
   box-shadow:0 18px 44px rgba(0,0,0,.35);}
-.nav .brand{display:flex;align-items:center;gap:9px;font-family:var(--display);font-weight:700;font-size:1.05rem;letter-spacing:-.02em;}
-.nav .brand img{height:26px;width:auto;}
-.nav .brand span{color:var(--amber);}
-.nav ul{display:flex;gap:26px;list-style:none;margin-left:auto;font-size:.93rem;color:#dfe3e9;}
+/* Marken-Lockup identisch zur Startseite: Logo-Zeichen mit „Elevate" darunter */
+.nav .brand{display:flex;align-items:center;gap:11px;}
+.brand-stack{display:inline-flex;flex-direction:column;align-items:center;gap:3px;line-height:1;}
+.brand-logo{height:38px;width:auto;display:block;
+  filter:drop-shadow(0 3px 10px rgba(168,201,62,.18));transition:transform .2s ease;}
+.brand:hover .brand-logo{transform:translateY(-2px) scale(1.05);}
+.brand-elevate{font-family:var(--display);font-weight:600;font-size:.6rem;
+  letter-spacing:.42em;text-transform:uppercase;color:var(--amber);padding-left:.42em;}
+.nav ul{display:flex;gap:26px;list-style:none;margin-left:auto;font-size:.93rem;color:var(--muted);}
 .nav ul a:hover{color:var(--amber);}
 .nav .cta{margin-left:8px;}
 .burger{display:none;margin-left:auto;background:none;border:0;padding:10px;cursor:pointer;}
-.burger span{display:block;width:22px;height:2px;background:#fff;margin:4px 0;border-radius:2px;}
+.burger span{display:block;width:22px;height:2px;background:var(--fg-light);margin:4px 0;border-radius:2px;}
 
 /* ---------- Hero ---------- */
 .hero{padding:150px 0 90px;position:relative;}
 .hero::after{content:"";position:absolute;inset:0;pointer-events:none;
-  background:radial-gradient(700px 420px at 82% 18%,rgba(255,181,62,.13),transparent 65%);}
+  background:radial-gradient(700px 420px at 82% 18%,rgba(168,201,62,.13),transparent 65%);}
 .hero .shell{position:relative;z-index:1;}
-.crumbs{font-size:.83rem;color:#9aa4b2;margin-bottom:34px;}
-.crumbs b{color:#fff;font-weight:500;}
+.crumbs{font-size:.83rem;color:var(--dim);margin-bottom:34px;}
+.crumbs b{color:var(--fg-light);font-weight:500;}
 .hero-grid{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;}
 .hero p.lead{margin:26px 0 34px;max-width:520px;}
 .hero-media img{border-radius:26px;aspect-ratio:4/3;object-fit:cover;box-shadow:0 30px 70px rgba(0,0,0,.45);}
 .channels{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:20px;}
-.chan{background:#fff;border-radius:14px;padding:14px 10px;text-align:center;color:var(--navy);}
+.chan{background:var(--card-light);border-radius:14px;padding:14px 10px;text-align:center;color:var(--ink);}
 .chan b{display:block;font-family:var(--display);font-weight:700;font-size:.9rem;letter-spacing:-.01em;}
-.chan small{font-size:.67rem;color:#7b8698;letter-spacing:.04em;text-transform:uppercase;}
+.chan small{font-size:.67rem;color:var(--ink-dim);letter-spacing:.04em;text-transform:uppercase;}
 
 /* ---------- Sections ---------- */
 .sec{padding:96px 0;}
@@ -119,20 +132,7 @@ p{margin-bottom:16px;}
 .checks li{display:flex;gap:14px;align-items:flex-start;font-size:1.02rem;}
 .checks svg{flex:none;margin-top:3px;}
 .checks b{font-weight:600;color:var(--ink);}
-.sec-deep .checks b,.sec-deep .checks span{color:#e6eaef;}
-
-/* Referenz-Karten */
-.ref-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px;margin-top:44px;}
-.ref{background:#fff;border:1px solid var(--line-ink);border-radius:24px;padding:30px 32px;color:var(--ink);}
-.tag{display:inline-block;font-family:var(--display);font-weight:700;font-size:.68rem;letter-spacing:.16em;
-  text-transform:uppercase;color:var(--amber-ink);background:rgba(255,181,62,.16);border:1px solid rgba(255,181,62,.5);
-  border-radius:100px;padding:4px 12px;margin-bottom:18px;}
-.ref h3{margin-bottom:4px;}
-.ref .role{font-size:.9rem;margin-bottom:22px;}
-.ref .kpi{font-family:var(--display);font-weight:700;font-size:2.1rem;letter-spacing:-.03em;color:var(--navy);margin-bottom:2px;}
-.ref .kpi-sub{font-size:.9rem;}
-.todo{display:inline-block;font-family:var(--display);font-size:.74rem;letter-spacing:.06em;color:var(--amber-ink);
-  background:rgba(255,181,62,.16);border:1px dashed var(--amber-dark);border-radius:6px;padding:2px 9px;}
+.sec-deep .checks b,.sec-deep .checks span{color:var(--fg-light);}
 
 /* FAQ */
 .faq{border-top:1px solid var(--line-ink);margin-top:40px;}
@@ -140,7 +140,7 @@ p{margin-bottom:16px;}
 .faq summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:24px;align-items:center;
   padding:26px 4px;font-family:var(--display);font-weight:600;font-size:clamp(1.02rem,1.7vw,1.24rem);letter-spacing:-.02em;}
 .faq summary::-webkit-details-marker{display:none;}
-.faq summary::after{content:"+";font-size:1.7rem;font-weight:500;color:var(--amber-dark);line-height:1;flex:none;}
+.faq summary::after{content:"+";font-size:1.7rem;font-weight:500;color:var(--amber-ink);line-height:1;flex:none;}
 .faq details[open] summary::after{content:"–";}
 .faq .answer{padding:0 4px 28px;max-width:830px;}
 .faq .answer p:last-child{margin-bottom:0;}
@@ -151,15 +151,15 @@ p{margin-bottom:16px;}
 .form-row{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
 .field{display:block;margin-bottom:14px;}
 .field span{display:block;font-size:.83rem;color:var(--muted);margin-bottom:7px;letter-spacing:.02em;}
-.field input,.field textarea,.field select{width:100%;background:rgba(255,255,255,.05);border:1px solid var(--line);
-  border-radius:14px;padding:14px 16px;color:#fff;font-family:var(--body);font-size:.98rem;}
-.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--amber);background:rgba(255,255,255,.08);}
-.field select option{background:var(--card);color:#fff;}
+.field input,.field textarea,.field select{width:100%;background:var(--navy);border:1px solid var(--line);
+  border-radius:14px;padding:14px 16px;color:var(--fg-light);font-family:var(--body);font-size:.98rem;}
+.field input:focus,.field textarea:focus,.field select:focus{outline:none;border-color:var(--amber);background:var(--card-2);}
+.field select option{background:var(--card);color:var(--fg-light);}
 .consent{display:flex;gap:11px;align-items:flex-start;font-size:.82rem;color:var(--muted);margin:6px 0 20px;}
 .consent input{margin-top:3px;accent-color:var(--amber);}
 .consent a{color:var(--amber);text-decoration:underline;}
 .direct{border-top:1px solid var(--line);margin-top:26px;padding-top:22px;font-size:.94rem;color:var(--muted);}
-.direct a{color:#fff;font-weight:500;}
+.direct a{color:var(--fg-light);font-weight:500;}
 .form-note{font-size:.9rem;margin-top:14px;}
 
 /* Content / TOC */
@@ -168,28 +168,28 @@ p{margin-bottom:16px;}
 .toc h4{font-family:var(--display);font-weight:700;font-size:.74rem;letter-spacing:.18em;text-transform:uppercase;
   color:var(--amber);margin-bottom:18px;}
 .toc ol{list-style:none;counter-reset:t;display:grid;gap:11px;}
-.toc li{counter-increment:t;font-size:.95rem;line-height:1.4;color:#c8cfd8;}
+.toc li{counter-increment:t;font-size:.95rem;line-height:1.4;color:var(--muted);}
 .toc li::before{content:counter(t,decimal-leading-zero);font-family:var(--display);font-weight:700;
   color:var(--amber);margin-right:10px;}
 .toc a:hover{color:var(--amber);}
 .article h2{margin-bottom:18px;}
 .article h2+p.lead{margin-bottom:34px;}
 .article h3{margin:40px 0 12px;}
-.article p{color:#c8cfd8;}
+.article p{color:var(--muted);}
 .article .block{border-left:3px solid var(--amber);padding-left:24px;margin:28px 0;}
 .article .block h3{margin-top:0;}
 .article img{border-radius:22px;margin:40px 0;aspect-ratio:16/9;object-fit:cover;width:100%;}
 
 /* Steps */
 .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-top:46px;}
-.step{background:rgba(255,255,255,.04);border:1px solid var(--line);border-radius:22px;padding:30px 28px;}
+.step{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:30px 28px;}
 .step .n{font-family:var(--display);font-weight:700;font-size:2.4rem;letter-spacing:-.04em;color:var(--amber);line-height:1;margin-bottom:16px;}
 .step h3{margin-bottom:10px;}
-.step p{color:#c3cad4;font-size:.97rem;margin:0;}
+.step p{color:var(--muted);font-size:.97rem;margin:0;}
 
 /* Nischen-Karten */
 .cards{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;margin-top:46px;}
-.card-n{background:#fff;border:1px solid var(--line-ink);border-radius:24px;overflow:hidden;display:flex;flex-direction:column;}
+.card-n{background:var(--card-light);border:1px solid var(--line-ink);border-radius:24px;overflow:hidden;display:flex;flex-direction:column;}
 .card-n img{aspect-ratio:16/9;object-fit:cover;width:100%;}
 .card-n .body{padding:28px 30px 32px;}
 .card-n h3{margin-bottom:10px;}
@@ -199,7 +199,7 @@ p{margin-bottom:16px;}
 .band{background:var(--card-2);border:1px solid var(--line);border-radius:32px;padding:clamp(34px,5vw,62px);
   display:grid;grid-template-columns:1.3fr auto;gap:40px;align-items:center;}
 .band h2{margin-bottom:14px;}
-.band p{color:#c3cad4;margin:0;max-width:620px;}
+.band p{color:var(--muted);margin:0;max-width:620px;}
 
 /* Footer */
 footer{background:var(--deep);padding:70px 0 34px;border-top:1px solid var(--line);}
@@ -208,11 +208,11 @@ footer{background:var(--deep);padding:70px 0 34px;border-top:1px solid var(--lin
 .foot-top p{color:var(--muted);font-size:.95rem;}
 footer h5{font-family:var(--display);font-weight:700;font-size:.74rem;letter-spacing:.16em;text-transform:uppercase;
   color:var(--amber);margin-bottom:16px;}
-footer ul{list-style:none;display:grid;gap:10px;font-size:.95rem;color:#cdd3db;}
+footer ul{list-style:none;display:grid;gap:10px;font-size:.95rem;color:var(--muted);}
 footer ul a:hover{color:var(--amber);}
 .foot-bottom{display:flex;flex-wrap:wrap;gap:18px;justify-content:space-between;padding-top:26px;
-  font-size:.86rem;color:#7f8a99;}
-.foot-bottom a:hover{color:#fff;}
+  font-size:.86rem;color:var(--dim);}
+.foot-bottom a:hover{color:var(--amber);}
 
 @media(max-width:960px){
   .nav ul{display:none;}
@@ -239,7 +239,12 @@ footer ul a:hover{color:var(--amber);}
 <div class="nav-outer">
   <div class="shell">
     <nav class="nav" id="nav" aria-label="Hauptnavigation">
-      <a class="brand" href="#top"><img src="/logo-gruen.webp" alt="MR Elevate" width="283" height="280" />MR&nbsp;<span>Elevate</span></a>
+      <a class="brand" href="/" aria-label="MR Elevate Startseite">
+        <span class="brand-stack">
+          <img class="brand-logo" src="/logo-gruen.webp" alt="MR Elevate Logo" width="283" height="280" />
+          <span class="brand-elevate">Elevate</span>
+        </span>
+      </a>
       <button class="burger" id="burger" type="button" aria-label="Menü öffnen" aria-expanded="false" aria-controls="navmenu"><span></span><span></span><span></span></button>
       <ul id="navmenu">
         <li><a href="#einleitung">Ausgangslage</a></li>
@@ -304,13 +309,13 @@ footer ul a:hover{color:var(--amber);}
       <div>
         <h2>Photovoltaik Leads: Strategie statt Einkauf</h2>
         <ul class="checks">
-          <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" fill="#ffb53e"/><path d="M5.6 10.2l2.8 2.8 5.9-6" stroke="#313f52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" fill="#a8c93e"/><path d="M5.6 10.2l2.8 2.8 5.9-6" stroke="#0a0d00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span><b>Lokale Reichweite.</b> GEO-Targeting und regionale Landingpages – Anzeigen laufen nur dort, wo Sie auch montieren.</span></li>
-          <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" fill="#ffb53e"/><path d="M5.6 10.2l2.8 2.8 5.9-6" stroke="#313f52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" fill="#a8c93e"/><path d="M5.6 10.2l2.8 2.8 5.9-6" stroke="#0a0d00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span><b>Volle Kontrolle.</b> Werbekonten, Landingpage und Daten laufen auf Ihren Namen, nicht auf unseren.</span></li>
-          <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" fill="#ffb53e"/><path d="M5.6 10.2l2.8 2.8 5.9-6" stroke="#313f52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" fill="#a8c93e"/><path d="M5.6 10.2l2.8 2.8 5.9-6" stroke="#0a0d00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span><b>Vorqualifiziert.</b> Dachform, Verbrauch, Eigentum, Zeitraum – abgefragt, bevor der Kontakt bei Ihnen landet.</span></li>
-          <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" fill="#ffb53e"/><path d="M5.6 10.2l2.8 2.8 5.9-6" stroke="#313f52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" fill="#a8c93e"/><path d="M5.6 10.2l2.8 2.8 5.9-6" stroke="#0a0d00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             <span><b>100 % exklusiv.</b> Jede Anfrage geht an einen Betrieb – an Sie. Kein Weiterverkauf, keine Parallelvergabe.</span></li>
         </ul>
         <a class="btn btn-amber" href="#termin">Termin buchen</a>
@@ -587,14 +592,14 @@ footer ul a:hover{color:var(--amber);}
       <div>
         <span class="eyebrow">Termin vereinbaren</span>
         <h2>Kostenloses Strategiegespräch</h2>
-        <p style="color:#c3cad4;margin-top:16px;">Wir schauen uns Ihr Einzugsgebiet, Ihre aktuelle
+        <p style="color:var(--muted);margin-top:16px;">Wir schauen uns Ihr Einzugsgebiet, Ihre aktuelle
         Anfragesituation und Ihre Kapazität an. Danach wissen Sie, welches Budget nötig wäre, mit
         wie vielen Anfragen Sie rechnen können – und ob sich das für Ihren Betrieb überhaupt lohnt.
         Kein Verkaufsdruck, keine Vertragsbindung im Gespräch.</p>
         <ul class="checks" style="margin-bottom:0;">
-          <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" fill="#ffb53e"/><path d="M5.6 10.2l2.8 2.8 5.9-6" stroke="#313f52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>30 Minuten, telefonisch oder per Video</span></li>
-          <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" fill="#ffb53e"/><path d="M5.6 10.2l2.8 2.8 5.9-6" stroke="#313f52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Konkrete Zahlen statt Präsentation</span></li>
-          <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" fill="#ffb53e"/><path d="M5.6 10.2l2.8 2.8 5.9-6" stroke="#313f52" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Rückmeldung in der Regel am selben Werktag</span></li>
+          <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" fill="#a8c93e"/><path d="M5.6 10.2l2.8 2.8 5.9-6" stroke="#0a0d00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>30 Minuten, telefonisch oder per Video</span></li>
+          <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" fill="#a8c93e"/><path d="M5.6 10.2l2.8 2.8 5.9-6" stroke="#0a0d00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Konkrete Zahlen statt Präsentation</span></li>
+          <li><svg width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="10" fill="#a8c93e"/><path d="M5.6 10.2l2.8 2.8 5.9-6" stroke="#0a0d00" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg><span>Rückmeldung in der Regel am selben Werktag</span></li>
         </ul>
         <div class="direct">
           Lieber direkt? <a href="tel:+4915510657637">0155 1065 7637</a> ·
@@ -679,17 +684,17 @@ footer ul a:hover{color:var(--amber);}
         note.style.display='block';
         if(r.ok){
           form.reset();
-          note.style.color='#ffb53e';
+          note.style.color='#a8c93e';
           note.textContent='Danke! Ihre Anfrage ist angekommen – wir melden uns in der Regel am selben Werktag.';
           btn.textContent='Gesendet';
         }else{
-          note.style.color='#ff9b8a';
+          note.style.color='#d76a4c';
           note.textContent='Das hat leider nicht geklappt. Bitte schreiben Sie uns direkt an info@mr-elevate.de.';
           btn.disabled=false;btn.textContent='Weiter zur Terminauswahl';
         }
       })
       .catch(function(){
-        note.style.display='block';note.style.color='#ff9b8a';
+        note.style.display='block';note.style.color='#d76a4c';
         note.textContent='Verbindungsfehler. Bitte schreiben Sie uns direkt an info@mr-elevate.de.';
         btn.disabled=false;btn.textContent='Weiter zur Terminauswahl';
       });
