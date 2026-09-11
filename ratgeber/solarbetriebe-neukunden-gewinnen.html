@@ -342,6 +342,10 @@ section{ position:relative; }
 /* Diagramme: selbst gezeichnet, hier ist keine Bild-API angebunden. */
 .grafik{ margin:30px 0; padding:20px 20px 16px; border:1px solid var(--line); border-radius:var(--radius); background:var(--bg-card); }
 .grafik svg{ width:100%; height:auto; display:block; overflow:visible; }
+/* Handyfassungen der Grafiken: eigenes Hochformat statt seitlichem Scrollen.
+   Unter 640px wird die breite Fassung aus- und die schmale eingeblendet. */
+.grafik .g-mobil{ display:none; }
+@media(max-width:640px){ .grafik .g-desk{ display:none; } .grafik .g-mobil{ display:block; } }
 .grafik figcaption{ margin-top:14px; padding-top:12px; border-top:1px solid var(--line); font-size:.84rem; color:var(--fg-dim); line-height:1.5; }
 .signal-list{ list-style:none; display:grid; gap:12px; margin:8px 0 4px; }
 .signal-list li{ display:flex; gap:12px; align-items:flex-start; color:var(--fg-muted); font-size:.98rem; }
@@ -393,7 +397,7 @@ sup a{ color:var(--accent); text-decoration:none; font-weight:600; padding:0 1px
       <p>Das heißt nicht, dass der Markt weg ist. <b>2025 gingen in Deutschland rund 863.000 Photovoltaikanlagen mit zusammen 16,4 Gigawatt ans Netz.</b> Verschoben hat sich, wo diese Leistung entsteht: 2024 wurde auf Dächern noch doppelt so viel Leistung installiert wie auf Freiflächen, 2025 lagen beide etwa gleichauf.<sup><a href="#quellen" id="r1">1</a></sup></p>
 
       <figure class="grafik">
-        <svg viewBox="0 0 520 240" role="img" aria-label="Balkendiagramm: 2024 entfiel doppelt so viel neu installierte Leistung auf Dachanlagen wie auf Freiflaechenanlagen, 2025 etwa je die Haelfte">
+        <svg class="g-desk" viewBox="0 0 520 240" role="img" aria-label="Balkendiagramm: 2024 entfiel doppelt so viel neu installierte Leistung auf Dachanlagen wie auf Freiflaechenanlagen, 2025 etwa je die Haelfte">
           <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="0" y="14" font-size="12">Neu installierte Leistung, Anteil nach Anlagentyp</text>
           <g transform="translate(0,34)">
             <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="0" y="16" font-size="13" font-weight="600">2024</text>
@@ -414,6 +418,25 @@ sup a{ color:var(--accent); text-decoration:none; font-weight:600; padding:0 1px
             <text style="fill:var(--fg-dim);font-family:var(--font-body)" x="0" y="22" font-size="12.5">Gesamtzubau 2025: 16,4 GW auf rund 863.000 Anlagen.</text>
             <text style="fill:var(--fg-dim);font-family:var(--font-body)" x="0" y="42" font-size="12.5">Das Dachgeschäft ist nicht verschwunden, aber es wächst nicht mehr mit.</text>
           </g>
+        </svg>
+        <svg class="g-mobil" viewBox="0 0 320 280" role="img" aria-label="Balkendiagramm: 2024 entfiel doppelt so viel neu installierte Leistung auf Dachanlagen wie auf Freiflaechenanlagen, 2025 etwa je die Haelfte">
+          <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="0" y="14" font-size="13">Neu installierte Leistung,</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="0" y="31" font-size="13">Anteil nach Anlagentyp</text>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="0" y="62" font-size="14" font-weight="600">2024</text>
+          <rect style="fill:var(--accent-fill)" x="0" y="70" width="210" height="30" rx="5"/>
+          <rect style="fill:var(--amber)" x="214" y="70" width="104" height="30" rx="5" opacity=".55"/>
+          <text style="fill:var(--accent-ink);font-family:var(--font-ui)" x="10" y="90" font-size="13" font-weight="600">Dach, doppelte Leistung</text>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="224" y="90" font-size="13">Freifläche</text>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="0" y="128" font-size="14" font-weight="600">2025 <tspan font-weight="400" style="fill:var(--fg-dim)">etwa gleichauf</tspan></text>
+          <rect style="fill:var(--accent-fill)" x="0" y="136" width="157" height="30" rx="5"/>
+          <rect style="fill:var(--amber)" x="161" y="136" width="157" height="30" rx="5" opacity=".55"/>
+          <text style="fill:var(--accent-ink);font-family:var(--font-ui)" x="10" y="156" font-size="13" font-weight="600">Dach</text>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="171" y="156" font-size="13">Freifläche</text>
+          <line style="stroke:var(--line)" x1="0" y1="188" x2="320" y2="188" stroke-width="1"/>
+          <text style="fill:var(--fg-dim);font-family:var(--font-body)" x="0" y="210" font-size="13">Gesamtzubau 2025: 16,4 GW</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-body)" x="0" y="228" font-size="13">auf rund 863.000 Anlagen.</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-body)" x="0" y="252" font-size="13">Das Dachgeschäft ist nicht verschwunden,</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-body)" x="0" y="270" font-size="13">aber es wächst nicht mehr mit.</text>
         </svg>
         <figcaption>Quelle: Auswertung des Marktstammdatenregisters der Bundesnetzagentur, wiedergegeben von pv magazine, Januar 2026. Die Balken zeigen Verhältnisse, keine Absolutwerte.</figcaption>
       </figure>
@@ -466,14 +489,27 @@ sup a{ color:var(--accent); text-decoration:none; font-weight:600; padding:0 1px
       <p>Das Geschäftsmodell der meisten Portale ist der Mehrfachverkauf: Derselbe Kontakt geht an vier bis fünf Betriebe. Der Interessent bekommt also mehrere Angebote, ohne dass er danach gefragt hat, und vergleicht das Einzige, was sich zwischen fünf Unbekannten leicht vergleichen lässt.</p>
 
       <figure class="grafik">
-        <svg viewBox="0 0 520 210" role="img" aria-label="Schema: eine Anfrage vom Lead-Haendler geht gleichzeitig an fuenf Betriebe, die sich im Preis unterbieten">
+        <svg class="g-desk" viewBox="0 0 520 210" role="img" aria-label="Schema: eine Anfrage vom Lead-Haendler geht gleichzeitig an fuenf Betriebe, die sich im Preis unterbieten">
           <g transform="translate(228,10)">
             <rect style="fill:var(--bg-card);stroke:var(--line-strong)" x="0" y="0" width="64" height="40" rx="9" stroke-width="2"/>
             <text style="fill:var(--fg);font-family:var(--font-ui)" x="32" y="25" font-size="12" font-weight="600" text-anchor="middle">1 Anfrage</text>
           </g>
-          <path style="stroke:var(--line-strong)" d="M260 52 C260 78 64 78 64 104" fill="none" stroke-width="2" stroke-dasharray="4 4"/><g transform="translate(30,104)"><rect style="fill:var(--bg-card);stroke:var(--clay)" x="0" y="0" width="68" height="46" rx="9" stroke-width="2" opacity=".85"/><text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="34" y="20" font-size="11" text-anchor="middle">Betrieb 1</text><text style="fill:var(--clay);font-family:var(--font-ui)" x="34" y="35" font-size="11" font-weight="600" text-anchor="middle">Preis ↓</text></g><path style="stroke:var(--line-strong)" d="M260 52 C260 78 178 78 178 104" fill="none" stroke-width="2" stroke-dasharray="4 4"/><g transform="translate(144,104)"><rect style="fill:var(--bg-card);stroke:var(--clay)" x="0" y="0" width="68" height="46" rx="9" stroke-width="2" opacity=".85"/><text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="34" y="20" font-size="11" text-anchor="middle">Betrieb 2</text><text style="fill:var(--clay);font-family:var(--font-ui)" x="34" y="35" font-size="11" font-weight="600" text-anchor="middle">Preis ↓</text></g><path style="stroke:var(--line-strong)" d="M260 52 C260 78 292 78 292 104" fill="none" stroke-width="2" stroke-dasharray="4 4"/><g transform="translate(258,104)"><rect style="fill:var(--bg-card);stroke:var(--clay)" x="0" y="0" width="68" height="46" rx="9" stroke-width="2" opacity=".85"/><text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="34" y="20" font-size="11" text-anchor="middle">Betrieb 3</text><text style="fill:var(--clay);font-family:var(--font-ui)" x="34" y="35" font-size="11" font-weight="600" text-anchor="middle">Preis ↓</text></g><path style="stroke:var(--line-strong)" d="M260 52 C260 78 406 78 406 104" fill="none" stroke-width="2" stroke-dasharray="4 4"/><g transform="translate(372,104)"><rect style="fill:var(--bg-card);stroke:var(--clay)" x="0" y="0" width="68" height="46" rx="9" stroke-width="2" opacity=".85"/><text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="34" y="20" font-size="11" text-anchor="middle">Betrieb 4</text><text style="fill:var(--clay);font-family:var(--font-ui)" x="34" y="35" font-size="11" font-weight="600" text-anchor="middle">Preis ↓</text></g><path style="stroke:var(--line-strong)" d="M260 52 C260 78 520 78 520 104" fill="none" stroke-width="2" stroke-dasharray="4 4"/><g transform="translate(486,104)"><rect style="fill:var(--bg-card);stroke:var(--clay)" x="0" y="0" width="68" height="46" rx="9" stroke-width="2" opacity=".85"/><text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="34" y="20" font-size="11" text-anchor="middle">Betrieb 5</text><text style="fill:var(--clay);font-family:var(--font-ui)" x="34" y="35" font-size="11" font-weight="600" text-anchor="middle">Preis ↓</text></g>
+          <path style="stroke:var(--line-strong)" d="M260 52 C260 78 36 78 36 104" fill="none" stroke-width="2" stroke-dasharray="4 4"/><g transform="translate(2,104)"><rect style="fill:var(--bg-card);stroke:var(--clay)" x="0" y="0" width="68" height="46" rx="9" stroke-width="2" opacity=".85"/><text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="34" y="20" font-size="12" text-anchor="middle">Betrieb 1</text><text style="fill:var(--clay);font-family:var(--font-ui)" x="34" y="35" font-size="12" font-weight="600" text-anchor="middle">Preis ↓</text></g><path style="stroke:var(--line-strong)" d="M260 52 C260 78 148 78 148 104" fill="none" stroke-width="2" stroke-dasharray="4 4"/><g transform="translate(114,104)"><rect style="fill:var(--bg-card);stroke:var(--clay)" x="0" y="0" width="68" height="46" rx="9" stroke-width="2" opacity=".85"/><text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="34" y="20" font-size="12" text-anchor="middle">Betrieb 2</text><text style="fill:var(--clay);font-family:var(--font-ui)" x="34" y="35" font-size="12" font-weight="600" text-anchor="middle">Preis ↓</text></g><path style="stroke:var(--line-strong)" d="M260 52 C260 78 260 78 260 104" fill="none" stroke-width="2" stroke-dasharray="4 4"/><g transform="translate(226,104)"><rect style="fill:var(--bg-card);stroke:var(--clay)" x="0" y="0" width="68" height="46" rx="9" stroke-width="2" opacity=".85"/><text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="34" y="20" font-size="12" text-anchor="middle">Betrieb 3</text><text style="fill:var(--clay);font-family:var(--font-ui)" x="34" y="35" font-size="12" font-weight="600" text-anchor="middle">Preis ↓</text></g><path style="stroke:var(--line-strong)" d="M260 52 C260 78 372 78 372 104" fill="none" stroke-width="2" stroke-dasharray="4 4"/><g transform="translate(338,104)"><rect style="fill:var(--bg-card);stroke:var(--clay)" x="0" y="0" width="68" height="46" rx="9" stroke-width="2" opacity=".85"/><text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="34" y="20" font-size="12" text-anchor="middle">Betrieb 4</text><text style="fill:var(--clay);font-family:var(--font-ui)" x="34" y="35" font-size="12" font-weight="600" text-anchor="middle">Preis ↓</text></g><path style="stroke:var(--line-strong)" d="M260 52 C260 78 484 78 484 104" fill="none" stroke-width="2" stroke-dasharray="4 4"/><g transform="translate(450,104)"><rect style="fill:var(--bg-card);stroke:var(--clay)" x="0" y="0" width="68" height="46" rx="9" stroke-width="2" opacity=".85"/><text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="34" y="20" font-size="12" text-anchor="middle">Betrieb 5</text><text style="fill:var(--clay);font-family:var(--font-ui)" x="34" y="35" font-size="12" font-weight="600" text-anchor="middle">Preis ↓</text></g>
           <text style="fill:var(--fg-dim);font-family:var(--font-body)" x="0" y="180" font-size="12.5">Alle fünf bekommen denselben Kontakt. Gewonnen hat, wer am schnellsten anruft</text>
           <text style="fill:var(--fg-dim);font-family:var(--font-body)" x="0" y="198" font-size="12.5">und am tiefsten geht. Bezahlt wird das aus der eigenen Marge.</text>
+        </svg>
+        <svg class="g-mobil" viewBox="0 0 320 314" role="img" aria-label="Schema: eine Anfrage vom Lead-Haendler geht gleichzeitig an fuenf Betriebe, die sich im Preis unterbieten">
+          <rect style="fill:var(--bg-card);stroke:var(--line-strong)" x="1" y="98" width="86" height="46" rx="9" stroke-width="2"/>
+          <text style="fill:var(--fg);font-family:var(--font-ui)" x="44" y="126" font-size="13" font-weight="600" text-anchor="middle">1 Anfrage</text>
+          <path style="stroke:var(--line-strong)" d="M88 121 C112 121 112 32 134 32" fill="none" stroke-width="2" stroke-dasharray="4 4"/><rect style="fill:var(--bg-card);stroke:var(--clay)" x="134" y="16" width="184" height="32" rx="9" stroke-width="2" opacity=".85"/><text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="148" y="37" font-size="13">Betrieb 1</text><text style="fill:var(--clay);font-family:var(--font-ui)" x="306" y="37" font-size="13" font-weight="600" text-anchor="end">Preis ↓</text>
+          <path style="stroke:var(--line-strong)" d="M88 121 C112 121 112 76 134 76" fill="none" stroke-width="2" stroke-dasharray="4 4"/><rect style="fill:var(--bg-card);stroke:var(--clay)" x="134" y="60" width="184" height="32" rx="9" stroke-width="2" opacity=".85"/><text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="148" y="81" font-size="13">Betrieb 2</text><text style="fill:var(--clay);font-family:var(--font-ui)" x="306" y="81" font-size="13" font-weight="600" text-anchor="end">Preis ↓</text>
+          <path style="stroke:var(--line-strong)" d="M88 121 C112 121 112 120 134 120" fill="none" stroke-width="2" stroke-dasharray="4 4"/><rect style="fill:var(--bg-card);stroke:var(--clay)" x="134" y="104" width="184" height="32" rx="9" stroke-width="2" opacity=".85"/><text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="148" y="125" font-size="13">Betrieb 3</text><text style="fill:var(--clay);font-family:var(--font-ui)" x="306" y="125" font-size="13" font-weight="600" text-anchor="end">Preis ↓</text>
+          <path style="stroke:var(--line-strong)" d="M88 121 C112 121 112 164 134 164" fill="none" stroke-width="2" stroke-dasharray="4 4"/><rect style="fill:var(--bg-card);stroke:var(--clay)" x="134" y="148" width="184" height="32" rx="9" stroke-width="2" opacity=".85"/><text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="148" y="169" font-size="13">Betrieb 4</text><text style="fill:var(--clay);font-family:var(--font-ui)" x="306" y="169" font-size="13" font-weight="600" text-anchor="end">Preis ↓</text>
+          <path style="stroke:var(--line-strong)" d="M88 121 C112 121 112 208 134 208" fill="none" stroke-width="2" stroke-dasharray="4 4"/><rect style="fill:var(--bg-card);stroke:var(--clay)" x="134" y="192" width="184" height="32" rx="9" stroke-width="2" opacity=".85"/><text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="148" y="213" font-size="13">Betrieb 5</text><text style="fill:var(--clay);font-family:var(--font-ui)" x="306" y="213" font-size="13" font-weight="600" text-anchor="end">Preis ↓</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-body)" x="0" y="252" font-size="13">Alle fünf bekommen denselben Kontakt.</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-body)" x="0" y="270" font-size="13">Gewonnen hat, wer am schnellsten anruft</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-body)" x="0" y="288" font-size="13">und am tiefsten geht. Bezahlt wird das</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-body)" x="0" y="306" font-size="13">aus der eigenen Marge.</text>
         </svg>
         <figcaption>Schematische Darstellung des Mehrfachverkaufs, wie ihn Lead-Portale üblicherweise anbieten. Keine Erhebung, sondern die Beschreibung eines Geschäftsmodells.</figcaption>
       </figure>
@@ -518,7 +554,7 @@ sup a{ color:var(--accent); text-decoration:none; font-weight:600; padding:0 1px
       <p><b>Bezahlt wird dabei pro Klick, nicht pro Einblendung.</b> Deine Anzeige kann also oft erscheinen, ohne dass etwas abgerechnet wird. Wer nicht klickt, hat den Namen trotzdem gesehen.</p>
 
       <figure class="grafik">
-        <svg viewBox="0 0 520 200" role="img" aria-label="Schema: von vielen Einblendungen wird nur ein kleiner Teil geklickt und bezahlt">
+        <svg class="g-desk" viewBox="0 0 520 200" role="img" aria-label="Schema: von vielen Einblendungen wird nur ein kleiner Teil geklickt und bezahlt">
           <g transform="translate(0,16)">
             <rect style="fill:var(--accent-fill)" x="0" y="0" width="470" height="34" rx="7" opacity=".28"/>
             <text style="fill:var(--fg);font-family:var(--font-ui)" x="14" y="22" font-size="13" font-weight="600">Einblendungen: dein Name steht da, kostenlos</text>
@@ -531,6 +567,19 @@ sup a{ color:var(--accent); text-decoration:none; font-weight:600; padding:0 1px
           <line style="stroke:var(--line)" x1="0" y1="128" x2="520" y2="128" stroke-width="1"/>
           <text style="fill:var(--fg-dim);font-family:var(--font-body)" x="0" y="150" font-size="12.5">Das Verhältnis ist ein Beispiel, keine Zusage. Wie viele Einblendungen auf</text>
           <text style="fill:var(--fg-dim);font-family:var(--font-body)" x="0" y="168" font-size="12.5">einen Klick kommen, hängt an Suchbegriff, Region und Wettbewerb.</text>
+        </svg>
+        <svg class="g-mobil" viewBox="0 0 320 210" role="img" aria-label="Schema: von vielen Einblendungen wird nur ein kleiner Teil geklickt und bezahlt">
+          <rect style="fill:var(--accent-fill)" x="0" y="0" width="318" height="54" rx="7" opacity=".28"/>
+          <text style="fill:var(--fg);font-family:var(--font-ui)" x="12" y="22" font-size="13.5" font-weight="600">Einblendungen:</text>
+          <text style="fill:var(--fg);font-family:var(--font-ui)" x="12" y="41" font-size="13.5" font-weight="600">dein Name steht da, kostenlos</text>
+          <rect style="fill:var(--accent-fill)" x="0" y="70" width="66" height="34" rx="7"/>
+          <text style="fill:var(--accent-ink);font-family:var(--font-ui)" x="10" y="92" font-size="13.5" font-weight="600">Klicks</text>
+          <text style="fill:var(--fg-muted);font-family:var(--font-body)" x="78" y="92" font-size="13.5">nur hierfür zahlst du</text>
+          <line style="stroke:var(--line)" x1="0" y1="124" x2="320" y2="124" stroke-width="1"/>
+          <text style="fill:var(--fg-dim);font-family:var(--font-body)" x="0" y="146" font-size="13">Das Verhältnis ist ein Beispiel, keine</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-body)" x="0" y="164" font-size="13">Zusage. Wie viele Einblendungen auf</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-body)" x="0" y="182" font-size="13">einen Klick kommen, hängt an</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-body)" x="0" y="200" font-size="13">Suchbegriff, Region und Wettbewerb.</text>
         </svg>
         <figcaption>Abrechnungsprinzip der Google-Suchanzeigen: bezahlt wird pro Klick, nicht pro Einblendung.</figcaption>
       </figure>

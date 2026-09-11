@@ -345,12 +345,11 @@ section{ position:relative; }
 /* Diagramme: selbst gezeichnet, hier ist keine Bild-API angebunden. */
 .grafik{ margin:30px 0; padding:20px 20px 16px; border:1px solid var(--line); border-radius:var(--radius); background:var(--bg-card); }
 .grafik svg{ width:100%; height:auto; display:block; overflow:visible; }
+/* Handyfassungen der Grafiken: eigenes Hochformat statt seitlichem Scrollen.
+   Unter 640px wird die breite Fassung aus- und die schmale eingeblendet. */
+.grafik .g-mobil{ display:none; }
+@media(max-width:640px){ .grafik .g-desk{ display:none; } .grafik .g-mobil{ display:block; } }
 .grafik figcaption{ margin-top:14px; padding-top:12px; border-top:1px solid var(--line); font-size:.84rem; color:var(--fg-dim); line-height:1.5; }
-.grafik-scroll{ overflow-x:auto; overscroll-behavior-x:contain; }
-/* Unter etwa 520px wuerden die Beschriftungen auf unter 8px schrumpfen.
-   Deshalb behaelt die Grafik eine Mindestbreite und scrollt lieber seitlich. */
-.grafik-scroll svg{ min-width:480px; }
-@media print{ .grafik-scroll{ overflow:visible; } .grafik-scroll svg{ min-width:0; } }
 .signal-list{ list-style:none; display:grid; gap:12px; margin:8px 0 4px; }
 .signal-list li{ display:flex; gap:12px; align-items:flex-start; color:var(--fg-muted); font-size:.98rem; }
 .signal-list li svg{ flex-shrink:0; margin-top:4px; color:var(--accent); }
@@ -441,8 +440,7 @@ sup a{ color:var(--accent); text-decoration:none; font-weight:600; padding:0 1px
       </ul>
 
       <figure class="grafik">
-        <div class="grafik-scroll">
-        <svg viewBox="0 0 520 250" role="img" aria-label="Entscheidungsweg: Betreibst du einen land- oder forstwirtschaftlichen Betrieb, einen gewerblichen Betrieb oder bist freiberuflich taetig? Liegt dein Gesamtumsatz ueber 100.000 Euro im Kalenderjahr? Wenn beides zutrifft, gilt die Kassenpflicht ab 1. Januar 2028.">
+        <svg class="g-desk" viewBox="0 0 520 250" role="img" aria-label="Entscheidungsweg: Betreibst du einen land- oder forstwirtschaftlichen Betrieb, einen gewerblichen Betrieb oder bist freiberuflich taetig? Liegt dein Gesamtumsatz ueber 100.000 Euro im Kalenderjahr? Wenn beides zutrifft, gilt die Kassenpflicht ab 1. Januar 2028.">
           <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="0" y="14" font-size="12">Der Weg durch § 146b Absatz 1</text>
           <g transform="translate(0,30)">
             <rect style="fill:var(--bg-elev);stroke:var(--line-strong)" x="1" y="1" width="518" height="52" rx="10"/>
@@ -464,7 +462,28 @@ sup a{ color:var(--accent); text-decoration:none; font-weight:600; padding:0 1px
             <text style="fill:var(--accent-ink);font-family:var(--font-ui)" x="20" y="41" font-size="12" opacity=".8">Elektronisches Aufzeichnungssystem mit zertifizierter TSE.</text>
           </g>
         </svg>
-        </div>
+        <svg class="g-mobil" viewBox="0 0 320 348" role="img" aria-label="Entscheidungsweg: Betreibst du einen land- oder forstwirtschaftlichen Betrieb, einen gewerblichen Betrieb oder bist freiberuflich taetig? Liegt dein Gesamtumsatz ueber 100.000 Euro im Kalenderjahr? Wenn beides zutrifft, gilt die Kassenpflicht ab 1. Januar 2028.">
+          <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="0" y="14" font-size="13">Der Weg durch § 146b Absatz 1</text>
+          <rect style="fill:var(--bg-elev);stroke:var(--line-strong)" x="1" y="26" width="318" height="88" rx="10"/>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="14" y="49" font-size="14" font-weight="600">1. Land-/Forstwirtschaft,</text>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="14" y="67" font-size="14" font-weight="600">Gewerbebetrieb oder freiberuflich?</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="14" y="87" font-size="13">Trifft auf fast jeden selbstständigen</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="14" y="104" font-size="13">Betrieb zu.</text>
+          <path d="M160 118 v14" style="stroke:var(--line-strong);stroke-width:1.6"/>
+          <path d="M155 130 l5 8 5 -8 z" style="fill:var(--line-strong)"/>
+          <rect style="fill:var(--bg-elev);stroke:var(--line-strong)" x="1" y="142" width="318" height="88" rx="10"/>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="14" y="165" font-size="14" font-weight="600">2. Gesamtumsatz über 100.000 €</text>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="14" y="183" font-size="14" font-weight="600">im Kalenderjahr?</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="14" y="203" font-size="13">Gesamtumsatz nach § 19 Abs. 2 S. 1</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="14" y="220" font-size="13">UStG, nicht nur die Bareinnahmen.</text>
+          <path d="M160 234 v14" style="stroke:var(--line-strong);stroke-width:1.6"/>
+          <path d="M155 246 l5 8 5 -8 z" style="fill:var(--line-strong)"/>
+          <rect style="fill:var(--accent-fill)" x="1" y="258" width="318" height="86" rx="10"/>
+          <text style="fill:var(--accent-ink);font-family:var(--font-ui)" x="14" y="282" font-size="15" font-weight="700">Beides ja: Kassenpflicht</text>
+          <text style="fill:var(--accent-ink);font-family:var(--font-ui)" x="14" y="301" font-size="15" font-weight="700">ab 1. Januar 2028</text>
+          <text style="fill:var(--accent-ink);font-family:var(--font-ui)" x="14" y="320" font-size="13" opacity=".8">Elektronisches Aufzeichnungssystem</text>
+          <text style="fill:var(--accent-ink);font-family:var(--font-ui)" x="14" y="336" font-size="13" opacity=".8">mit zertifizierter TSE.</text>
+        </svg>
         <figcaption>Vereinfachte Darstellung des Prüfwegs nach dem Entwurf. Die Finanzbehörden können nach § 148 AO im Einzelfall befreien, und das Ministerium darf per Rechtsverordnung Ausnahmen festlegen. Beides steht bisher nicht fest.</figcaption>
       </figure>
     </div>
@@ -487,8 +506,7 @@ sup a{ color:var(--accent); text-decoration:none; font-weight:600; padding:0 1px
       <p><b>Und wieder raus:</b> Die Pflicht endet erst mit Ablauf des dritten aufeinanderfolgenden Kalenderjahres unter der Grenze. Ein schwaches Jahr befreit also nicht.</p>
 
       <figure class="grafik">
-        <div class="grafik-scroll">
-        <svg viewBox="0 0 520 190" role="img" aria-label="Zeitleiste: August 2026 Referentenentwurf, 2027 das Umsatzjahr das ueber den Start entscheidet, 1. Januar 2028 Kassenpflicht und Wegfall des Papierbons, fuenf Jahre spaeter Evaluierung.">
+        <svg class="g-desk" viewBox="0 0 520 190" role="img" aria-label="Zeitleiste: August 2026 Referentenentwurf, 2027 das Umsatzjahr das ueber den Start entscheidet, 1. Januar 2028 Kassenpflicht und Wegfall des Papierbons, fuenf Jahre spaeter Evaluierung.">
           <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="0" y="14" font-size="12">Zeitplan nach dem Entwurf</text>
           <line x1="16" y1="70" x2="504" y2="70" style="stroke:var(--line-strong);stroke-width:2"/>
           <g>
@@ -520,7 +538,28 @@ sup a{ color:var(--accent); text-decoration:none; font-weight:600; padding:0 1px
             <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="18" y="35" font-size="12">unter 100.000 Euro Umsatz ausgeweitet wird.</text>
           </g>
         </svg>
-        </div>
+        <svg class="g-mobil" viewBox="0 0 320 362" role="img" aria-label="Zeitleiste: August 2026 Referentenentwurf, 2027 das Umsatzjahr das ueber den Start entscheidet, 1. Januar 2028 Kassenpflicht und Wegfall des Papierbons, fuenf Jahre spaeter Evaluierung.">
+          <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="0" y="14" font-size="13">Zeitplan nach dem Entwurf</text>
+          <line x1="22" y1="48" x2="22" y2="244" style="stroke:var(--line-strong);stroke-width:2"/>
+          <circle cx="22" cy="48" r="9" style="fill:var(--bg-card);stroke:var(--line-strong);stroke-width:2"/>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="46" y="46" font-size="14" font-weight="700">Aug. 2026</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="46" y="64" font-size="13">Referentenentwurf</text>
+          <circle cx="22" cy="108" r="9" style="fill:var(--bg-card);stroke:var(--line-strong);stroke-width:2"/>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="46" y="106" font-size="14" font-weight="700">2027</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="46" y="124" font-size="13">Das Umsatzjahr, das zählt</text>
+          <circle cx="22" cy="172" r="13" style="fill:var(--accent-fill)"/>
+          <text style="fill:var(--accent);font-family:var(--font-ui)" x="46" y="168" font-size="14.5" font-weight="700">1.1.2028</text>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="46" y="186" font-size="13.5" font-weight="600">Kassenpflicht</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="46" y="203" font-size="13">Papierbon fällt weg</text>
+          <circle cx="22" cy="244" r="9" style="fill:var(--bg-card);stroke:var(--line-strong);stroke-width:2"/>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="46" y="242" font-size="14" font-weight="700">+5 Jahre</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="46" y="260" font-size="13">Evaluierung</text>
+          <rect style="fill:var(--bg-elev);stroke:var(--line)" x="1" y="278" width="318" height="80" rx="9"/>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="14" y="299" font-size="13">Bei der Evaluierung soll auch geprüft</text>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="14" y="315" font-size="13">werden, ob die Kassenpflicht auf</text>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="14" y="331" font-size="13">Betriebe unter 100.000 Euro Umsatz</text>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="14" y="347" font-size="13">ausgeweitet wird.</text>
+        </svg>
         <figcaption>Nach dem Referentenentwurf vom 7. August 2026. Ein Kabinettsbeschluss steht aus, die Termine können sich noch verschieben.</figcaption>
       </figure>
     </div>
@@ -541,8 +580,7 @@ sup a{ color:var(--accent); text-decoration:none; font-weight:600; padding:0 1px
       <p>Die Deutsche Industrie- und Handelskammer hält das für deutlich zu niedrig und nennt <b>3.500 bis 6.500 Euro</b> als realistische Größenordnung.<sup><a href="#quellen" id="r2">2</a></sup></p>
 
       <figure class="grafik">
-        <div class="grafik-scroll">
-        <svg viewBox="0 0 520 200" role="img" aria-label="Balkenvergleich der Anschaffungskosten je Kasse: Bundesfinanzministerium rechnet mit 575 Euro, die DIHK haelt 3.500 bis 6.500 Euro fuer realistisch.">
+        <svg class="g-desk" viewBox="0 0 520 200" role="img" aria-label="Balkenvergleich der Anschaffungskosten je Kasse: Bundesfinanzministerium rechnet mit 575 Euro, die DIHK haelt 3.500 bis 6.500 Euro fuer realistisch.">
           <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="0" y="14" font-size="12">Anschaffungskosten je Kasse, Annahme im Entwurf gegen Schätzung der DIHK</text>
           <g transform="translate(0,36)">
             <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="0" y="16" font-size="12" font-weight="600">BMF</text>
@@ -563,7 +601,25 @@ sup a{ color:var(--accent); text-decoration:none; font-weight:600; padding:0 1px
             <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="18" y="54" font-size="12">Warenwirtschaft. Beide Zahlen können stimmen und meinen Verschiedenes.</text>
           </g>
         </svg>
-        </div>
+        <svg class="g-mobil" viewBox="0 0 320 266" role="img" aria-label="Balkenvergleich der Anschaffungskosten je Kasse: Bundesfinanzministerium rechnet mit 575 Euro, die DIHK haelt 3.500 bis 6.500 Euro fuer realistisch.">
+          <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="0" y="14" font-size="13">Anschaffungskosten je Kasse, Annahme im</text>
+          <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="0" y="31" font-size="13">Entwurf gegen Schätzung der DIHK</text>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="0" y="72" font-size="13" font-weight="600">BMF</text>
+          <rect style="fill:var(--accent-fill)" x="46" y="54" width="17.7" height="26" rx="4"/>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="72" y="72" font-size="13.5" font-weight="700">575 €</text>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="0" y="116" font-size="13" font-weight="600">DIHK</text>
+          <rect style="fill:var(--clay)" x="46" y="98" width="107.7" height="26" rx="5" opacity=".85"/>
+          <rect style="fill:var(--clay)" x="153.7" y="98" width="92.3" height="26" rx="5" opacity=".4"/>
+          <text style="fill:var(--accent-ink);font-family:var(--font-ui)" x="56" y="116" font-size="13" font-weight="600">3.500 €</text>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="254" y="116" font-size="13.5" font-weight="700">6.500 €</text>
+          <rect style="fill:var(--bg-elev);stroke:var(--line)" x="1" y="142" width="318" height="120" rx="9"/>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="14" y="164" font-size="13">Die Spanne erklärt sich durch den</text>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="14" y="181" font-size="13">Zuschnitt: Das Ministerium rechnet die</text>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="14" y="198" font-size="13">reine Kasse, die Kammer ein System mit</text>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="14" y="215" font-size="13">Einrichtung, Schulung, Anbindung und</text>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="14" y="232" font-size="13">Warenwirtschaft. Beide Zahlen können</text>
+          <text style="fill:var(--fg-muted);font-family:var(--font-ui)" x="14" y="249" font-size="13">stimmen und meinen Verschiedenes.</text>
+        </svg>
         <figcaption>Balkenlängen maßstäblich zu den genannten Beträgen. Quelle der 575 Euro: Referentenentwurf, Abschnitt Erfüllungsaufwand. Quelle der Spanne: Stellungnahme der DIHK.</figcaption>
       </figure>
 
