@@ -709,15 +709,19 @@ footer ul a:hover{color:var(--amber);}
   "@graph": [
     {
       "@type": "ProfessionalService",
-      "@id": "https://www.mr-elevate.de/#organisation",
+      "@id": "https://www.mr-elevate.de/#organization",
       "name": "MR Elevate",
       "legalName": "MR Elevate – Marc Richter",
       "url": "https://www.mr-elevate.de/",
       "email": "info@mr-elevate.de",
-      "telephone": "+49 155 10657637",
+      "telephone": "+4915510657637",
       "founder": {
         "@type": "Person",
-        "name": "Marc Richter"
+        "@id": "https://www.mr-elevate.de/#marc-richter",
+        "name": "Marc Richter",
+        "sameAs": [
+          "https://www.linkedin.com/in/marc-richter-043a90412/"
+        ]
       },
       "address": {
         "@type": "PostalAddress",
@@ -727,10 +731,32 @@ footer ul a:hover{color:var(--amber);}
         "addressRegion": "Sachsen",
         "addressCountry": "DE"
       },
-      "areaServed": {
-        "@type": "Country",
-        "name": "Deutschland"
-      },
+      "areaServed": [
+        {
+          "@type": "City",
+          "name": "Dresden"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Landkreis Meißen"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Landkreis Sächsische Schweiz-Osterzgebirge"
+        },
+        {
+          "@type": "AdministrativeArea",
+          "name": "Landkreis Bautzen"
+        },
+        {
+          "@type": "State",
+          "name": "Sachsen"
+        },
+        {
+          "@type": "Country",
+          "name": "Deutschland"
+        }
+      ],
       "knowsAbout": [
         "Leadgenerierung",
         "Google Ads",
@@ -738,7 +764,12 @@ footer ul a:hover{color:var(--amber);}
         "Landingpages",
         "Photovoltaik-Marketing"
       ],
-      "vatID": "DE358236187"
+      "vatID": "DE358236187",
+      "geo": {
+        "@type": "GeoCoordinates",
+        "latitude": 51.06149,
+        "longitude": 13.65755
+      }
     },
     {
       "@type": "WebPage",
@@ -753,7 +784,7 @@ footer ul a:hover{color:var(--amber);}
         "name": "MR Elevate"
       },
       "about": {
-        "@id": "https://www.mr-elevate.de/#organisation"
+        "@id": "https://www.mr-elevate.de/#organization"
       },
       "primaryImageOfPage": {
         "@type": "ImageObject",
@@ -784,7 +815,7 @@ footer ul a:hover{color:var(--amber);}
       "name": "Leadgenerierung für Solar- und Photovoltaik-Fachbetriebe",
       "serviceType": "Leadgenerierung",
       "provider": {
-        "@id": "https://www.mr-elevate.de/#organisation"
+        "@id": "https://www.mr-elevate.de/#organization"
       },
       "areaServed": {
         "@type": "Country",
