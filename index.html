@@ -1115,6 +1115,8 @@ body{
 @media(prefers-reduced-motion:reduce){
   .sol-visual .mk-spark-lime{ stroke-dashoffset:0 !important; animation:none !important; }
 }
+/* Lange Woerter in Ueberschriften: weiche Trennstellen im HTML, dies nur als letzte Sicherung */
+@media(max-width:480px){ h1,h2,h3{ overflow-wrap:break-word; } }
 </style>
 </head>
 
@@ -1401,7 +1403,7 @@ body{
 <section class="sec-pad" id="prozess" style="border-top:1px solid var(--line);border-bottom:1px solid var(--line);">
   <div class="container">
     <div class="sec-head reveal">
-      <h2 class="h-sec">So sieht eine Zusammenarbeit mit mir aus</h2>
+      <h2 class="h-sec">So sieht eine Zusammen&shy;arbeit mit mir aus</h2>
       <p class="sec-sub">Von der Analyse bis zur Skalierung</p>
       <p class="lead">Nach jeder Phase bekommst du eine kurze Einordnung, was gut lief und was ausbaufähig ist.</p>
     </div>

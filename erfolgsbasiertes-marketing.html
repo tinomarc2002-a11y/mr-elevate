@@ -376,6 +376,8 @@ section{ position:relative; }
 /* Erst auf schmalen Displays ausblenden: bis dahin ist Platz, und ohne
    die Links gaebe es auf Unterseiten gar keinen Weg zum Ratgeber. */
 @media(max-width:600px){ .nav-wc{ display:none; } }
+/* Lange Woerter in Ueberschriften: weiche Trennstellen im HTML, dies nur als letzte Sicherung */
+@media(max-width:480px){ h1,h2,h3{ overflow-wrap:break-word; } }
 </style>
 </head>
 <body>
@@ -581,7 +583,7 @@ section{ position:relative; }
 <section class="closing">
   <div class="container">
     <span class="eyebrow" style="justify-content:center;"><i>Der nächste Schritt</i></span>
-    <h2>15 Minuten, klare Einschätzung, kein Verkaufsgespräch</h2>
+    <h2>15 Minuten, klare Einschätzung, kein Verkaufs&shy;gespräch</h2>
     <p>Im kostenlosen Analysegespräch klären wir, ob erfolgsbasiertes Marketing für dein Angebot rechnerisch aufgeht.</p>
     <p class="strong-line">Reicht deine Marge nicht für Werbekosten plus Vergütung, sage ich ab. Dann kostet dich das Ganze fünfzehn Minuten statt drei Monate Budget.</p>
     <div class="closing-actions">

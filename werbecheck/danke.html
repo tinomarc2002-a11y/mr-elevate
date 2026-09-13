@@ -97,6 +97,8 @@ main{flex:1;display:flex;align-items:center;justify-content:center;padding:36px 
 .btn-primary{touch-action:manipulation;}
 :focus-visible{outline:3px solid var(--accent);outline-offset:2px;}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;}}
+/* Lange Woerter in Ueberschriften: weiche Trennstellen im HTML, dies nur als letzte Sicherung */
+@media(max-width:480px){ h1,h2,h3{ overflow-wrap:break-word; } }
 </style>
 </head>
 <body>

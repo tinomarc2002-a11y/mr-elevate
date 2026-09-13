@@ -392,6 +392,8 @@ section{ position:relative; }
 /* Erst auf schmalen Displays ausblenden: bis dahin ist Platz, und ohne
    die Links gaebe es auf Unterseiten gar keinen Weg zum Ratgeber. */
 @media(max-width:600px){ .nav-wc{ display:none; } }
+/* Lange Woerter in Ueberschriften: weiche Trennstellen im HTML, dies nur als letzte Sicherung */
+@media(max-width:480px){ h1,h2,h3{ overflow-wrap:break-word; } }
 </style>
 </head>
 <body>
@@ -418,7 +420,7 @@ section{ position:relative; }
 <header class="g-hero">
   <div class="container">
     <span class="g-kicker">Wachstum &amp; Personal</span>
-    <h1 class="g-title">Mitarbeitergewinnung: wenn die Anfragen schneller wachsen als dein Team</h1>
+    <h1 class="g-title">Mitarbeiter&shy;gewinnung: wenn die Anfragen schneller wachsen als dein Team</h1>
     <p class="g-lead">Meine Kerndienstleistung ist die <a href="/leadgenerierung-dienstleister">Neukundengewinnung</a>. Die funktioniert allerdings irgendwann so gut, dass ein zweites Problem auftaucht: <b>Es kommen mehr Anfragen herein, als du allein abarbeiten kannst.</b></p>
     <p class="g-lead">Dann bringt noch mehr Reichweite wenig. Du brauchst Menschen, die zu deinem Betrieb passen, und Abläufe, die das Wachstum tragen. Hier steht, wie ich dich dabei unterstütze und wo die Grenzen dieser Leistung liegen.</p>
     <div class="g-meta">
@@ -579,7 +581,7 @@ section{ position:relative; }
 
 <section class="g-faq" id="faq">
   <div class="container">
-    <h2>Häufige Fragen zur Mitarbeitergewinnung</h2>
+    <h2>Häufige Fragen zur Mitarbeiter&shy;gewinnung</h2>
     <dl>
       <div>
         <dt>Ist Mitarbeitergewinnung deine Hauptleistung?</dt>

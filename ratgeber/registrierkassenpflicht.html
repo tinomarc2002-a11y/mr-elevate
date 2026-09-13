@@ -318,6 +318,8 @@ section{ position:relative; }
 /* Erst auf schmalen Displays ausblenden: bis dahin ist Platz, und ohne
    die Links gaebe es auf Unterseiten gar keinen Weg zum Ratgeber. */
 @media(max-width:600px){ .nav-wc{ display:none; } }
+/* Lange Woerter in Ueberschriften: weiche Trennstellen im HTML, dies nur als letzte Sicherung */
+@media(max-width:480px){ h1,h2,h3{ overflow-wrap:break-word; } }
 </style>
 </head>
 <body>
@@ -383,7 +385,7 @@ sup a{ color:var(--accent); text-decoration:none; font-weight:600; padding:0 1px
 <header class="g-hero">
   <div class="container">
     <span class="g-kicker">Ratgeber · Kassenpflicht</span>
-    <h1 class="g-title">Registrierkassenpflicht ab 2028: was im Gesetzentwurf wirklich steht</h1>
+    <h1 class="g-title">Registrier&shy;kassen&shy;pflicht ab 2028: was im Gesetzentwurf wirklich steht</h1>
     <p class="g-lead">Seit dem 7. August 2026 liegt der Referentenentwurf des Bundesfinanzministeriums vor. <b>Wer mehr als 100.000 Euro Gesamtumsatz macht, soll ab dem 1. Januar 2028 eine elektronische Kasse führen müssen.</b> Die offene Ladenkasse wäre damit für diese Betriebe erledigt.</p>
     <p class="g-lead">In den Meldungen dazu stehen mehrere Dinge falsch. Am hartnäckigsten die Behauptung, es gehe nur um Gastronomie. Dieser Artikel geht den Entwurf durch und zitiert, wo es darauf ankommt, den Gesetzestext selbst.</p>
     <div class="g-meta">

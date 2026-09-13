@@ -412,6 +412,15 @@ section{ position:relative; }
 /* Erst auf schmalen Displays ausblenden: bis dahin ist Platz, und ohne
    die Links gaebe es auf Unterseiten gar keinen Weg zum Ratgeber. */
 @media(max-width:600px){ .nav-wc{ display:none; } }
+/* Liste der Stadtseiten */
+.city-list{ list-style:none; display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:10px; margin:18px 0 8px; }
+.phase-body .city-list a{ display:block; padding:14px 16px; border:1px solid var(--line-strong); border-radius:var(--radius-sm);
+  text-decoration:none; color:var(--fg); transition:border-color var(--t-fast), background var(--t-fast); }
+.phase-body .city-list a:hover{ border-color:var(--accent); background:rgba(168,201,62,.05); color:var(--fg); }
+.city-list b{ display:block; font-family:var(--font-display); font-weight:600; font-size:1.02rem; margin-bottom:2px; }
+.city-list span{ display:block; font-size:.88rem; color:var(--fg-muted); line-height:1.45; }
+/* Lange Woerter in Ueberschriften: weiche Trennstellen im HTML, dies nur als letzte Sicherung */
+@media(max-width:480px){ h1,h2,h3{ overflow-wrap:break-word; } }
 </style>
 </head>
 <body>
@@ -438,13 +447,13 @@ section{ position:relative; }
 <header class="g-hero">
   <div class="container">
     <span class="g-kicker">Für Unternehmen in Dresden und Sachsen</span>
-    <h1 class="g-title">Neukundengewinnung für Unternehmen in Dresden und Sachsen</h1>
+    <h1 class="g-title">Neukunden&shy;gewinnung für Unternehmen in Dresden und Sachsen</h1>
     <p class="g-lead">Wer seine Kunden in der eigenen Region findet, braucht keine Reichweite in ganz Deutschland. <b>Er braucht Sichtbarkeit genau dort, wo seine Kunden wohnen und suchen.</b> In Dresden, im Umland und überall in Sachsen, wo ein Betrieb seine Aufträge holt.</p>
     <p class="g-lead">Hier steht, wie regionale Sichtbarkeit entsteht, warum Dresden allein selten das ganze Einzugsgebiet ist und weshalb zwanzig kopierte Ortsseiten mehr schaden als nutzen.</p>
     <div class="g-meta">
       <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 1 0 0 16 8 8 0 0 0 0-16M6.5 17a5.5 5.5 0 0 1 11 0"/></svg> von <a href="/#founder">Marc Richter</a></span>
-      <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg> aktualisiert <time datetime="2026-09-11">11. September 2026</time></span>
-      <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> ca. 6 Minuten Lesezeit</span>
+      <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M8 3v4M16 3v4M3 11h18"/></svg> aktualisiert <time datetime="2026-09-13">13. September 2026</time></span>
+      <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg> ca. 7 Minuten Lesezeit</span>
       <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg> MR Elevate, Dresden-Briesnitz</span>
     </div>
   </div>
@@ -521,6 +530,29 @@ section{ position:relative; }
       <p><b>Du sprichst dabei direkt mit mir.</b> Kein Account-Manager, kein wechselnder Ansprechpartner. Wer anruft, erreicht die Person, die auch die Kampagne gebaut hat.</p>
       <p>Sitzt du in Dresden oder im Umland, treffen wir uns auch persönlich. Wo, suchen wir zusammen aus. Bei mir wird es eher nicht, bei dir nicht zwingend. Am besten ein Ort, an dem man gern ein bisschen länger sitzt.</p>
       <p>Abgerechnet wird wie bei allen meinen Leistungen: eine kleine Setup-Gebühr zum Start, das Werbebudget geht direkt an Google oder Meta, und der größere Teil meiner Vergütung hängt an qualifizierten Anfragen. Erstverträge laufen höchstens drei bis sechs Monate. Wie das genau funktioniert, steht beim <a href="/erfolgsbasiertes-marketing">erfolgsbasierten Marketing</a>.</p>
+    </div>
+  </div>
+</section>
+
+<section class="phase" id="staedte">
+  <div class="container">
+    <div class="phase-head reveal">
+      <div class="phase-icon" aria-hidden="true"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg></div>
+      <div class="phase-head-text">
+        <span class="pnum">Städte in Sachsen</span>
+        <h2>Leipzig, Chemnitz und die anderen größeren Städte</h2>
+      </div>
+    </div>
+    <div class="phase-body reveal">
+      <p>Außerhalb von Dresden sieht das Einzugsgebiet überall anders aus. In Leipzig reicht es bis nach Halle, in Plauen über drei Grenzen, im Landkreis Bautzen von der Dresdner Stadtgrenze bis Hoyerswerda. Deshalb gibt es für die größeren Städte eigene Seiten, jede mit Zahlen von Stadt, Kammern und Landesamt und mit dem, worauf man bei Anzeigen vor Ort achten sollte.</p>
+      <ul class="city-list">
+        <li><a href="/neukundengewinnung-leipzig"><b>Leipzig</b><span>Stadtteile, viele Einpendler und die Nähe zu Halle</span></a></li>
+        <li><a href="/neukundengewinnung-chemnitz"><b>Chemnitz</b><span>Umland bis ins Erzgebirge und eine ältere Kundschaft</span></a></li>
+        <li><a href="/neukundengewinnung-zwickau"><b>Zwickau</b><span>Viele Einpendler und die nahe Grenze zu Thüringen</span></a></li>
+        <li><a href="/neukundengewinnung-plauen"><b>Plauen</b><span>Dreiländereck mit Bayern, Thüringen und Tschechien</span></a></li>
+        <li><a href="/neukundengewinnung-goerlitz"><b>Görlitz</b><span>Europastadt an der Grenze zu Polen</span></a></li>
+        <li><a href="/neukundengewinnung-bautzen"><b>Bautzen</b><span>Großer Landkreis zwischen Radeberg und Hoyerswerda</span></a></li>
+      </ul>
     </div>
   </div>
 </section>
