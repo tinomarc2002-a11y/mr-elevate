@@ -4,10 +4,7 @@
    Ergaenzt die Inline-Effekte der Startseite (Spotlight, Magnetic auf
    [data-magnetic]) um Effekte fuer ALLE Seiten:
 
-   - [data-tilt]        3D-Neigung mit Glanzlicht, das der Maus folgt
    - [data-parallax=N]  sanfter Parallax-Versatz beim Scrollen (max N px)
-   - .btn-primary       magnetischer Sog (nur ohne data-magnetic, das
-                        behandelt die Startseite selbst - kein Doppelbind)
    - .art-card/.kpi-card  Maus-Spotlight wie auf der Startseite
    - .nav-links         Scrollspy: aktiver Abschnitt wird markiert
 
@@ -102,39 +99,6 @@
       }, { passive: true });
     })();
 
-    /* ---------- Magnetic auf Primaer-Buttons ohne data-magnetic ---------- */
-    document.querySelectorAll(".btn-primary:not([data-magnetic])").forEach(function (el) {
-      el.addEventListener("mousemove", function (e) {
-        var r = el.getBoundingClientRect();
-        var x = e.clientX - (r.left + r.width / 2);
-        var y = e.clientY - (r.top + r.height / 2);
-        el.style.transform = "translate(" + (x * 0.28) + "px," + (y * 0.36) + "px)";
-      });
-      el.addEventListener("mouseleave", function () { el.style.transform = ""; });
-    });
-
-    /* ---------- 3D-Tilt mit Glanzlicht ---------- */
-    document.querySelectorAll("[data-tilt]").forEach(function (el) {
-      var glare = document.createElement("span");
-      glare.className = "fx-glare";
-      glare.setAttribute("aria-hidden", "true");
-      el.appendChild(glare);
-      var MAX = 6;
-      el.addEventListener("pointerenter", function () { el.style.transition = "none"; });
-      el.addEventListener("pointermove", function (e) {
-        var r = el.getBoundingClientRect();
-        var px = (e.clientX - r.left) / r.width;
-        var py = (e.clientY - r.top) / r.height;
-        el.style.transform = "perspective(900px) rotateX(" + ((0.5 - py) * 2 * MAX).toFixed(2) +
-          "deg) rotateY(" + ((px - 0.5) * 2 * MAX).toFixed(2) + "deg) scale(1.015)";
-        el.style.setProperty("--gx", (px * 100).toFixed(1) + "%");
-        el.style.setProperty("--gy", (py * 100).toFixed(1) + "%");
-      });
-      el.addEventListener("pointerleave", function () {
-        el.style.transition = "transform .5s cubic-bezier(.22,.61,.36,1)";
-        el.style.transform = "";
-      });
-    });
   }
 
   if (document.readyState === "loading") {

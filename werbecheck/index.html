@@ -621,8 +621,9 @@ button, .option, .btn-primary, .booking-submit, .field select { touch-action: ma
 /* Lange Woerter in Ueberschriften: weiche Trennstellen im HTML, dies nur als letzte Sicherung */
 @media(max-width:480px){ h1,h2,h3{ overflow-wrap:break-word; } }
 </style>
+<link rel="stylesheet" href="/perspective.css" />
 </head>
-<body>
+<body class="p-wc">
 
 <!-- ============ HEADER ============ -->
 <header class="site-header">
@@ -800,7 +801,7 @@ document.getElementById('year').textContent = new Date().getFullYear();
 
 // ============== BADGES (für section-label über der Frage) ==============
 const gateBadge = { name: 'Eure Zahlen', text: '#0E7F57', soft: '#E3F7EF' };
-const contextBadge = { name: 'Kurz zu deinem Angebot', text: '#6B7280', soft: '#F0EEE8' };
+const contextBadge = { name: 'Kurz zu deinem Angebot', text: '#4B5563', soft: '#EEF0F5' };
 const fitBadge = { name: 'Plattform-Fit', text: '#2A63C7', soft: '#E5EEFD' };
 
 // ============== FRAGEN ==============
@@ -1184,7 +1185,7 @@ function renderQuestion(idx) {
   card.style.animation = 'none';
   card.offsetHeight;
   const anim = navDirection === 'back' ? 'slideInLeft' : 'slideInRight';
-  card.style.animation = anim + ' 0.4s cubic-bezier(0.22, 1, 0.36, 1)';
+  card.style.animation = anim + ' 0.24s cubic-bezier(0.23, 1, 0.32, 1)';
 
   const sectionLabel = document.getElementById('sectionLabel');
   if (q.badge) {
