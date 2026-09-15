@@ -394,4 +394,45 @@ body .btn-cc{ border-radius:12px; font-family:var(--font-body); font-weight:600;
   border-radius:8px; backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px); }
 .hero-credit a{ color:inherit; text-decoration:underline; text-underline-offset:2px; }
 .hero-credit a:hover{ color:rgba(20,20,20,.9); }
-@media(max-width:640px){ .hero-credit{ font-size:.6rem; right:10px; bottom:10px; padding:2px 7px; } }
+/* Rechtsbuendig und schmal genug, damit der Cookie-Schalter unten links frei bleibt. */
+@media(max-width:640px){ .hero-credit{ font-size:.6rem; right:10px; bottom:10px; padding:2px 7px;
+  max-width:70%; text-align:right; } }
+
+/* Echte Fotos sind unruhiger als die gemalte Illustration, deshalb hier ein
+   kraeftigerer Aufheller hinter der Schrift. */
+.hero-bg:has(.hero-photo-real)::after{
+  background:
+    linear-gradient(90deg, rgba(var(--bg-light-rgb),.78) 0%, rgba(var(--bg-light-rgb),.58) 44%, rgba(var(--bg-light-rgb),.26) 74%, rgba(var(--bg-light-rgb),.1) 100%),
+    linear-gradient(180deg, rgba(var(--bg-light-rgb),.2) 0%, rgba(var(--bg-light-rgb),.04) 38%, rgba(var(--bg-light-rgb),.4) 78%, var(--bg-light) 100%);
+}
+@media (max-width:900px){
+  .hero-bg:has(.hero-photo-real)::after{ background:
+    linear-gradient(180deg, rgba(var(--bg-light-rgb),.88) 0%, rgba(var(--bg-light-rgb),.78) 46%, rgba(var(--bg-light-rgb),.76) 74%, var(--bg-light) 100%); }
+}
+/* Die transparente Kontur verschwindet auf einem Foto fast ganz. Auf der
+   Startseite steht sie auf der blassen Illustration und bleibt dort. */
+.hero:has(.hero-photo-real) .hero-title .outline{ -webkit-text-stroke:0; color:var(--accent); }
+
+/* =================================================================
+   HERO AUF SCHMALEN SCHIRMEN
+   ================================================================= */
+/* Bei 2.6rem ist "Marketingagentur" 354 px breit, das Textfeld aber nur
+   327 px. Die Reveal-Maske (.hl{overflow:hidden}) hat den Ueberstand
+   kommentarlos abgeschnitten. Kleinerer Grad plus Silbentrennung. */
+@media (max-width:640px){
+  .h-hero{ font-size:clamp(1.95rem,8.2vw,2.6rem); line-height:1.08; letter-spacing:-.02em; }
+  .hero-title{ hyphens:auto; -webkit-hyphens:auto; overflow-wrap:break-word; }
+  /* Die Kontur franst in dieser Groesse auf dem Foto aus, hier lieber gefuellt. */
+  .hero-title .outline{ -webkit-text-stroke:0; color:var(--accent); }
+}
+
+/* Im hochkanten Handy-Hero ist das Bild hoehenfuellend skaliert, sichtbar
+   bleibt nur ein schmaler senkrechter Streifen. Dort entscheidet also die
+   waagerechte Position, welches Gebaeude im Bild landet, waehrend auf dem
+   Desktop die senkrechte zaehlt. Deshalb je Stadt ein eigener Wert. */
+@media (max-width:640px){
+  .hero-photo[src$="hero-freiberg.jpg"]{ object-position:16% 50%; }
+  .hero-photo[src$="hero-goerlitz.jpg"]{ object-position:33% 50%; }
+  .hero-photo[src$="hero-meissen.jpg"]{ object-position:45% 50%; }
+  .hero-photo[src$="hero-delitzsch.jpg"]{ object-position:72% 50%; }
+}
