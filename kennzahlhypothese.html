@@ -80,6 +80,30 @@ hr{border:0;border-top:1px solid var(--line);margin:28px 0}
 .kachel.dunkel{background:var(--ink);color:#fff}
 .kachel.dunkel .k{color:var(--accent)}
 
+.spanne-kopf{display:flex;flex-wrap:wrap;gap:16px 30px;align-items:flex-end;justify-content:space-between;margin-bottom:18px}
+.spanne-kopf h2{font-size:1.05rem;font-weight:700;margin:0 0 4px;letter-spacing:-.01em}
+.spanne-kopf p{margin:0;font-size:.88rem;color:var(--fg-muted);max-width:46ch}
+.spanne-regler{min-width:240px;flex:1}
+.spanne-regler output{min-width:4.2em}
+
+table.faelle{width:100%;border-collapse:collapse;font-size:.95rem}
+table.faelle th,table.faelle td{padding:10px 12px;border-bottom:1px solid var(--line);text-align:right;
+  font-variant-numeric:tabular-nums}
+table.faelle thead th{font-size:.72rem;font-weight:700;letter-spacing:.07em;text-transform:uppercase;
+  color:var(--fg-muted);border-bottom:1px solid var(--line)}
+table.faelle thead th.schlecht{color:#a0492c}
+table.faelle thead th.gut{color:var(--accent-text)}
+table.faelle tbody th{text-align:left;font-weight:500;color:var(--fg-muted);padding-left:0}
+table.faelle tbody tr:last-child th,table.faelle tbody tr:last-child td{border-bottom:0;
+  font-weight:700;padding-top:14px}
+table.faelle td.ergebnis{font-size:1.05rem;font-weight:700}
+@media(max-width:640px){
+  table.faelle{font-size:.85rem}
+  table.faelle th,table.faelle td{padding:8px 6px}
+  table.faelle tbody th{font-size:.8rem}
+}
+.spanne-fuss{margin:16px 0 0;font-size:.83rem;color:var(--fg-muted)}
+
 .fuss{margin-top:26px;text-align:center;color:#8d94a1;font-size:.83rem}
 .fuss a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(168,201,62,.4)}
 @media(hover:hover){.fuss a:hover{color:#fff}}
@@ -155,6 +179,34 @@ hr{border:0;border-top:1px solid var(--line);margin:28px 0}
       <div class="kachel dunkel"><span class="k">ROAS</span><span class="v" id="k-roas">0x</span></div>
       <div class="kachel dunkel"><span class="k">Gewinn</span><span class="v" id="k-gewinn">0 €</span></div>
     </div>
+
+    <hr />
+
+    <div class="spanne-kopf">
+      <div>
+        <h2>Schlechter Fall, Erwartung, guter Fall</h2>
+        <p>Quoten und Lead-Preis treffen selten genau. Der Regler verschiebt beides nach oben und unten.</p>
+      </div>
+      <div class="schieber spanne-regler">
+        <input type="range" id="spanne" min="5" max="50" step="5" value="25" aria-label="Schwankung" />
+        <output for="spanne" id="spanne-out">±25%</output>
+      </div>
+    </div>
+
+    <table class="faelle">
+      <thead>
+        <tr><th></th><th class="schlecht">Schlechter Fall</th><th>Erwartung</th><th class="gut">Guter Fall</th></tr>
+      </thead>
+      <tbody>
+        <tr><th>Kosten pro Lead</th><td id="c-cpl-s">0 €</td><td id="c-cpl-e">0 €</td><td id="c-cpl-g">0 €</td></tr>
+        <tr><th>Leads</th><td id="c-leads-s">0</td><td id="c-leads-e">0</td><td id="c-leads-g">0</td></tr>
+        <tr><th>Neukunden</th><td id="c-kunden-s">0</td><td id="c-kunden-e">0</td><td id="c-kunden-g">0</td></tr>
+        <tr><th>Umsatz</th><td id="c-umsatz-s">0 €</td><td id="c-umsatz-e">0 €</td><td id="c-umsatz-g">0 €</td></tr>
+        <tr><th>ROAS</th><td id="c-roas-s">0x</td><td id="c-roas-e">0x</td><td id="c-roas-g">0x</td></tr>
+        <tr><th>Gewinn</th><td class="ergebnis" id="c-gewinn-s">0 €</td><td class="ergebnis" id="c-gewinn-e">0 €</td><td class="ergebnis" id="c-gewinn-g">0 €</td></tr>
+      </tbody>
+    </table>
+    <p class="spanne-fuss" id="spanne-fuss"></p>
   </div>
 
   <p class="fuss">Du kennst die Kosten pro Lead noch nicht? Der <a href="/leadpreisrechner">Lead-Preis-Rechner</a> leitet sie aus CPM, CTR und CPC her.</p>
@@ -163,7 +215,7 @@ hr{border:0;border-top:1px solid var(--line);margin:28px 0}
 
 <script>
 (function(){
-  var ids = ['budget','cpl','erreich','qual','close','wert'];
+  var ids = ['budget','cpl','erreich','qual','close','wert','spanne'];
   var start = {}; ids.forEach(function(i){ start[i] = document.getElementById(i).value; });
   var el = function(id){ return document.getElementById(id); };
   var nf0 = new Intl.NumberFormat('de-DE',{maximumFractionDigits:0});
@@ -207,6 +259,51 @@ hr{border:0;border-top:1px solid var(--line);margin:28px 0}
     el('k-umsatz').textContent = nf0.format(Math.round(umsatz)) + ' €';
     el('k-roas').textContent   = nf2.format(roas) + 'x';
     el('k-gewinn').textContent = nf0.format(Math.round(gewinn)) + ' €';
+
+    faelle(budget, cpl, e, q, c, w);
+  }
+
+  // Drei Faelle: die drei Quoten und der Lead-Preis jeweils um die Spanne
+  // nach oben und unten verschoben. Quoten koennen 100 % nicht ueberschreiten.
+  function faelle(budget, cpl, e, q, c, w){
+    var s = wert('spanne') / 100;
+    el('spanne-out').textContent = '±' + wert('spanne') + '%';
+    spur(el('spanne'));
+
+    var satz = function(richtung){
+      var f = 1 + richtung * s;
+      var quote = function(x){ return Math.min(1, Math.max(0, x * f)); };
+      var lp = richtung > 0 ? cpl * (1 - s) : cpl * (1 + s);   // bessere Quoten, billigere Leads
+      var leads  = lp > 0 ? budget / lp : 0;
+      var kunden = leads * quote(e) * quote(q) * quote(c);
+      var umsatz = kunden * w;
+      return {cpl:lp, leads:leads, kunden:kunden, umsatz:umsatz,
+              roas: budget > 0 ? umsatz / budget : 0, gewinn: umsatz - budget};
+    };
+
+    var r = {s: satz(-1), e: {cpl:cpl, leads: cpl > 0 ? budget/cpl : 0}, g: satz(1)};
+    r.e.kunden = r.e.leads * e * q * c;
+    r.e.umsatz = r.e.kunden * w;
+    r.e.roas   = budget > 0 ? r.e.umsatz / budget : 0;
+    r.e.gewinn = r.e.umsatz - budget;
+
+    ['s','e','g'].forEach(function(k){
+      var d = r[k];
+      el('c-cpl-' + k).textContent    = nf2.format(d.cpl) + ' €';
+      el('c-leads-' + k).textContent  = nf0.format(Math.round(d.leads));
+      el('c-kunden-' + k).textContent = nf0.format(Math.round(d.kunden));
+      el('c-umsatz-' + k).textContent = nf0.format(Math.round(d.umsatz)) + ' €';
+      el('c-roas-' + k).textContent   = nf2.format(d.roas) + 'x';
+      var g = el('c-gewinn-' + k);
+      g.textContent = nf0.format(Math.round(d.gewinn)) + ' €';
+      g.style.color = d.gewinn >= 0 ? 'var(--accent-text)' : '#a0492c';
+    });
+
+    el('spanne-fuss').textContent = r.s.gewinn >= 0
+      ? 'Selbst im schlechten Fall bleibt die Rechnung im Plus.'
+      : (r.e.gewinn >= 0
+        ? 'Die Erwartung trägt sich, der schlechte Fall nicht. Ab hier entscheidet, wie schnell auf Anfragen reagiert wird.'
+        : 'Auch die Erwartung trägt sich nicht. Am Lead-Preis oder am Wert pro Kunde muss sich etwas ändern.');
   }
 
   ids.forEach(function(id){
