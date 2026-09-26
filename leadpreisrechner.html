@@ -10,238 +10,288 @@
 <link rel="stylesheet" href="/fonts.css" />
 <style>
 :root{
-  --ink:#0b0c10; --card:#ffffff; --feld:#f7f8fa; --line:#e6e8ec;
-  --fg:#16181d; --fg-muted:#5c6470;
-  --accent:#a8c93e; --accent-tief:#8fae2e; --accent-text:#3e6810;
+  --bg:#0a0b0d; --bg2:#0f1114;
+  --flaeche:rgba(255,255,255,.035);
+  --rand:rgba(255,255,255,.09);
+  --rand-hell:rgba(255,255,255,.16);
+  --fg:#f2f4f6; --fg2:#9aa3ad; --fg3:#6b737d;
+  --gruen:#b6d94c; --gruen-dunkel:#8fae2e; --gruen-schimmer:rgba(182,217,76,.14);
   --font:'Inter', system-ui, -apple-system, sans-serif;
+  --e:cubic-bezier(.22,1,.36,1);
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--ink);color:#fff;font-family:var(--font);font-size:16px;
-  line-height:1.5;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1000px;margin:0 auto;padding:56px 20px 64px}
-@media(max-width:640px){.wrap{padding:30px 16px 48px}}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);
+  font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;
+  font-feature-settings:'tnum' 1,'cv05' 1;
+  background-image:radial-gradient(900px 500px at 50% -180px, rgba(182,217,76,.10), transparent 70%);
+  background-repeat:no-repeat}
+.wrap{max-width:1120px;margin:0 auto;padding:72px 24px 80px}
+@media(max-width:700px){.wrap{padding:36px 18px 56px}}
 
-.kicker{text-align:center;font-size:.72rem;font-weight:700;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--accent);margin:0 0 14px}
-h1{text-align:center;font-size:clamp(2rem,5.5vw,3.2rem);font-weight:800;letter-spacing:-.025em;
-  line-height:1.05;margin:0 0 14px}
-.lead{text-align:center;color:#c3c8d1;margin:0 auto 34px;max-width:54ch;font-size:1rem}
+.kopf{margin-bottom:40px}
+.marke{display:inline-flex;align-items:center;gap:8px;font-size:.7rem;font-weight:600;
+  letter-spacing:.18em;text-transform:uppercase;color:var(--fg3);margin:0 0 18px}
+.marke::before{content:"";width:16px;height:1px;background:var(--gruen)}
+h1{font-size:clamp(2.1rem,4.6vw,3.1rem);font-weight:700;letter-spacing:-.035em;line-height:1.02;margin:0 0 12px}
+.unter{color:var(--fg2);margin:0;max-width:50ch;font-size:1.02rem}
 
-.card{background:var(--card);color:var(--fg);border-radius:16px;padding:30px;
-  box-shadow:0 24px 60px rgba(0,0,0,.45)}
-@media(max-width:640px){.card{padding:20px}}
+.raster{display:grid;grid-template-columns:minmax(0,420px) minmax(0,1fr);gap:24px;align-items:start}
+@media(max-width:900px){.raster{grid-template-columns:1fr}}
 
-.seg{display:flex;gap:10px;margin-bottom:26px}
-.seg label{flex:1;position:relative}
-.seg input{position:absolute;opacity:0;pointer-events:none}
-.seg span{display:block;text-align:center;padding:11px 10px;border:1px solid var(--line);
-  border-radius:10px;font-size:.93rem;font-weight:600;cursor:pointer;color:var(--fg-muted);
-  transition:background .16s,border-color .16s,color .16s}
-.seg input:checked + span{background:#f3f8e4;border-color:var(--accent-tief);color:var(--accent-text)}
-.seg input:focus-visible + span{outline:2px solid var(--accent-text);outline-offset:2px}
+.karte{background:var(--flaeche);border:1px solid var(--rand);border-radius:20px;padding:26px}
+@media(max-width:700px){.karte{padding:20px;border-radius:16px}}
+.karte-titel h2{font-size:.76rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--fg3);margin:0 0 22px}
 
-.felder{display:grid;grid-template-columns:1fr 1fr;gap:22px 30px}
-@media(max-width:640px){.felder{grid-template-columns:1fr;gap:18px}}
-.feld > label{display:block;font-size:.95rem;color:var(--fg-muted);margin-bottom:8px}
-.feld input[type=number]{width:100%;font:inherit;font-size:1.05rem;padding:12px 14px;
-  background:var(--feld);border:1px solid var(--line);border-radius:10px;color:var(--fg)}
-.feld input[type=number]:focus{outline:none;border-color:var(--accent-tief);background:#fff}
-.feld input[type=number]::-webkit-outer-spin-button,
-.feld input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
-.feld input[type=number]{-moz-appearance:textfield}
+.wahl{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:5px;margin-bottom:22px;
+  background:rgba(255,255,255,.04);border:1px solid var(--rand);border-radius:13px}
+.wahl label{position:relative}
+.wahl input{position:absolute;opacity:0;pointer-events:none}
+.wahl span{display:block;text-align:center;padding:9px 8px;border-radius:9px;font-size:.9rem;
+  font-weight:550;color:var(--fg2);cursor:pointer;transition:background .18s var(--e),color .18s var(--e)}
+.wahl input:checked + span{background:rgba(182,217,76,.14);color:var(--gruen)}
+.wahl input:focus-visible + span{outline:2px solid var(--gruen-dunkel);outline-offset:2px}
 
-.schieber{display:flex;align-items:center;gap:14px}
-.schieber output{font-size:.95rem;font-weight:700;color:var(--fg);min-width:4em;text-align:right;
-  font-variant-numeric:tabular-nums}
-input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:22px;background:transparent;cursor:pointer;margin:0}
-input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:99px;
-  background:linear-gradient(to right,var(--accent) var(--pct,50%),var(--line) var(--pct,50%))}
-input[type=range]::-moz-range-track{height:6px;border-radius:99px;background:var(--line)}
-input[type=range]::-moz-range-progress{height:6px;border-radius:99px;background:var(--accent)}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;
-  background:var(--accent-tief);margin-top:-6px;box-shadow:0 1px 3px rgba(0,0,0,.25)}
-input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--accent-tief);
-  border:0;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+.felder{display:grid;gap:16px}
+.paar{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+@media(max-width:480px){.paar{grid-template-columns:1fr}}
+.feld label{display:block;font-size:.88rem;color:var(--fg2);margin-bottom:7px}
+.eingabe{position:relative;display:flex;align-items:center}
+.eingabe input{width:100%;font:inherit;font-size:1.22rem;font-weight:600;letter-spacing:-.01em;
+  color:var(--fg);background:rgba(255,255,255,.04);border:1px solid var(--rand);
+  border-radius:12px;padding:13px 44px 13px 15px;
+  transition:border-color .16s var(--e),background .16s var(--e),box-shadow .16s var(--e)}
+.eingabe input:hover{border-color:var(--rand-hell)}
+.eingabe input:focus{outline:none;border-color:var(--gruen-dunkel);background:rgba(255,255,255,.06);
+  box-shadow:0 0 0 3px var(--gruen-schimmer)}
+.eingabe .einheit{position:absolute;right:15px;color:var(--fg3);font-size:.98rem;font-weight:500;
+  pointer-events:none}
 
-.knopfzeile{margin-top:26px;display:flex;flex-wrap:wrap;gap:12px}
-button{font:inherit;font-weight:600;padding:11px 22px;border-radius:10px;cursor:pointer;
-  border:1px solid var(--line);background:#fff;color:var(--fg);transition:background .16s}
-button.primary{background:var(--accent);border-color:var(--accent);color:#0a0d00}
-@media(hover:hover){button:hover{background:var(--feld)}button.primary:hover{background:var(--accent-tief)}}
+.knopf{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.knopf button{font:inherit;font-size:.93rem;font-weight:600;padding:12px 18px;border-radius:12px;
+  cursor:pointer;border:1px solid transparent;background:var(--gruen);color:#101204;
+  transition:filter .16s var(--e),transform .12s var(--e)}
+@media(hover:hover){.knopf button:hover{filter:brightness(1.07)}}
+.knopf button:active{transform:translateY(1px)}
+.knopf .zuruecksetzen{background:none;border:0;padding:0 0 1px;font:inherit;font-size:.86rem;
+  color:var(--fg3);cursor:pointer;border-bottom:1px solid transparent;transition:color .16s var(--e)}
+@media(hover:hover){.knopf .zuruecksetzen:hover{background:none;filter:none;color:var(--fg2);
+  border-bottom-color:var(--rand-hell)}}
 
-hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+.ergebnis{background:var(--flaeche);border:1px solid var(--rand);border-radius:20px;overflow:hidden}
+@media(max-width:700px){.ergebnis{border-radius:16px}}
+.haupt{padding:30px 28px 26px;border-bottom:1px solid var(--rand);
+  background:radial-gradient(600px 220px at 12% -40%, rgba(182,217,76,.10), transparent 70%)}
+@media(max-width:700px){.haupt{padding:22px 20px 20px}}
+.haupt .k{font-size:.74rem;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--fg3);
+  display:block;margin-bottom:10px}
+.gross{font-size:clamp(2.6rem,7vw,3.9rem);font-weight:700;letter-spacing:-.04em;line-height:1;color:var(--gruen)}
+.neben{display:flex;flex-wrap:wrap;gap:26px;margin-top:20px}
+.neben .k{font-size:.72rem;margin-bottom:5px}
+.neben .v{font-size:1.32rem;font-weight:650;letter-spacing:-.02em}
 
-/* minmax(0,…) verhindert, dass lange Woerter die Spalte aufblaehen
-   und die Kacheln aus der Karte schieben. */
-.kacheln{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-@media(max-width:860px){.kacheln{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
-.kachel{background:var(--feld);border-radius:12px;padding:16px 18px;min-width:0}
-@media(max-width:640px){.kachel{padding:13px 14px}}
-.kachel .k{display:block;font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
-  color:var(--fg-muted);margin-bottom:8px;line-height:1.3;overflow-wrap:break-word;
-  hyphens:auto;-webkit-hyphens:auto}
-@media(max-width:640px){.kachel .k{font-size:.66rem;letter-spacing:.05em}}
-.kachel .v{font-size:1.7rem;font-weight:700;letter-spacing:.02em;font-variant-numeric:tabular-nums}
-@media(max-width:640px){.kachel .v{font-size:1.4rem}}
-.kachel.dunkel{background:var(--ink);color:#fff}
-.kachel.dunkel .k{color:var(--accent)}
+.kette{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;background:var(--rand)}
+.kette div{background:var(--bg2);padding:18px;min-width:0}
+.kette .k{display:block;font-size:.7rem;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--fg3);margin-bottom:6px;overflow-wrap:break-word}
+.kette .v{font-size:1.28rem;font-weight:650;letter-spacing:-.02em}
 
-.weg{margin-top:22px;font-size:.9rem;color:var(--fg-muted);line-height:1.7}
-.weg b{color:var(--fg);font-variant-numeric:tabular-nums}
-.fuss{margin-top:26px;text-align:center;color:#8d94a1;font-size:.83rem}
-.fuss a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(168,201,62,.4)}
-@media(hover:hover){.fuss a:hover{color:#fff}}
+.weg{padding:20px 28px 24px;font-size:.9rem;color:var(--fg2);line-height:1.65;margin:0}
+@media(max-width:700px){.weg{padding:18px 20px}}
+.weg b{color:var(--fg);font-weight:600}
+
+.hinweis{margin:26px 0 0;font-size:.84rem;color:var(--fg3)}
+.hinweis a{color:var(--fg2);text-decoration:none;border-bottom:1px solid var(--rand-hell)}
+@media(hover:hover){.hinweis a:hover{color:var(--gruen)}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-  <p class="kicker">MR Elevate</p>
-  <h1>Lead-Preis-Rechner</h1>
-  <p class="lead">Was ein Lead kostet, hängt an Einblendungen, Klicks und der Landingpage. Setz an, was du kennst: CPM oder CPC.</p>
+  <header class="kopf">
+    <p class="marke">MR Elevate</p>
+    <h1>Lead-Preis-Rechner</h1>
+    <p class="unter">Was ein Lead kostet, hängt an Einblendungen, Klicks und der Landingpage. Setz an, was du kennst.</p>
+  </header>
 
-  <div class="card">
-    <div class="seg" role="radiogroup" aria-label="Ausgangswert">
-      <label><input type="radio" name="modus" value="cpm" checked /><span>Ich kenne den CPM</span></label>
-      <label><input type="radio" name="modus" value="cpc" /><span>Ich kenne den CPC</span></label>
-    </div>
+  <div class="raster">
 
-    <div class="felder">
-      <div class="feld">
-        <label for="budget">Werbebudget (€)</label>
-        <input type="number" id="budget" value="3000" min="0" step="100" inputmode="decimal" />
+    <section class="karte">
+      <div class="karte-titel"><h2>Ausgangswerte</h2></div>
+
+      <div class="wahl" role="radiogroup" aria-label="Ausgangswert">
+        <label><input type="radio" name="modus" value="cpm" checked /><span>Über CPM</span></label>
+        <label><input type="radio" name="modus" value="cpc" /><span>Über CPC</span></label>
       </div>
 
-      <div class="feld" data-only="cpm">
-        <label for="cpm">CPM, Preis je 1.000 Einblendungen (€)</label>
-        <input type="number" id="cpm" value="9" min="0" step="0.5" inputmode="decimal" />
-      </div>
-      <div class="feld" data-only="cpc">
-        <label for="cpc">CPC, Preis je Klick (€)</label>
-        <input type="number" id="cpc" value="1.2" min="0" step="0.1" inputmode="decimal" />
-      </div>
+      <div class="felder">
+        <div class="paar">
+          <div class="feld">
+            <label for="budget">Werbebudget</label>
+            <div class="eingabe"><input id="budget" type="text" inputmode="decimal" value="3.000" /><span class="einheit">€</span></div>
+          </div>
+          <div class="feld" data-nur="cpm">
+            <label for="cpm">CPM, je 1.000 Einblendungen</label>
+            <div class="eingabe"><input id="cpm" type="text" inputmode="decimal" value="9" /><span class="einheit">€</span></div>
+          </div>
+          <div class="feld" data-nur="cpc">
+            <label for="cpc">CPC, Preis je Klick</label>
+            <div class="eingabe"><input id="cpc" type="text" inputmode="decimal" value="1,20" /><span class="einheit">€</span></div>
+          </div>
+        </div>
 
-      <div class="feld">
-        <label for="ctr">Klickrate (CTR)</label>
-        <div class="schieber">
-          <input type="range" id="ctr" min="0.1" max="10" step="0.1" value="1.2" />
-          <output for="ctr" id="ctr-out">1,2%</output>
+        <div class="paar">
+          <div class="feld">
+            <label for="ctr">Klickrate (CTR)</label>
+            <div class="eingabe"><input id="ctr" type="text" inputmode="decimal" value="1,2" /><span class="einheit">%</span></div>
+          </div>
+          <div class="feld">
+            <label for="cr">Conversion-Rate</label>
+            <div class="eingabe"><input id="cr" type="text" inputmode="decimal" value="4" /><span class="einheit">%</span></div>
+          </div>
         </div>
       </div>
-      <div class="feld">
-        <label for="cr">Conversion-Rate der Landingpage</label>
-        <div class="schieber">
-          <input type="range" id="cr" min="0.5" max="30" step="0.1" value="4" />
-          <output for="cr" id="cr-out">4,0%</output>
+
+      <div class="knopf">
+        <button type="button" id="uebernehmen">In die Kennzahlhypothese</button>
+        <button type="button" class="zuruecksetzen" id="reset">Zurücksetzen</button>
+      </div>
+    </section>
+
+    <section class="ergebnis">
+      <div class="haupt">
+        <span class="k">Kosten pro Lead</span>
+        <div class="gross" id="o-cpl">0 €</div>
+        <div class="neben">
+          <div><span class="k">Leads im Monat</span><div class="v" id="o-leads">0</div></div>
+          <div><span class="k" id="o-abgeleitet-k">CPC</span><div class="v" id="o-abgeleitet">0 €</div></div>
         </div>
       </div>
-    </div>
 
-    <div class="knopfzeile">
-      <button type="button" class="primary" id="uebernehmen">Lead-Preis in die Kennzahlhypothese übernehmen</button>
-      <button type="button" id="reset">Zurücksetzen</button>
-    </div>
+      <div class="kette">
+        <div><span class="k">Einblendungen</span><span class="v" id="o-imp">0</span></div>
+        <div><span class="k">Klicks</span><span class="v" id="o-klicks">0</span></div>
+      </div>
 
-    <hr />
-
-    <div class="kacheln">
-      <div class="kachel"><span class="k">Einblendungen</span><span class="v" id="k-imp">0</span></div>
-      <div class="kachel"><span class="k">Klicks</span><span class="v" id="k-klicks">0</span></div>
-      <div class="kachel"><span class="k" id="k-abgeleitet-label">CPC</span><span class="v" id="k-abgeleitet">0 €</span></div>
-      <div class="kachel"><span class="k">Leads</span><span class="v" id="k-leads">0</span></div>
-      <div class="kachel dunkel" style="grid-column:1/-1"><span class="k">Kosten pro Lead</span><span class="v" id="k-cpl">0 €</span></div>
-    </div>
-
-    <p class="weg" id="weg"></p>
+      <p class="weg" id="weg"></p>
+    </section>
   </div>
 
-  <p class="fuss">Zurück zur <a href="/kennzahlhypothese">Kennzahlhypothese</a>.</p>
+  <p class="hinweis">Zurück zur <a href="/kennzahlhypothese">Kennzahlhypothese</a>.</p>
 
 </div>
 
 <script>
 (function(){
-  var ids = ['budget','cpm','cpc','ctr','cr'];
-  var start = {}; ids.forEach(function(i){ start[i] = document.getElementById(i).value; });
+  var felder = [
+    {id:'budget', dez:0, max:1e9},
+    {id:'cpm',    dez:2, max:1000},
+    {id:'cpc',    dez:2, max:1000},
+    {id:'ctr',    dez:2, max:100},
+    {id:'cr',     dez:2, max:100}
+  ];
+  var start = {}; felder.forEach(function(f){ start[f.id] = document.getElementById(f.id).value; });
   var el = function(id){ return document.getElementById(id); };
-  var nf0 = new Intl.NumberFormat('de-DE',{maximumFractionDigits:0});
-  var nf1 = new Intl.NumberFormat('de-DE',{minimumFractionDigits:1,maximumFractionDigits:1});
-  var nf2 = new Intl.NumberFormat('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2});
-
-  function wert(id){ var n = parseFloat(el(id).value); return isFinite(n) ? n : 0; }
-  function spur(r){ r.style.setProperty('--pct', (r.value - r.min) / (r.max - r.min) * 100 + '%'); }
-  function modus(){ return document.querySelector('input[name=modus]:checked').value; }
+  var fmt = function(n, dez){
+    return new Intl.NumberFormat('de-DE',{minimumFractionDigits:dez,maximumFractionDigits:dez}).format(n);
+  };
+  var ganz = function(n){ return fmt(Math.round(n), 0); };
+  var modus = function(){ return document.querySelector('input[name=modus]:checked').value; };
   var letzterCpl = 0;
 
+  // Akzeptiert 1.234,56 und 1234.56 gleichermassen
+  function lies(id){
+    var roh = el(id).value.trim().replace(/\s|€|%/g, '');
+    if(roh.indexOf(',') > -1) roh = roh.replace(/\./g, '').replace(',', '.');
+    else if((roh.match(/\./g) || []).length > 1) roh = roh.replace(/\./g, '');
+    else if(/\.\d{3}$/.test(roh)) roh = roh.replace(/\./g, '');
+    var n = parseFloat(roh);
+    return isFinite(n) && n >= 0 ? n : 0;
+  }
+
   function rechne(){
-    var m = modus(), budget = wert('budget'), ctr = wert('ctr')/100, cr = wert('cr')/100;
-    var imp, klicks, abgeleitet, abgeleitetName;
+    var m = modus(), budget = lies('budget'),
+        ctr = Math.min(100, lies('ctr'))/100, cr = Math.min(100, lies('cr'))/100;
+    var imp, klicks, abgeleitet, name;
 
     if(m === 'cpm'){
-      var cpm = wert('cpm');
+      var cpm = lies('cpm');
       imp = cpm > 0 ? budget / cpm * 1000 : 0;
       klicks = imp * ctr;
-      abgeleitet = klicks > 0 ? budget / klicks : 0;      // daraus folgt der Klickpreis
-      abgeleitetName = 'CPC';
+      abgeleitet = klicks > 0 ? budget / klicks : 0;   // daraus folgt der Klickpreis
+      name = 'CPC';
     } else {
-      var cpc = wert('cpc');
+      var cpc = lies('cpc');
       klicks = cpc > 0 ? budget / cpc : 0;
       imp = ctr > 0 ? klicks / ctr : 0;
-      abgeleitet = imp > 0 ? budget / imp * 1000 : 0;     // daraus folgt der Tausenderpreis
-      abgeleitetName = 'CPM';
+      abgeleitet = imp > 0 ? budget / imp * 1000 : 0;  // daraus folgt der Tausenderpreis
+      name = 'CPM';
     }
 
     var leads = klicks * cr;
-    var cpl = leads > 0 ? budget / leads : 0;
-    letzterCpl = cpl;
+    letzterCpl = leads > 0 ? budget / leads : 0;
 
-    el('ctr-out').textContent = nf1.format(wert('ctr')) + '%';
-    el('cr-out').textContent = nf1.format(wert('cr')) + '%';
-    spur(el('ctr')); spur(el('cr'));
-
-    el('k-imp').textContent = nf0.format(Math.round(imp));
-    el('k-klicks').textContent = nf0.format(Math.round(klicks));
-    el('k-abgeleitet-label').textContent = abgeleitetName;
-    el('k-abgeleitet').textContent = nf2.format(abgeleitet) + ' €';
-    el('k-leads').textContent = nf0.format(Math.round(leads));
-    el('k-cpl').textContent = nf2.format(cpl) + ' €';
+    el('o-cpl').textContent = fmt(letzterCpl, 2) + ' €';
+    el('o-leads').textContent = leads > 0 && leads < 10 ? fmt(leads, 1) : ganz(leads);
+    el('o-abgeleitet-k').textContent = name;
+    el('o-abgeleitet').textContent = fmt(abgeleitet, 2) + ' €';
+    el('o-imp').textContent = ganz(imp);
+    el('o-klicks').textContent = ganz(klicks);
 
     el('weg').innerHTML = m === 'cpm'
-      ? 'Rechenweg: ' + nf0.format(budget) + ' € bei ' + nf2.format(wert('cpm')) + ' € CPM ergeben <b>'
-        + nf0.format(Math.round(imp)) + '</b> Einblendungen. Davon ' + nf1.format(wert('ctr')) + ' % geklickt sind <b>'
-        + nf0.format(Math.round(klicks)) + '</b> Klicks zu je <b>' + nf2.format(abgeleitet) + ' €</b>. Davon '
-        + nf1.format(wert('cr')) + ' % zur Anfrage ergibt <b>' + nf0.format(Math.round(leads)) + '</b> Leads.'
-      : 'Rechenweg: ' + nf0.format(budget) + ' € bei ' + nf2.format(wert('cpc')) + ' € CPC ergeben <b>'
-        + nf0.format(Math.round(klicks)) + '</b> Klicks. Bei ' + nf1.format(wert('ctr')) + ' % Klickrate entspricht das <b>'
-        + nf0.format(Math.round(imp)) + '</b> Einblendungen, also <b>' + nf2.format(abgeleitet) + ' €</b> CPM. Davon '
-        + nf1.format(wert('cr')) + ' % zur Anfrage ergibt <b>' + nf0.format(Math.round(leads)) + '</b> Leads.';
+      ? ganz(budget) + ' € bei ' + fmt(lies('cpm'), 2) + ' € CPM ergeben <b>' + ganz(imp)
+        + '</b> Einblendungen. Davon ' + fmt(ctr*100, 1) + ' % geklickt sind <b>' + ganz(klicks)
+        + '</b> Klicks zu je <b>' + fmt(abgeleitet, 2) + ' €</b>. Davon ' + fmt(cr*100, 1)
+        + ' % zur Anfrage ergibt <b>' + ganz(leads) + '</b> Leads.'
+      : ganz(budget) + ' € bei ' + fmt(lies('cpc'), 2) + ' € CPC ergeben <b>' + ganz(klicks)
+        + '</b> Klicks. Bei ' + fmt(ctr*100, 1) + ' % Klickrate entspricht das <b>' + ganz(imp)
+        + '</b> Einblendungen, also <b>' + fmt(abgeleitet, 2) + ' €</b> CPM. Davon ' + fmt(cr*100, 1)
+        + ' % zur Anfrage ergibt <b>' + ganz(leads) + '</b> Leads.';
   }
 
   function sichtbarkeit(){
     var m = modus();
-    document.querySelectorAll('[data-only]').forEach(function(f){
-      f.style.display = (f.getAttribute('data-only') === m) ? '' : 'none';
+    document.querySelectorAll('[data-nur]').forEach(function(f){
+      f.style.display = (f.getAttribute('data-nur') === m) ? '' : 'none';
     });
   }
 
-  ids.forEach(function(id){
-    el(id).addEventListener('input', rechne);
-    el(id).addEventListener('change', rechne);
+  felder.forEach(function(f){
+    var i = el(f.id);
+    i.addEventListener('input', rechne);
+    i.addEventListener('focus', function(){ i.select(); });
+    i.addEventListener('blur', function(){
+      var n = Math.min(lies(f.id), f.max);
+      i.value = fmt(n, n % 1 === 0 ? 0 : f.dez);
+      rechne();
+    });
+    i.addEventListener('keydown', function(ev){
+      if(ev.key === 'Enter') i.blur();
+      if(ev.key === 'ArrowUp' || ev.key === 'ArrowDown'){
+        ev.preventDefault();
+        var schritt = ev.shiftKey ? 10 : (f.dez > 0 ? .1 : 1);
+        var n = lies(f.id) + (ev.key === 'ArrowUp' ? schritt : -schritt);
+        n = Math.min(Math.max(n, 0), f.max);
+        i.value = fmt(n, n % 1 === 0 ? 0 : f.dez);
+        rechne();
+      }
+    });
   });
+
   document.querySelectorAll('input[name=modus]').forEach(function(r){
     r.addEventListener('change', function(){ sichtbarkeit(); rechne(); });
   });
 
   el('reset').addEventListener('click', function(){
-    ids.forEach(function(i){ el(i).value = start[i]; });
+    felder.forEach(function(f){ el(f.id).value = start[f.id]; });
     document.querySelector('input[name=modus][value=cpm]').checked = true;
     sichtbarkeit(); rechne();
   });
 
   el('uebernehmen').addEventListener('click', function(){
-    location.href = '/kennzahlhypothese?budget=' + Math.round(wert('budget'))
+    location.href = '/kennzahlhypothese?budget=' + Math.round(lies('budget'))
       + '&cpl=' + (Math.round(letzterCpl * 100) / 100);
   });
 
