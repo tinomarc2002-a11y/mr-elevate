@@ -1,0 +1,504 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Interne Seite: nicht verlinkt, nicht in der Sitemap, nicht fuer Google. -->
+<meta name="robots" content="noindex, nofollow" />
+<title>Kennzahlen-Rechner (intern) | MR Elevate</title>
+<link rel="icon" href="/favicon-32.png" sizes="32x32" />
+<link rel="stylesheet" href="/fonts.css" />
+<style>
+:root{
+  --bg:#ffffff; --bg-elev:#f6f7fb; --line:rgba(0,0,0,.1); --line-strong:rgba(0,0,0,.16);
+  --fg:#141414; --fg-muted:#4f4f4f; --fg-dim:#6b6b6b;
+  --accent:#3e6810; --accent-fill:#a8c93e; --accent-soft:#f1f7dc;
+  --warn:#923d24; --warn-soft:#fdeee9;
+  --radius:18px; --radius-sm:10px;
+  --shadow:0 6px 22px rgba(0,0,0,.07), 0 1px 1px rgba(0,0,0,.05);
+  --font:'Inter', system-ui, -apple-system, sans-serif;
+  --ease:cubic-bezier(.23,1,.32,1);
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);
+  font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1180px;margin:0 auto;padding:28px 20px 64px}
+
+header.top{display:flex;flex-wrap:wrap;gap:12px;align-items:baseline;justify-content:space-between;
+  padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:24px}
+h1{font-size:clamp(1.5rem,3vw,2rem);font-weight:800;letter-spacing:-.02em;margin:0 0 4px}
+.sub{color:var(--fg-muted);margin:0;font-size:.95rem;max-width:62ch}
+.intern{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--accent);background:var(--accent-soft);padding:5px 10px;border-radius:999px;white-space:nowrap}
+
+.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
+@media(max-width:900px){.grid{grid-template-columns:1fr}}
+
+.card{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);
+  box-shadow:var(--shadow);padding:22px}
+.card + .card{margin-top:20px}
+.card h2{font-size:1.05rem;font-weight:700;margin:0 0 2px;letter-spacing:-.01em}
+.card .hint{color:var(--fg-dim);font-size:.85rem;margin:0 0 18px}
+
+fieldset{border:0;margin:0 0 22px;padding:0}
+fieldset:last-of-type{margin-bottom:0}
+legend{font-size:.76rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
+  color:var(--fg-dim);padding:0 0 10px}
+
+.seg{display:flex;gap:8px;margin-bottom:18px}
+.seg label{flex:1;position:relative}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg span{display:block;text-align:center;padding:9px 8px;border:1px solid var(--line-strong);
+  border-radius:var(--radius-sm);font-size:.9rem;font-weight:600;cursor:pointer;
+  transition:background .16s var(--ease),border-color .16s var(--ease)}
+.seg input:checked + span{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
+.seg input:focus-visible + span{outline:2px solid var(--accent);outline-offset:2px}
+
+.row{margin-bottom:16px}
+.row:last-child{margin-bottom:0}
+.row .lab{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:6px}
+.row .lab label{font-size:.92rem;font-weight:600}
+.row .lab .note{font-size:.78rem;color:var(--fg-dim);font-weight:400}
+.val{display:inline-flex;align-items:baseline;gap:3px;font-variant-numeric:tabular-nums}
+.val input{width:5.6em;text-align:right;font:inherit;font-weight:700;font-variant-numeric:tabular-nums;
+  color:var(--fg);background:var(--bg-elev);border:1px solid transparent;border-radius:8px;padding:3px 7px}
+.val input:focus{outline:none;border-color:var(--accent);background:#fff}
+.val .unit{font-size:.85rem;color:var(--fg-dim);font-weight:600}
+
+input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:22px;background:transparent;cursor:pointer;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:99px;
+  background:linear-gradient(to right,var(--accent-fill) var(--pct,50%),var(--bg-elev) var(--pct,50%))}
+input[type=range]::-moz-range-track{height:6px;border-radius:99px;background:var(--bg-elev)}
+input[type=range]::-moz-range-progress{height:6px;border-radius:99px;background:var(--accent-fill)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;
+  background:#fff;border:2px solid var(--accent);margin-top:-7px;box-shadow:0 1px 4px rgba(0,0,0,.18);
+  transition:transform .16s var(--ease)}
+input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#fff;
+  border:2px solid var(--accent);box-shadow:0 1px 4px rgba(0,0,0,.18)}
+@media(hover:hover){input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.12)}}
+input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--accent);outline-offset:2px}
+
+.verdict{border-radius:var(--radius);padding:16px 18px;margin-bottom:20px;border:1px solid var(--line)}
+.verdict.gut{background:var(--accent-soft);border-color:rgba(62,104,16,.25)}
+.verdict.schlecht{background:var(--warn-soft);border-color:rgba(146,61,36,.25)}
+.verdict .head{font-size:1.15rem;font-weight:800;letter-spacing:-.01em;margin-bottom:3px}
+.verdict.gut .head{color:var(--accent)}
+.verdict.schlecht .head{color:var(--warn)}
+.verdict p{margin:0;font-size:.9rem;color:var(--fg-muted)}
+
+.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);
+  border:1px solid var(--line);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:22px}
+@media(max-width:520px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.kpi{background:var(--bg);padding:12px 13px}
+.kpi .k{font-size:.74rem;color:var(--fg-dim);font-weight:600;display:block;margin-bottom:3px}
+.kpi .v{font-size:1.12rem;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
+.kpi.stark{background:var(--bg-elev)}
+
+.funnel{margin-bottom:22px}
+.st{margin-bottom:9px}
+.st:last-child{margin-bottom:0}
+.st .t{display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:4px;gap:10px}
+.st .t b{font-variant-numeric:tabular-nums}
+.st .t .q{color:var(--fg-dim);font-size:.78rem}
+.bar{height:9px;border-radius:99px;background:var(--bg-elev);overflow:hidden}
+.bar i{display:block;height:100%;border-radius:99px;background:var(--accent-fill);
+  transition:width .3s var(--ease)}
+.st:nth-child(5) .bar i{background:var(--accent)}
+
+table.be{width:100%;border-collapse:collapse;font-size:.88rem}
+table.be th,table.be td{text-align:left;padding:9px 0;border-bottom:1px solid var(--line);vertical-align:top}
+table.be td:last-child{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
+table.be tr:last-child th,table.be tr:last-child td{border-bottom:0}
+table.be th{font-weight:500;color:var(--fg-muted)}
+
+.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+button{font:inherit;font-weight:600;padding:10px 16px;border-radius:var(--radius-sm);cursor:pointer;
+  border:1px solid var(--line-strong);background:var(--bg);color:var(--fg);
+  transition:background .16s var(--ease),transform .16s var(--ease)}
+button.primary{background:var(--accent-fill);border-color:var(--accent-fill);color:#0a0d00}
+@media(hover:hover){button:hover{background:var(--bg-elev)}button.primary:hover{filter:brightness(.96);background:var(--accent-fill)}}
+button:active{transform:translateY(1px)}
+.fuss{margin-top:26px;font-size:.82rem;color:var(--fg-dim);max-width:78ch}
+.fuss b{color:var(--fg-muted)}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<header class="top">
+  <div>
+    <h1>Kennzahlen-Rechner</h1>
+    <p class="sub">Schieb die Regler auf deine Zahlen und sieh, was am Ende des Monats übrig bleibt. Alle Werte sind Annahmen, keine Prognose.</p>
+  </div>
+  <span class="intern">Interne Seite</span>
+</header>
+
+<div class="grid">
+
+  <!-- ============ EINGABEN ============ -->
+  <section class="card">
+    <h2>Deine Annahmen</h2>
+    <p class="hint">Die Startwerte sind Platzhalter. Ersetz sie durch die Zahlen des Betriebs, über den ihr gerade redet.</p>
+
+    <fieldset>
+      <legend>Kanal und Budget</legend>
+      <div class="seg" role="radiogroup" aria-label="Kanal">
+        <label><input type="radio" name="kanal" value="meta" checked /><span>Meta (über CPM)</span></label>
+        <label><input type="radio" name="kanal" value="google" /><span>Google (über CPC)</span></label>
+      </div>
+
+      <div class="row">
+        <div class="lab"><label for="budget">Werbebudget im Monat</label>
+          <span class="val"><input id="budget-n" type="text" inputmode="decimal" /><span class="unit">€</span></span></div>
+        <input type="range" id="budget" min="200" max="20000" step="100" value="2000" />
+      </div>
+
+      <div class="row" data-only="meta">
+        <div class="lab"><label for="cpm">CPM, Preis je 1.000 Einblendungen</label>
+          <span class="val"><input id="cpm-n" type="text" inputmode="decimal" /><span class="unit">€</span></span></div>
+        <input type="range" id="cpm" min="1" max="40" step="0.5" value="9" />
+      </div>
+
+      <div class="row">
+        <div class="lab"><label for="ctr">CTR, Klicks je Einblendung</label>
+          <span class="val"><input id="ctr-n" type="text" inputmode="decimal" /><span class="unit">%</span></span></div>
+        <input type="range" id="ctr" min="0.2" max="6" step="0.1" value="1.2" />
+        <p class="note" id="ctr-note" style="margin:5px 0 0;font-size:.78rem;color:var(--fg-dim)"></p>
+      </div>
+
+      <div class="row" data-only="google">
+        <div class="lab"><label for="cpc">CPC, Preis je Klick</label>
+          <span class="val"><input id="cpc-n" type="text" inputmode="decimal" /><span class="unit">€</span></span></div>
+        <input type="range" id="cpc" min="0.2" max="25" step="0.1" value="3.5" />
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Vom Klick zum Kunden</legend>
+      <div class="row">
+        <div class="lab"><label for="cr">Conversion-Rate der Landingpage</label>
+          <span class="note">Besucher, die das Formular abschicken</span></div>
+        <div class="lab" style="margin-bottom:6px"><span></span>
+          <span class="val"><input id="cr-n" type="text" inputmode="decimal" /><span class="unit">%</span></span></div>
+        <input type="range" id="cr" min="0.5" max="20" step="0.1" value="4" />
+      </div>
+
+      <div class="row">
+        <div class="lab"><label for="qual">Davon qualifiziert</label>
+          <span class="note">erreicht und Termin vereinbart</span></div>
+        <div class="lab" style="margin-bottom:6px"><span></span>
+          <span class="val"><input id="qual-n" type="text" inputmode="decimal" /><span class="unit">%</span></span></div>
+        <input type="range" id="qual" min="5" max="100" step="1" value="45" />
+      </div>
+
+      <div class="row">
+        <div class="lab"><label for="close">Abschlussquote</label>
+          <span class="note">Termine, aus denen ein Auftrag wird</span></div>
+        <div class="lab" style="margin-bottom:6px"><span></span>
+          <span class="val"><input id="close-n" type="text" inputmode="decimal" /><span class="unit">%</span></span></div>
+        <input type="range" id="close" min="2" max="80" step="1" value="25" />
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>Wert und Kosten</legend>
+      <div class="row">
+        <div class="lab"><label for="gewinn">Gewinn pro Neukunde</label>
+          <span class="note">Deckungsbeitrag, nicht Umsatz</span></div>
+        <div class="lab" style="margin-bottom:6px"><span></span>
+          <span class="val"><input id="gewinn-n" type="text" inputmode="decimal" /><span class="unit">€</span></span></div>
+        <input type="range" id="gewinn" min="100" max="20000" step="100" value="1500" />
+      </div>
+
+      <div class="row">
+        <div class="lab"><label for="fee">Erfolgsvergütung je qualifizierter Anfrage</label>
+          <span class="val"><input id="fee-n" type="text" inputmode="decimal" /><span class="unit">€</span></span></div>
+        <input type="range" id="fee" min="0" max="500" step="5" value="120" />
+      </div>
+
+      <div class="row">
+        <div class="lab"><label for="setup">Setup-Gebühr, einmalig</label>
+          <span class="val"><input id="setup-n" type="text" inputmode="decimal" /><span class="unit">€</span></span></div>
+        <input type="range" id="setup" min="0" max="6000" step="100" value="1500" />
+      </div>
+
+      <div class="row">
+        <div class="lab"><label for="monate">Verteilt auf</label>
+          <span class="val"><input id="monate-n" type="text" inputmode="decimal" /><span class="unit">Monate</span></span></div>
+        <input type="range" id="monate" min="1" max="24" step="1" value="6" />
+      </div>
+    </fieldset>
+  </section>
+
+  <!-- ============ ERGEBNIS ============ -->
+  <section>
+    <div class="card">
+      <div class="verdict" id="verdict">
+        <div class="head" id="verdict-head">&nbsp;</div>
+        <p id="verdict-text">&nbsp;</p>
+      </div>
+
+      <div class="kpis">
+        <div class="kpi"><span class="k">Einblendungen</span><span class="v" id="o-imp">0</span></div>
+        <div class="kpi"><span class="k">Klicks</span><span class="v" id="o-klicks">0</span></div>
+        <div class="kpi"><span class="k">Preis je Klick</span><span class="v" id="o-cpc">0 €</span></div>
+        <div class="kpi"><span class="k">Formulare</span><span class="v" id="o-leads">0</span></div>
+        <div class="kpi"><span class="k">Qualifizierte Anfragen</span><span class="v" id="o-qual">0</span></div>
+        <div class="kpi"><span class="k">Neukunden</span><span class="v" id="o-kunden">0</span></div>
+        <div class="kpi stark"><span class="k">Kosten je Anfrage</span><span class="v" id="o-cpq">0 €</span></div>
+        <div class="kpi stark"><span class="k">Kosten je Neukunde</span><span class="v" id="o-cac">0 €</span></div>
+        <div class="kpi stark"><span class="k">Ergebnis im Monat</span><span class="v" id="o-ergebnis">0 €</span></div>
+      </div>
+
+      <div class="funnel" id="funnel">
+        <div class="st"><div class="t"><span>Einblendungen</span><b id="f1">0</b></div><div class="bar"><i id="b1"></i></div></div>
+        <div class="st"><div class="t"><span>Klicks <span class="q" id="q1"></span></span><b id="f2">0</b></div><div class="bar"><i id="b2"></i></div></div>
+        <div class="st"><div class="t"><span>Formulare <span class="q" id="q2"></span></span><b id="f3">0</b></div><div class="bar"><i id="b3"></i></div></div>
+        <div class="st"><div class="t"><span>Qualifizierte Anfragen <span class="q" id="q3"></span></span><b id="f4">0</b></div><div class="bar"><i id="b4"></i></div></div>
+        <div class="st"><div class="t"><span>Neukunden <span class="q" id="q4"></span></span><b id="f5">0</b></div><div class="bar"><i id="b5"></i></div></div>
+      </div>
+
+      <table class="be">
+        <tr><th>Werbebudget</th><td id="o-budget">0 €</td></tr>
+        <tr><th>Erfolgsvergütung</th><td id="o-fee">0 €</td></tr>
+        <tr><th>Setup, auf die Laufzeit verteilt</th><td id="o-setup">0 €</td></tr>
+        <tr><th>Kosten gesamt im Monat</th><td id="o-kosten">0 €</td></tr>
+        <tr><th>Rohertrag aus Neukunden</th><td id="o-rohertrag">0 €</td></tr>
+      </table>
+
+      <div class="actions">
+        <button type="button" class="primary" id="btn-link">Zahlen als Link kopieren</button>
+        <button type="button" id="btn-reset">Zurücksetzen</button>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Wo die Grenze liegt</h2>
+      <p class="hint">Ab diesen Werten trägt sich die Rechnung gerade noch.</p>
+      <table class="be">
+        <tr><th>Nötige Neukunden im Monat</th><td id="g-kunden">0</td></tr>
+        <tr><th>Höchster Klickpreis, der noch aufgeht</th><td id="g-cpc">0 €</td></tr>
+        <tr><th>Nötige Conversion-Rate der Landingpage</th><td id="g-cr">0 %</td></tr>
+        <tr><th>Wert eines Klicks</th><td id="g-klickwert">0 €</td></tr>
+        <tr><th>Wert einer qualifizierten Anfrage</th><td id="g-anfragewert">0 €</td></tr>
+      </table>
+    </div>
+  </section>
+</div>
+
+<p class="fuss"><b>Wofür das gedacht ist:</b> Die Rechnung zeigt, ob Marge und Abschlussquote das Werbebudget tragen. Sie sagt nicht voraus, was eine Kampagne liefert. Klickpreise, Conversion-Rate und Abschlussquote schwanken nach Branche, Region und Wettbewerb, und belastbar sind sie erst mit eigenen Zahlen aus dem Werbekonto. Nimm den Rechner als Gegenprobe zum Bauchgefühl, nicht als Zusage.</p>
+
+</div>
+
+<script>
+(function(){
+  var F = [
+    {id:'budget', dec:0}, {id:'cpm', dec:1}, {id:'ctr', dec:1}, {id:'cpc', dec:2},
+    {id:'cr', dec:1}, {id:'qual', dec:0}, {id:'close', dec:0},
+    {id:'gewinn', dec:0}, {id:'fee', dec:0}, {id:'setup', dec:0}, {id:'monate', dec:0}
+  ];
+  var START = {}; F.forEach(function(f){ START[f.id] = document.getElementById(f.id).value; });
+  var nf = new Intl.NumberFormat('de-DE');
+  var el = function(id){ return document.getElementById(id); };
+
+  function zahl(n, dec){
+    if(!isFinite(n)) return '—';
+    return new Intl.NumberFormat('de-DE',{minimumFractionDigits:dec,maximumFractionDigits:dec}).format(n);
+  }
+  function euro(n, dec){
+    if(!isFinite(n)) return '—';
+    return zahl(n, dec === undefined ? 0 : dec) + ' €';
+  }
+  function kanal(){ return document.querySelector('input[name=kanal]:checked').value; }
+
+  // Der gefuellte Teil der Slider-Schiene wird in Chrome per CSS-Variable gezeichnet.
+  function spur(r){
+    var p = (r.value - r.min) / (r.max - r.min) * 100;
+    r.style.setProperty('--pct', p + '%');
+  }
+
+  function werte(){
+    var v = {};
+    F.forEach(function(f){ v[f.id] = parseFloat(document.getElementById(f.id).value); });
+    return v;
+  }
+
+  function rechne(){
+    var v = werte(), g = kanal() === 'google';
+    var klicks, imp, cpc;
+
+    if(g){
+      cpc = v.cpc;
+      klicks = cpc > 0 ? v.budget / cpc : 0;
+      imp = v.ctr > 0 ? klicks / (v.ctr/100) : 0;   // CTR dient hier nur der Anzeige
+    } else {
+      imp = v.cpm > 0 ? v.budget / v.cpm * 1000 : 0;
+      klicks = imp * (v.ctr/100);
+      cpc = klicks > 0 ? v.budget / klicks : 0;
+    }
+
+    var leads   = klicks * (v.cr/100);
+    var anfr    = leads * (v.qual/100);
+    var kunden  = anfr * (v.close/100);
+
+    var feeSum  = anfr * v.fee;
+    var setupM  = v.monate > 0 ? v.setup / v.monate : 0;
+    var kosten  = v.budget + feeSum + setupM;
+    var roh     = kunden * v.gewinn;
+    var erg     = roh - kosten;
+
+    // Wert je Stufe: was eine Anfrage bzw. ein Klick nach Abzug der Vergütung einbringt
+    var anfragewert = (v.close/100) * v.gewinn - v.fee;
+    var klickwert   = (v.cr/100) * (v.qual/100) * anfragewert;
+    var maxCpc      = klickwert;
+    var noetigKunden= v.gewinn > 0 ? (v.budget + setupM) / (v.gewinn - (v.close > 0 ? v.fee / (v.close/100) : 0)) : Infinity;
+    var noetigCr    = (klicks > 0 && anfragewert > 0)
+                      ? (v.budget + setupM) / (klicks * (v.qual/100) * anfragewert) * 100 : Infinity;
+
+    return {v:v, imp:imp, klicks:klicks, cpc:cpc, leads:leads, anfr:anfr, kunden:kunden,
+            feeSum:feeSum, setupM:setupM, kosten:kosten, roh:roh, erg:erg,
+            anfragewert:anfragewert, klickwert:klickwert, maxCpc:maxCpc,
+            noetigKunden:noetigKunden, noetigCr:noetigCr};
+  }
+
+  function zeige(){
+    var r = rechne(), v = r.v;
+
+    el('o-imp').textContent    = nf.format(Math.round(r.imp));
+    el('o-klicks').textContent = nf.format(Math.round(r.klicks));
+    el('o-cpc').textContent    = euro(r.cpc, 2);
+    el('o-leads').textContent  = zahl(r.leads, r.leads < 10 ? 1 : 0);
+    el('o-qual').textContent   = zahl(r.anfr, r.anfr < 10 ? 1 : 0);
+    el('o-kunden').textContent = zahl(r.kunden, r.kunden < 10 ? 1 : 0);
+    el('o-cpq').textContent    = r.anfr > 0 ? euro(r.kosten / r.anfr) : '—';
+    el('o-cac').textContent    = r.kunden > 0 ? euro(r.kosten / r.kunden) : '—';
+    el('o-ergebnis').textContent = euro(r.erg);
+    el('o-ergebnis').style.color = r.erg >= 0 ? 'var(--accent)' : 'var(--warn)';
+
+    el('o-budget').textContent    = euro(v.budget);
+    el('o-fee').textContent       = euro(r.feeSum);
+    el('o-setup').textContent     = euro(r.setupM);
+    el('o-kosten').textContent    = euro(r.kosten);
+    el('o-rohertrag').textContent = euro(r.roh);
+
+    // Trichter: logarithmisch, sonst ist alles hinter den Einblendungen ein Strich
+    var stufen = [r.imp, r.klicks, r.leads, r.anfr, r.kunden];
+    var max = Math.max.apply(null, stufen.concat([1]));
+    for(var i = 0; i < 5; i++){
+      var n = stufen[i];
+      el('f' + (i+1)).textContent = zahl(n, n > 0 && n < 10 ? 1 : 0);
+      var br = n > 0 ? Math.log10(n + 1) / Math.log10(max + 1) * 100 : 0;
+      el('b' + (i+1)).style.width = Math.max(n > 0 ? 2 : 0, br) + '%';
+    }
+    var quoten = [
+      r.imp > 0 ? r.klicks / r.imp * 100 : 0,
+      r.klicks > 0 ? r.leads / r.klicks * 100 : 0,
+      r.leads > 0 ? r.anfr / r.leads * 100 : 0,
+      r.anfr > 0 ? r.kunden / r.anfr * 100 : 0
+    ];
+    for(var j = 0; j < 4; j++){
+      el('q' + (j+1)).textContent = quoten[j] > 0 ? '(' + zahl(quoten[j], quoten[j] < 10 ? 1 : 0) + ' %)' : '';
+    }
+
+    el('g-kunden').textContent      = (isFinite(r.noetigKunden) && r.noetigKunden > 0) ? zahl(r.noetigKunden, 1) : '—';
+    el('g-cpc').textContent         = r.maxCpc > 0 ? euro(r.maxCpc, 2) : 'nicht erreichbar';
+    el('g-cr').textContent          = (isFinite(r.noetigCr) && r.noetigCr > 0) ? zahl(r.noetigCr, 2) + ' %' : '—';
+    el('g-klickwert').textContent   = euro(r.klickwert, 2);
+    el('g-anfragewert').textContent = euro(r.anfragewert, 2);
+
+    var vd = el('verdict'), kopf = el('verdict-head'), txt = el('verdict-text');
+    if(r.anfragewert <= 0){
+      vd.className = 'verdict schlecht';
+      kopf.textContent = 'Die Vergütung frisst den Gewinn';
+      txt.textContent = 'Eine qualifizierte Anfrage ist bei dieser Abschlussquote weniger wert als die Vergütung, die dafür fällig wird. Entweder muss die Abschlussquote hoch oder die Vergütung runter.';
+    } else if(r.erg >= 0){
+      vd.className = 'verdict gut';
+      kopf.textContent = 'Die Rechnung geht auf: ' + euro(r.erg) + ' im Monat';
+      txt.textContent = 'Aus ' + zahl(r.kunden, r.kunden < 10 ? 1 : 0) + ' Neukunden entstehen ' + euro(r.roh)
+        + ' Rohertrag, dem stehen ' + euro(r.kosten) + ' Kosten gegenüber. Der Klickpreis dürfte bis '
+        + euro(r.maxCpc, 2) + ' steigen, bevor es kippt.';
+    } else {
+      vd.className = 'verdict schlecht';
+      kopf.textContent = 'So trägt es sich nicht: ' + euro(r.erg) + ' im Monat';
+      txt.textContent = 'Es fehlen ' + euro(Math.abs(r.erg)) + '. Nötig wären '
+        + (isFinite(r.noetigKunden) ? zahl(r.noetigKunden, 1) : '—') + ' Neukunden im Monat oder eine Conversion-Rate von '
+        + (isFinite(r.noetigCr) ? zahl(r.noetigCr, 2) + ' %' : '—') + ' statt ' + zahl(v.cr, 1) + ' %.';
+    }
+  }
+
+  function syncFeld(f){
+    var r = document.getElementById(f.id), n = document.getElementById(f.id + '-n');
+    n.value = zahl(parseFloat(r.value), f.dec);
+    spur(r);
+  }
+
+  function sichtbarkeit(){
+    var g = kanal() === 'google';
+    document.querySelectorAll('[data-only]').forEach(function(row){
+      row.style.display = (row.getAttribute('data-only') === (g ? 'google' : 'meta')) ? '' : 'none';
+    });
+    el('ctr-note').textContent = g
+      ? 'Bei Google zählt der Klickpreis. Die CTR schätzt hier nur, wie oft deine Anzeige dafür erscheinen muss.'
+      : '';
+  }
+
+  function alles(){ F.forEach(syncFeld); sichtbarkeit(); zeige(); }
+
+  F.forEach(function(f){
+    var r = document.getElementById(f.id), n = document.getElementById(f.id + '-n');
+    r.addEventListener('input', function(){ syncFeld(f); zeige(); });
+    n.addEventListener('change', function(){
+      var z = parseFloat(n.value.replace(/\./g, '').replace(',', '.'));
+      if(isFinite(z)){
+        r.value = Math.min(Math.max(z, parseFloat(r.min)), parseFloat(r.max));
+      }
+      syncFeld(f); zeige();
+    });
+    n.addEventListener('focus', function(){ n.select(); });
+  });
+
+  document.querySelectorAll('input[name=kanal]').forEach(function(k){
+    k.addEventListener('change', function(){ sichtbarkeit(); zeige(); });
+  });
+
+  el('btn-reset').addEventListener('click', function(){
+    F.forEach(function(f){ document.getElementById(f.id).value = START[f.id]; });
+    document.querySelector('input[name=kanal][value=meta]').checked = true;
+    history.replaceState(null, '', location.pathname);
+    alles();
+  });
+
+  el('btn-link').addEventListener('click', function(){
+    var p = new URLSearchParams();
+    p.set('k', kanal());
+    F.forEach(function(f){ p.set(f.id, document.getElementById(f.id).value); });
+    var url = location.origin + location.pathname + '?' + p.toString();
+    history.replaceState(null, '', url);
+    var fertig = function(ok){
+      var b = el('btn-link'), alt = b.textContent;
+      b.textContent = ok ? 'Link kopiert' : 'Link steht in der Adresszeile';
+      setTimeout(function(){ b.textContent = alt; }, 2200);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(url).then(function(){ fertig(true); }, function(){ fertig(false); });
+    } else { fertig(false); }
+  });
+
+  // Werte aus der Adresszeile uebernehmen, damit sich ein Stand teilen laesst
+  var p = new URLSearchParams(location.search);
+  if(p.get('k') === 'google') document.querySelector('input[name=kanal][value=google]').checked = true;
+  F.forEach(function(f){
+    var q = parseFloat(p.get(f.id));
+    if(isFinite(q)){
+      var r = document.getElementById(f.id);
+      r.value = Math.min(Math.max(q, parseFloat(r.min)), parseFloat(r.max));
+    }
+  });
+
+  alles();
+})();
+</script>
+</body>
+</html>
