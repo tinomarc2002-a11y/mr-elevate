@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<!-- Interne Seite: nicht verlinkt, nicht in der Sitemap, nicht fuer Google. -->
+<meta name="robots" content="noindex, nofollow" />
+<title>Lead-Preis-Rechner | MR Elevate</title>
+<link rel="icon" href="/favicon-32.png" sizes="32x32" />
+<link rel="stylesheet" href="/fonts.css" />
+<style>
+:root{
+  --ink:#0b0c10; --card:#ffffff; --feld:#f7f8fa; --line:#e6e8ec;
+  --fg:#16181d; --fg-muted:#5c6470;
+  --accent:#a8c93e; --accent-tief:#8fae2e; --accent-text:#3e6810;
+  --font:'Inter', system-ui, -apple-system, sans-serif;
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--ink);color:#fff;font-family:var(--font);font-size:16px;
+  line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1000px;margin:0 auto;padding:56px 20px 64px}
+
+.kicker{text-align:center;font-size:.72rem;font-weight:700;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+h1{text-align:center;font-size:clamp(2rem,5.5vw,3.2rem);font-weight:800;letter-spacing:-.025em;
+  line-height:1.05;margin:0 0 14px}
+.lead{text-align:center;color:#c3c8d1;margin:0 auto 34px;max-width:54ch;font-size:1rem}
+
+.card{background:var(--card);color:var(--fg);border-radius:16px;padding:30px;
+  box-shadow:0 24px 60px rgba(0,0,0,.45)}
+@media(max-width:640px){.card{padding:20px}}
+
+.seg{display:flex;gap:10px;margin-bottom:26px}
+.seg label{flex:1;position:relative}
+.seg input{position:absolute;opacity:0;pointer-events:none}
+.seg span{display:block;text-align:center;padding:11px 10px;border:1px solid var(--line);
+  border-radius:10px;font-size:.93rem;font-weight:600;cursor:pointer;color:var(--fg-muted);
+  transition:background .16s,border-color .16s,color .16s}
+.seg input:checked + span{background:#f3f8e4;border-color:var(--accent-tief);color:var(--accent-text)}
+.seg input:focus-visible + span{outline:2px solid var(--accent-text);outline-offset:2px}
+
+.felder{display:grid;grid-template-columns:1fr 1fr;gap:22px 30px}
+@media(max-width:640px){.felder{grid-template-columns:1fr;gap:18px}}
+.feld > label{display:block;font-size:.95rem;color:var(--fg-muted);margin-bottom:8px}
+.feld input[type=number]{width:100%;font:inherit;font-size:1.05rem;padding:12px 14px;
+  background:var(--feld);border:1px solid var(--line);border-radius:10px;color:var(--fg)}
+.feld input[type=number]:focus{outline:none;border-color:var(--accent-tief);background:#fff}
+.feld input[type=number]::-webkit-outer-spin-button,
+.feld input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.feld input[type=number]{-moz-appearance:textfield}
+
+.schieber{display:flex;align-items:center;gap:14px}
+.schieber output{font-size:.95rem;font-weight:700;color:var(--fg);min-width:4em;text-align:right;
+  font-variant-numeric:tabular-nums}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:22px;background:transparent;cursor:pointer;margin:0}
+input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:99px;
+  background:linear-gradient(to right,var(--accent) var(--pct,50%),var(--line) var(--pct,50%))}
+input[type=range]::-moz-range-track{height:6px;border-radius:99px;background:var(--line)}
+input[type=range]::-moz-range-progress{height:6px;border-radius:99px;background:var(--accent)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;
+  background:var(--accent-tief);margin-top:-6px;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--accent-tief);
+  border:0;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+
+.knopfzeile{margin-top:26px;display:flex;flex-wrap:wrap;gap:12px}
+button{font:inherit;font-weight:600;padding:11px 22px;border-radius:10px;cursor:pointer;
+  border:1px solid var(--line);background:#fff;color:var(--fg);transition:background .16s}
+button.primary{background:var(--accent);border-color:var(--accent);color:#0a0d00}
+@media(hover:hover){button:hover{background:var(--feld)}button.primary:hover{background:var(--accent-tief)}}
+
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
+
+.kacheln{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:860px){.kacheln{grid-template-columns:repeat(2,1fr)}}
+.kachel{background:var(--feld);border-radius:12px;padding:16px 18px}
+.kachel .k{display:block;font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--fg-muted);margin-bottom:8px;line-height:1.3}
+.kachel .v{font-size:1.7rem;font-weight:700;letter-spacing:.02em;font-variant-numeric:tabular-nums}
+@media(max-width:640px){.kachel .v{font-size:1.4rem}}
+.kachel.dunkel{background:var(--ink);color:#fff}
+.kachel.dunkel .k{color:var(--accent)}
+
+.weg{margin-top:22px;font-size:.9rem;color:var(--fg-muted);line-height:1.7}
+.weg b{color:var(--fg);font-variant-numeric:tabular-nums}
+.fuss{margin-top:26px;text-align:center;color:#8d94a1;font-size:.83rem}
+.fuss a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(168,201,62,.4)}
+@media(hover:hover){.fuss a:hover{color:#fff}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <p class="kicker">MR Elevate</p>
+  <h1>Lead-Preis-Rechner</h1>
+  <p class="lead">Was ein Lead kostet, hängt an Einblendungen, Klicks und der Landingpage. Setz an, was du kennst: CPM oder CPC.</p>
+
+  <div class="card">
+    <div class="seg" role="radiogroup" aria-label="Ausgangswert">
+      <label><input type="radio" name="modus" value="cpm" checked /><span>Ich kenne den CPM</span></label>
+      <label><input type="radio" name="modus" value="cpc" /><span>Ich kenne den CPC</span></label>
+    </div>
+
+    <div class="felder">
+      <div class="feld">
+        <label for="budget">Werbebudget (€)</label>
+        <input type="number" id="budget" value="3000" min="0" step="100" inputmode="decimal" />
+      </div>
+
+      <div class="feld" data-only="cpm">
+        <label for="cpm">CPM, Preis je 1.000 Einblendungen (€)</label>
+        <input type="number" id="cpm" value="9" min="0" step="0.5" inputmode="decimal" />
+      </div>
+      <div class="feld" data-only="cpc">
+        <label for="cpc">CPC, Preis je Klick (€)</label>
+        <input type="number" id="cpc" value="1.2" min="0" step="0.1" inputmode="decimal" />
+      </div>
+
+      <div class="feld">
+        <label for="ctr">Klickrate (CTR)</label>
+        <div class="schieber">
+          <input type="range" id="ctr" min="0.1" max="10" step="0.1" value="1.2" />
+          <output for="ctr" id="ctr-out">1,2%</output>
+        </div>
+      </div>
+      <div class="feld">
+        <label for="cr">Conversion-Rate der Landingpage</label>
+        <div class="schieber">
+          <input type="range" id="cr" min="0.5" max="30" step="0.1" value="4" />
+          <output for="cr" id="cr-out">4,0%</output>
+        </div>
+      </div>
+    </div>
+
+    <div class="knopfzeile">
+      <button type="button" class="primary" id="uebernehmen">Lead-Preis in die Kennzahlhypothese übernehmen</button>
+      <button type="button" id="reset">Zurücksetzen</button>
+    </div>
+
+    <hr />
+
+    <div class="kacheln">
+      <div class="kachel"><span class="k">Einblendungen</span><span class="v" id="k-imp">0</span></div>
+      <div class="kachel"><span class="k">Klicks</span><span class="v" id="k-klicks">0</span></div>
+      <div class="kachel"><span class="k" id="k-abgeleitet-label">CPC</span><span class="v" id="k-abgeleitet">0 €</span></div>
+      <div class="kachel"><span class="k">Leads</span><span class="v" id="k-leads">0</span></div>
+      <div class="kachel dunkel" style="grid-column:1/-1"><span class="k">Kosten pro Lead</span><span class="v" id="k-cpl">0 €</span></div>
+    </div>
+
+    <p class="weg" id="weg"></p>
+  </div>
+
+  <p class="fuss">Zurück zur <a href="/rechner">Kennzahlhypothese</a>.</p>
+
+</div>
+
+<script>
+(function(){
+  var ids = ['budget','cpm','cpc','ctr','cr'];
+  var start = {}; ids.forEach(function(i){ start[i] = document.getElementById(i).value; });
+  var el = function(id){ return document.getElementById(id); };
+  var nf0 = new Intl.NumberFormat('de-DE',{maximumFractionDigits:0});
+  var nf1 = new Intl.NumberFormat('de-DE',{minimumFractionDigits:1,maximumFractionDigits:1});
+  var nf2 = new Intl.NumberFormat('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2});
+
+  function wert(id){ var n = parseFloat(el(id).value); return isFinite(n) ? n : 0; }
+  function spur(r){ r.style.setProperty('--pct', (r.value - r.min) / (r.max - r.min) * 100 + '%'); }
+  function modus(){ return document.querySelector('input[name=modus]:checked').value; }
+  var letzterCpl = 0;
+
+  function rechne(){
+    var m = modus(), budget = wert('budget'), ctr = wert('ctr')/100, cr = wert('cr')/100;
+    var imp, klicks, abgeleitet, abgeleitetName;
+
+    if(m === 'cpm'){
+      var cpm = wert('cpm');
+      imp = cpm > 0 ? budget / cpm * 1000 : 0;
+      klicks = imp * ctr;
+      abgeleitet = klicks > 0 ? budget / klicks : 0;      // daraus folgt der Klickpreis
+      abgeleitetName = 'CPC';
+    } else {
+      var cpc = wert('cpc');
+      klicks = cpc > 0 ? budget / cpc : 0;
+      imp = ctr > 0 ? klicks / ctr : 0;
+      abgeleitet = imp > 0 ? budget / imp * 1000 : 0;     // daraus folgt der Tausenderpreis
+      abgeleitetName = 'CPM';
+    }
+
+    var leads = klicks * cr;
+    var cpl = leads > 0 ? budget / leads : 0;
+    letzterCpl = cpl;
+
+    el('ctr-out').textContent = nf1.format(wert('ctr')) + '%';
+    el('cr-out').textContent = nf1.format(wert('cr')) + '%';
+    spur(el('ctr')); spur(el('cr'));
+
+    el('k-imp').textContent = nf0.format(Math.round(imp));
+    el('k-klicks').textContent = nf0.format(Math.round(klicks));
+    el('k-abgeleitet-label').textContent = abgeleitetName;
+    el('k-abgeleitet').textContent = nf2.format(abgeleitet) + ' €';
+    el('k-leads').textContent = nf0.format(Math.round(leads));
+    el('k-cpl').textContent = nf2.format(cpl) + ' €';
+
+    el('weg').innerHTML = m === 'cpm'
+      ? 'Rechenweg: ' + nf0.format(budget) + ' € bei ' + nf2.format(wert('cpm')) + ' € CPM ergeben <b>'
+        + nf0.format(Math.round(imp)) + '</b> Einblendungen. Davon ' + nf1.format(wert('ctr')) + ' % geklickt sind <b>'
+        + nf0.format(Math.round(klicks)) + '</b> Klicks zu je <b>' + nf2.format(abgeleitet) + ' €</b>. Davon '
+        + nf1.format(wert('cr')) + ' % zur Anfrage ergibt <b>' + nf0.format(Math.round(leads)) + '</b> Leads.'
+      : 'Rechenweg: ' + nf0.format(budget) + ' € bei ' + nf2.format(wert('cpc')) + ' € CPC ergeben <b>'
+        + nf0.format(Math.round(klicks)) + '</b> Klicks. Bei ' + nf1.format(wert('ctr')) + ' % Klickrate entspricht das <b>'
+        + nf0.format(Math.round(imp)) + '</b> Einblendungen, also <b>' + nf2.format(abgeleitet) + ' €</b> CPM. Davon '
+        + nf1.format(wert('cr')) + ' % zur Anfrage ergibt <b>' + nf0.format(Math.round(leads)) + '</b> Leads.';
+  }
+
+  function sichtbarkeit(){
+    var m = modus();
+    document.querySelectorAll('[data-only]').forEach(function(f){
+      f.style.display = (f.getAttribute('data-only') === m) ? '' : 'none';
+    });
+  }
+
+  ids.forEach(function(id){
+    el(id).addEventListener('input', rechne);
+    el(id).addEventListener('change', rechne);
+  });
+  document.querySelectorAll('input[name=modus]').forEach(function(r){
+    r.addEventListener('change', function(){ sichtbarkeit(); rechne(); });
+  });
+
+  el('reset').addEventListener('click', function(){
+    ids.forEach(function(i){ el(i).value = start[i]; });
+    document.querySelector('input[name=modus][value=cpm]').checked = true;
+    sichtbarkeit(); rechne();
+  });
+
+  el('uebernehmen').addEventListener('click', function(){
+    location.href = '/rechner?budget=' + Math.round(wert('budget'))
+      + '&cpl=' + (Math.round(letzterCpl * 100) / 100);
+  });
+
+  sichtbarkeit();
+  rechne();
+})();
+</script>
+</body>
+</html>

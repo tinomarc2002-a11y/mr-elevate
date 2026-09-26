@@ -5,453 +5,229 @@
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <!-- Interne Seite: nicht verlinkt, nicht in der Sitemap, nicht fuer Google. -->
 <meta name="robots" content="noindex, nofollow" />
-<title>Kennzahlhypothese (intern) | MR Elevate</title>
+<title>Kennzahlhypothese | MR Elevate</title>
 <link rel="icon" href="/favicon-32.png" sizes="32x32" />
 <link rel="stylesheet" href="/fonts.css" />
 <style>
 :root{
-  --bg:#ffffff; --bg-elev:#f6f7fb; --line:rgba(0,0,0,.1); --line-strong:rgba(0,0,0,.16);
-  --fg:#141414; --fg-muted:#4f4f4f; --fg-dim:#6b6b6b;
-  --accent:#3e6810; --accent-fill:#a8c93e; --accent-soft:#f1f7dc;
-  --warn:#923d24; --warn-soft:#fdeee9;
-  --radius:18px; --radius-sm:10px;
-  --shadow:0 6px 22px rgba(0,0,0,.07), 0 1px 1px rgba(0,0,0,.05);
+  --ink:#0b0c10; --card:#ffffff; --feld:#f7f8fa; --line:#e6e8ec;
+  --fg:#16181d; --fg-muted:#5c6470; --fg-dim:#8a92a0;
+  --accent:#a8c93e; --accent-tief:#8fae2e; --accent-text:#3e6810;
   --font:'Inter', system-ui, -apple-system, sans-serif;
-  --ease:cubic-bezier(.23,1,.32,1);
 }
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%}
-body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--font);
-  font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased}
-.wrap{max-width:1080px;margin:0 auto;padding:28px 20px 56px}
+body{margin:0;background:var(--ink);color:#fff;font-family:var(--font);font-size:16px;
+  line-height:1.5;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1000px;margin:0 auto;padding:56px 20px 64px}
 
-header.top{display:flex;flex-wrap:wrap;gap:12px;align-items:baseline;justify-content:space-between;
-  padding-bottom:18px;border-bottom:1px solid var(--line);margin-bottom:24px}
-h1{font-size:clamp(1.5rem,3vw,2rem);font-weight:800;letter-spacing:-.02em;margin:0 0 4px}
-.sub{color:var(--fg-muted);margin:0;font-size:.95rem;max-width:62ch}
-.intern{font-size:.72rem;font-weight:700;letter-spacing:.08em;text-transform:uppercase;
-  color:var(--accent);background:var(--accent-soft);padding:5px 10px;border-radius:999px;white-space:nowrap}
+.kicker{text-align:center;font-size:.72rem;font-weight:700;letter-spacing:.22em;
+  text-transform:uppercase;color:var(--accent);margin:0 0 14px}
+h1{text-align:center;font-size:clamp(2rem,5.5vw,3.2rem);font-weight:800;letter-spacing:-.025em;
+  line-height:1.05;margin:0 0 14px}
+.lead{text-align:center;color:#c3c8d1;margin:0 auto 34px;max-width:52ch;font-size:1rem}
 
-.grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:22px;align-items:start}
-@media(max-width:900px){.grid{grid-template-columns:1fr}}
+.card{background:var(--card);color:var(--fg);border-radius:16px;padding:30px;
+  box-shadow:0 24px 60px rgba(0,0,0,.45)}
+@media(max-width:640px){.card{padding:20px}}
 
-.card{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);
-  box-shadow:var(--shadow);padding:22px}
-.card h2{font-size:1.05rem;font-weight:700;margin:0 0 18px;letter-spacing:-.01em}
+.felder{display:grid;grid-template-columns:1fr 1fr;gap:22px 30px}
+@media(max-width:640px){.felder{grid-template-columns:1fr;gap:18px}}
+.feld > label{display:block;font-size:.95rem;color:var(--fg-muted);margin-bottom:8px}
+.feld input[type=number]{width:100%;font:inherit;font-size:1.05rem;padding:12px 14px;
+  background:var(--feld);border:1px solid var(--line);border-radius:10px;color:var(--fg)}
+.feld input[type=number]:focus{outline:none;border-color:var(--accent-tief);background:#fff}
+.feld input[type=number]::-webkit-outer-spin-button,
+.feld input[type=number]::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
+.feld input[type=number]{-moz-appearance:textfield}
 
-.seg{display:flex;gap:8px;margin-bottom:20px}
-.seg label{flex:1;position:relative}
-.seg input{position:absolute;opacity:0;pointer-events:none}
-.seg span{display:block;text-align:center;padding:9px 8px;border:1px solid var(--line-strong);
-  border-radius:var(--radius-sm);font-size:.88rem;font-weight:600;cursor:pointer;
-  transition:background .16s var(--ease),border-color .16s var(--ease)}
-.seg input:checked + span{background:var(--accent-soft);border-color:var(--accent);color:var(--accent)}
-.seg input:focus-visible + span{outline:2px solid var(--accent);outline-offset:2px}
-
-.row{margin-bottom:18px}
-.row:last-child{margin-bottom:0}
-.row .lab{display:flex;justify-content:space-between;align-items:baseline;gap:12px;margin-bottom:5px}
-.row .lab label{font-size:.94rem;font-weight:600}
-.row .lab label .nr{color:var(--fg-dim);font-weight:700;margin-right:5px}
-.row .note{font-size:.79rem;color:var(--fg-dim);margin:4px 0 0}
-.val{display:inline-flex;align-items:baseline;gap:3px;font-variant-numeric:tabular-nums;white-space:nowrap}
-.val input{width:5.4em;text-align:right;font:inherit;font-weight:700;font-variant-numeric:tabular-nums;
-  color:var(--fg);background:var(--bg-elev);border:1px solid transparent;border-radius:8px;padding:3px 7px}
-.val input:focus{outline:none;border-color:var(--accent);background:#fff}
-.val .unit{font-size:.85rem;color:var(--fg-dim);font-weight:600}
-.abgeleitet{font-size:.79rem;color:var(--fg-dim);margin:14px 0 0;padding-top:12px;border-top:1px dashed var(--line)}
-.abgeleitet b{color:var(--fg);font-variant-numeric:tabular-nums}
-
-input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:22px;background:transparent;cursor:pointer;margin:0}
+.schieber{display:flex;align-items:center;gap:14px}
+.schieber output{font-size:.95rem;font-weight:700;color:var(--fg);min-width:3.4em;text-align:right;
+  font-variant-numeric:tabular-nums}
+input[type=range]{-webkit-appearance:none;appearance:none;flex:1;height:22px;background:transparent;cursor:pointer;margin:0}
 input[type=range]::-webkit-slider-runnable-track{height:6px;border-radius:99px;
-  background:linear-gradient(to right,var(--accent-fill) var(--pct,50%),var(--bg-elev) var(--pct,50%))}
-input[type=range]::-moz-range-track{height:6px;border-radius:99px;background:var(--bg-elev)}
-input[type=range]::-moz-range-progress{height:6px;border-radius:99px;background:var(--accent-fill)}
-input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;border-radius:50%;
-  background:#fff;border:2px solid var(--accent);margin-top:-7px;box-shadow:0 1px 4px rgba(0,0,0,.18);
-  transition:transform .16s var(--ease)}
-input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;background:#fff;
-  border:2px solid var(--accent);box-shadow:0 1px 4px rgba(0,0,0,.18)}
-@media(hover:hover){input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.12)}}
-input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--accent);outline-offset:2px}
+  background:linear-gradient(to right,var(--accent) var(--pct,50%),var(--line) var(--pct,50%))}
+input[type=range]::-moz-range-track{height:6px;border-radius:99px;background:var(--line)}
+input[type=range]::-moz-range-progress{height:6px;border-radius:99px;background:var(--accent)}
+input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:18px;height:18px;border-radius:50%;
+  background:var(--accent-tief);margin-top:-6px;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--accent-tief);
+  border:0;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--accent-text);outline-offset:2px}
 
-.verdict{border-radius:var(--radius);padding:16px 18px;margin-bottom:20px;border:1px solid var(--line)}
-.verdict.gut{background:var(--accent-soft);border-color:rgba(62,104,16,.25)}
-.verdict.schlecht{background:var(--warn-soft);border-color:rgba(146,61,36,.25)}
-.verdict .head{font-size:1.15rem;font-weight:800;letter-spacing:-.01em;margin-bottom:3px}
-.verdict.gut .head{color:var(--accent)}
-.verdict.schlecht .head{color:var(--warn)}
-.verdict p{margin:0;font-size:.9rem;color:var(--fg-muted)}
+.knopfzeile{margin-top:26px}
+button{font:inherit;font-weight:600;padding:11px 22px;border-radius:10px;cursor:pointer;
+  border:1px solid var(--line);background:#fff;color:var(--fg);transition:background .16s}
+@media(hover:hover){button:hover{background:var(--feld)}}
 
-.kpis{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;background:var(--line);
-  border:1px solid var(--line);border-radius:var(--radius-sm);overflow:hidden;margin-bottom:22px}
-@media(max-width:520px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}}
-.kpi{background:var(--bg);padding:12px 13px}
-.kpi .k{font-size:.74rem;color:var(--fg-dim);font-weight:600;display:block;margin-bottom:3px}
-.kpi .v{font-size:1.12rem;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:-.01em}
-.kpi.stark{background:var(--bg-elev)}
+hr{border:0;border-top:1px solid var(--line);margin:28px 0}
 
-.st{margin-bottom:10px}
-.st:last-child{margin-bottom:0}
-.st .t{display:flex;justify-content:space-between;font-size:.85rem;margin-bottom:4px;gap:10px}
-.st .t b{font-variant-numeric:tabular-nums}
-.st .t .q{color:var(--fg-dim);font-size:.78rem}
-.bar{height:10px;border-radius:99px;background:var(--bg-elev);overflow:hidden}
-.bar i{display:block;height:100%;border-radius:99px;background:var(--accent-fill);
-  transition:width .3s var(--ease)}
-.st:last-child .bar i{background:var(--accent)}
+.balken{display:grid;grid-template-columns:auto 1fr auto;gap:12px 18px;align-items:center}
+@media(max-width:640px){.balken{grid-template-columns:auto 1fr auto;gap:10px 10px;font-size:.9rem}}
+.balken .name{color:var(--fg-muted);font-size:.95rem;white-space:nowrap}
+.balken .zahl{font-weight:600;font-variant-numeric:tabular-nums;text-align:right;min-width:3em}
+.spur{height:12px;border-radius:99px;background:var(--feld);overflow:hidden;min-width:60px}
+.spur i{display:block;height:100%;border-radius:99px;background:var(--accent);transition:width .3s cubic-bezier(.23,1,.32,1)}
+.balken .letzte-spur i{background:var(--ink)}
 
-table.be{width:100%;border-collapse:collapse;font-size:.88rem}
-table.be th,table.be td{text-align:left;padding:9px 0;border-bottom:1px solid var(--line);vertical-align:top}
-table.be td:last-child{text-align:right;font-weight:700;font-variant-numeric:tabular-nums;white-space:nowrap}
-table.be tr:last-child th,table.be tr:last-child td{border-bottom:0}
-table.be th{font-weight:500;color:var(--fg-muted)}
+.kacheln{display:grid;grid-template-columns:repeat(4,1fr);gap:16px}
+@media(max-width:860px){.kacheln{grid-template-columns:repeat(2,1fr)}}
+.kachel{background:var(--feld);border-radius:12px;padding:16px 18px}
+.kachel .k{display:block;font-size:.72rem;font-weight:700;letter-spacing:.09em;text-transform:uppercase;
+  color:var(--fg-muted);margin-bottom:8px;line-height:1.3}
+.kachel .v{font-size:1.7rem;font-weight:700;letter-spacing:.02em;font-variant-numeric:tabular-nums}
+@media(max-width:640px){.kachel .v{font-size:1.4rem}}
+.kachel.dunkel{background:var(--ink);color:#fff}
+.kachel.dunkel .k{color:var(--accent)}
 
-.actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
-button{font:inherit;font-weight:600;padding:10px 16px;border-radius:var(--radius-sm);cursor:pointer;
-  border:1px solid var(--line-strong);background:var(--bg);color:var(--fg);
-  transition:background .16s var(--ease),transform .16s var(--ease)}
-button.primary{background:var(--accent-fill);border-color:var(--accent-fill);color:#0a0d00}
-@media(hover:hover){button:hover{background:var(--bg-elev)}button.primary:hover{filter:brightness(.96);background:var(--accent-fill)}}
-button:active{transform:translateY(1px)}
-.fuss{margin-top:24px;font-size:.82rem;color:var(--fg-dim);max-width:76ch}
+.fuss{margin-top:26px;text-align:center;color:#8d94a1;font-size:.83rem}
+.fuss a{color:var(--accent);text-decoration:none;border-bottom:1px solid rgba(168,201,62,.4)}
+@media(hover:hover){.fuss a:hover{color:#fff}}
 @media(prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 </head>
 <body>
 <div class="wrap">
 
-<header class="top">
-  <div>
-    <h1>Kennzahlhypothese</h1>
-    <p class="sub">Aus Werbebudget, Kosten pro Lead und den drei Quoten dahinter: wie viele Neukunden am Ende stehen und ob sich das rechnet.</p>
+  <p class="kicker">MR Elevate</p>
+  <h1>Kennzahlhypothese</h1>
+  <p class="lead">Berechne Leads, Neukunden, Umsatz, ROAS und Gewinn aus Werbebudget, Kosten pro Lead und deinen drei Quoten.</p>
+
+  <div class="card">
+    <div class="felder">
+      <div class="feld">
+        <label for="budget">Werbebudget (€)</label>
+        <input type="number" id="budget" value="3000" min="0" step="100" inputmode="decimal" />
+      </div>
+      <div class="feld">
+        <label for="cpl">Kosten pro Lead (€)</label>
+        <input type="number" id="cpl" value="25" min="0" step="1" inputmode="decimal" />
+      </div>
+
+      <div class="feld">
+        <label for="erreich">1. Erreichbarkeitsquote</label>
+        <div class="schieber">
+          <input type="range" id="erreich" min="0" max="100" step="1" value="60" />
+          <output for="erreich" id="erreich-out">60%</output>
+        </div>
+      </div>
+      <div class="feld">
+        <label for="qual">2. Qualifizierungsquote</label>
+        <div class="schieber">
+          <input type="range" id="qual" min="0" max="100" step="1" value="50" />
+          <output for="qual" id="qual-out">50%</output>
+        </div>
+      </div>
+
+      <div class="feld">
+        <label for="close">3. Abschlussquote</label>
+        <div class="schieber">
+          <input type="range" id="close" min="0" max="100" step="1" value="20" />
+          <output for="close" id="close-out">20%</output>
+        </div>
+      </div>
+      <div class="feld">
+        <label for="wert">Wert pro Kunde (€)</label>
+        <input type="number" id="wert" value="450" min="0" step="50" inputmode="decimal" />
+      </div>
+    </div>
+
+    <div class="knopfzeile"><button type="button" id="reset">Zurücksetzen</button></div>
+
+    <hr />
+
+    <div class="balken">
+      <span class="name">Leads</span><div class="spur"><i id="b1"></i></div><span class="zahl" id="z1">0</span>
+      <span class="name">Erstgespräche</span><div class="spur"><i id="b2"></i></div><span class="zahl" id="z2">0</span>
+      <span class="name">Abschlussgespräche</span><div class="spur"><i id="b3"></i></div><span class="zahl" id="z3">0</span>
+      <span class="name letzte">Neukunden</span><div class="spur letzte-spur"><i id="b4"></i></div><span class="zahl" id="z4">0</span>
+    </div>
+
+    <hr />
+
+    <div class="kacheln">
+      <div class="kachel"><span class="k">Leads</span><span class="v" id="k-leads">0</span></div>
+      <div class="kachel"><span class="k">Erstgespräche</span><span class="v" id="k-erst">0</span></div>
+      <div class="kachel"><span class="k">Abschlussgespräche</span><span class="v" id="k-absch">0</span></div>
+      <div class="kachel"><span class="k">Neukunden</span><span class="v" id="k-kunden">0</span></div>
+      <div class="kachel"><span class="k">Gesamt-Conversion-Rate</span><span class="v" id="k-cr">0%</span></div>
+      <div class="kachel"><span class="k">Umsatz</span><span class="v" id="k-umsatz">0 €</span></div>
+      <div class="kachel dunkel"><span class="k">ROAS</span><span class="v" id="k-roas">0x</span></div>
+      <div class="kachel dunkel"><span class="k">Gewinn</span><span class="v" id="k-gewinn">0 €</span></div>
+    </div>
   </div>
-  <span class="intern">Interne Seite</span>
-</header>
 
-<div class="grid">
-
-  <!-- ============ EINGABEN ============ -->
-  <section class="card">
-    <h2>Annahmen</h2>
-
-    <div class="seg" role="radiogroup" aria-label="Woraus der Lead-Preis kommt">
-      <label><input type="radio" name="modus" value="cpl" checked /><span>Lead-Preis</span></label>
-      <label><input type="radio" name="modus" value="cpm" /><span>über CPM</span></label>
-      <label><input type="radio" name="modus" value="cpc" /><span>über CPC</span></label>
-    </div>
-
-    <div class="row">
-      <div class="lab"><label for="budget">Werbebudget im Monat</label>
-        <span class="val"><input id="budget-n" type="text" inputmode="decimal" /><span class="unit">€</span></span></div>
-      <input type="range" id="budget" min="200" max="20000" step="100" value="3000" />
-    </div>
-
-    <div class="row" data-only="cpl">
-      <div class="lab"><label for="cpl">Kosten pro Lead</label>
-        <span class="val"><input id="cpl-n" type="text" inputmode="decimal" /><span class="unit">€</span></span></div>
-      <input type="range" id="cpl" min="1" max="400" step="1" value="25" />
-    </div>
-
-    <div class="row" data-only="cpm">
-      <div class="lab"><label for="cpm">CPM, Preis je 1.000 Einblendungen</label>
-        <span class="val"><input id="cpm-n" type="text" inputmode="decimal" /><span class="unit">€</span></span></div>
-      <input type="range" id="cpm" min="1" max="40" step="0.5" value="9" />
-    </div>
-    <div class="row" data-only="cpc">
-      <div class="lab"><label for="cpc">CPC, Preis je Klick</label>
-        <span class="val"><input id="cpc-n" type="text" inputmode="decimal" /><span class="unit">€</span></span></div>
-      <input type="range" id="cpc" min="0.2" max="25" step="0.1" value="1.2" />
-    </div>
-    <div class="row" data-only="cpm cpc">
-      <div class="lab"><label for="ctr">CTR, Klicks je Einblendung</label>
-        <span class="val"><input id="ctr-n" type="text" inputmode="decimal" /><span class="unit">%</span></span></div>
-      <input type="range" id="ctr" min="0.2" max="6" step="0.1" value="1.2" />
-      <p class="note" id="ctr-note"></p>
-    </div>
-    <div class="row" data-only="cpm cpc">
-      <div class="lab"><label for="cr">Conversion-Rate der Landingpage</label>
-        <span class="val"><input id="cr-n" type="text" inputmode="decimal" /><span class="unit">%</span></span></div>
-      <input type="range" id="cr" min="0.5" max="20" step="0.1" value="4" />
-      <p class="note">Besucher der Landingpage, die das Formular abschicken. Daraus entsteht der Lead-Preis.</p>
-    </div>
-
-    <div class="row">
-      <div class="lab"><label for="erreich"><span class="nr">1.</span>Erreichbarkeitsquote</label>
-        <span class="val"><input id="erreich-n" type="text" inputmode="decimal" /><span class="unit">%</span></span></div>
-      <input type="range" id="erreich" min="5" max="100" step="1" value="60" />
-      <p class="note">Leads, die du telefonisch erreichst und aus denen ein Erstgespräch wird. Fällt schnell, wenn erst Tage später zurückgerufen wird.</p>
-    </div>
-
-    <div class="row">
-      <div class="lab"><label for="qual"><span class="nr">2.</span>Qualifizierungsquote</label>
-        <span class="val"><input id="qual-n" type="text" inputmode="decimal" /><span class="unit">%</span></span></div>
-      <input type="range" id="qual" min="5" max="100" step="1" value="50" />
-      <p class="note">Erstgespräche, aus denen ein echtes Abschlussgespräch wird.</p>
-    </div>
-
-    <div class="row">
-      <div class="lab"><label for="close"><span class="nr">3.</span>Abschlussquote</label>
-        <span class="val"><input id="close-n" type="text" inputmode="decimal" /><span class="unit">%</span></span></div>
-      <input type="range" id="close" min="2" max="80" step="1" value="20" />
-      <p class="note">Abschlussgespräche, aus denen ein Auftrag wird.</p>
-    </div>
-
-    <div class="row">
-      <div class="lab"><label for="wert">Wert pro Kunde</label>
-        <span class="val"><input id="wert-n" type="text" inputmode="decimal" /><span class="unit">€</span></span></div>
-      <input type="range" id="wert" min="100" max="20000" step="50" value="450" />
-      <p class="note">Was ein Neukunde einbringt. Setz den Deckungsbeitrag ein, wenn du wissen willst, was wirklich hängen bleibt, sonst den Umsatz.</p>
-    </div>
-
-    <p class="abgeleitet" id="ableitung"></p>
-  </section>
-
-  <!-- ============ ERGEBNIS ============ -->
-  <section>
-    <div class="card">
-      <div class="verdict" id="verdict">
-        <div class="head" id="verdict-head">&nbsp;</div>
-        <p id="verdict-text">&nbsp;</p>
-      </div>
-
-      <div class="kpis">
-        <div class="kpi"><span class="k">Leads</span><span class="v" id="o-leads">0</span></div>
-        <div class="kpi"><span class="k">Erstgespräche</span><span class="v" id="o-erst">0</span></div>
-        <div class="kpi"><span class="k">Abschlussgespräche</span><span class="v" id="o-absch">0</span></div>
-        <div class="kpi"><span class="k">Neukunden</span><span class="v" id="o-kunden">0</span></div>
-        <div class="kpi"><span class="k">Gesamt-Conversion</span><span class="v" id="o-gesamt">0 %</span></div>
-        <div class="kpi"><span class="k">Kosten je Neukunde</span><span class="v" id="o-cac">0 €</span></div>
-        <div class="kpi stark"><span class="k">Ertrag</span><span class="v" id="o-umsatz">0 €</span></div>
-        <div class="kpi stark"><span class="k">ROAS</span><span class="v" id="o-roas">0x</span></div>
-        <div class="kpi stark"><span class="k">Nach Werbekosten</span><span class="v" id="o-gewinn">0 €</span></div>
-      </div>
-
-      <div id="funnel">
-        <div class="st"><div class="t"><span>Leads</span><b id="f1">0</b></div><div class="bar"><i id="b1"></i></div></div>
-        <div class="st"><div class="t"><span>Erstgespräche <span class="q" id="q1"></span></span><b id="f2">0</b></div><div class="bar"><i id="b2"></i></div></div>
-        <div class="st"><div class="t"><span>Abschlussgespräche <span class="q" id="q2"></span></span><b id="f3">0</b></div><div class="bar"><i id="b3"></i></div></div>
-        <div class="st"><div class="t"><span>Neukunden <span class="q" id="q3"></span></span><b id="f4">0</b></div><div class="bar"><i id="b4"></i></div></div>
-      </div>
-
-      <div class="actions">
-        <button type="button" class="primary" id="btn-link">Zahlen als Link kopieren</button>
-        <button type="button" id="btn-reset">Zurücksetzen</button>
-      </div>
-    </div>
-
-    <div class="card" style="margin-top:20px">
-      <h2>Wo die Grenze liegt</h2>
-      <table class="be">
-        <tr><th>Nötige Neukunden im Monat</th><td id="g-kunden">0</td></tr>
-        <tr><th>Höchster Lead-Preis, der noch aufgeht</th><td id="g-cpl">0 €</td></tr>
-        <tr><th>Nötige Erreichbarkeitsquote</th><td id="g-erreich">0 %</td></tr>
-        <tr><th>Nötige Abschlussquote</th><td id="g-close">0 %</td></tr>
-        <tr><th>Wert eines Leads</th><td id="g-leadwert">0 €</td></tr>
-        <tr><th>Wert eines Erstgesprächs</th><td id="g-erstwert">0 €</td></tr>
-      </table>
-    </div>
-  </section>
-</div>
-
-<p class="fuss">Die Rechnung prüft, ob Marge und Quoten das Werbebudget tragen. Sie sagt nicht voraus, was eine Kampagne liefert, und enthält außer dem Werbebudget keine weiteren Kosten. Lead-Preise und Quoten schwanken nach Branche, Region und Wettbewerb, belastbar werden sie erst mit eigenen Zahlen aus dem Werbekonto.</p>
+  <p class="fuss">Du kennst die Kosten pro Lead noch nicht? Der <a href="/rechner/leadpreis">Lead-Preis-Rechner</a> leitet sie aus CPM, CTR und CPC her.</p>
 
 </div>
 
 <script>
 (function(){
-  var F = [
-    {id:'budget', dec:0}, {id:'cpl', dec:0}, {id:'cpm', dec:1}, {id:'cpc', dec:2}, {id:'ctr', dec:1}, {id:'cr', dec:1},
-    {id:'erreich', dec:0}, {id:'qual', dec:0}, {id:'close', dec:0}, {id:'wert', dec:0}
-  ];
-  var START = {}; F.forEach(function(f){ START[f.id] = document.getElementById(f.id).value; });
-  var nf = new Intl.NumberFormat('de-DE');
+  var ids = ['budget','cpl','erreich','qual','close','wert'];
+  var start = {}; ids.forEach(function(i){ start[i] = document.getElementById(i).value; });
   var el = function(id){ return document.getElementById(id); };
+  var nf0 = new Intl.NumberFormat('de-DE',{maximumFractionDigits:0});
+  var nf2 = new Intl.NumberFormat('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2});
+  var nf1 = new Intl.NumberFormat('de-DE',{minimumFractionDigits:1,maximumFractionDigits:1});
 
-  function zahl(n, dec){
-    if(!isFinite(n)) return '—';
-    return new Intl.NumberFormat('de-DE',{minimumFractionDigits:dec,maximumFractionDigits:dec}).format(n);
-  }
-  function euro(n, dec){ return !isFinite(n) ? '—' : zahl(n, dec === undefined ? 0 : dec) + ' €'; }
-  function prozent(n, dec){ return !isFinite(n) ? '—' : zahl(n, dec === undefined ? 1 : dec) + ' %'; }
-  function stueck(n){ return zahl(n, n > 0 && n < 10 ? 1 : 0); }
-  function modus(){ return document.querySelector('input[name=modus]:checked').value; }
+  function wert(id){ var n = parseFloat(el(id).value); return isFinite(n) ? n : 0; }
   function spur(r){ r.style.setProperty('--pct', (r.value - r.min) / (r.max - r.min) * 100 + '%'); }
 
   function rechne(){
-    var v = {};
-    F.forEach(function(f){ v[f.id] = parseFloat(document.getElementById(f.id).value); });
+    var budget = wert('budget'), cpl = wert('cpl'), w = wert('wert');
+    var e = wert('erreich')/100, q = wert('qual')/100, c = wert('close')/100;
 
-    // Lead-Preis entweder direkt gesetzt oder aus CPM bzw. CPC hergeleitet
-    var m = modus(), cpl = v.cpl, imp = 0, klicks = 0, cpm = v.cpm, cpc = v.cpc;
-    if(m !== 'cpl'){
-      if(m === 'cpm'){
-        imp = cpm > 0 ? v.budget / cpm * 1000 : 0;
-        klicks = imp * (v.ctr/100);
-        cpc = klicks > 0 ? v.budget / klicks : Infinity;
-      } else {
-        klicks = cpc > 0 ? v.budget / cpc : 0;
-        imp = v.ctr > 0 ? klicks / (v.ctr/100) : 0;
-        cpm = imp > 0 ? v.budget / imp * 1000 : Infinity;
-      }
-      var leadsAusKlicks = klicks * (v.cr/100);
-      cpl = leadsAusKlicks > 0 ? v.budget / leadsAusKlicks : Infinity;
-    }
+    var leads  = cpl > 0 ? budget / cpl : 0;
+    var erst   = leads * e;
+    var absch  = erst * q;
+    var kunden = absch * c;
 
-    var leads  = cpl > 0 && isFinite(cpl) ? v.budget / cpl : 0;
-    var erst   = leads * (v.erreich/100);
-    var absch  = erst * (v.qual/100);
-    var kunden = absch * (v.close/100);
+    var umsatz = kunden * w;
+    var roas   = budget > 0 ? umsatz / budget : 0;
+    var gewinn = umsatz - budget;
+    var gesamt = e * q * c * 100;
 
-    var ertrag = kunden * v.wert;
-    var uebrig = ertrag - v.budget;
-    var roas   = v.budget > 0 ? ertrag / v.budget : 0;
-
-    var kette      = (v.erreich/100) * (v.qual/100) * (v.close/100);
-    var leadwert   = kette * v.wert;
-    var erstwert   = (v.qual/100) * (v.close/100) * v.wert;
-
-    return {v:v, cpl:cpl, cpm:cpm, cpc:cpc, imp:imp, klicks:klicks, leads:leads, erst:erst, absch:absch, kunden:kunden,
-      ertrag:ertrag, uebrig:uebrig, roas:roas, kette:kette, leadwert:leadwert, erstwert:erstwert,
-      maxCpl: leadwert,
-      noetigKunden: v.wert > 0 ? v.budget / v.wert : Infinity,
-      // Welche einzelne Quote muesste steigen, damit es aufgeht
-      noetigErreich: (leads > 0 && (v.qual/100)*(v.close/100)*v.wert > 0)
-        ? v.budget / (leads * (v.qual/100) * (v.close/100) * v.wert) * 100 : Infinity,
-      noetigClose: (absch > 0 && v.wert > 0) ? v.budget / (absch * v.wert) * 100 : Infinity
-    };
-  }
-
-  function zeige(){
-    var r = rechne(), v = r.v;
-
-    el('o-leads').textContent  = stueck(r.leads);
-    el('o-erst').textContent   = stueck(r.erst);
-    el('o-absch').textContent  = stueck(r.absch);
-    el('o-kunden').textContent = stueck(r.kunden);
-    el('o-gesamt').textContent = prozent(r.kette * 100, r.kette * 100 < 10 ? 1 : 0);
-    el('o-cac').textContent    = r.kunden > 0 ? euro(v.budget / r.kunden) : '—';
-    el('o-umsatz').textContent = euro(r.ertrag);
-    el('o-roas').textContent   = isFinite(r.roas) ? zahl(r.roas, 2) + 'x' : '—';
-    el('o-gewinn').textContent = euro(r.uebrig);
-    el('o-gewinn').style.color = r.uebrig >= 0 ? 'var(--accent)' : 'var(--warn)';
-    el('o-roas').style.color   = r.roas >= 1 ? 'var(--accent)' : 'var(--warn)';
-
-    var stufen = [r.leads, r.erst, r.absch, r.kunden], max = Math.max.apply(null, stufen.concat([1]));
-    for(var i = 0; i < 4; i++){
-      el('f' + (i+1)).textContent = stueck(stufen[i]);
-      el('b' + (i+1)).style.width = (stufen[i] > 0 ? Math.max(2, stufen[i] / max * 100) : 0) + '%';
-    }
-    el('q1').textContent = '(' + zahl(v.erreich, 0) + ' %)';
-    el('q2').textContent = '(' + zahl(v.qual, 0) + ' %)';
-    el('q3').textContent = '(' + zahl(v.close, 0) + ' %)';
-
-    var m = modus();
-    if(m === 'cpl'){
-      el('ableitung').innerHTML = 'Daraus: <b>' + stueck(r.leads) + '</b> Leads im Monat, jeder Lead ist rechnerisch <b>'
-        + euro(r.leadwert, 2) + '</b> wert.';
-      el('ctr-note').textContent = '';
-    } else {
-      el('ableitung').innerHTML = 'Daraus: <b>' + nf.format(Math.round(r.imp)) + '</b> Einblendungen, <b>'
-        + nf.format(Math.round(r.klicks)) + '</b> Klicks, '
-        + (m === 'cpm' ? 'CPC <b>' + euro(r.cpc, 2) + '</b>' : 'CPM <b>' + euro(r.cpm, 2) + '</b>')
-        + ', Lead-Preis <b>' + euro(r.cpl, 2) + '</b>.';
-      el('ctr-note').textContent = m === 'cpm'
-        ? 'Aus CPM und CTR ergibt sich der Klickpreis.'
-        : 'Die CTR wird hier nur gebraucht, um aus dem Klickpreis den CPM zurückzurechnen.';
-    }
-
-    el('g-kunden').textContent   = isFinite(r.noetigKunden) ? zahl(r.noetigKunden, 1) : '—';
-    el('g-cpl').textContent      = euro(r.maxCpl, 2);
-    el('g-erreich').textContent  = isFinite(r.noetigErreich)
-      ? (r.noetigErreich > 100 ? 'über 100 %, reicht nicht' : prozent(r.noetigErreich)) : '—';
-    el('g-close').textContent    = isFinite(r.noetigClose)
-      ? (r.noetigClose > 100 ? 'über 100 %, reicht nicht' : prozent(r.noetigClose)) : '—';
-    el('g-leadwert').textContent = euro(r.leadwert, 2);
-    el('g-erstwert').textContent = euro(r.erstwert, 2);
-
-    var vd = el('verdict');
-    if(r.uebrig >= 0){
-      vd.className = 'verdict gut';
-      el('verdict-head').textContent = 'Geht auf: ' + euro(r.uebrig) + ' über dem Werbebudget';
-      el('verdict-text').textContent = stueck(r.kunden) + ' Neukunden bringen ' + euro(r.ertrag)
-        + ' bei ' + euro(v.budget) + ' Budget, das ist ein ROAS von ' + zahl(r.roas, 2)
-        + 'x. Der Lead-Preis dürfte bis ' + euro(r.maxCpl, 2) + ' steigen, bevor es kippt.';
-    } else {
-      vd.className = 'verdict schlecht';
-      el('verdict-head').textContent = 'Trägt sich nicht: ' + euro(r.uebrig) + ' im Monat';
-      el('verdict-text').textContent = 'Es fehlen ' + euro(Math.abs(r.uebrig)) + '. Entweder der Lead-Preis runter auf '
-        + euro(r.maxCpl, 2) + ' statt ' + euro(r.cpl, 2) + ', oder eine der Quoten hoch: Erreichbarkeit '
-        + (isFinite(r.noetigErreich) && r.noetigErreich <= 100 ? prozent(r.noetigErreich) : 'reicht allein nicht')
-        + ', Abschluss ' + (isFinite(r.noetigClose) && r.noetigClose <= 100 ? prozent(r.noetigClose) : 'reicht allein nicht') + '.';
-    }
-  }
-
-  function syncFeld(f){
-    var r = el(f.id);
-    el(f.id + '-n').value = zahl(parseFloat(r.value), f.dec);
-    spur(r);
-  }
-
-  function sichtbarkeit(){
-    var m = modus();
-    document.querySelectorAll('[data-only]').forEach(function(row){
-      row.style.display = (row.getAttribute('data-only').split(' ').indexOf(m) > -1) ? '' : 'none';
+    ['erreich','qual','close'].forEach(function(id){
+      el(id + '-out').textContent = wert(id) + '%';
+      spur(el(id));
     });
+
+    var stufen = [leads, erst, absch, kunden];
+    var max = Math.max.apply(null, stufen.concat([1]));
+    stufen.forEach(function(n, i){
+      el('z' + (i+1)).textContent = nf0.format(Math.round(n));
+      el('b' + (i+1)).style.width = (n > 0 ? Math.max(2, n / max * 100) : 0) + '%';
+    });
+
+    el('k-leads').textContent  = nf0.format(Math.round(leads));
+    el('k-erst').textContent   = nf0.format(Math.round(erst));
+    el('k-absch').textContent  = nf0.format(Math.round(absch));
+    el('k-kunden').textContent = nf0.format(Math.round(kunden));
+    el('k-cr').textContent     = nf1.format(gesamt) + '%';
+    el('k-umsatz').textContent = nf0.format(Math.round(umsatz)) + ' €';
+    el('k-roas').textContent   = nf2.format(roas) + 'x';
+    el('k-gewinn').textContent = nf0.format(Math.round(gewinn)) + ' €';
   }
 
-  function alles(){ F.forEach(syncFeld); sichtbarkeit(); zeige(); }
-
-  F.forEach(function(f){
-    var r = el(f.id), n = el(f.id + '-n');
-    r.addEventListener('input', function(){ syncFeld(f); zeige(); });
-    n.addEventListener('change', function(){
-      var z = parseFloat(n.value.replace(/\./g, '').replace(',', '.'));
-      if(isFinite(z)) r.value = Math.min(Math.max(z, parseFloat(r.min)), parseFloat(r.max));
-      syncFeld(f); zeige();
-    });
-    n.addEventListener('focus', function(){ n.select(); });
+  ids.forEach(function(id){
+    el(id).addEventListener('input', rechne);
+    el(id).addEventListener('change', rechne);
   });
 
-  document.querySelectorAll('input[name=modus]').forEach(function(k){
-    k.addEventListener('change', function(){ sichtbarkeit(); zeige(); });
-  });
-
-  el('btn-reset').addEventListener('click', function(){
-    F.forEach(function(f){ el(f.id).value = START[f.id]; });
-    document.querySelector('input[name=modus][value=cpl]').checked = true;
+  el('reset').addEventListener('click', function(){
+    ids.forEach(function(i){ el(i).value = start[i]; });
     history.replaceState(null, '', location.pathname);
-    alles();
+    rechne();
   });
 
-  el('btn-link').addEventListener('click', function(){
-    var p = new URLSearchParams();
-    p.set('m', modus());
-    F.forEach(function(f){ p.set(f.id, el(f.id).value); });
-    var url = location.origin + location.pathname + '?' + p.toString();
-    history.replaceState(null, '', url);
-    var fertig = function(ok){
-      var b = el('btn-link'), alt = b.textContent;
-      b.textContent = ok ? 'Link kopiert' : 'Link steht in der Adresszeile';
-      setTimeout(function(){ b.textContent = alt; }, 2200);
-    };
-    if(navigator.clipboard && navigator.clipboard.writeText){
-      navigator.clipboard.writeText(url).then(function(){ fertig(true); }, function(){ fertig(false); });
-    } else { fertig(false); }
-  });
-
-  // Werte aus der Adresszeile uebernehmen, damit sich ein Stand teilen laesst
+  // Werte lassen sich per Adresszeile vorbelegen, etwa aus dem Lead-Preis-Rechner
   var p = new URLSearchParams(location.search);
-  if(p.get('m') === 'cpm') document.querySelector('input[name=modus][value=cpm]').checked = true;
-  F.forEach(function(f){
-    var q = parseFloat(p.get(f.id));
-    if(isFinite(q)){
-      var r = el(f.id);
-      r.value = Math.min(Math.max(q, parseFloat(r.min)), parseFloat(r.max));
-    }
+  ids.forEach(function(id){
+    var q = parseFloat(p.get(id));
+    if(isFinite(q)) el(id).value = q;
   });
 
-  alles();
+  rechne();
 })();
 </script>
 </body>
