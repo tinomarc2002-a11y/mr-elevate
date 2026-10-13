@@ -351,6 +351,9 @@ section{ position:relative; }
 @media(max-width:600px){ .nav-wc{ display:none; } }
 /* Lange Woerter in Ueberschriften: weiche Trennstellen im HTML, dies nur als letzte Sicherung */
 @media(max-width:480px){ h1,h2,h3{ overflow-wrap:break-word; } }
+.thumb-puls{ transform-box:fill-box; transform-origin:center; animation:thumbPuls 2.4s ease-out infinite; }
+@keyframes thumbPuls{ 0%{ opacity:.6; transform:scale(.5); } 100%{ opacity:0; transform:scale(2.2); } }
+@media (prefers-reduced-motion:reduce){ .thumb-puls{ animation:none; } }
 </style>
 <link rel="stylesheet" href="/perspective.css" />
 </head>
@@ -393,26 +396,26 @@ section{ position:relative; }
       <div class="art-grid">
       <a class="art-card" href="/ratgeber/google-ads-handwerk">
         <span class="art-illu">
-          <svg viewBox="0 0 260 150" role="img" aria-label="Illustration: ein Suchfeld mit Lupe, darunter ein hervorgehobenes Suchergebnis, daneben ein Haus">
-            <ellipse cx="130" cy="96" rx="78" ry="38" fill="rgba(168,201,62,.16)"/>
-            <g transform="translate(34,34)">
-              <rect style="fill:var(--bg-card);stroke:var(--line-strong)" x="0" y="0" width="150" height="38" rx="19" stroke-width="2.4"/>
-              <circle style="fill:none;stroke:var(--fg-dim)" cx="21" cy="18" r="7" stroke-width="2.4"/>
-              <line style="stroke:var(--fg-dim)" x1="26" y1="23" x2="32" y2="29" stroke-width="2.4" stroke-linecap="round"/>
-              <line style="stroke:var(--fg-dim)" x1="44" y1="19" x2="112" y2="19" stroke-width="3" stroke-linecap="round" opacity=".6"/>
+          <svg viewBox="0 0 260 150" role="img" aria-label="Illustration: Kartenausschnitt mit Suchfeld, drei grauen Nadeln und einer hervorgehobenen gruenen Nadel">
+            <defs><clipPath id="thumb-karte"><rect x="30" y="18" width="208" height="122" rx="18"/></clipPath></defs>
+            <g clip-path="url(#thumb-karte)">
+              <rect x="30" y="18" width="208" height="122" style="fill:#eef2e3"/>
+              <path d="M20 126 C 74 108, 118 142, 168 130 S 224 110, 250 124" style="fill:none;stroke:#cde0ea;stroke-width:18;stroke-linecap:round"/>
+              <path d="M186 30 q22 -9 40 2 q11 15 -2 29 q-21 9 -40 -2 q-10 -15 2 -29z" style="fill:#d3e5a6"/>
+              <g style="fill:#dfe6ce"><rect x="124" y="62" width="22" height="10" rx="2.5"/><rect x="152" y="62" width="10" height="10" rx="2.5"/><rect x="124" y="78" width="10" height="10" rx="2.5"/><rect x="140" y="78" width="22" height="10" rx="2.5"/><rect x="182" y="78" width="22" height="10" rx="2.5"/><rect x="46" y="84" width="22" height="10" rx="2.5"/><rect x="74" y="84" width="10" height="10" rx="2.5"/><rect x="124" y="106" width="10" height="10" rx="2.5"/><rect x="140" y="106" width="22" height="10" rx="2.5"/></g>
+              <path d="M114 10 V150 M172 54 V96 M20 72 H250" style="fill:none;stroke:#fff;stroke-width:5;stroke-linecap:round"/>
+              <path d="M20 104 L114 96 L196 96 L250 82" style="fill:none;stroke:#fff;stroke-width:8;stroke-linecap:round;stroke-linejoin:round"/>
+              <g transform="translate(210,82) scale(0.62)"><path d="M0 0 c-8 -11 -12 -16 -12 -23 a12 12 0 0 1 24 0 c0 7 -4 12 -12 23 z" style="fill:#a8a392"/><circle cx="0" cy="-23" r="4.4" style="fill:#fff"/></g><g transform="translate(70,100) scale(0.62)"><path d="M0 0 c-8 -11 -12 -16 -12 -23 a12 12 0 0 1 24 0 c0 7 -4 12 -12 23 z" style="fill:#a8a392"/><circle cx="0" cy="-23" r="4.4" style="fill:#fff"/></g><g transform="translate(204,126) scale(0.62)"><path d="M0 0 c-8 -11 -12 -16 -12 -23 a12 12 0 0 1 24 0 c0 7 -4 12 -12 23 z" style="fill:#a8a392"/><circle cx="0" cy="-23" r="4.4" style="fill:#fff"/></g>
+              <circle class="thumb-puls" cx="150" cy="96" r="13" style="fill:var(--accent-fill);opacity:.55"/>
+              <g transform="translate(150,96) scale(1.15)"><path d="M0 0 c-8 -11 -12 -16 -12 -23 a12 12 0 0 1 24 0 c0 7 -4 12 -12 23 z" style="fill:var(--accent)"/><circle cx="0" cy="-23" r="4.4" style="fill:#fff"/></g>
             </g>
-            <g transform="translate(52,86)">
-              <rect style="fill:var(--accent-fill)" x="0" y="0" width="114" height="36" rx="8"/>
-              <line style="stroke:var(--accent-ink)" x1="14" y1="13" x2="76" y2="13" stroke-width="3" stroke-linecap="round" opacity=".6"/>
-              <line style="stroke:var(--accent-ink)" x1="14" y1="24" x2="52" y2="24" stroke-width="3" stroke-linecap="round" opacity=".35"/>
-            </g>
-            <g transform="translate(186,62)">
-              <rect style="fill:var(--bg-card);stroke:var(--line-strong)" x="6" y="22" width="34" height="28" rx="3" stroke-width="2.2"/>
-              <path style="fill:none;stroke:var(--accent)" d="M0 24 L23 3 L46 24" stroke-width="3.2" stroke-linecap="round" stroke-linejoin="round"/>
-              <rect style="fill:var(--amber)" x="18" y="34" width="10" height="16" rx="2" opacity=".85"/>
-            </g>
-            <g class="rg-spark" transform="translate(22,92) scale(0.7)"><path style="fill:var(--accent-fill)" d="M12 0C13.5 7 15 8.5 22 10C15 11.5 13.5 13 12 20C10.5 13 9 11.5 2 10C9 8.5 10.5 7 12 0Z"/></g>
-            <g class="rg-spark" transform="translate(226,36) scale(0.62)"><path style="fill:var(--amber)" d="M12 0C13.5 7 15 8.5 22 10C15 11.5 13.5 13 12 20C10.5 13 9 11.5 2 10C9 8.5 10.5 7 12 0Z"/></g>
+            <rect x="30" y="18" width="208" height="122" rx="18" style="fill:none;stroke:var(--line-strong)" stroke-width="2"/>
+            <rect style="fill:var(--bg-card);stroke:var(--line-strong)" x="14" y="28" width="132" height="32" rx="16" stroke-width="2.2"/>
+            <circle style="fill:none;stroke:var(--fg-dim)" cx="32" cy="43" r="6" stroke-width="2.2"/>
+            <line style="stroke:var(--fg-dim)" x1="36.5" y1="47.5" x2="41" y2="52" stroke-width="2.2" stroke-linecap="round"/>
+            <line style="stroke:var(--fg-dim)" x1="52" y1="44" x2="122" y2="44" stroke-width="3" stroke-linecap="round" opacity=".55"/>
+            <g class="rg-spark" transform="translate(12,104) scale(0.7)"><path style="fill:var(--accent-fill)" d="M12 0C13.5 7 15 8.5 22 10C15 11.5 13.5 13 12 20C10.5 13 9 11.5 2 10C9 8.5 10.5 7 12 0Z"/></g>
+            <g class="rg-spark" transform="translate(236,8) scale(0.62)"><path style="fill:var(--amber)" d="M12 0C13.5 7 15 8.5 22 10C15 11.5 13.5 13 12 20C10.5 13 9 11.5 2 10C9 8.5 10.5 7 12 0Z"/></g>
           </svg>
         </span>
         <span class="art-body">

@@ -395,19 +395,24 @@ sup a{ color:var(--accent); text-decoration:none; font-weight:600; padding:0 1px
 .illu figcaption{ margin-top:12px; text-align:center; font-size:.88rem; color:var(--fg-dim); line-height:1.5; }
 
 /* Zeichnung im Kopf: laeuft in einer Schleife */
-.illu-hero{ max-width:520px; margin:38px auto 0; }
-.h-haeuser rect,.h-haeuser path{ fill:var(--bg-card); stroke:var(--line-strong); stroke-width:2; stroke-linejoin:round; }
-.h-haeuser .tuer{ fill:var(--line); stroke:none; }
-.h-treffer rect,.h-treffer path{ fill:var(--accent-fill); stroke:var(--accent); stroke-width:2; stroke-linejoin:round; }
-.h-treffer .tuer{ fill:var(--accent); stroke:none; }
-.h-decke{ transform:scaleX(0); transform-box:fill-box; transform-origin:right; animation:tippen 9s linear infinite; }
-.h-nadel{ transform-box:fill-box; animation:nadel 9s var(--ease) infinite; }
-.h-treffer{ animation:treffer 9s linear infinite; }
-.h-schild,.h-faden{ animation:schild 9s linear infinite; }
-@keyframes tippen{ 0%{ transform:scaleX(1); animation-timing-function:steps(25,end); } 30%,94%{ transform:scaleX(0); } 100%{ transform:scaleX(1); } }
-@keyframes nadel{ 0%,33%{ opacity:0; transform:translateY(-46px); } 41%{ opacity:1; transform:translateY(0); } 45%{ transform:translateY(-9px); } 49%,94%{ opacity:1; transform:translateY(0); } 100%{ opacity:0; transform:translateY(-46px); } }
-@keyframes treffer{ 0%,43%{ opacity:0; } 50%,94%{ opacity:1; } 100%{ opacity:0; } }
-@keyframes schild{ 0%,49%{ opacity:0; } 57%,94%{ opacity:1; } 100%{ opacity:0; } }
+.illu-hero{ max-width:880px; margin:46px auto 0; }
+.illu-hero .hm{ display:none; }
+.k-auf{ opacity:0; transform:translateY(14px); animation:kAuf .6s var(--ease) forwards; animation-delay:var(--d,0s); }
+.k-fall{ opacity:0; animation:kFall .62s var(--ease) forwards; animation-delay:var(--d,0s); }
+.k-tippen{ transform-box:fill-box; transform-origin:right; animation:kTippen 1.5s steps(25,end) .5s forwards; }
+.k-cursor{ opacity:0; animation:kBlink 1s steps(1) 2s infinite; }
+.k-linie{ stroke-dasharray:1000; stroke-dashoffset:1000; animation:ziehen .7s var(--ease) forwards; animation-delay:var(--d,0s); }
+.k-puls{ opacity:0; transform-box:fill-box; transform-origin:center; animation:kPuls 2.4s ease-out infinite; animation-delay:var(--d,0s); }
+.k-toast{ opacity:0; transform:translateY(16px) scale(.94); transform-box:fill-box; transform-origin:center; animation:kToast .55s var(--ease) forwards; animation-delay:var(--d,0s); }
+.k-glocke{ transform-box:fill-box; transform-origin:top center; animation:kGlocke 4s ease-in-out 5.4s infinite; }
+@keyframes kAuf{ to{ opacity:1; transform:none; } }
+@keyframes kFall{ 0%{ opacity:0; transform:translateY(-46px); } 60%{ opacity:1; transform:translateY(0); } 78%{ opacity:1; transform:translateY(-8px); } 100%{ opacity:1; transform:translateY(0); } }
+@keyframes kTippen{ to{ transform:scaleX(0); } }
+@keyframes kBlink{ 0%{ opacity:1; } 50%{ opacity:0; } }
+@keyframes kPuls{ 0%{ opacity:.75; transform:scale(.4); } 100%{ opacity:0; transform:scale(3.4); } }
+@keyframes kToast{ 60%{ opacity:1; transform:translateY(-4px) scale(1.03); } 100%{ opacity:1; transform:none; } }
+@keyframes kGlocke{ 0%,86%,100%{ transform:rotate(0); } 89%{ transform:rotate(16deg); } 92%{ transform:rotate(-13deg); } 95%{ transform:rotate(7deg); } 98%{ transform:rotate(-3deg); } }
+@media(max-width:640px){ .illu-hero .hd{ display:none; } .illu-hero .hm{ display:block; } .illu-hero{ margin-top:34px; } }
 
 /* Einstieg, Kernaussagen, Merksaetze */
 .phase-body.einstieg{ margin-left:0; }
@@ -484,7 +489,11 @@ sup a{ color:var(--accent); text-decoration:none; font-weight:600; padding:0 1px
   .z-langsam{ transform:scaleX(.3); }
   .z-auf{ opacity:1; transform:none; }
   .z-ring,.z-tipp{ display:none; }
-  .grafik.in *,.illu.in *,.kenn.in *,.h-decke,.h-nadel,.h-treffer,.h-schild,.h-faden{ animation:none !important; }
+  .grafik.in *,.illu.in *,.kenn.in *,.illu-hero *{ animation:none !important; }
+  .k-auf,.k-fall,.k-toast{ opacity:1; transform:none; }
+  .k-tippen{ transform:scaleX(0); }
+  .k-linie{ stroke-dashoffset:0; }
+  .k-puls,.k-wagen,.k-cursor{ display:none; }
 }
 
 .phase.ob{ padding:clamp(64px,9vw,124px) 0; }
@@ -524,7 +533,7 @@ sup a{ color:var(--accent); text-decoration:none; font-weight:600; padding:0 1px
 .start-grid .kurz .signal-list{ gap:0; margin:0; }
 .start-grid .kurz .signal-list li{ padding:13px 0; border-top:1px solid rgba(62,104,16,.22); font-size:1.03rem; line-height:1.5; color:var(--fg); }
 .start-grid .kurz .signal-list li:last-child{ padding-bottom:0; }
-.illu-hero{ max-width:600px; }
+
 #schrauben .spiel-ergebnis{ min-height:1.6em; }
 @media(max-width:860px){
   .ob-grid{ grid-template-columns:minmax(0,1fr); grid-template-areas:"kopf" "bild" "punkte" "fuss"; }
@@ -543,47 +552,135 @@ sup a{ color:var(--accent); text-decoration:none; font-weight:600; padding:0 1px
       <span><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6h16M4 12h10M4 18h6"/></svg> Lesezeit rund 6 Minuten</span>
     </div>
     <figure class="illu illu-hero" aria-hidden="true">
-    <svg viewBox="0 0 420 200">
-      <rect style="fill:var(--bg-card);stroke:var(--line-strong);stroke-width:2" x="60" y="6" width="300" height="44" rx="22"/>
-      <circle cx="86" cy="27" r="7" style="fill:none;stroke:var(--fg-dim);stroke-width:2.2"/>
-      <path d="M91 32 l6 6" style="stroke:var(--fg-dim);stroke-width:2.2;stroke-linecap:round"/>
-      <text style="fill:var(--fg);font-family:var(--font-ui)" x="108" y="33" font-size="15">Dachdecker in meiner Nähe</text>
-      <rect class="h-decke" x="104" y="14" width="232" height="28" style="fill:var(--bg-card)"/>
-      <path class="h-faden" d="M214 52 V68" style="stroke:var(--line-strong);stroke-width:2;stroke-dasharray:3 5;stroke-linecap:round"/>
-      <line x1="16" y1="190" x2="404" y2="190" style="stroke:var(--line-strong);stroke-width:2;stroke-linecap:round"/>
-      <g class="h-haeuser"><g >
-        <rect x="40" y="150" width="44" height="40" rx="3"/>
-        <path d="M35 152 L62 130 L89 152 Z"/>
-        <rect class="tuer" x="57" y="172" width="10" height="18" rx="1.5"/>
-      </g><g >
-        <rect x="116" y="140" width="44" height="50" rx="3"/>
-        <path d="M111 142 L138 120 L165 142 Z"/>
-        <rect class="tuer" x="133" y="172" width="10" height="18" rx="1.5"/>
-      </g><g >
-        <rect x="192" y="146" width="44" height="44" rx="3"/>
-        <path d="M187 148 L214 126 L241 148 Z"/>
-        <rect class="tuer" x="209" y="172" width="10" height="18" rx="1.5"/>
-      </g><g >
-        <rect x="268" y="154" width="44" height="36" rx="3"/>
-        <path d="M263 156 L290 134 L317 156 Z"/>
-        <rect class="tuer" x="285" y="172" width="10" height="18" rx="1.5"/>
-      </g><g >
-        <rect x="344" y="142" width="44" height="48" rx="3"/>
-        <path d="M339 144 L366 122 L393 144 Z"/>
-        <rect class="tuer" x="361" y="172" width="10" height="18" rx="1.5"/>
-      </g></g>
-      <g class="h-treffer"><g >
-        <rect x="192" y="146" width="44" height="44" rx="3"/>
-        <path d="M187 148 L214 126 L241 148 Z"/>
-        <rect class="tuer" x="209" y="172" width="10" height="18" rx="1.5"/>
-      </g></g>
-      <g class="h-nadel">
-        <path d="M214 124 c-11 -15 -16 -21 -16 -30 a16 16 0 0 1 32 0 c0 9 -5 15 -16 30 z" style="fill:var(--accent)"/>
-        <circle cx="214" cy="94" r="5.5" style="fill:var(--bg-card)"/>
+    <svg class="hd" viewBox="0 0 880 440">
+      <defs><clipPath id="karte-breit"><rect width="880" height="440" rx="28"/></clipPath></defs>
+      <g clip-path="url(#karte-breit)">
+        <rect width="880" height="440" style="fill:#eef2e3"/>
+        <path d="M-30 366 C 150 326, 290 420, 460 388 S 760 320, 910 372" style="fill:none;stroke:#cde0ea;stroke-width:48;stroke-linecap:round"/>
+        <path d="M650 62 q62 -30 124 0 q36 42 -4 92 q-60 28 -120 -2 q-40 -44 0 -90z" style="fill:#d3e5a6"/>
+        <g style="fill:#dfe6ce"><rect x="468" y="20" width="48" height="20" rx="4"/><rect x="524" y="20" width="20" height="20" rx="4"/><rect x="552" y="20" width="20" height="20" rx="4"/><rect x="580" y="20" width="20" height="20" rx="4"/><rect x="468" y="48" width="48" height="20" rx="4"/><rect x="524" y="48" width="20" height="20" rx="4"/><rect x="552" y="48" width="20" height="20" rx="4"/><rect x="580" y="48" width="20" height="20" rx="4"/><rect x="440" y="76" width="20" height="20" rx="4"/><rect x="496" y="76" width="20" height="20" rx="4"/><rect x="524" y="76" width="20" height="20" rx="4"/><rect x="552" y="76" width="20" height="20" rx="4"/><rect x="580" y="76" width="20" height="20" rx="4"/><rect x="440" y="104" width="48" height="20" rx="4"/><rect x="496" y="104" width="48" height="20" rx="4"/><rect x="816" y="22" width="20" height="20" rx="4"/><rect x="816" y="50" width="20" height="20" rx="4"/><rect x="844" y="50" width="20" height="20" rx="4"/><rect x="816" y="78" width="20" height="20" rx="4"/><rect x="844" y="78" width="20" height="20" rx="4"/><rect x="816" y="106" width="20" height="20" rx="4"/><rect x="486" y="168" width="48" height="20" rx="4"/><rect x="542" y="168" width="20" height="20" rx="4"/><rect x="486" y="196" width="48" height="20" rx="4"/><rect x="542" y="196" width="20" height="20" rx="4"/><rect x="570" y="196" width="20" height="20" rx="4"/><rect x="638" y="168" width="20" height="20" rx="4"/><rect x="666" y="168" width="48" height="20" rx="4"/><rect x="722" y="168" width="20" height="20" rx="4"/><rect x="348" y="262" width="20" height="20" rx="4"/><rect x="376" y="262" width="48" height="20" rx="4"/><rect x="348" y="290" width="20" height="20" rx="4"/><rect x="376" y="290" width="48" height="20" rx="4"/><rect x="432" y="290" width="20" height="20" rx="4"/><rect x="498" y="262" width="20" height="20" rx="4"/><rect x="526" y="262" width="20" height="20" rx="4"/><rect x="554" y="262" width="48" height="20" rx="4"/><rect x="498" y="290" width="20" height="20" rx="4"/><rect x="554" y="290" width="48" height="20" rx="4"/><rect x="694" y="262" width="20" height="20" rx="4"/><rect x="722" y="262" width="20" height="20" rx="4"/><rect x="778" y="226" width="20" height="20" rx="4"/><rect x="806" y="226" width="48" height="20" rx="4"/><rect x="778" y="254" width="48" height="20" rx="4"/><rect x="834" y="254" width="20" height="20" rx="4"/><rect x="638" y="318" width="20" height="20" rx="4"/><rect x="666" y="318" width="20" height="20" rx="4"/><rect x="694" y="318" width="20" height="20" rx="4"/><rect x="722" y="318" width="20" height="20" rx="4"/></g>
+        <path d="M120 -20 V282 M-20 62 H330 M200 150 V262 M470 150 V240 M620 300 H900 M760 210 V460 M480 240 V460" style="fill:none;stroke:#fff;stroke-width:9;stroke-linecap:round;stroke-linejoin:round"/>
+        <path d="M-20 150 H900 M330 -20 V460 M620 -20 V460 M-20 300 L330 240 L620 240 L900 180" style="fill:none;stroke:#fff;stroke-width:17;stroke-linecap:round;stroke-linejoin:round"/>
+        <g class="k-wagen">
+          <rect x="-12" y="-6.5" width="24" height="13" rx="4.5" style="fill:var(--fg)"/>
+          <rect x="3.5" y="-4.5" width="5" height="9" rx="1.5" style="fill:#fff;opacity:.75"/>
+          <animateMotion dur="15s" repeatCount="indefinite" rotate="auto" path="M-30 302 L330 240 L620 240 L910 178"/>
+        </g>
+        <circle class="k-puls" style="--d:4.1s;fill:var(--accent-fill)" cx="556" cy="240" r="11"/>
+        <circle class="k-puls" style="--d:5.3s;fill:var(--accent-fill)" cx="556" cy="240" r="11"/>
+        <path class="k-linie" pathLength="1000" style="--d:3.2s;fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linecap:round;opacity:.55" d="M420 170 C 470 170, 520 172, 548 196"/>
+        <g class="k-fall" style="--d:2.10s"><g transform="translate(470,96) scale(1.05)">
+          <path d="M0 0 c-8 -11 -12 -16 -12 -23 a12 12 0 0 1 24 0 c0 7 -4 12 -12 23 z" style="fill:#a8a392"/>
+          <circle cx="0" cy="-23" r="4.4" style="fill:#fff"/></g></g>
+        <g class="k-fall" style="--d:2.25s"><g transform="translate(712,232) scale(1.05)">
+          <path d="M0 0 c-8 -11 -12 -16 -12 -23 a12 12 0 0 1 24 0 c0 7 -4 12 -12 23 z" style="fill:#a8a392"/>
+          <circle cx="0" cy="-23" r="4.4" style="fill:#fff"/></g></g>
+        <g class="k-fall" style="--d:2.40s"><g transform="translate(826,122) scale(1.05)">
+          <path d="M0 0 c-8 -11 -12 -16 -12 -23 a12 12 0 0 1 24 0 c0 7 -4 12 -12 23 z" style="fill:#a8a392"/>
+          <circle cx="0" cy="-23" r="4.4" style="fill:#fff"/></g></g>
+        <g class="k-fall" style="--d:2.55s"><g transform="translate(548,330) scale(1.05)">
+          <path d="M0 0 c-8 -11 -12 -16 -12 -23 a12 12 0 0 1 24 0 c0 7 -4 12 -12 23 z" style="fill:#a8a392"/>
+          <circle cx="0" cy="-23" r="4.4" style="fill:#fff"/></g></g>
+        <g class="k-fall" style="--d:2.70s"><g transform="translate(228,318) scale(1.05)">
+          <path d="M0 0 c-8 -11 -12 -16 -12 -23 a12 12 0 0 1 24 0 c0 7 -4 12 -12 23 z" style="fill:#a8a392"/>
+          <circle cx="0" cy="-23" r="4.4" style="fill:#fff"/></g></g>
+        <g class="k-fall" style="--d:3.5s"><g transform="translate(556,240) scale(1.7)">
+          <path d="M0 0 c-8 -11 -12 -16 -12 -23 a12 12 0 0 1 24 0 c0 7 -4 12 -12 23 z" style="fill:var(--accent)"/>
+          <circle cx="0" cy="-23" r="4.4" style="fill:#fff"/></g></g>
+        <g class="k-auf" style="--d:3.95s">
+          <rect x="584" y="174" width="128" height="34" rx="17" style="fill:var(--accent-fill)"/>
+          <text style="fill:var(--accent-ink);font-family:var(--font-ui)" x="648" y="196.4" font-size="15" font-weight="700" text-anchor="middle">Dein Betrieb</text>
+        </g>
       </g>
-      <g class="h-schild">
-        <rect x="238" y="80" width="104" height="28" rx="14" style="fill:var(--accent-fill)"/>
-        <text style="fill:var(--accent-ink);font-family:var(--font-ui)" x="290" y="99" font-size="13" font-weight="700" text-anchor="middle">Dein Betrieb</text>
+      <rect x="1" y="1" width="878" height="438" rx="27" style="fill:none;stroke:var(--line-strong);stroke-width:2"/>
+      <rect x="36" y="34" width="384" height="58" rx="29" style="fill:#fff;stroke:var(--line-strong);stroke-width:2"/>
+      <circle cx="65" cy="62" r="7.9799999999999995" style="fill:none;stroke:var(--fg-dim);stroke-width:2.4"/>
+      <path d="M70.7 67.7 l6.08 6.08" style="stroke:var(--fg-dim);stroke-width:2.4;stroke-linecap:round"/>
+      <text style="fill:var(--fg);font-family:var(--font-ui)" x="91.1" y="69.65" font-size="19">Dachdecker in meiner Nähe</text>
+      <rect class="k-tippen" x="89.1" y="40" width="251" height="46" style="fill:#fff"/>
+      <rect class="k-cursor" x="336.1" y="51.6" width="2.2" height="22.8" rx="1" style="fill:var(--accent)"/>
+      <g class="k-auf" style="--d:2.6s">
+        <rect x="36" y="108" width="384" height="124" rx="20" style="fill:#fff;stroke:var(--line-strong);stroke-width:2"/>
+        <rect x="58" y="128" width="78" height="26" rx="13" style="fill:var(--accent-fill)"/>
+        <text style="fill:var(--accent-ink);font-family:var(--font-ui)" x="97" y="145.86" font-size="13.5" font-weight="700" text-anchor="middle">Anzeige</text>
+        <text style="fill:var(--fg);font-family:var(--font-ui)" x="58" y="186" font-size="25" font-weight="700">Dein Betrieb</text>
+        <path transform="translate(65,207) scale(1.25)" d="M0 -6 L1.8 -1.9 L6 -1.9 L2.6 .9 L3.7 5.2 L0 2.7 L-3.7 5.2 L-2.6 .9 L-6 -1.9 L-1.8 -1.9 Z" style="fill:#e0a53a"/><path transform="translate(84,207) scale(1.25)" d="M0 -6 L1.8 -1.9 L6 -1.9 L2.6 .9 L3.7 5.2 L0 2.7 L-3.7 5.2 L-2.6 .9 L-6 -1.9 L-1.8 -1.9 Z" style="fill:#e0a53a"/><path transform="translate(103,207) scale(1.25)" d="M0 -6 L1.8 -1.9 L6 -1.9 L2.6 .9 L3.7 5.2 L0 2.7 L-3.7 5.2 L-2.6 .9 L-6 -1.9 L-1.8 -1.9 Z" style="fill:#e0a53a"/><path transform="translate(122,207) scale(1.25)" d="M0 -6 L1.8 -1.9 L6 -1.9 L2.6 .9 L3.7 5.2 L0 2.7 L-3.7 5.2 L-2.6 .9 L-6 -1.9 L-1.8 -1.9 Z" style="fill:#e0a53a"/><path transform="translate(141,207) scale(1.25)" d="M0 -6 L1.8 -1.9 L6 -1.9 L2.6 .9 L3.7 5.2 L0 2.7 L-3.7 5.2 L-2.6 .9 L-6 -1.9 L-1.8 -1.9 Z" style="fill:#e0a53a"/>
+        <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="161" y="212.22" font-size="14.5">Dachdeckerei in der Nähe</text>
+        <circle cx="373" cy="170" r="25" style="fill:var(--accent)"/>
+        <path d="M366 170 h14 M374 164 l6 6 -6 6" style="fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/>
+      </g>
+      <g class="k-toast" style="--d:4.6s">
+        <rect x="592" y="350" width="252" height="64" rx="19.2" style="fill:#fff;stroke:var(--line-strong);stroke-width:2"/>
+        <circle cx="626" cy="382" r="19.84" style="fill:var(--accent-fill)"/>
+        <g class="k-glocke"><path transform="translate(626,381) scale(1.1428571428571428)" d="M-8 5 h16 l-2.5 -3.5 v-5.5 a5.5 5.5 0 0 0 -11 0 v5.5 z M-2.2 8.5 a2.2 2.2 0 0 0 4.4 0" style="fill:none;stroke:var(--accent-ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round"/></g>
+        <text style="fill:var(--fg);font-family:var(--font-ui)" x="662" y="380" font-size="17.5" font-weight="700">Neue Anfrage</text>
+        <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="662" y="398.625" font-size="13.65">gerade eben</text>
+        <circle cx="840" cy="354" r="12.8" style="fill:var(--accent)"/>
+        <text x="840" y="358.8" font-size="14.72" font-weight="700" text-anchor="middle" style="fill:#fff;font-family:var(--font-ui)">1</text>
+      </g>
+    </svg>
+    <svg class="hm" viewBox="0 0 360 440">
+      <defs><clipPath id="karte-handy"><rect width="360" height="440" rx="22"/></clipPath></defs>
+      <g clip-path="url(#karte-handy)">
+        <rect width="360" height="440" style="fill:#eef2e3"/>
+        <path d="M-30 392 C 70 356, 170 428, 390 380" style="fill:none;stroke:#cde0ea;stroke-width:40;stroke-linecap:round"/>
+        
+        <g style="fill:#dfe6ce"><rect x="14" y="236" width="15" height="15" rx="3"/><rect x="35" y="236" width="15" height="15" rx="3"/><rect x="56" y="236" width="36" height="15" rx="3"/><rect x="14" y="257" width="15" height="15" rx="3"/><rect x="35" y="257" width="15" height="15" rx="3"/><rect x="56" y="257" width="15" height="15" rx="3"/><rect x="77" y="257" width="15" height="15" rx="3"/><rect x="126" y="236" width="36" height="15" rx="3"/><rect x="126" y="257" width="15" height="15" rx="3"/><rect x="147" y="257" width="15" height="15" rx="3"/><rect x="217" y="236" width="15" height="15" rx="3"/><rect x="266" y="236" width="15" height="15" rx="3"/><rect x="287" y="236" width="36" height="15" rx="3"/><rect x="329" y="236" width="15" height="15" rx="3"/><rect x="35" y="312" width="36" height="15" rx="3"/><rect x="126" y="302" width="36" height="15" rx="3"/><rect x="168" y="302" width="15" height="15" rx="3"/><rect x="126" y="323" width="36" height="15" rx="3"/><rect x="189" y="323" width="15" height="15" rx="3"/><rect x="210" y="323" width="15" height="15" rx="3"/><rect x="266" y="288" width="15" height="15" rx="3"/></g>
+        <path d="M182 222 V288 M-20 340 H112 M252 322 H380" style="fill:none;stroke:#fff;stroke-width:7;stroke-linecap:round;stroke-linejoin:round"/>
+        <path d="M-20 222 H380 M112 180 V460 M252 180 V460 M-20 300 L380 262" style="fill:none;stroke:#fff;stroke-width:13;stroke-linecap:round;stroke-linejoin:round"/>
+        <g class="k-wagen">
+          <rect x="-12" y="-6.5" width="24" height="13" rx="4.5" style="fill:var(--fg)"/>
+          <rect x="3.5" y="-4.5" width="5" height="9" rx="1.5" style="fill:#fff;opacity:.75"/>
+          <animateMotion dur="11s" repeatCount="indefinite" rotate="auto" path="M-30 301 L390 261"/>
+        </g>
+        <circle class="k-puls" style="--d:4.1s;fill:var(--accent-fill)" cx="196" cy="280" r="11"/>
+        <circle class="k-puls" style="--d:5.3s;fill:var(--accent-fill)" cx="196" cy="280" r="11"/>
+        <path class="k-linie" pathLength="1000" style="--d:3.2s;fill:none;stroke:var(--accent);stroke-width:2.5;stroke-linecap:round;opacity:.55" d="M196 194 V236"/>
+        <g class="k-fall" style="--d:2.10s"><g transform="translate(84,352) scale(0.95)">
+          <path d="M0 0 c-8 -11 -12 -16 -12 -23 a12 12 0 0 1 24 0 c0 7 -4 12 -12 23 z" style="fill:#a8a392"/>
+          <circle cx="0" cy="-23" r="4.4" style="fill:#fff"/></g></g>
+        <g class="k-fall" style="--d:2.25s"><g transform="translate(58,268) scale(0.95)">
+          <path d="M0 0 c-8 -11 -12 -16 -12 -23 a12 12 0 0 1 24 0 c0 7 -4 12 -12 23 z" style="fill:#a8a392"/>
+          <circle cx="0" cy="-23" r="4.4" style="fill:#fff"/></g></g>
+        <g class="k-fall" style="--d:2.40s"><g transform="translate(318,350) scale(0.95)">
+          <path d="M0 0 c-8 -11 -12 -16 -12 -23 a12 12 0 0 1 24 0 c0 7 -4 12 -12 23 z" style="fill:#a8a392"/>
+          <circle cx="0" cy="-23" r="4.4" style="fill:#fff"/></g></g>
+        <g class="k-fall" style="--d:2.55s"><g transform="translate(176,356) scale(0.95)">
+          <path d="M0 0 c-8 -11 -12 -16 -12 -23 a12 12 0 0 1 24 0 c0 7 -4 12 -12 23 z" style="fill:#a8a392"/>
+          <circle cx="0" cy="-23" r="4.4" style="fill:#fff"/></g></g>
+        <g class="k-fall" style="--d:3.5s"><g transform="translate(196,280) scale(1.5)">
+          <path d="M0 0 c-8 -11 -12 -16 -12 -23 a12 12 0 0 1 24 0 c0 7 -4 12 -12 23 z" style="fill:var(--accent)"/>
+          <circle cx="0" cy="-23" r="4.4" style="fill:#fff"/></g></g>
+        <g class="k-auf" style="--d:3.95s">
+          <rect x="220" y="226" width="116" height="30" rx="15" style="fill:var(--accent-fill)"/>
+          <text style="fill:var(--accent-ink);font-family:var(--font-ui)" x="278" y="246.04" font-size="14" font-weight="700" text-anchor="middle">Dein Betrieb</text>
+        </g>
+      </g>
+      <rect x="1" y="1" width="358" height="438" rx="21" style="fill:none;stroke:var(--line-strong);stroke-width:2"/>
+      <rect x="14" y="14" width="332" height="52" rx="26" style="fill:#fff;stroke:var(--line-strong);stroke-width:2"/>
+      <circle cx="40" cy="39" r="6.93" style="fill:none;stroke:var(--fg-dim);stroke-width:2.4"/>
+      <path d="M44.95 43.95 l5.28 5.28" style="stroke:var(--fg-dim);stroke-width:2.4;stroke-linecap:round"/>
+      <text style="fill:var(--fg);font-family:var(--font-ui)" x="63.4" y="45.775" font-size="16.5">Dachdecker in meiner Nähe</text>
+      <rect class="k-tippen" x="61.4" y="20" width="220" height="40" style="fill:#fff"/>
+      <rect class="k-cursor" x="277.4" y="30.1" width="2.2" height="19.8" rx="1" style="fill:var(--accent)"/>
+      <g class="k-auf" style="--d:2.6s">
+        <rect x="14" y="78" width="332" height="112" rx="18" style="fill:#fff;stroke:var(--line-strong);stroke-width:2"/>
+        <rect x="32" y="94" width="72" height="24" rx="12" style="fill:var(--accent-fill)"/>
+        <text style="fill:var(--accent-ink);font-family:var(--font-ui)" x="68" y="110.68" font-size="13" font-weight="700" text-anchor="middle">Anzeige</text>
+        <text style="fill:var(--fg);font-family:var(--font-ui)" x="32" y="150" font-size="22" font-weight="700">Dein Betrieb</text>
+        <path transform="translate(39,170) scale(1.1)" d="M0 -6 L1.8 -1.9 L6 -1.9 L2.6 .9 L3.7 5.2 L0 2.7 L-3.7 5.2 L-2.6 .9 L-6 -1.9 L-1.8 -1.9 Z" style="fill:#e0a53a"/><path transform="translate(56,170) scale(1.1)" d="M0 -6 L1.8 -1.9 L6 -1.9 L2.6 .9 L3.7 5.2 L0 2.7 L-3.7 5.2 L-2.6 .9 L-6 -1.9 L-1.8 -1.9 Z" style="fill:#e0a53a"/><path transform="translate(73,170) scale(1.1)" d="M0 -6 L1.8 -1.9 L6 -1.9 L2.6 .9 L3.7 5.2 L0 2.7 L-3.7 5.2 L-2.6 .9 L-6 -1.9 L-1.8 -1.9 Z" style="fill:#e0a53a"/><path transform="translate(90,170) scale(1.1)" d="M0 -6 L1.8 -1.9 L6 -1.9 L2.6 .9 L3.7 5.2 L0 2.7 L-3.7 5.2 L-2.6 .9 L-6 -1.9 L-1.8 -1.9 Z" style="fill:#e0a53a"/><path transform="translate(107,170) scale(1.1)" d="M0 -6 L1.8 -1.9 L6 -1.9 L2.6 .9 L3.7 5.2 L0 2.7 L-3.7 5.2 L-2.6 .9 L-6 -1.9 L-1.8 -1.9 Z" style="fill:#e0a53a"/>
+        <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="125" y="174.86" font-size="13.5">in deiner Nähe</text>
+        <circle cx="306" cy="134" r="22" style="fill:var(--accent)"/>
+        <path d="M299 134 h14 M307 128 l6 6 -6 6" style="fill:none;stroke:#fff;stroke-width:2.6;stroke-linecap:round;stroke-linejoin:round"/>
+      </g>
+      <g class="k-toast" style="--d:4.6s">
+        <rect x="14" y="372" width="214" height="56" rx="16.8" style="fill:#fff;stroke:var(--line-strong);stroke-width:2"/>
+        <circle cx="44" cy="400" r="17.36" style="fill:var(--accent-fill)"/>
+        <g class="k-glocke"><path transform="translate(44,399) scale(1)" d="M-8 5 h16 l-2.5 -3.5 v-5.5 a5.5 5.5 0 0 0 -11 0 v5.5 z M-2.2 8.5 a2.2 2.2 0 0 0 4.4 0" style="fill:none;stroke:var(--accent-ink);stroke-width:2;stroke-linejoin:round;stroke-linecap:round"/></g>
+        <text style="fill:var(--fg);font-family:var(--font-ui)" x="76" y="398" font-size="16" font-weight="700">Neue Anfrage</text>
+        <text style="fill:var(--fg-dim);font-family:var(--font-ui)" x="76" y="415.2" font-size="12.48">gerade eben</text>
+        <circle cx="224" cy="376" r="11.200000000000001" style="fill:var(--accent)"/>
+        <text x="224" y="380.2" font-size="12.88" font-weight="700" text-anchor="middle" style="fill:#fff;font-family:var(--font-ui)">1</text>
       </g>
     </svg>
   </figure>
