@@ -1118,6 +1118,27 @@ body{
 }
 /* Lange Woerter in Ueberschriften: weiche Trennstellen im HTML, dies nur als letzte Sicherung */
 @media(max-width:480px){ h1,h2,h3{ overflow-wrap:break-word; } }
+
+/* Partner-Laufband unter dem Hero */
+.partner{ padding:clamp(30px,4.2vw,48px) 0; border-bottom:1px solid var(--line); overflow:hidden; }
+.partner-titel{ text-align:center; font-family:var(--font-ui); font-size:.76rem; font-weight:600; letter-spacing:.18em; text-transform:uppercase; color:var(--fg-dim); margin:0 0 24px; }
+.partner-band{ overflow:hidden; -webkit-mask-image:linear-gradient(90deg,transparent 0,#000 12%,#000 88%,transparent 100%); mask-image:linear-gradient(90deg,transparent 0,#000 12%,#000 88%,transparent 100%); }
+.partner-spur{ display:flex; width:max-content; animation:partnerLauf 46s linear infinite; }
+.partner-band:hover .partner-spur{ animation-play-state:paused; }
+.partner-satz{ display:flex; align-items:center; flex-shrink:0; gap:clamp(56px,7vw,104px); padding-right:clamp(56px,7vw,104px); }
+.partner-satz img{ display:block; width:auto; height:44px; }
+.partner-satz img.p-koerper{ height:56px; }
+.partner-satz img.p-future{ height:40px; }
+@keyframes partnerLauf{ from{ transform:translateX(-50%); } to{ transform:translateX(0); } }
+@media(max-width:640px){
+  .partner-titel{ margin-bottom:18px; }
+  .partner-satz img{ height:32px; }
+  .partner-satz img.p-koerper{ height:42px; }
+  .partner-satz img.p-future{ height:30px; }
+}
+@media (prefers-reduced-motion:reduce){
+  .partner-spur{ animation:none; transform:translateX(-12%); }
+}
 </style>
 <link rel="stylesheet" href="/perspective.css" />
 </head>
@@ -1208,6 +1229,45 @@ body{
     </div>
   </div>
 </header>
+
+<!-- ============================================================= -->
+<!-- PARTNER: Logo-Laufband, wandert von links nach rechts          -->
+<!-- ============================================================= -->
+<section class="partner" aria-label="Partnerunternehmen">
+  <p class="partner-titel">Partnerunternehmen</p>
+  <div class="partner-band">
+    <div class="partner-spur">
+      <div class="partner-satz">
+          <img class="p-koerper" src="/img/partner/koerper-formen.webp" width="339" height="108" alt="Körper Formen" loading="lazy" decoding="async" />
+          <img class="p-hammer" src="/img/partner/tom-hammer-kassensysteme.webp" width="485" height="88" alt="Tom Hammer Kassensysteme" loading="lazy" decoding="async" />
+          <img class="p-future" src="/img/partner/futurenow.webp" width="266" height="53" alt="FutureNow" loading="lazy" decoding="async" />
+          <img class="p-koerper" src="/img/partner/koerper-formen.webp" width="339" height="108" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+          <img class="p-hammer" src="/img/partner/tom-hammer-kassensysteme.webp" width="485" height="88" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+          <img class="p-future" src="/img/partner/futurenow.webp" width="266" height="53" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+          <img class="p-koerper" src="/img/partner/koerper-formen.webp" width="339" height="108" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+          <img class="p-hammer" src="/img/partner/tom-hammer-kassensysteme.webp" width="485" height="88" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+          <img class="p-future" src="/img/partner/futurenow.webp" width="266" height="53" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+          <img class="p-koerper" src="/img/partner/koerper-formen.webp" width="339" height="108" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+          <img class="p-hammer" src="/img/partner/tom-hammer-kassensysteme.webp" width="485" height="88" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+          <img class="p-future" src="/img/partner/futurenow.webp" width="266" height="53" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+      </div>
+      <div class="partner-satz" aria-hidden="true">
+          <img class="p-koerper" src="/img/partner/koerper-formen.webp" width="339" height="108" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+          <img class="p-hammer" src="/img/partner/tom-hammer-kassensysteme.webp" width="485" height="88" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+          <img class="p-future" src="/img/partner/futurenow.webp" width="266" height="53" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+          <img class="p-koerper" src="/img/partner/koerper-formen.webp" width="339" height="108" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+          <img class="p-hammer" src="/img/partner/tom-hammer-kassensysteme.webp" width="485" height="88" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+          <img class="p-future" src="/img/partner/futurenow.webp" width="266" height="53" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+          <img class="p-koerper" src="/img/partner/koerper-formen.webp" width="339" height="108" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+          <img class="p-hammer" src="/img/partner/tom-hammer-kassensysteme.webp" width="485" height="88" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+          <img class="p-future" src="/img/partner/futurenow.webp" width="266" height="53" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+          <img class="p-koerper" src="/img/partner/koerper-formen.webp" width="339" height="108" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+          <img class="p-hammer" src="/img/partner/tom-hammer-kassensysteme.webp" width="485" height="88" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+          <img class="p-future" src="/img/partner/futurenow.webp" width="266" height="53" alt="" loading="lazy" decoding="async" aria-hidden="true" />
+      </div>
+    </div>
+  </div>
+</section>
 
 <!-- Quiz-Funnel ist jetzt ein Popup/Modal (siehe Ende des <body>),
      öffnet sich bei jedem Klick auf einen [data-quiz-cta]-Button. -->
