@@ -1139,6 +1139,49 @@ body{
 @media (prefers-reduced-motion:reduce){
   .partner-spur{ animation:none; transform:translateX(-12%); }
 }
+
+/* Hero geteilt: links Kontaktformular, rechts Imagevideo */
+.hero-inner.hero-geteilt{ max-width:none; width:100%; }
+.hero-geteilt .h-hero{ font-size:clamp(2.3rem,4.4vw,3.9rem); }
+.hero-geteilt .hero-tagline{ max-width:64ch; }
+.hero-split{ display:grid; grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr); grid-template-areas:"form video"; gap:clamp(22px,3.2vw,46px); align-items:center; margin-top:30px; }
+.hero-form{ grid-area:form; position:relative; display:grid; gap:10px; background:#fff; border:1px solid var(--line-strong); border-radius:20px; padding:clamp(20px,2.3vw,28px); }
+.hero-form p{ margin:0; }
+.hf-titel{ font-weight:700; font-size:1.28rem; letter-spacing:-.01em; color:var(--fg); }
+.hf-text{ color:var(--fg-muted); font-size:.95rem; line-height:1.5; margin-bottom:6px !important; }
+.hero-form input[type=text],.hero-form input[type=email],.hero-form input[type=tel]{ width:100%; font:inherit; font-size:1rem; padding:13px 14px; border:1px solid var(--line-strong); border-radius:12px; background:#fff; color:var(--fg); }
+.hero-form input:focus{ outline:2px solid var(--accent-fill); outline-offset:1px; border-color:var(--accent); }
+.hero-form input.falsch{ border-color:var(--clay); }
+.hf-falle{ position:absolute !important; left:-9999px; width:1px; height:1px; opacity:0; }
+.hf-zustimmung{ display:flex; gap:10px; align-items:flex-start; font-size:.8rem; line-height:1.45; color:var(--fg-dim); cursor:pointer; }
+.hf-zustimmung input{ flex-shrink:0; width:18px; height:18px; margin-top:1px; accent-color:var(--accent); }
+.hf-zustimmung a{ color:var(--accent); text-decoration:underline; text-underline-offset:2px; }
+.hf-senden{ width:100%; justify-content:center; margin-top:4px; }
+.hf-hinweis{ font-size:.8rem; color:var(--fg-dim); text-align:center; }
+.hf-danke{ padding:8px 0; }
+.hf-danke b{ display:block; font-size:1.28rem; color:var(--fg); margin-bottom:8px; }
+.hf-danke span{ color:var(--fg-muted); font-size:.98rem; line-height:1.55; }
+.hero-video{ grid-area:video; position:relative; aspect-ratio:16/9; border-radius:20px; overflow:hidden; border:1px solid var(--line-strong); background:#141012; }
+.hero-video video{ display:block; width:100%; height:100%; object-fit:cover; }
+.hv-ton{ position:absolute; left:16px; bottom:16px; display:inline-flex; align-items:center; gap:10px; padding:8px 16px 8px 8px; border:0; border-radius:999px; background:rgba(255,255,255,.95); color:var(--fg); font:inherit; font-size:.92rem; font-weight:600; cursor:pointer; transition:transform var(--t-fast); }
+.hv-ton:hover{ transform:translateY(-1px); }
+.hv-ton:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+.hv-icon{ display:grid; place-items:center; width:34px; height:34px; border-radius:50%; background:var(--accent-fill); color:var(--accent-ink); }
+.hv-ton small{ color:var(--fg-dim); font-size:.82rem; font-weight:500; }
+@media(max-width:900px){
+  .hero-split{ grid-template-columns:minmax(0,1fr); grid-template-areas:"video" "form"; margin-top:22px; }
+  .hv-ton{ left:12px; bottom:12px; font-size:.86rem; }
+}
+
+/* Hero geteilt: so kompakt, dass Formular und Video auf einen Laptop-Bildschirm passen */
+.hero:has(.hero-geteilt){ padding-top:100px; padding-bottom:34px; }
+.hero-geteilt .h-hero{ font-size:clamp(2.2rem,3.9vw,3.4rem); }
+.hero-geteilt .hero-title{ margin-bottom:12px; }
+.hero-geteilt .hero-tagline{ font-size:clamp(1rem,1.3vw,1.15rem); max-width:none; }
+.hero-geteilt .hero-split{ margin-top:22px; }
+.hero-form{ gap:8px; padding:20px 22px; }
+.hero-form input[type=text],.hero-form input[type=email],.hero-form input[type=tel]{ padding:11px 13px; }
+@media(max-width:900px){ .hero:has(.hero-geteilt){ padding-top:96px; } .hero-geteilt .hero-tagline{ font-size:1rem; } }
 </style>
 <link rel="stylesheet" href="/perspective.css" />
 </head>
@@ -1206,7 +1249,7 @@ body{
     <span class="hero-twinkle t3" aria-hidden="true"></span>
   </div>
 
-  <div class="container hero-inner">
+  <div class="container hero-inner hero-geteilt">
     <!-- CONVERSION-CRITICAL: Hero-Headline (Wort-für-Wort-Reveal) -->
     <h1 class="h-hero hero-title">
       <span class="hl"><span class="hl-in">Dein Produkt ist genial.</span></span>
@@ -1219,13 +1262,30 @@ body{
       Nach einer Zusammenarbeit mit mir brauchst du definitiv <span class="accent">mehr Mitarbeiter</span>. Zum Glück <a href="/mitarbeitergewinnung">kann ich da auch helfen</a>.
     </p>
 
-    <div class="hero-actions reveal in d2">
-      <!-- CONVERSION-CRITICAL: Primary CTA -->
-      <a href="/analysegespraech" class="btn btn-primary" data-cursor data-quiz-cta>
-        Kostenloses Analysegespräch sichern
-        <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
-      </a>
-      <a href="#system" class="btn btn-ghost" data-cursor>So funktioniert's</a>
+    <div class="hero-split">
+      <!-- CONVERSION-CRITICAL: Kontaktformular direkt im Hero (Formspree) -->
+      <form class="hero-form" id="heroForm" novalidate>
+        <p class="hf-titel">Kostenloses Analysegespräch</p>
+        <p class="hf-text">Ich melde mich persönlich, meist innerhalb von 24 Stunden.</p>
+        <input type="text" name="name" placeholder="Dein Name" aria-label="Dein Name" autocomplete="name" required />
+        <input type="email" name="email" placeholder="E-Mail-Adresse" aria-label="E-Mail-Adresse" autocomplete="email" required />
+        <input type="tel" name="telefon" placeholder="Telefon (optional)" aria-label="Telefon, optional" autocomplete="tel" />
+        <input type="text" name="_gotcha" class="hf-falle" tabindex="-1" autocomplete="off" aria-hidden="true" />
+        <label class="hf-zustimmung"><input type="checkbox" name="einwilligung" required /><span>Ich bin damit einverstanden, dass Marc Richter mich zu meiner Anfrage per E-Mail oder Telefon kontaktiert. Mehr dazu in der <a href="/datenschutz">Datenschutzerklärung</a>.</span></label>
+        <button type="submit" class="btn btn-primary hf-senden" id="heroSenden">Jetzt eintragen <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
+        <p class="hf-hinweis" id="heroHinweis" aria-live="polite">Keine Newsletter, keine Weitergabe.</p>
+      </form>
+
+      <!-- Imagevideo, selbst gehostet (keine Drittanbieter) -->
+      <div class="hero-video">
+        <video id="heroVideo" playsinline preload="none" poster="/video/image-video-poster.webp" width="1280" height="720" aria-label="Imagevideo von MR Elevate, rund 80 Sekunden">
+          <source src="/video/image-video.mp4" type="video/mp4" />
+        </video>
+        <button type="button" class="hv-ton" id="heroTon">
+          <span class="hv-icon" aria-hidden="true"><svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M7 4.5v15l12.5-7.5z"/></svg></span>
+          <span>Video mit Ton ansehen</span><small>80 Sek.</small>
+        </button>
+      </div>
     </div>
   </div>
 </header>
@@ -1738,6 +1798,59 @@ body{
 
 <!-- Cookie-Consent: seitenuebergreifend in /consent.js.
      Laedt Microsoft Clarity ausschliesslich nach aktiver Einwilligung. -->
+<script id="hero-split-skript">
+(function(){
+  "use strict";
+  var v = document.getElementById('heroVideo'), ton = document.getElementById('heroTon');
+  if (v && ton) {
+    // Auf grossen Bildschirmen laeuft das Video stumm in Schleife, sonst erst auf Klick
+    var gross = window.matchMedia('(min-width: 900px)').matches;
+    var sparen = navigator.connection && navigator.connection.saveData;
+    var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (gross && !sparen && !ruhig) {
+      v.muted = true; v.loop = true; v.preload = 'auto';
+      var p = v.play(); if (p && p.catch) p.catch(function(){});
+    }
+    ton.addEventListener('click', function(){
+      v.muted = false; v.loop = false; v.currentTime = 0; v.controls = true;
+      var q = v.play(); if (q && q.catch) q.catch(function(){});
+      ton.hidden = true;
+    });
+  }
+
+  var f = document.getElementById('heroForm');
+  if (!f) return;
+  var hinweis = document.getElementById('heroHinweis'), knopf = document.getElementById('heroSenden');
+  var knopfText = knopf.innerHTML;
+  f.addEventListener('submit', function(e){
+    e.preventDefault();
+    var feld = function(n){ return f.elements.namedItem(n); };
+    var nameFeld = feld('name');
+    var name = nameFeld.value.trim(), mail = feld('email').value.trim(), tel = feld('telefon').value.trim();
+    nameFeld.classList.toggle('falsch', !name);
+    var mailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail);
+    feld('email').classList.toggle('falsch', !mailOk);
+    if (!name || !mailOk) { hinweis.textContent = 'Bitte Name und eine gültige E-Mail-Adresse angeben.'; hinweis.style.color = 'var(--clay)'; return; }
+    if (!feld('einwilligung').checked) { hinweis.textContent = 'Ohne deine Einwilligung darf ich dich nicht kontaktieren.'; hinweis.style.color = 'var(--clay)'; return; }
+    knopf.disabled = true; knopf.textContent = 'Wird gesendet…';
+    hinweis.style.color = ''; hinweis.textContent = 'Keine Newsletter, keine Weitergabe.';
+    fetch('https://formspree.io/f/xvznajve', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
+      body: JSON.stringify({ Name: name, email: mail, Telefon: tel, Quelle: 'Startseite, Formular im Hero', _gotcha: feld('_gotcha').value, _subject: 'Neue Anfrage über die Startseite von ' + name })
+    }).then(function(r){
+      if (!r.ok) throw new Error('senden fehlgeschlagen');
+      var vorname = name.split(' ')[0];
+      f.innerHTML = '<div class="hf-danke" role="status"><b></b><span>Deine Anfrage ist da. Ich melde mich persönlich, in der Regel innerhalb von 24 Stunden.</span></div>';
+      f.querySelector('b').textContent = 'Danke, ' + vorname + '.';
+    }).catch(function(){
+      knopf.disabled = false; knopf.innerHTML = knopfText;
+      hinweis.textContent = 'Das hat gerade nicht geklappt. Schreib mir sonst direkt an info@mr-elevate.de.';
+      hinweis.style.color = 'var(--clay)';
+    });
+  });
+})();
+</script>
 <script defer src="/consent.js"></script>
 <script defer src="/fx.js"></script>
 
