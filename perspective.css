@@ -436,3 +436,9 @@ body .btn-cc{ border-radius:12px; font-family:var(--font-body); font-weight:600;
   .hero-photo[src$="hero-meissen.jpg"]{ object-position:45% 50%; }
   .hero-photo[src$="hero-delitzsch.jpg"]{ object-position:72% 50%; }
 }
+
+/* Schlanke Fusszeile: nur Impressum und Datenschutz */
+.footer.footer-schlicht{ padding:26px 0 28px; }
+.footer-recht{ display:flex; justify-content:center; gap:28px; font-size:.9rem; }
+.footer-recht a{ color:var(--fg-muted, #5c5349); text-decoration:none; }
+.footer-recht a:hover{ color:var(--accent, #3e6810); text-decoration:underline; text-underline-offset:3px; }
