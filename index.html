@@ -1145,22 +1145,6 @@ body{
 .hero-geteilt .h-hero{ font-size:clamp(2.3rem,4.4vw,3.9rem); }
 .hero-geteilt .hero-tagline{ max-width:64ch; }
 .hero-split{ display:grid; grid-template-columns:minmax(0,.86fr) minmax(0,1.14fr); grid-template-areas:"form video"; gap:clamp(22px,3.2vw,46px); align-items:center; margin-top:30px; }
-.hero-form{ grid-area:form; position:relative; display:grid; gap:10px; background:#fff; border:1px solid var(--line-strong); border-radius:20px; padding:clamp(20px,2.3vw,28px); }
-.hero-form p{ margin:0; }
-.hf-titel{ font-weight:700; font-size:1.28rem; letter-spacing:-.01em; color:var(--fg); }
-.hf-text{ color:var(--fg-muted); font-size:.95rem; line-height:1.5; margin-bottom:6px !important; }
-.hero-form input[type=text],.hero-form input[type=email],.hero-form input[type=tel]{ width:100%; font:inherit; font-size:1rem; padding:13px 14px; border:1px solid var(--line-strong); border-radius:12px; background:#fff; color:var(--fg); }
-.hero-form input:focus{ outline:2px solid var(--accent-fill); outline-offset:1px; border-color:var(--accent); }
-.hero-form input.falsch{ border-color:var(--clay); }
-.hf-falle{ position:absolute !important; left:-9999px; width:1px; height:1px; opacity:0; }
-.hf-zustimmung{ display:flex; gap:10px; align-items:flex-start; font-size:.8rem; line-height:1.45; color:var(--fg-dim); cursor:pointer; }
-.hf-zustimmung input{ flex-shrink:0; width:18px; height:18px; margin-top:1px; accent-color:var(--accent); }
-.hf-zustimmung a{ color:var(--accent); text-decoration:underline; text-underline-offset:2px; }
-.hf-senden{ width:100%; justify-content:center; margin-top:4px; }
-.hf-hinweis{ font-size:.8rem; color:var(--fg-dim); text-align:center; }
-.hf-danke{ padding:8px 0; }
-.hf-danke b{ display:block; font-size:1.28rem; color:var(--fg); margin-bottom:8px; }
-.hf-danke span{ color:var(--fg-muted); font-size:.98rem; line-height:1.55; }
 .hero-video{ grid-area:video; position:relative; aspect-ratio:16/9; border-radius:20px; overflow:hidden; border:1px solid var(--line-strong); background:#141012; }
 .hero-video video{ display:block; width:100%; height:100%; object-fit:cover; }
 .hv-ton{ position:absolute; left:16px; bottom:16px; display:inline-flex; align-items:center; gap:10px; padding:8px 16px 8px 8px; border:0; border-radius:999px; background:rgba(255,255,255,.95); color:var(--fg); font:inherit; font-size:.92rem; font-weight:600; cursor:pointer; transition:transform var(--t-fast); }
@@ -1179,9 +1163,154 @@ body{
 .hero-geteilt .hero-title{ margin-bottom:12px; }
 .hero-geteilt .hero-tagline{ font-size:clamp(1rem,1.3vw,1.15rem); max-width:none; }
 .hero-geteilt .hero-split{ margin-top:22px; }
-.hero-form{ gap:8px; padding:20px 22px; }
-.hero-form input[type=text],.hero-form input[type=email],.hero-form input[type=tel]{ padding:11px 13px; }
 @media(max-width:900px){ .hero:has(.hero-geteilt){ padding-top:96px; } .hero-geteilt .hero-tagline{ font-size:1rem; } }
+
+/* =============================================================
+   QUIZ IM HERO  (Perspective-Funnel-Stil)
+   ============================================================= */
+.hq{ grid-area:form; position:relative; display:flex; flex-direction:column; min-height:440px; background:#fff;
+  border:1px solid rgba(20,20,20,.07); border-radius:24px; padding:18px 22px 20px; overflow:hidden; isolation:isolate;
+  box-shadow:0 1px 2px rgba(20,20,20,.05), 0 14px 34px -14px rgba(20,20,20,.16), 0 40px 70px -40px rgba(62,104,16,.28); }
+.hq::before{ content:""; position:absolute; inset:0 0 auto; height:120px; z-index:-1; pointer-events:none;
+  background:radial-gradient(70% 100% at 0% 0%, rgba(168,201,62,.10), transparent 70%); }
+.hq-kopf{ display:grid; grid-template-columns:32px 1fr auto; align-items:center; gap:12px; margin-bottom:18px; }
+.hq-zurueck{ display:grid; place-items:center; width:32px; height:32px; padding:0; border-radius:50%; border:1px solid #e3e5dc;
+  background:#fff; color:var(--fg); cursor:pointer; transition:opacity .2s, transform .2s var(--ease), border-color .2s, background .2s; }
+.hq-zurueck:hover{ border-color:var(--accent); background:#f6f9ec; transform:translateX(-2px); }
+.hq-zurueck:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+.hq-zurueck.weg{ opacity:0; pointer-events:none; transform:scale(.7); }
+.hq-balken{ display:grid; grid-template-columns:repeat(5,1fr); gap:5px; }
+.hq-balken i{ position:relative; height:6px; border-radius:3px; background:#eef0e7; overflow:hidden; }
+.hq-balken i::after{ content:""; position:absolute; inset:0; border-radius:inherit; background:linear-gradient(90deg,#9cbf34,var(--accent-fill));
+  transform:scaleX(0); transform-origin:left; transition:transform .55s var(--ease); }
+.hq-balken i.jetzt::after{ transform:scaleX(.4); }
+.hq-balken i.voll::after{ transform:scaleX(1); }
+.hq-schritt{ min-width:94px; text-align:right; font-size:.8rem; font-weight:600; color:var(--fg-dim); white-space:nowrap; font-variant-numeric:tabular-nums; }
+.hq-buehne{ flex:1; display:flex; flex-direction:column; min-height:0; }
+.hq-buehne > *{ animation:hqRein .44s var(--ease) both; }
+.hq-buehne.zurueck > *{ animation-name:hqReinZurueck; }
+.hq-buehne.raus > *{ animation:hqRaus .15s ease-in both; }
+.hq-buehne.erst > *{ animation:none; }
+@keyframes hqRein{ from{ opacity:0; transform:translateX(28px); } to{ opacity:1; transform:none; } }
+@keyframes hqReinZurueck{ from{ opacity:0; transform:translateX(-28px); } to{ opacity:1; transform:none; } }
+@keyframes hqRaus{ to{ opacity:0; transform:translateX(-16px); } }
+.hq-frage{ display:flex; flex-direction:column; flex:1; }
+.hq-kicker{ display:inline-flex; align-items:center; gap:8px; margin:0 0 8px; font-size:.74rem; font-weight:700; letter-spacing:.13em;
+  text-transform:uppercase; color:var(--accent); }
+.hq-kicker::before{ content:""; width:7px; height:7px; border-radius:50%; background:var(--accent-fill); animation:hqPuls 2.2s ease-out infinite; }
+@keyframes hqPuls{ 0%{ box-shadow:0 0 0 0 rgba(168,201,62,.55); } 80%,100%{ box-shadow:0 0 0 8px rgba(168,201,62,0); } }
+.hq-titel{ margin:0 0 16px; font-family:var(--font-body); font-size:clamp(1.24rem,1.75vw,1.48rem); font-weight:700; line-height:1.22;
+  letter-spacing:-.02em; color:var(--fg); outline:none; }
+.hq-optionen{ display:grid; grid-template-columns:1fr 1fr; grid-auto-rows:1fr; gap:10px; flex:1; max-height:270px; }
+.hq-opt{ position:relative; display:flex; flex-direction:column; align-items:flex-start; justify-content:space-between; gap:12px; min-height:100px;
+  padding:14px 14px 13px; margin:0; text-align:left; font:inherit; color:var(--fg); background:#fff; border:1.5px solid #e6e8df; border-radius:16px;
+  cursor:pointer; -webkit-tap-highlight-color:transparent;
+  transition:border-color .18s, transform .22s var(--ease), box-shadow .22s, background .18s; }
+.hq-opt:hover{ border-color:var(--accent-fill); transform:translateY(-2px); box-shadow:0 12px 24px -14px rgba(62,104,16,.45); }
+.hq-opt:active{ transform:translateY(0) scale(.985); }
+.hq-opt:focus-visible{ outline:2px solid var(--accent); outline-offset:2px; }
+.hq-icon{ display:grid; place-items:center; width:40px; height:40px; border-radius:12px; background:#f1f5e3; color:var(--accent);
+  transition:background .2s, color .2s, transform .3s cubic-bezier(.34,1.56,.64,1); }
+.hq-icon svg{ fill:none; stroke:currentColor; stroke-width:2; stroke-linecap:round; stroke-linejoin:round; }
+.hq-opt:hover .hq-icon{ background:var(--accent-fill); color:var(--accent-ink); transform:rotate(-7deg) scale(1.07); }
+.hq-label{ font-size:.95rem; font-weight:600; line-height:1.28; padding-right:26px; }
+.hq-haken{ position:absolute; top:12px; right:12px; display:grid; place-items:center; width:22px; height:22px; border-radius:50%;
+  background:var(--accent); color:#fff; transform:scale(0); transition:transform .3s cubic-bezier(.34,1.56,.64,1); }
+.hq-taste{ position:absolute; right:12px; bottom:11px; padding:3px 6px; font:600 .68rem/1 var(--font-body); color:var(--fg-dim);
+  background:#fafaf6; border:1px solid #dfe1d6; border-bottom-width:2px; border-radius:5px; transition:opacity .2s; }
+.hq-opt.gewaehlt{ border-color:var(--accent); background:#f5f9ea; box-shadow:0 0 0 4px rgba(168,201,62,.18); }
+.hq-opt.gewaehlt .hq-haken{ transform:scale(1); }
+.hq-opt.gewaehlt .hq-icon{ background:var(--accent-fill); color:var(--accent-ink); }
+.hq-opt.gewaehlt .hq-taste{ opacity:0; }
+.hq-fuss{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; margin:16px 0 0; padding-top:14px;
+  border-top:1px solid #eef0e7; font-size:.78rem; color:var(--fg-dim); }
+.hq-marc{ display:inline-flex; align-items:center; gap:9px; color:var(--fg); font-weight:600; }
+.hq-marc img{ width:30px; height:30px; border-radius:50%; object-fit:cover; box-shadow:0 0 0 2px #fff, 0 0 0 3.5px var(--accent-fill); }
+.hq-fuss .hq-marc > span{ display:block; line-height:1.25; }
+.hq-marc small{ display:block; font-size:.72rem; font-weight:500; color:var(--fg-dim); }
+.hq-fuss span{ display:inline-flex; align-items:center; gap:6px; }
+.hq-fuss svg{ color:var(--accent); }
+/* Kontaktschritt */
+.hq-kontakt{ display:flex; flex-direction:column; flex:1; margin:0; }
+.hq-chips{ display:flex; flex-wrap:wrap; gap:6px; margin-bottom:12px; }
+.hq-chips span{ display:inline-flex; align-items:center; gap:5px; padding:5px 10px; font-size:.75rem; font-weight:600; line-height:1.2;
+  color:var(--accent); background:#f1f5e3; border-radius:999px; }
+.hq-chips svg{ flex-shrink:0; }
+.hq-felder{ display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+.hq-feld{ display:flex; align-items:center; gap:10px; height:50px; padding:0 14px; background:#fff; border:1.5px solid #e6e8df; border-radius:13px;
+  cursor:text; transition:border-color .18s, box-shadow .18s; }
+.hq-feld svg{ flex-shrink:0; color:#9a9f8f; transition:color .18s; }
+.hq-feld input{ flex:1; min-width:0; height:100%; padding:0; border:0; outline:0; background:transparent; font:inherit; font-size:1rem; color:var(--fg); }
+.hq-feld input::placeholder{ color:#9a9d93; }
+.hq-feld:focus-within{ border-color:var(--accent); box-shadow:0 0 0 4px rgba(168,201,62,.2); }
+.hq-feld:focus-within svg{ color:var(--accent); }
+.hq-breit{ grid-column:1 / -1; }
+.hq-feld.falsch,.hq-zustimmung.falsch .hq-box{ border-color:#c0472b; animation:hqWackeln .38s; }
+@keyframes hqWackeln{ 20%,60%{ transform:translateX(-4px); } 40%,80%{ transform:translateX(4px); } }
+.hq-falle{ position:absolute !important; left:-9999px; width:1px; height:1px; opacity:0; }
+.hq-zustimmung{ position:relative; display:flex; gap:10px; align-items:flex-start; margin:12px 0 14px; font-size:.77rem; line-height:1.45;
+  color:var(--fg-dim); cursor:pointer; }
+.hq-zustimmung input{ position:absolute; left:0; top:0; width:20px; height:20px; margin:0; opacity:0; cursor:pointer; }
+.hq-box{ flex-shrink:0; display:grid; place-items:center; width:20px; height:20px; border-radius:6px; border:1.5px solid #cfd3c4; background:#fff;
+  color:#fff; transition:background .18s, border-color .18s; }
+.hq-box svg{ opacity:0; transform:scale(.3); transition:opacity .18s, transform .28s cubic-bezier(.34,1.56,.64,1); }
+.hq-zustimmung input:checked + .hq-box{ background:var(--accent); border-color:var(--accent); }
+.hq-zustimmung input:checked + .hq-box svg{ opacity:1; transform:scale(1); }
+.hq-zustimmung input:focus-visible + .hq-box{ outline:2px solid var(--accent); outline-offset:2px; }
+.hq-zustimmung a{ color:var(--accent); text-decoration:underline; text-underline-offset:2px; }
+.hq-senden{ display:flex; align-items:center; justify-content:center; gap:10px; width:100%; height:54px; margin-top:auto; padding:0 18px;
+  border:0; border-radius:14px; background:var(--accent-fill); color:var(--accent-ink); font:inherit; font-size:1.02rem; font-weight:700;
+  letter-spacing:-.01em; text-decoration:none; cursor:pointer;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.45), 0 12px 26px -12px rgba(110,140,30,.75);
+  transition:transform .2s var(--ease), box-shadow .2s, background .2s; }
+.hq-senden:hover{ background:#b3d24b; transform:translateY(-1px); box-shadow:inset 0 1px 0 rgba(255,255,255,.45), 0 16px 30px -12px rgba(110,140,30,.85); }
+.hq-senden:active{ transform:translateY(0) scale(.99); }
+.hq-senden:focus-visible{ outline:2px solid var(--accent); outline-offset:3px; }
+.hq-senden svg{ transition:transform .2s var(--ease); }
+.hq-senden:hover svg{ transform:translateX(3px); }
+.hq-senden[disabled]{ cursor:progress; opacity:.85; transform:none; }
+.hq-lade{ width:18px; height:18px; border-radius:50%; border:2.5px solid rgba(10,13,0,.25); border-top-color:var(--accent-ink); animation:hqDreh .7s linear infinite; }
+@keyframes hqDreh{ to{ transform:rotate(360deg); } }
+.hq-hinweis{ display:flex; align-items:center; justify-content:center; gap:7px; margin:10px 0 0; font-size:.77rem; color:var(--fg-dim); text-align:center; }
+.hq-hinweis svg{ flex-shrink:0; color:var(--accent); }
+.hq-hinweis.fehler{ color:#b0412a; }
+.hq-hinweis.fehler svg{ color:#b0412a; }
+/* Erfolg */
+.hq-erfolg{ display:flex; flex-direction:column; align-items:center; justify-content:center; gap:10px; flex:1; text-align:center; padding:6px 4px; }
+.hq-erfolg-bild{ position:relative; width:76px; height:76px; margin-bottom:4px; }
+.hq-erfolg-bild svg{ width:76px; height:76px; }
+.hq-erfolg-bild .kreis{ fill:#f1f5e3; stroke:var(--accent-fill); stroke-width:3; stroke-dasharray:226; stroke-dashoffset:226; animation:hqStrich .7s var(--ease) .1s forwards; }
+.hq-erfolg-bild .haken{ fill:none; stroke:var(--accent); stroke-width:4.5; stroke-linecap:round; stroke-linejoin:round; stroke-dasharray:48; stroke-dashoffset:48; animation:hqStrich .45s var(--ease) .65s forwards; }
+@keyframes hqStrich{ to{ stroke-dashoffset:0; } }
+.hq-funke{ position:absolute; left:50%; top:50%; width:7px; height:7px; margin:-3.5px; border-radius:2px; background:var(--accent-fill); opacity:0;
+  animation:hqFunke .8s var(--ease) .75s forwards; }
+.hq-funke:nth-child(even){ background:#e0a53a; width:6px; height:6px; border-radius:50%; }
+@keyframes hqFunke{ 0%{ opacity:1; transform:rotate(var(--w)) translateY(0) scale(.6); } 100%{ opacity:0; transform:rotate(var(--w)) translateY(-56px) scale(1); } }
+.hq-erfolg h3{ margin:0; font-family:var(--font-body); font-size:1.5rem; font-weight:800; letter-spacing:-.02em; color:var(--fg); outline:none; }
+.hq-erfolg p{ margin:0 0 4px; max-width:40ch; font-size:.97rem; line-height:1.55; color:var(--fg-muted); }
+.hq-erfolg .hq-chips{ justify-content:center; margin:2px 0 10px; }
+.hq-erfolg .hq-senden{ margin-top:4px; }
+.hq-ohne-js{ margin:auto 0; font-size:.95rem; color:var(--fg-muted); }
+.hq-ohne-js a{ color:var(--accent); }
+@media (hover:none){ .hq-taste{ display:none; } .hq-opt:hover{ transform:none; box-shadow:none; } .hq-opt:hover .hq-icon{ transform:none; } }
+@media(max-width:900px){
+  .hq{ min-height:0; padding:16px 16px 18px; border-radius:20px; }
+  .hq-kopf{ margin-bottom:16px; }
+}
+@media(max-width:430px){
+  .hq-optionen{ gap:8px; }
+  .hq-opt{ min-height:94px; padding:12px; gap:10px; border-radius:14px; }
+  .hq-icon{ width:36px; height:36px; border-radius:11px; }
+  .hq-label{ font-size:.9rem; padding-right:20px; }
+  .hq-haken{ top:10px; right:10px; }
+  .hq-felder{ grid-template-columns:1fr; }
+  .hq-fuss > span:last-child{ display:none; }
+}
+@media (prefers-reduced-motion:reduce){
+  .hq-buehne > *,.hq-buehne.raus > *,.hq-kicker::before,.hq-funke{ animation:none !important; }
+  .hq-erfolg-bild .kreis,.hq-erfolg-bild .haken{ animation:none; stroke-dashoffset:0; }
+  .hq-opt,.hq-icon,.hq-haken,.hq-balken i::after{ transition:none; }
+}
 </style>
 <link rel="stylesheet" href="/perspective.css" />
 </head>
@@ -1263,18 +1392,16 @@ body{
     </p>
 
     <div class="hero-split">
-      <!-- CONVERSION-CRITICAL: Kontaktformular direkt im Hero (Formspree) -->
-      <form class="hero-form" id="heroForm" novalidate>
-        <p class="hf-titel">Kostenloses Analysegespräch</p>
-        <p class="hf-text">Ich melde mich persönlich, meist innerhalb von 24 Stunden.</p>
-        <input type="text" name="name" placeholder="Dein Name" aria-label="Dein Name" autocomplete="name" required />
-        <input type="email" name="email" placeholder="E-Mail-Adresse" aria-label="E-Mail-Adresse" autocomplete="email" required />
-        <input type="tel" name="telefon" placeholder="Telefon (optional)" aria-label="Telefon, optional" autocomplete="tel" />
-        <input type="text" name="_gotcha" class="hf-falle" tabindex="-1" autocomplete="off" aria-hidden="true" />
-        <label class="hf-zustimmung"><input type="checkbox" name="einwilligung" required /><span>Ich bin damit einverstanden, dass Marc Richter mich zu meiner Anfrage per E-Mail oder Telefon kontaktiert. Mehr dazu in der <a href="/datenschutz">Datenschutzerklärung</a>.</span></label>
-        <button type="submit" class="btn btn-primary hf-senden" id="heroSenden">Jetzt eintragen <svg class="arrow" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>
-        <p class="hf-hinweis" id="heroHinweis" aria-live="polite">Keine Newsletter, keine Weitergabe.</p>
-      </form>
+      <!-- CONVERSION-CRITICAL: Quiz im Hero (Perspective-Stil), Versand ueber Formspree -->
+      <div class="hq" id="heroQuiz">
+        <div class="hq-kopf">
+          <button type="button" class="hq-zurueck weg" aria-label="Eine Frage zurück"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button>
+          <div class="hq-balken" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+          <span class="hq-schritt" aria-live="polite">Frage 1 von 4</span>
+        </div>
+        <div class="hq-buehne"></div>
+        <noscript><p class="hq-ohne-js">Das Quiz braucht JavaScript. Schreib mir direkt an <a href="mailto:info@mr-elevate.de">info@mr-elevate.de</a>.</p></noscript>
+      </div>
 
       <!-- Imagevideo, selbst gehostet (keine Drittanbieter) -->
       <div class="hero-video">
@@ -1801,9 +1928,9 @@ body{
 <script id="hero-split-skript">
 (function(){
   "use strict";
+  /* ---------- Video: auf grossen Bildschirmen stumm in Schleife, Ton auf Klick ---------- */
   var v = document.getElementById('heroVideo'), ton = document.getElementById('heroTon');
   if (v && ton) {
-    // Auf grossen Bildschirmen laeuft das Video stumm in Schleife, sonst erst auf Klick
     var gross = window.matchMedia('(min-width: 900px)').matches;
     var sparen = navigator.connection && navigator.connection.saveData;
     var ruhig = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -1818,37 +1945,250 @@ body{
     });
   }
 
-  var f = document.getElementById('heroForm');
-  if (!f) return;
-  var hinweis = document.getElementById('heroHinweis'), knopf = document.getElementById('heroSenden');
-  var knopfText = knopf.innerHTML;
-  f.addEventListener('submit', function(e){
-    e.preventDefault();
-    var feld = function(n){ return f.elements.namedItem(n); };
-    var nameFeld = feld('name');
-    var name = nameFeld.value.trim(), mail = feld('email').value.trim(), tel = feld('telefon').value.trim();
-    nameFeld.classList.toggle('falsch', !name);
+  /* ---------- Quiz im Hero ---------- */
+  var root = document.getElementById('heroQuiz');
+  if (!root) return;
+  var reduziert = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var I = {
+    briefcase:'<rect x="3" y="8" width="18" height="12" rx="2"/><path d="M8 8V6a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="3" y1="13" x2="21" y2="13"/>',
+    gear:'<circle cx="12" cy="12" r="3"/><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4M4.9 19.1l2.8-2.8M16.3 7.7l2.8-2.8"/>',
+    chat:'<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>',
+    spark:'<path d="M12 2l1.5 5.5L19 9l-5.5 1.5L12 16l-1.5-5.5L5 9l5.5-1.5z"/>',
+    coin:'<circle cx="12" cy="12" r="9"/><path d="M15 8.5a4 4 0 1 0 0 7"/><line x1="7" y1="10" x2="13" y2="10"/><line x1="7" y1="14" x2="13" y2="14"/>',
+    users:'<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/>',
+    share:'<circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.6" y1="10.5" x2="15.4" y2="6.5"/><line x1="8.6" y1="13.5" x2="15.4" y2="17.5"/>',
+    megaphone:'<path d="M3 11l18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/>',
+    help:'<circle cx="12" cy="12" r="10"/><path d="M9.09 9a3 3 0 1 1 5.83 1c0 2-3 2-3 4"/><line x1="12" y1="17" x2="12" y2="17.01"/>',
+    zap:'<path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z"/>',
+    calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/>',
+    clock:'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+    book:'<path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/>'
+  };
+  var FRAGEN = [
+    { key:'branche', q:'In welcher Branche bist du tätig?', o:[
+      { v:'Dienstleister', i:I.briefcase }, { v:'Handwerk', i:I.gear }, { v:'Coaching / Beratung', i:I.chat }, { v:'Sonstiges', i:I.spark } ] },
+    { key:'kundenwert', q:'Wie hoch ist dein durchschnittlicher Kundenwert?', o:[
+      { v:'unter 500 €', i:I.coin, s:15 }, { v:'500–1.000 €', i:I.coin, s:18 }, { v:'1.000–5.000 €', i:I.coin, s:21 }, { v:'über 5.000 €', i:I.coin, s:25 } ] },
+    { key:'akquise', q:'Wie gewinnst du aktuell Neukunden?', o:[
+      { v:'Empfehlungen', i:I.users }, { v:'Social Media / organisch', i:I.share }, { v:'Bezahlte Werbung', i:I.megaphone }, { v:'Aktuell kaum / gar nicht', i:I.help } ] },
+    { key:'timing', q:'Wann möchtest du eine Lösung?', o:[
+      { v:'Sofort', i:I.zap }, { v:'Innerhalb von 30 Tagen', i:I.calendar }, { v:'In den nächsten Monaten', i:I.clock }, { v:'Ich möchte mich nur informieren', i:I.book } ] }
+  ];
+  var N = FRAGEN.length;
+  var s = { i:0, a:{}, k:{} };
+  var buehne = root.querySelector('.hq-buehne');
+  var zurueck = root.querySelector('.hq-zurueck');
+  var schritt = root.querySelector('.hq-schritt');
+  var segmente = root.querySelectorAll('.hq-balken i');
+  var benutzt = false, sperre = false;
+
+  var HAKEN = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>';
+  var PFEIL = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>';
+  var SCHLOSS = '<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg>';
+
+  function esc(t){ return String(t || '').replace(/[&<>"]/g, function(c){ return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;' }[c]; }); }
+  function svg(pfad, g){ g = g || 20; return '<svg width="' + g + '" height="' + g + '" viewBox="0 0 24 24">' + pfad + '</svg>'; }
+  function chips(){
+    return ['branche','kundenwert','akquise','timing'].filter(function(k){ return s.a[k]; })
+      .map(function(k){ return '<span>' + HAKEN.replace('width="12" height="12"', 'width="10" height="10"') + esc(s.a[k]) + '</span>'; }).join('');
+  }
+
+  function balken(){
+    for (var k = 0; k < segmente.length; k++) {
+      segmente[k].classList.toggle('voll', k < s.i || s.i > N);
+      segmente[k].classList.toggle('jetzt', k === s.i && s.i <= N);
+    }
+    schritt.textContent = s.i < N ? 'Frage ' + (s.i + 1) + ' von ' + N : (s.i === N ? 'Letzter Schritt' : 'Geschafft');
+    zurueck.classList.toggle('weg', s.i === 0 || s.i > N);
+  }
+
+  function frageHtml(){
+    var f = FRAGEN[s.i];
+    return '<div class="hq-frage">' +
+      (s.i === 0 ? '<p class="hq-kicker">Kostenloses Analysegespräch</p>' : '') +
+      '<h3 class="hq-titel" id="hqTitel" tabindex="-1">' + esc(f.q) + '</h3>' +
+      '<div class="hq-optionen" role="group" aria-labelledby="hqTitel">' +
+      f.o.map(function(o, k){
+        var an = s.a[f.key] === o.v;
+        return '<button type="button" class="hq-opt' + (an ? ' gewaehlt' : '') + '" data-q="' + s.i + '" data-v="' + esc(o.v) + '" aria-pressed="' + an + '">' +
+          '<span class="hq-icon">' + svg(o.i, o.s) + '</span>' +
+          '<span class="hq-label">' + esc(o.v) + '</span>' +
+          '<span class="hq-haken" aria-hidden="true">' + HAKEN + '</span>' +
+          '<kbd class="hq-taste" aria-hidden="true">' + (k + 1) + '</kbd>' +
+        '</button>';
+      }).join('') +
+      '</div>' +
+      '<div class="hq-fuss"><span class="hq-marc"><img src="/founder-avatar.webp" alt="" width="30" height="30" /><span>Marc Richter<small>meldet sich persönlich</small></span></span><span>' + SCHLOSS + 'Kostenlos und unverbindlich</span></div>' +
+    '</div>';
+  }
+
+  function kontaktHtml(){
+    var k = s.k;
+    return '<form class="hq-kontakt" novalidate>' +
+      '<div class="hq-chips">' + chips() + '</div>' +
+      '<h3 class="hq-titel" id="hqTitel" tabindex="-1">Fast geschafft. Wohin darf ich deine Einschätzung schicken?</h3>' +
+      '<div class="hq-felder">' +
+        '<label class="hq-feld">' + svg('<path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="12" cy="7" r="4" fill="none" stroke="currentColor" stroke-width="2"/>', 18) +
+          '<input type="text" name="name" placeholder="Dein Name" aria-label="Dein Name" autocomplete="name" value="' + esc(k.name) + '" /></label>' +
+        '<label class="hq-feld">' + svg('<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1.9.4 1.8.7 2.7a2 2 0 0 1-.5 2.1L8 9.8a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.7.7a2 2 0 0 1 1.7 2z" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>', 18) +
+          '<input type="tel" name="telefon" placeholder="Telefon (optional)" aria-label="Telefon, optional" autocomplete="tel" value="' + esc(k.telefon) + '" /></label>' +
+        '<label class="hq-feld hq-breit">' + svg('<rect x="3" y="5" width="18" height="14" rx="2" fill="none" stroke="currentColor" stroke-width="2"/><path d="m3 7 9 6 9-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>', 18) +
+          '<input type="email" name="email" placeholder="E-Mail-Adresse" aria-label="E-Mail-Adresse" autocomplete="email" value="' + esc(k.email) + '" /></label>' +
+      '</div>' +
+      '<input type="text" name="_gotcha" class="hq-falle" tabindex="-1" autocomplete="off" aria-hidden="true" />' +
+      '<label class="hq-zustimmung"><input type="checkbox" name="einwilligung"' + (k.ok ? ' checked' : '') + ' /><span class="hq-box" aria-hidden="true">' + HAKEN + '</span>' +
+        '<span>Ich bin damit einverstanden, dass Marc Richter mich zu meiner Anfrage per E-Mail oder Telefon kontaktiert. Mehr dazu in der <a href="/datenschutz">Datenschutzerklärung</a>.</span></label>' +
+      '<button type="submit" class="hq-senden">Einschätzung anfordern ' + PFEIL + '</button>' +
+      '<p class="hq-hinweis" aria-live="polite">' + SCHLOSS + 'Kostenlos und unverbindlich. Keine Weitergabe deiner Daten.</p>' +
+    '</form>';
+  }
+
+  function erfolgHtml(){
+    var knapp = s.a.kundenwert === 'unter 500 €';
+    var text = knapp
+      ? 'Deine Anfrage ist da. Mein erfolgsbasiertes Modell trägt sich vor allem ab etwa 500 € Kundenwert. Ich schaue mir deinen Fall trotzdem an und sage dir offen, was ich sehe.'
+      : 'Deine Anfrage ist da. Ich melde mich persönlich mit meiner Einschätzung, meist innerhalb von 24 Stunden.';
+    var vorname = (s.k.name || '').trim().split(/\s+/)[0];
+    var funken = '';
+    for (var k = 0; k < 10; k++) funken += '<i class="hq-funke" style="--w:' + (k * 36) + 'deg"></i>';
+    return '<div class="hq-erfolg" role="status">' +
+      '<div class="hq-erfolg-bild" aria-hidden="true">' + funken +
+        '<svg viewBox="0 0 76 76"><circle class="kreis" cx="38" cy="38" r="35"/><path class="haken" d="M25 39.5l9 9 17-18"/></svg></div>' +
+      '<h3 id="hqTitel" tabindex="-1">Geschafft' + (vorname ? ', ' + esc(vorname) : '') + '!</h3>' +
+      '<p>' + text + '</p>' +
+      '<div class="hq-chips">' + chips() + '</div>' +
+      '<a class="hq-senden" href="#termin">Wunschtermin direkt buchen ' + PFEIL + '</a>' +
+    '</div>';
+  }
+
+  function zeige(html, richtung){
+    var tausch = function(){
+      buehne.className = 'hq-buehne' + (richtung === 'z' ? ' zurueck' : '');
+      buehne.innerHTML = html;
+      sperre = false;
+      binden();
+      balken();
+      if (benutzt) { var t = document.getElementById('hqTitel'); if (t) { try { t.focus({ preventScroll:true }); } catch (e) { t.focus(); } } }
+    };
+    if (!buehne.firstChild) { tausch(); buehne.classList.add('erst'); return; }
+    if (reduziert) { tausch(); return; }
+    buehne.classList.add('raus');
+    setTimeout(tausch, 150);
+  }
+  function render(richtung){
+    if (s.i < N) zeige(frageHtml(), richtung);
+    else if (s.i === N) zeige(kontaktHtml(), richtung);
+    else zeige(erfolgHtml(), richtung);
+  }
+
+  function waehle(knopf){
+    if (sperre || +knopf.getAttribute('data-q') !== s.i) return;
+    sperre = true; benutzt = true;
+    var f = FRAGEN[s.i];
+    s.a[f.key] = knopf.getAttribute('data-v');
+    var alle = buehne.querySelectorAll('.hq-opt');
+    for (var k = 0; k < alle.length; k++) {
+      alle[k].classList.toggle('gewaehlt', alle[k] === knopf);
+      alle[k].setAttribute('aria-pressed', alle[k] === knopf ? 'true' : 'false');
+    }
+    segmente[s.i].classList.add('voll');
+    setTimeout(function(){ s.i++; render('v'); }, reduziert ? 120 : 360);
+  }
+
+  function merken(form){
+    s.k.name = form.elements.namedItem('name').value;
+    s.k.email = form.elements.namedItem('email').value;
+    s.k.telefon = form.elements.namedItem('telefon').value;
+    s.k.ok = form.elements.namedItem('einwilligung').checked;
+  }
+
+  function binden(){
+    var opts = buehne.querySelectorAll('.hq-opt');
+    for (var k = 0; k < opts.length; k++) opts[k].addEventListener('click', function(){ waehle(this); });
+    var form = buehne.querySelector('.hq-kontakt');
+    if (form) {
+      form.addEventListener('input', function(){ merken(form); });
+      form.addEventListener('submit', function(e){ e.preventDefault(); senden(form); });
+    }
+  }
+
+  function fehler(form, text){
+    var h = form.querySelector('.hq-hinweis');
+    h.classList.add('fehler');
+    h.innerHTML = SCHLOSS + esc(text);
+  }
+
+  function senden(form){
+    merken(form);
+    var feld = function(n){ return form.elements.namedItem(n); };
+    var name = s.k.name.trim(), mail = s.k.email.trim(), tel = s.k.telefon.trim();
     var mailOk = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(mail);
-    feld('email').classList.toggle('falsch', !mailOk);
-    if (!name || !mailOk) { hinweis.textContent = 'Bitte Name und eine gültige E-Mail-Adresse angeben.'; hinweis.style.color = 'var(--clay)'; return; }
-    if (!feld('einwilligung').checked) { hinweis.textContent = 'Ohne deine Einwilligung darf ich dich nicht kontaktieren.'; hinweis.style.color = 'var(--clay)'; return; }
-    knopf.disabled = true; knopf.textContent = 'Wird gesendet…';
-    hinweis.style.color = ''; hinweis.textContent = 'Keine Newsletter, keine Weitergabe.';
+    var rahmen = function(n){ return feld(n).closest('.hq-feld'); };
+    rahmen('name').classList.remove('falsch'); rahmen('email').classList.remove('falsch');
+    form.querySelector('.hq-zustimmung').classList.remove('falsch');
+    void form.offsetWidth;
+    if (!name || !mailOk) {
+      if (!name) rahmen('name').classList.add('falsch');
+      if (!mailOk) rahmen('email').classList.add('falsch');
+      fehler(form, 'Bitte Name und eine gültige E-Mail-Adresse angeben.');
+      (name ? feld('email') : feld('name')).focus();
+      return;
+    }
+    if (!s.k.ok) {
+      form.querySelector('.hq-zustimmung').classList.add('falsch');
+      fehler(form, 'Ohne deine Einwilligung darf ich dich nicht kontaktieren.');
+      return;
+    }
+    var knopf = form.querySelector('.hq-senden');
+    var knopfHtml = knopf.innerHTML;
+    knopf.disabled = true;
+    knopf.innerHTML = '<span class="hq-lade" aria-hidden="true"></span> Wird gesendet';
+    var h = form.querySelector('.hq-hinweis');
+    h.classList.remove('fehler'); h.innerHTML = SCHLOSS + 'Kostenlos und unverbindlich. Keine Weitergabe deiner Daten.';
     fetch('https://formspree.io/f/xvznajve', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-      body: JSON.stringify({ Name: name, email: mail, Telefon: tel, Quelle: 'Startseite, Formular im Hero', _gotcha: feld('_gotcha').value, _subject: 'Neue Anfrage über die Startseite von ' + name })
+      body: JSON.stringify({
+        Name: name, email: mail, Telefon: tel,
+        Branche: s.a.branche || '', Kundenwert: s.a.kundenwert || '',
+        Akquise: s.a.akquise || '', Zeitrahmen: s.a.timing || '',
+        Quelle: 'Startseite, Quiz im Hero',
+        _gotcha: feld('_gotcha').value,
+        _subject: 'Neue Analysegespräch-Anfrage von ' + name
+      })
     }).then(function(r){
       if (!r.ok) throw new Error('senden fehlgeschlagen');
-      var vorname = name.split(' ')[0];
-      f.innerHTML = '<div class="hf-danke" role="status"><b></b><span>Deine Anfrage ist da. Ich melde mich persönlich, in der Regel innerhalb von 24 Stunden.</span></div>';
-      f.querySelector('b').textContent = 'Danke, ' + vorname + '.';
+      s.i = N + 1;
+      render('v');
     }).catch(function(){
-      knopf.disabled = false; knopf.innerHTML = knopfText;
-      hinweis.textContent = 'Das hat gerade nicht geklappt. Schreib mir sonst direkt an info@mr-elevate.de.';
-      hinweis.style.color = 'var(--clay)';
+      knopf.disabled = false;
+      knopf.innerHTML = knopfHtml;
+      fehler(form, 'Das hat gerade nicht geklappt. Bitte nochmal versuchen oder direkt an info@mr-elevate.de schreiben.');
     });
+  }
+
+  zurueck.addEventListener('click', function(){
+    if (s.i === 0 || s.i > N || sperre) return;
+    var form = buehne.querySelector('.hq-kontakt'); if (form) merken(form);
+    benutzt = true; sperre = true; s.i--; render('z');
   });
+
+  /* Tasten 1 bis 4 waehlen eine Antwort, solange das Quiz zu sehen ist */
+  document.addEventListener('keydown', function(e){
+    if (s.i >= N || e.ctrlKey || e.metaKey || e.altKey) return;
+    var a = document.activeElement;
+    if (a && (a.tagName === 'INPUT' || a.tagName === 'TEXTAREA' || a.tagName === 'SELECT' || a.isContentEditable)) return;
+    var modal = document.getElementById('quizModal');
+    if (modal && !modal.hidden) return;
+    var n = parseInt(e.key, 10);
+    if (!(n >= 1 && n <= 4)) return;
+    var r = root.getBoundingClientRect();
+    if (r.bottom < 80 || r.top > window.innerHeight - 80) return;
+    var b = buehne.querySelectorAll('.hq-opt')[n - 1];
+    if (b) { e.preventDefault(); waehle(b); }
+  });
+
+  render();
 })();
 </script>
 <script defer src="/consent.js"></script>
