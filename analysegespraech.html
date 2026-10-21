@@ -4,7 +4,7 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Kostenloses Analysegespräch anfragen | MR Elevate</title>
-<meta name="description" content="Vier kurze Fragen, danach meldet sich Marc Richter persönlich mit seiner Einschätzung. Kein Verkaufsgespräch, keine Verpflichtung." />
+<meta name="description" content="Vier kurze Fragen, danach meldet sich Marc Richter persönlich mit seiner Einschätzung. Das Gespräch verpflichtet dich zu nichts." />
 <meta name="theme-color" content="#f7f3ec" />
 <link rel="canonical" href="https://www.mr-elevate.de/analysegespraech" />
 
@@ -19,13 +19,13 @@
 <meta property="og:locale" content="de_DE" />
 <meta property="og:site_name" content="MR Elevate" />
 <meta property="og:title" content="Kostenloses Analysegespräch anfragen" />
-<meta property="og:description" content="Vier kurze Fragen, danach meine Einschätzung. Auch wenn sie lautet, dass sich Werbung für dich gerade nicht lohnt." />
+<meta property="og:description" content="Vier kurze Fragen, danach meine Einschätzung, auch wenn sie lautet, dass sich Werbung für dich gerade nicht lohnt." />
 <meta property="og:url" content="https://www.mr-elevate.de/analysegespraech" />
 <meta property="og:image" content="https://www.mr-elevate.de/hero-pastel.jpg" />
 <meta property="og:image:alt" content="Dresden bei Sonnenaufgang, Sitz von MR Elevate" />
 <meta name="twitter:card" content="summary_large_image" />
 <meta name="twitter:title" content="Kostenloses Analysegespräch anfragen" />
-<meta name="twitter:description" content="Vier kurze Fragen, danach meine Einschätzung. Auch wenn sie lautet, dass sich Werbung für dich gerade nicht lohnt." />
+<meta name="twitter:description" content="Vier kurze Fragen, danach meine Einschätzung, auch wenn sie lautet, dass sich Werbung für dich gerade nicht lohnt." />
 <meta name="twitter:image" content="https://www.mr-elevate.de/hero-pastel.jpg" />
 <!-- Formularseite: kein Suchmaschinenziel, der Inhalt steht auf der Startseite. -->
 <meta name="robots" content="noindex, follow" />
@@ -240,7 +240,7 @@ main{ flex:1; display:flex; align-items:flex-start; justify-content:center; padd
         { v:'Coaching / Beratung', icon:ICON.chat },
         { v:'Sonstiges', icon:ICON.spark }
       ] },
-    { key:'kundenwert', frage:'Was bringt dir ein neuer Kunde im Schnitt?', hilfe:'Gewinn, nicht Umsatz. Grobe Schätzung reicht.',
+    { key:'kundenwert', frage:'Was bringt dir ein neuer Kunde im Schnitt?', hilfe:'Gemeint ist der Gewinn. Eine grobe Schätzung reicht.',
       optionen:[
         { v:'unter 500 €', icon:ICON.coin, groesse:15 },
         { v:'500–1.000 €', icon:ICON.coin, groesse:20 },
@@ -254,7 +254,7 @@ main{ flex:1; display:flex; align-items:flex-start; justify-content:center; padd
         { v:'Bezahlte Werbung', icon:ICON.megaphone },
         { v:'Kaum bis gar nicht', icon:ICON.help }
       ] },
-    { key:'timing', frage:'Wann soll sich etwas ändern?', hilfe:'Ehrlich, nicht höflich.',
+    { key:'timing', frage:'Wann soll sich etwas ändern?', hilfe:'Antworte ruhig ehrlich.',
       optionen:[
         { v:'Sofort', icon:ICON.zap },
         { v:'In 30 Tagen', icon:ICON.calendar },
@@ -329,7 +329,7 @@ main{ flex:1; display:flex; align-items:flex-start; justify-content:center; padd
       '<button type="button" class="btn btn-still" data-zurueck>Zurück</button>' +
       '<button type="submit" class="btn btn-haupt" id="senden">Einschätzung anfordern' +
       '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 6l6 6-6 6"/></svg></button>' +
-      '</div><p class="hinweis" id="hinweis">Keine Newsletter, keine Weitergabe. Du kannst jederzeit widersprechen.</p>' +
+      '</div><p class="hinweis" id="hinweis">Ich schicke dir keinen Newsletter und gebe deine Daten nicht weiter. Du kannst jederzeit widersprechen.</p>' +
       '</form></div>';
   }
 
@@ -382,7 +382,7 @@ main{ flex:1; display:flex; align-items:flex-start; justify-content:center; padd
     knopf.disabled = true;
     knopf.textContent = 'Wird gesendet…';
     hinweis.style.color = '';
-    hinweis.textContent = 'Keine Newsletter, keine Weitergabe. Du kannst jederzeit widersprechen.';
+    hinweis.textContent = 'Ich schicke dir keinen Newsletter und gebe deine Daten nicht weiter. Du kannst jederzeit widersprechen.';
 
     var a = stand.antworten;
     fetch('https://formspree.io/f/xvznajve', {

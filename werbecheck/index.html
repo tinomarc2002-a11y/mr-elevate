@@ -724,7 +724,7 @@ button, .option, .btn-primary, .booking-submit, .field select { touch-action: ma
         <div class="booking-list">
           <div class="booking-item"><span class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg></span>Die günstigste Plattform für deine Anfragen: Google, Meta oder ein Mix aus beidem</div>
           <div class="booking-item"><span class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg></span>Deine Budget-Aufteilung in Euro, konkret durchgerechnet</div>
-          <div class="booking-item"><span class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg></span>Komplettanleitung zur Umsetzung: die vier Schritte, die Lernphase, die drei häufigsten Fehler</div>
+          <div class="booking-item"><span class="check-icon"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" stroke="white" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="2,6.5 5,9.5 10,3.5"/></svg></span>Anleitung zur Umsetzung: die vier Schritte, die Lernphase, die drei häufigsten Fehler</div>
         </div>
 
 
@@ -851,7 +851,7 @@ const questions = [
   {
     id: 'einzugsgebiet',
     text: 'Wie groß ist euer Einzugsgebiet?',
-    hint: 'Dort, wo eure Kunden tatsächlich herkommen. Nicht, wo ihr theoretisch liefern könntet.',
+    hint: 'Es zählt, wo eure Kunden tatsächlich herkommen. Wohin ihr theoretisch liefern könntet, spielt keine Rolle.',
     badge: fitBadge,
     options: [
       { label: 'Sehr lokal begrenzt (ein Ort/Landkreis)' },
@@ -887,7 +887,7 @@ const questions = [
   {
     id: 'entscheidung',
     text: 'Ist der Kauf eher ein spontaner Impuls oder eine gut durchdachte, verglichene Entscheidung?',
-    hint: 'Aus Sicht eures typischen Kunden, nicht des Ausnahmefalls.',
+    hint: 'Denk an euren typischen Kunden. Ausnahmefälle zählen hier nicht.',
     badge: fitBadge,
     options: [
       { label: 'Spontaner Impuls-/Wunschkauf' },
@@ -935,7 +935,7 @@ const questions = [
   {
     id: 'budget',
     text: 'Wie hoch ist euer monatliches Werbebudget aktuell (bzw. das, was ihr investieren würdet)?',
-    hint: 'Damit die Budget-Aufteilung in Euro zu euch passt, nichts davon ist verbindlich.',
+    hint: 'Damit die Budget-Aufteilung in Euro zu euch passt. Verbindlich ist davon nichts.',
     badge: gateBadge,
     options: [
       { label: 'Unter 500 €' },
@@ -1325,8 +1325,8 @@ function zeigeGateErgebnis(g) {
         '<span class="gate-eyebrow">Dein Ergebnis</span>' +
         '<h2>' + g.titel + '</h2>' +
         '<p>' + g.text + '</p>' +
-        '<p class="gate-next"><b>Was jetzt wirklich hilft:</b> zuerst die Grundlagen bauen, dann lohnt sich Werbung. ' +
-        'Wie das geht, steht vollständig und kostenlos im Ads-Leitfaden. Ohne Anmeldung, ohne Haken.</p>' +
+        '<p class="gate-next"><b>Was jetzt hilft:</b> zuerst die Grundlagen bauen, dann lohnt sich Werbung. ' +
+        'Wie das geht, steht vollständig im Ads-Leitfaden. Der ist kostenlos und braucht keine Anmeldung.</p>' +
         '<div class="gate-actions">' +
           '<a class="btn-primary" href="/leitfaden">Zum kostenlosen Ads-Leitfaden</a>' +
           '<a class="gate-link" href="/">Mehr über MR Elevate</a>' +

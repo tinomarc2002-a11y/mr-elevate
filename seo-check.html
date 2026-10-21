@@ -261,13 +261,13 @@
     </div>
     <p class="hint">Der Abruf läuft über einen öffentlichen CORS-Proxy. Seiten hinter Login oder mit Bot-Schutz können evtl. nicht geladen werden.</p>
     <details class="adv" id="advbox">
-      <summary>⚙️ Erweitert: PageSpeed-API-Key <span class="keystate off" id="keystate">– nicht hinterlegt</span></summary>
+      <summary>⚙️ Erweitert: PageSpeed-API-Key <span class="keystate off" id="keystate">nicht hinterlegt</span></summary>
       <div class="advbody">
         <div class="field">
           <label for="apikey">Google-API-Key für PageSpeed Insights</label>
           <input id="apikey" type="text" placeholder="AIza…" autocomplete="off" spellcheck="false">
         </div>
-        <p class="hint">Ohne Key limitiert Google die Lighthouse-Abfragen stark (Fehler 429) – die Performance-Kategorie fällt dann aus der Wertung. Kostenlosen Key holen: <a href="https://console.cloud.google.com/apis/library/pagespeedonline.googleapis.com" target="_blank" rel="noopener noreferrer">Cloud Console → „PageSpeed Insights API“ aktivieren → Anmeldedaten → API-Schlüssel</a>. Der Key wird ausschließlich lokal in deinem Browser gespeichert und nur an Google gesendet.</p>
+        <p class="hint">Ohne Key limitiert Google die Lighthouse-Abfragen stark (Fehler 429). Die Performance-Kategorie fällt dann aus der Wertung. Kostenlosen Key holen: <a href="https://console.cloud.google.com/apis/library/pagespeedonline.googleapis.com" target="_blank" rel="noopener noreferrer">Cloud Console → „PageSpeed Insights API“ aktivieren → Anmeldedaten → API-Schlüssel</a>. Der Key wird ausschließlich lokal in deinem Browser gespeichert und nur an Google gesendet.</p>
       </div>
     </details>
   </form>
@@ -305,7 +305,7 @@
 
     <div class="todo" id="todo">
       <h3>🎯 Deine Top-Prioritäten</h3>
-      <p class="lead">Diese Punkte bringen aktuell den größten Hebel – in dieser Reihenfolge abarbeiten.</p>
+      <p class="lead">Diese Punkte bringen aktuell den größten Hebel. Arbeite sie in dieser Reihenfolge ab.</p>
       <ol id="todolist"></ol>
     </div>
 
@@ -509,40 +509,40 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
     /* Volle Punktzahl der Title-Gruppe verlieren, damit ein fehlender Title
        nicht besser bewertet wird als ein vorhandener mit Mängeln. */
     C.add('meta','Title-Tag','fail',0,5,'Kein <code>&lt;title&gt;</code> vorhanden.',
-      'Der Title ist der wichtigste On-Page-Faktor. Füge einen einzigartigen, beschreibenden Titel mit deinem Hauptkeyword ein: <code>&lt;title&gt;Keyword – Nutzen | Marke&lt;/title&gt;</code>', 12);
+      'Der Title ist der wichtigste On-Page-Faktor. Füge einen einzigartigen, beschreibenden Titel mit deinem Hauptkeyword ein: <code>&lt;title&gt;Keyword: Nutzen | Marke&lt;/title&gt;</code>', 12);
   } else {
     C.add('meta','Title-Tag','ok',3,3,`„${escapeHtml(title)}“`);
     const px = approxPixelWidth(title, 20);
     if (title.length < 30)
-      C.add('meta','Title-Länge','warn',1,2,`${title.length} Zeichen (~${px}px) – recht kurz, verschenkter Platz.`,
-        'Nutze 40–60 Zeichen: Hauptkeyword vorn, Marke hinten, z. B. „Google Ads Agentur Dresden – mehr Anfragen | MR Elevate“.', 4);
+      C.add('meta','Title-Länge','warn',1,2,`${title.length} Zeichen (~${px}px), recht kurz, verschenkter Platz.`,
+        'Nutze 40–60 Zeichen: Hauptkeyword vorn, Marke hinten, z. B. „Google Ads Agentur Dresden: mehr Anfragen | MR Elevate“.', 4);
     else if (px > 580 || title.length > 65)
-      C.add('meta','Title-Länge','warn',1,2,`${title.length} Zeichen (~${px}px) – wird in den Suchergebnissen abgeschnitten (Limit ≈ 580px).`,
+      C.add('meta','Title-Länge','warn',1,2,`${title.length} Zeichen (~${px}px), wird in den Suchergebnissen abgeschnitten (Limit ≈ 580px).`,
         'Kürze auf ca. 60 Zeichen. Alles Wichtige gehört in die ersten 50 Zeichen.', 4);
     else
-      C.add('meta','Title-Länge','ok',2,2,`${title.length} Zeichen (~${px}px) – optimal.`);
+      C.add('meta','Title-Länge','ok',2,2,`${title.length} Zeichen (~${px}px), optimal.`);
     if (kw) C.add('meta','Keyword im Title', contains(title)?'ok':'fail', contains(title)?2:0, 2,
       contains(title) ? 'Fokus-Keyword ist im Title enthalten.' : 'Fokus-Keyword fehlt im Title.',
-      'Platziere das Keyword möglichst weit vorn im Title – das ist einer der stärksten Einzelfaktoren.', 10);
+      'Platziere das Keyword möglichst weit vorn im Title. Das ist einer der stärksten Einzelfaktoren.', 10);
   }
 
   const desc = doc.querySelector('meta[name="description" i]')?.getAttribute('content')?.trim().replace(/\s+/g,' ') || '';
   if (!desc){
     C.add('meta','Meta-Description','fail',0,5,'Keine Meta-Description vorhanden.',
-      'Schreibe 120–160 Zeichen mit Keyword und klarem Klick-Anreiz. Ohne Description bastelt Google selbst einen Textausschnitt zusammen – meist deutlich schlechter.', 8);
+      'Schreibe 120–160 Zeichen mit Keyword und klarem Klick-Anreiz. Ohne Description bastelt Google selbst einen Textausschnitt zusammen, meist deutlich schlechter.', 8);
   } else {
     C.add('meta','Meta-Description','ok',3,3,`„${escapeHtml(desc.slice(0,180))}${desc.length>180?'…':''}“`);
     if (desc.length < 70)
-      C.add('meta','Description-Länge','warn',1,2,`${desc.length} Zeichen – zu kurz, verschenkter Platz im Snippet.`,
+      C.add('meta','Description-Länge','warn',1,2,`${desc.length} Zeichen, zu kurz, verschenkter Platz im Snippet.`,
         'Nutze 120–160 Zeichen inkl. Nutzenversprechen und Handlungsaufforderung.', 3);
     else if (desc.length > 165)
-      C.add('meta','Description-Länge','warn',1,2,`${desc.length} Zeichen – wird abgeschnitten.`,
+      C.add('meta','Description-Länge','warn',1,2,`${desc.length} Zeichen, wird abgeschnitten.`,
         'Kürze auf ca. 160 Zeichen; die Kernbotschaft nach vorn.', 3);
     else
-      C.add('meta','Description-Länge','ok',2,2,`${desc.length} Zeichen – optimal.`);
+      C.add('meta','Description-Länge','ok',2,2,`${desc.length} Zeichen, optimal.`);
     if (kw) C.add('meta','Keyword in Description', contains(desc)?'ok':'warn', contains(desc)?1:0, 1,
       contains(desc) ? 'Fokus-Keyword ist enthalten.' : 'Fokus-Keyword fehlt in der Description.',
-      'Google fettet Suchbegriffe im Snippet – das erhöht die Klickrate spürbar.', 4);
+      'Google fettet Suchbegriffe im Snippet. Das erhöht die Klickrate spürbar.', 4);
   }
 
   const canonicalRaw = doc.querySelector('link[rel="canonical" i]')?.getAttribute('href') || '';
@@ -555,7 +555,7 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
       same = norm(c.href) === norm(pageUrl.href);
     } catch(e){}
     if (same)
-      C.add('meta','Canonical-Tag','ok',2,2,'Vorhanden und selbstreferenzierend – so soll es sein.');
+      C.add('meta','Canonical-Tag','ok',2,2,'Vorhanden und selbstreferenzierend, so soll es sein.');
     else
       /* Ein fremder Canonical bedeutet: Google indexiert diese Seite NICHT.
          Das darf keine volle Punktzahl geben. */
@@ -569,33 +569,33 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
 
   const robotsMeta = doc.querySelector('meta[name="robots" i]')?.getAttribute('content')?.toLowerCase() || '';
   if (/noindex/.test(robotsMeta))
-    C.add('meta','Robots-Meta','fail',0,3,`<code>${escapeHtml(robotsMeta)}</code> – die Seite ist für Google gesperrt!`,
+    C.add('meta','Robots-Meta','fail',0,3,`<code>${escapeHtml(robotsMeta)}</code>: Die Seite ist für Google gesperrt!`,
       'Entferne „noindex“, sonst erscheint die Seite nie in den Suchergebnissen. (Bei Test-, Danke- oder Rechtsseiten ist das natürlich gewollt.)', 15);
   else if (/nofollow/.test(robotsMeta))
-    C.add('meta','Robots-Meta','warn',1.5,3,`<code>${escapeHtml(robotsMeta)}</code> – Indexierung erlaubt, aber Links werden nicht verfolgt.`,
+    C.add('meta','Robots-Meta','warn',1.5,3,`<code>${escapeHtml(robotsMeta)}</code>: Indexierung erlaubt, aber Links werden nicht verfolgt.`,
       'Ohne „nofollow“ vererben deine internen Links Rankingkraft weiter.', 5);
   else
-    C.add('meta','Robots-Meta','ok',3,3, robotsMeta ? `<code>${escapeHtml(robotsMeta)}</code> – Indexierung erlaubt.` : 'Kein einschränkendes Robots-Meta – Indexierung erlaubt.');
+    C.add('meta','Robots-Meta','ok',3,3, robotsMeta ? `<code>${escapeHtml(robotsMeta)}</code>: Indexierung erlaubt.` : 'Kein einschränkendes Robots-Meta, Indexierung erlaubt.');
 
   const lang = doc.documentElement.getAttribute('lang');
   C.add('meta','Sprachangabe (lang)', lang?'ok':'warn', lang?1:0, 1,
     lang ? `<code>lang="${escapeHtml(lang)}"</code>` : 'Kein lang-Attribut am <code>&lt;html&gt;</code>-Tag.',
-    'Setze <code>&lt;html lang="de"&gt;</code> – wichtig für Screenreader und die Sprachzuordnung durch Google.', 2);
+    'Setze <code>&lt;html lang="de"&gt;</code>. Das ist wichtig für Screenreader und die Sprachzuordnung durch Google.', 2);
 
   const viewport = doc.querySelector('meta[name="viewport" i]');
   C.add('meta','Viewport (Mobile)', viewport?'ok':'fail', viewport?2:0, 2,
-    viewport ? `<code>${escapeHtml(viewport.getAttribute('content')||'')}</code>` : 'Kein Viewport-Meta – Seite ist nicht mobiloptimiert.',
+    viewport ? `<code>${escapeHtml(viewport.getAttribute('content')||'')}</code>` : 'Kein Viewport-Meta, die Seite ist nicht mobiloptimiert.',
     'Füge <code>&lt;meta name="viewport" content="width=device-width, initial-scale=1"&gt;</code> ein. Google indexiert ausschließlich Mobile-First.', 11);
 
   const charset = doc.querySelector('meta[charset], meta[http-equiv="Content-Type" i]');
   C.add('meta','Zeichensatz', charset?'ok':'warn', charset?1:0, 1,
     charset ? 'Zeichensatz ist deklariert.' : 'Kein Charset-Meta gefunden.',
-    'Füge <code>&lt;meta charset="UTF-8"&gt;</code> als erstes Element im <code>&lt;head&gt;</code> ein – sonst drohen kaputte Umlaute.', 3);
+    'Füge <code>&lt;meta charset="UTF-8"&gt;</code> als erstes Element im <code>&lt;head&gt;</code> ein, sonst drohen kaputte Umlaute.', 3);
 
   const favicon = doc.querySelector('link[rel~="icon" i], link[rel="shortcut icon" i], link[rel="apple-touch-icon" i]');
   C.add('meta','Favicon', favicon?'ok':'warn', favicon?1:0, 1,
     favicon ? 'Favicon ist verlinkt.' : 'Kein Favicon verlinkt.',
-    'Google zeigt das Favicon in den mobilen Suchergebnissen direkt neben deinem Treffer – kleiner Aufwand, mehr Klicks.', 2);
+    'Google zeigt das Favicon in den mobilen Suchergebnissen direkt neben deinem Treffer. Kleiner Aufwand, mehr Klicks.', 2);
 
   /* ---------- INHALT ---------- */
   const h1Els = [...doc.querySelectorAll('h1')];
@@ -611,11 +611,11 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
   }
   if (kw && h1s.length) C.add('content','Keyword in H1', h1s.some(contains)?'ok':'warn', h1s.some(contains)?2:0, 2,
     h1s.some(contains) ? 'Fokus-Keyword ist in der H1 enthalten.' : 'Fokus-Keyword fehlt in der H1.',
-    'H1 und Title sollten beide das Hauptkeyword tragen – aber unterschiedlich formuliert.', 8);
+    'H1 und Title sollten beide das Hauptkeyword tragen, aber unterschiedlich formuliert.', 8);
   if (title && h1s.length === 1){
     const identical = title.toLowerCase().trim() === h1s[0].toLowerCase().trim();
     C.add('content','Title ≠ H1', identical?'warn':'ok', identical?0:1, 1,
-      identical ? 'Title und H1 sind wortgleich.' : 'Title und H1 sind unterschiedlich formuliert – gut.',
+      identical ? 'Title und H1 sind wortgleich.' : 'Title und H1 sind unterschiedlich formuliert. Gut so.',
       'Zwei identische Texte verschenken Platz für Synonyme und Nebenkeywords. Formuliere die H1 als Nutzenversprechen, den Title suchmaschinenorientiert.', 3);
   }
 
@@ -628,7 +628,7 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
   }
   const hCounts = [1,2,3,4,5,6].map(i => doc.querySelectorAll('h'+i).length);
   C.add('content','Überschriften-Hierarchie', skips===0?'ok':'warn', skips===0?2:1, 2,
-    `H1:${hCounts[0]} · H2:${hCounts[1]} · H3:${hCounts[2]} · H4:${hCounts[3]}${skips?` – ${skips}× Ebene übersprungen`:' – saubere Struktur'}`,
+    `H1:${hCounts[0]} · H2:${hCounts[1]} · H3:${hCounts[2]} · H4:${hCounts[3]}${skips?`, ${skips}× Ebene übersprungen`:', saubere Struktur'}`,
     'Überspringe keine Ebenen (z. B. H2 → H4). Die Hierarchie sagt Google, wie dein Inhalt gegliedert ist.', 4);
   C.add('content','Zwischenüberschriften (H2)', hCounts[1] >= 2 ? 'ok' : hCounts[1] === 1 ? 'warn' : 'fail',
     hCounts[1] >= 2 ? 2 : hCounts[1] === 1 ? 1 : 0, 2,
@@ -651,10 +651,10 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
     firstPara = p || bodyText.slice(0, 400);
   }
   const scopeNote = ' (ohne Navigation und Footer)';
-  if (words >= 600) C.add('content','Textumfang','ok',3,3,`${words.toLocaleString('de-DE')} Wörter${scopeNote} – guter Umfang.`);
-  else if (words >= 300) C.add('content','Textumfang','warn',2,3,`${words.toLocaleString('de-DE')} Wörter${scopeNote} – solide Basis, für umkämpfte Keywords eher knapp.`,
+  if (words >= 600) C.add('content','Textumfang','ok',3,3,`${words.toLocaleString('de-DE')} Wörter${scopeNote}, guter Umfang.`);
+  else if (words >= 300) C.add('content','Textumfang','warn',2,3,`${words.toLocaleString('de-DE')} Wörter${scopeNote}, solide Basis, für umkämpfte Keywords eher knapp.`,
     'Top-Rankings haben meist 600+ Wörter. Wichtiger als die reine Zahl: Beantworte die Fragen der Zielgruppe vollständig (FAQ, Ablauf, Preise, Beispiele).', 5);
-  else C.add('content','Textumfang','fail',0,3,`Nur ${words} Wörter sichtbarer Text${scopeNote} – zu wenig („Thin Content“).`,
+  else C.add('content','Textumfang','fail',0,3,`Nur ${words} Wörter sichtbarer Text${scopeNote}, zu wenig („Thin Content“).`,
     'Seiten mit sehr wenig Text ranken selten. Baue relevante Inhalte auf: Leistungsbeschreibung, Ablauf, Referenzen, FAQ.', 9);
 
   if (kw){
@@ -665,15 +665,15 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
       C.add('content','Keyword im Text','fail',0,2,'Das Fokus-Keyword kommt im Fließtext nicht vor.',
         'Verwende das Keyword natürlich im ersten Absatz, in einer H2 und im weiteren Text.', 8);
     else if (density > 3.5)
-      C.add('content','Keyword im Text','warn',1,2,`${occurrences}× gefunden (Dichte ~${density.toFixed(1)} %) – wirkt überoptimiert.`,
+      C.add('content','Keyword im Text','warn',1,2,`${occurrences}× gefunden (Dichte ~${density.toFixed(1)} %), wirkt überoptimiert.`,
         'Reduziere Wiederholungen und nutze Synonyme sowie verwandte Begriffe. Keyword-Stuffing wird von Google abgestraft.', 5);
     else
-      C.add('content','Keyword im Text','ok',2,2,`${occurrences}× im Text (Dichte ~${density.toFixed(1)} %) – natürlich eingesetzt.`);
+      C.add('content','Keyword im Text','ok',2,2,`${occurrences}× im Text (Dichte ~${density.toFixed(1)} %), natürlich eingesetzt.`);
 
     const inFirst = firstPara.toLowerCase().includes(kw);
     C.add('content','Keyword im Einstieg', inFirst?'ok':'warn', inFirst?1:0, 1,
       inFirst ? 'Das Keyword steht bereits im ersten Absatz.' : 'Das Keyword fehlt im ersten Absatz.',
-      'Die ersten 100 Wörter wiegen besonders schwer – nenne dort dein Hauptthema.', 4);
+      'Die ersten 100 Wörter wiegen besonders schwer. Nenne dort dein Hauptthema.', 4);
   }
 
   const ratio = rawHtml.length ? (bodyText.length / rawHtml.length * 100) : 0;
@@ -689,7 +689,7 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
   const lists = doc.querySelectorAll('ul li, ol li').length;
   const tables = doc.querySelectorAll('table').length;
   if (lists >= 3 || tables > 0)
-    C.add('content','Strukturierte Textelemente','ok',1,1,`${lists} Listenpunkte${tables?`, ${tables} Tabelle(n)`:''} – gut für Featured Snippets.`);
+    C.add('content','Strukturierte Textelemente','ok',1,1,`${lists} Listenpunkte${tables?`, ${tables} Tabelle(n)`:''}, gut für Featured Snippets.`);
   else
     C.add('content','Strukturierte Textelemente','warn',0,1,'Kaum Listen oder Tabellen im Inhalt.',
       'Aufzählungen und Tabellen werden von Google überdurchschnittlich oft als Featured Snippet („Position 0“) ausgespielt.', 3);
@@ -708,7 +708,7 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
       `${imgs.length - missingAlt.length} von ${imgs.length} Bildern haben ein alt-Attribut` +
       (decorative ? ` (davon ${decorative} bewusst leer = dekorativ, das ist korrekt)` : '') + '.' +
       (missingAlt.length ? ` Fehlt z. B. bei <code>${escapeHtml(((missingAlt[0].getAttribute('src')||'').split('/').pop()||'unbekannt').slice(0,60))}</code>` : ''),
-      'Beschreibe im alt-Text, was zu sehen ist (mit Keyword, wenn es passt). Rein dekorative Bilder bekommen <code>alt=""</code> – aber nie gar kein alt.', 6);
+      'Beschreibe im alt-Text, was zu sehen ist (mit Keyword, wenn es passt). Rein dekorative Bilder bekommen <code>alt=""</code>, aber nie gar kein alt.', 6);
 
     const lazy = imgs.filter(i => (i.getAttribute('loading')||'').toLowerCase() === 'lazy').length;
     const eager = imgs.length - lazy;
@@ -716,7 +716,7 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
       lazy ? `${lazy} von ${imgs.length} Bildern laden verzögert.` : 'Kein Bild nutzt <code>loading="lazy"</code>.',
       'Setze <code>loading="lazy"</code> auf alle Bilder unterhalb des sichtbaren Bereichs. Wichtig: das erste große Bild (LCP-Element) ausdrücklich NICHT lazy laden.', 4);
     if (lazy > 0 && eager === 0)
-      C.info('images','Hinweis zum LCP-Bild','Alle Bilder laden verzögert – prüfe, ob auch dein Hero-Bild betroffen ist. Das verschlechtert den LCP-Wert messbar.');
+      C.info('images','Hinweis zum LCP-Bild','Alle Bilder laden verzögert. Prüfe, ob auch dein Hero-Bild betroffen ist. Das verschlechtert den LCP-Wert messbar.');
 
     const modern = imgs.filter(i =>
       /\.(webp|avif)(\?|#|$)/i.test(i.getAttribute('src')||'') ||
@@ -727,19 +727,19 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
     C.add('images','Moderne Formate (WebP/AVIF)', modRatio >= 0.6 ? 'ok' : modern > 0 ? 'warn' : 'fail',
       modRatio >= 0.6 ? 2 : modern > 0 ? 1 : 0, 2,
       `${modern} von ${imgs.length} Bildern in WebP/AVIF.`,
-      'WebP/AVIF sparen 30–70 % Dateigröße gegenüber JPG/PNG – der mit Abstand größte Performance-Hebel bei bildlastigen Seiten. Konvertieren z. B. über squoosh.app.', 7);
+      'WebP/AVIF sparen 30–70 % Dateigröße gegenüber JPG/PNG. Das ist der mit Abstand größte Performance-Hebel bei bildlastigen Seiten. Konvertieren z. B. über squoosh.app.', 7);
 
     const dims = imgs.filter(i => (i.getAttribute('width') && i.getAttribute('height')) || i.style.aspectRatio).length;
     const dimRatio = dims / imgs.length;
     C.add('images','Größenangaben (width/height)', dimRatio >= 0.8 ? 'ok' : 'warn',
       dimRatio >= 0.8 ? 2 : dimRatio >= 0.3 ? 1 : 0, 2,
       `${dims} von ${imgs.length} Bildern mit festen Größenangaben.`,
-      'Feste width/height verhindern Layout-Sprünge beim Laden (CLS) – einer der drei Core Web Vitals und direkter Rankingfaktor.', 5);
+      'Feste width/height verhindern Layout-Sprünge beim Laden (CLS). CLS ist einer der drei Core Web Vitals und direkter Rankingfaktor.', 5);
 
     const responsive = imgs.filter(i => i.getAttribute('srcset') || i.closest('picture')).length;
     C.add('images','Responsive Bilder', responsive > 0 ? 'ok' : 'warn', responsive > 0 ? 1 : 0, 1,
       responsive ? `${responsive} von ${imgs.length} Bildern liefern mehrere Auflösungen aus.` : 'Kein <code>srcset</code>/<code>&lt;picture&gt;</code> im Einsatz.',
-      'Mit <code>srcset</code> laden Handys kleinere Dateien als Desktops – spürbar bessere Ladezeit im Mobile-Ranking.', 3);
+      'Mit <code>srcset</code> laden Handys kleinere Dateien als Desktops. Das bringt spürbar bessere Ladezeit im Mobile-Ranking.', 3);
   }
 
   /* ---------- LINKS & URL ---------- */
@@ -764,7 +764,7 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
   C.add('links','Interne Verlinkung', internal >= 8 ? 'ok' : internal >= 3 ? 'warn' : 'fail',
     internal >= 8 ? 3 : internal >= 3 ? 2 : internal > 0 ? 1 : 0, 3,
     `${internal} interne Links gefunden.`,
-    'Interne Links verteilen Rankingkraft und helfen Google beim Crawlen. Verlinke aus dem Fließtext heraus auf thematisch verwandte Unterseiten – mit sprechendem Ankertext.', 6);
+    'Interne Links verteilen Rankingkraft und helfen Google beim Crawlen. Verlinke aus dem Fließtext heraus auf thematisch verwandte Unterseiten, mit sprechendem Ankertext.', 6);
   C.info('links','Externe Links', `${external} externe Links.` + (external === 0 ? ' Keine ausgehenden Links.' : ''),
     'Ausgehende Links zu vertrauenswürdigen Quellen sind ein positives Qualitätssignal (E-E-A-T).');
   C.add('links','Ankertexte', generic === 0 ? 'ok' : generic <= 2 ? 'warn' : 'fail',
@@ -773,7 +773,7 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
     'Der Ankertext sagt Google, worum es auf der Zielseite geht. Statt „mehr erfahren“ lieber „Google Ads Betreuung ansehen“.', 4);
   if (emptyAnchor)
     C.add('links','Links ohne Text','warn',0,1,`${emptyAnchor} Links ohne erkennbaren Text oder Bild-Alt.`,
-      'Leere Links (z. B. reine Icon-Links) brauchen ein <code>aria-label</code> – sonst versteht weder Google noch ein Screenreader das Ziel.', 3);
+      'Leere Links (z. B. reine Icon-Links) brauchen ein <code>aria-label</code>, sonst versteht weder Google noch ein Screenreader das Ziel.', 3);
   else
     C.add('links','Links ohne Text','ok',1,1,'Alle Links haben erkennbaren Text.');
   if (pageUrl.protocol === 'https:')
@@ -781,7 +781,7 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
       insecureExt === 0 ? 'Keine unsicheren http://-Links.' : `${insecureExt} Links zeigen auf unverschlüsselte http://-Adressen.`, undefined, 3);
   C.add('links','target="_blank" abgesichert', extNoNoopener === 0 ? 'ok' : 'warn', extNoNoopener === 0 ? 1 : 0, 1,
     extNoNoopener === 0 ? 'Alle _blank-Links sind abgesichert.' : `${extNoNoopener} externe _blank-Links ohne <code>rel="noopener"</code>.`,
-    'Ergänze <code>rel="noopener noreferrer"</code> – schützt vor Tabnabbing und verhindert Performance-Einbußen.', 2);
+    'Ergänze <code>rel="noopener noreferrer"</code>. Das schützt vor Tabnabbing und verhindert Performance-Einbußen.', 2);
 
   const path = pageUrl.pathname;
   const urlIssues = [];
@@ -792,7 +792,7 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
   if (pageUrl.search.length > 40) urlIssues.push('viele URL-Parameter');
   if ((path.match(/\//g)||[]).length > 4) urlIssues.push('sehr tiefe Verschachtelung');
   C.add('links','URL-Struktur', urlIssues.length === 0 ? 'ok' : 'warn', urlIssues.length === 0 ? 2 : 1, 2,
-    urlIssues.length === 0 ? `<code>${escapeHtml(path)}</code> – kurz und sauber.` : `Auffällig: ${urlIssues.join(', ')} (<code>${escapeHtml(path.slice(0,80))}</code>)`,
+    urlIssues.length === 0 ? `<code>${escapeHtml(path)}</code>, kurz und sauber.` : `Auffällig: ${urlIssues.join(', ')} (<code>${escapeHtml(path.slice(0,80))}</code>)`,
     'Ideal: kurze Kleinbuchstaben-URLs mit Bindestrichen, z. B. <code>/google-ads-agentur-dresden</code>. Bestehende URLs nur mit 301-Weiterleitung ändern!', 4);
   if (kw){
     const slug = kw.replace(/\s+/g,'-');
@@ -801,7 +801,7 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
     const inUrl = decoded.includes(slug) || decoded.includes(kw.replace(/\s+/g,''));
     C.add('links','Keyword in der URL', inUrl?'ok':'warn', inUrl?1:0, 1,
       inUrl ? 'Fokus-Keyword ist Teil der URL.' : 'Fokus-Keyword kommt in der URL nicht vor.',
-      'Ein Keyword im URL-Pfad ist ein kleiner, aber leicht mitzunehmender Faktor – und erhöht die Klickrate im Snippet.', 3);
+      'Ein Keyword im URL-Pfad ist ein kleiner, aber leicht mitzunehmender Faktor und erhöht die Klickrate im Snippet.', 3);
   }
 
   /* ---------- SOCIAL ---------- */
@@ -811,7 +811,7 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
     C.add('social', label, v ? 'ok' : 'warn', v ? weightPts : 0, weightPts,
       v ? `<code>${escapeHtml(v.slice(0,110))}${v.length>110?'…':''}</code>` : `${label} fehlt.`,
       p === 'image'
-        ? 'Ohne <code>og:image</code> zeigen Facebook, LinkedIn und WhatsApp beim Teilen keine Bildvorschau – die Klickrate bricht dadurch massiv ein. Empfohlen: 1200×630 px.'
+        ? 'Ohne <code>og:image</code> zeigen Facebook, LinkedIn und WhatsApp beim Teilen keine Bildvorschau. Die Klickrate bricht dadurch massiv ein. Empfohlen: 1200×630 px.'
         : 'Open-Graph-Tags steuern, wie deine Seite beim Teilen in sozialen Netzwerken und Messengern aussieht.', p === 'image' ? 4 : 2);
   }
   const twCard = doc.querySelector('meta[name="twitter:card" i]')?.getAttribute('content') || '';
@@ -825,7 +825,7 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
   if (ldScripts.length === 0){
     if (microdata)
       C.add('schema','Strukturierte Daten','warn',2,5,'Kein JSON-LD, aber Microdata-Auszeichnung gefunden.',
-        'Google empfiehlt ausdrücklich JSON-LD statt Microdata – es ist einfacher zu pflegen und weniger fehleranfällig.', 4);
+        'Google empfiehlt ausdrücklich JSON-LD statt Microdata. Es ist einfacher zu pflegen und weniger fehleranfällig.', 4);
     else
       C.add('schema','Strukturierte Daten','fail',0,5,'Keine strukturierten Daten (JSON-LD) gefunden.',
         'Mit Schema.org-Markup qualifizierst du dich für Rich Snippets (Sterne, FAQ-Aufklapper, Öffnungszeiten). Für lokale Dienstleister sind <code>LocalBusiness</code> + <code>FAQPage</code> Pflicht. Generator: technicalseo.com/tools/schema-markup-generator', 8);
@@ -848,7 +848,7 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
     C.add('schema','JSON-LD vorhanden','ok',3,3,
       `${ldScripts.length} Block/Blöcke. Typen: <code>${escapeHtml(uniq.join(', ') || 'unbekannt')}</code>`);
     C.add('schema','JSON-LD gültig (Syntax)', parseErrors === 0 ? 'ok' : 'fail', parseErrors === 0 ? 2 : 0, 2,
-      parseErrors === 0 ? 'Alle Blöcke sind valides JSON.' : `${parseErrors} Block/Blöcke mit JSON-Syntaxfehler – Google ignoriert diese komplett!`,
+      parseErrors === 0 ? 'Alle Blöcke sind valides JSON.' : `${parseErrors} Block/Blöcke mit JSON-Syntaxfehler. Google ignoriert diese komplett!`,
       'Prüfe mit validator.schema.org oder Googles Rich-Results-Test.', 7);
     const richTypes = ['LocalBusiness','Organization','FAQPage','Service','Product','Article','BreadcrumbList','Review','AggregateRating','HowTo','Event','JobPosting'];
     const hasRich = uniq.some(t => richTypes.includes(t));
@@ -857,7 +857,7 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
               : 'Nur Basis-Typen ausgezeichnet.',
       'Ergänze <code>FAQPage</code> (Aufklapper direkt im Suchergebnis), <code>LocalBusiness</code> (Öffnungszeiten, Karte) oder <code>BreadcrumbList</code> (Pfad statt URL im Snippet).', 4);
     if (!uniq.includes('BreadcrumbList'))
-      C.info('schema','Breadcrumbs','Kein <code>BreadcrumbList</code>-Markup – damit ersetzt Google die URL im Snippet durch einen lesbaren Pfad.');
+      C.info('schema','Breadcrumbs','Kein <code>BreadcrumbList</code>-Markup. Damit ersetzt Google die URL im Snippet durch einen lesbaren Pfad.');
   }
 
   /* ---------- VERTRAUEN & RECHT (DACH-spezifisch) ---------- */
@@ -866,7 +866,7 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
   const hasPrivacy = linkTexts.some(t => /datenschutz|privacy/.test(t));
   C.add('trust','Impressum verlinkt', hasImpressum?'ok':'fail', hasImpressum?3:0, 3,
     hasImpressum ? 'Impressum ist von dieser Seite aus verlinkt.' : 'Kein Impressums-Link gefunden.',
-    'In Deutschland ist ein leicht erreichbares Impressum gesetzlich Pflicht (§ 5 DDG) – Abmahnrisiko. Google wertet es zusätzlich als Vertrauenssignal (E-E-A-T).', 10);
+    'In Deutschland ist ein leicht erreichbares Impressum gesetzlich Pflicht (§ 5 DDG), sonst droht eine Abmahnung. Google wertet es zusätzlich als Vertrauenssignal (E-E-A-T).', 10);
   C.add('trust','Datenschutzerklärung verlinkt', hasPrivacy?'ok':'fail', hasPrivacy?3:0, 3,
     hasPrivacy ? 'Datenschutzerklärung ist verlinkt.' : 'Kein Datenschutz-Link gefunden.',
     'Nach DSGVO Art. 13 verpflichtend, sobald personenbezogene Daten verarbeitet werden (auch schon durch Server-Logs oder Kontaktformulare).', 10);
@@ -878,7 +878,7 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
   const nap = [hasPhone, hasMail, hasAddress].filter(Boolean).length;
   C.add('trust','Kontaktdaten (NAP)', nap === 3 ? 'ok' : nap >= 1 ? 'warn' : 'fail', nap, 3,
     `Gefunden: ${[hasPhone?'Telefon':null, hasMail?'E-Mail':null, hasAddress?'Adresse':null].filter(Boolean).join(', ') || 'keine'}.`,
-    'Name, Adresse, Telefon („NAP“) sichtbar auf der Seite sind ein starkes Signal für lokale Rankings und Google Business – und senken die Absprungrate.', 6);
+    'Name, Adresse, Telefon („NAP“) sichtbar auf der Seite sind ein starkes Signal für lokale Rankings und Google Business und senken die Absprungrate.', 6);
 
   const ctaWords = /termin|kontakt|anfrag|berat|angebot|buchen|gespräch|gespraech|erstgespräch|demo|call|jetzt (starten|sichern|anfragen|testen)|sichern|anfordern|analyse|check|kennenlernen|loslegen|starten/i;
   const hasCta = anchors.some(a => /^(tel:|mailto:)/i.test(a.getAttribute('href')||'')) ||
@@ -898,11 +898,11 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
     const insecureRes = (rawHtml.match(/(?:src|href)\s*=\s*["']http:\/\/(?!localhost)/gi) || []).length;
     C.add('tech','Mixed Content (Ressourcen)', insecureRes === 0 ? 'ok' : 'fail', insecureRes === 0 ? 2 : 0, 2,
       insecureRes === 0 ? 'Alle Bilder/Skripte/Styles werden verschlüsselt geladen.' : `${insecureRes} Ressourcen werden über unsicheres http:// eingebunden.`,
-      'Browser blockieren unsichere Skripte und Styles auf HTTPS-Seiten komplett – das kann die Seite kaputt machen. Stelle alle Pfade auf https:// oder relative URLs um.', 9);
+      'Browser blockieren unsichere Skripte und Styles auf HTTPS-Seiten komplett. Das kann die Seite kaputt machen. Stelle alle Pfade auf https:// oder relative URLs um.', 9);
   }
 
   C.add('tech','HTML5-Doctype', /^\s*<!doctype html/i.test(rawHtml) ? 'ok' : 'warn', /^\s*<!doctype html/i.test(rawHtml) ? 1 : 0, 1,
-    /^\s*<!doctype html/i.test(rawHtml) ? '<code>&lt;!DOCTYPE html&gt;</code> vorhanden.' : 'Kein oder veralteter Doctype – Browser rendern dann im Quirks-Modus.', undefined, 3);
+    /^\s*<!doctype html/i.test(rawHtml) ? '<code>&lt;!DOCTYPE html&gt;</code> vorhanden.' : 'Kein oder veralteter Doctype. Browser rendern dann im Quirks-Modus.', undefined, 3);
 
   const kb = Math.round(rawHtml.length / 1024);
   C.add('tech','HTML-Dokumentgröße', kb <= 300 ? 'ok' : kb <= 700 ? 'warn' : 'fail', kb <= 300 ? 2 : kb <= 700 ? 1 : 0, 2,
@@ -914,7 +914,7 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
   const blocking = [...doc.querySelectorAll('head script[src]')].filter(s => !s.hasAttribute('defer') && !s.hasAttribute('async')).length;
   C.add('tech','Render-blockierende Skripte', blocking === 0 ? 'ok' : blocking <= 2 ? 'warn' : 'fail',
     blocking === 0 ? 2 : blocking <= 2 ? 1 : 0, 2,
-    `${scripts} externe Skripte, ${styles} Stylesheets – davon ${blocking} render-blockierend im <code>&lt;head&gt;</code>.`,
+    `${scripts} externe Skripte, ${styles} Stylesheets, davon ${blocking} render-blockierend im <code>&lt;head&gt;</code>.`,
     'Ergänze <code>defer</code> (oder <code>async</code>) bei Skripten im head. Blockierende Skripte verzögern den First Contentful Paint direkt.', 6);
 
   const preconnect = doc.querySelectorAll('link[rel="preconnect"], link[rel="dns-prefetch"], link[rel="preload"]').length;
@@ -927,11 +927,11 @@ function analyzeOnPage(doc, pageUrl, rawHtml, keyword, C){
     deprecated.length === 0 ? 'Keine veralteten Tags gefunden.' : `${deprecated.length} veraltete Elemente (font, center, frame …).`, undefined, 2);
 
   const iframes = doc.querySelectorAll('iframe').length;
-  if (iframes > 0) C.info('tech','iFrames', `${iframes} iFrame(s) eingebunden – Inhalte darin zählen nicht zum Seiteninhalt und werden nicht mitindexiert.`);
+  if (iframes > 0) C.info('tech','iFrames', `${iframes} iFrame(s) eingebunden. Inhalte darin zählen nicht zum Seiteninhalt und werden nicht mitindexiert.`);
   const hreflangs = doc.querySelectorAll('link[rel="alternate"][hreflang]').length;
   if (hreflangs) C.info('tech','hreflang', `${hreflangs} hreflang-Verweise für Sprachversionen gefunden.`);
   if (doc.querySelector('meta[name="keywords" i]'))
-    C.info('tech','Meta-Keywords','Ein <code>meta name="keywords"</code> ist vorhanden. Google ignoriert das seit 2009 – es schadet nicht, bringt aber auch nichts.');
+    C.info('tech','Meta-Keywords','Ein <code>meta name="keywords"</code> ist vorhanden. Google ignoriert das seit 2009. Es schadet nicht, bringt aber auch nichts.');
 
   return {title, desc, words, imgCount: imgs.length, internal, external};
 }
@@ -949,7 +949,7 @@ async function analyzeTech(pageUrl, C){
     parsed = parseRobots(robotsTxt);
     if (robotsBlocksEverything(parsed, pageUrl.pathname)){
       C.add('tech','robots.txt','fail',0,3,'robots.txt sperrt mit <code>User-agent: *  Disallow: /</code> die komplette Website!',
-        'Entferne die Sperre – so crawlt Google gar nichts. Häufige Ursache: eine Staging-robots.txt ist versehentlich live gegangen.', 15);
+        'Entferne die Sperre, so crawlt Google gar nichts. Häufige Ursache: eine Staging-robots.txt ist versehentlich live gegangen.', 15);
     } else if (robotsBlocksPath(parsed, pageUrl.pathname)){
       C.add('tech','robots.txt','fail',0.5,3,`robots.txt vorhanden, aber der Pfad <code>${escapeHtml(pageUrl.pathname)}</code> ist für Crawler gesperrt.`,
         'Diese konkrete Seite wird nicht gecrawlt. Prüfe die Disallow-Regeln, falls die Seite ranken soll.', 13);
@@ -964,7 +964,7 @@ async function analyzeTech(pageUrl, C){
     }
   } else {
     C.add('tech','robots.txt','warn',1,3,'Keine auswertbare robots.txt gefunden.',
-      `Lege eine robots.txt im Stammverzeichnis an – mindestens mit <code>User-agent: *</code>, <code>Allow: /</code> und <code>Sitemap: ${escapeHtml(origin)}/sitemap.xml</code>`, 6);
+      `Lege eine robots.txt im Stammverzeichnis an, mindestens mit <code>User-agent: *</code>, <code>Allow: /</code> und <code>Sitemap: ${escapeHtml(origin)}/sitemap.xml</code>`, 6);
   }
 
   /* Sitemap: robots.txt-Verweis bevorzugen, sonst gängige Standardpfade testen */
@@ -981,10 +981,10 @@ async function analyzeTech(pageUrl, C){
     const urlCount = (found.body.match(/<loc>/gi) || []).length;
     const isIndex = /<sitemapindex/i.test(found.body);
     C.add('tech','XML-Sitemap','ok',3,3,
-      `Gefunden unter <code>${escapeHtml(found.url)}</code> – ${isIndex ? `Sitemap-Index mit ${urlCount} Sitemaps` : `${urlCount} URLs`}.`);
+      `Gefunden unter <code>${escapeHtml(found.url)}</code>: ${isIndex ? `Sitemap-Index mit ${urlCount} Sitemaps` : `${urlCount} URLs`}.`);
   } else {
     C.add('tech','XML-Sitemap','warn',0,3,'Keine XML-Sitemap unter den gängigen Pfaden gefunden.',
-      'Erstelle eine sitemap.xml, verlinke sie in der robots.txt und reiche sie in der Google Search Console ein – so findet Google neue Seiten deutlich schneller.', 7);
+      'Erstelle eine sitemap.xml, verlinke sie in der robots.txt und reiche sie in der Google Search Console ein. So findet Google neue Seiten deutlich schneller.', 7);
   }
 }
 
@@ -1011,7 +1011,7 @@ async function analyzePerformance(pageUrl, strategy, C){
   if (!data || !data.lighthouseResult){
     C.info('perf','Lighthouse nicht verfügbar',
       lastStatus === 429
-        ? 'Google limitiert Abfragen ohne API-Key stark (Fehler 429). Hinterlege oben unter „⚙️ Erweitert“ einen kostenlosen API-Key – dann läuft der Performance-Check zuverlässig.'
+        ? 'Google limitiert Abfragen ohne API-Key stark (Fehler 429). Hinterlege oben unter „⚙️ Erweitert“ einen kostenlosen API-Key. Dann läuft der Performance-Check zuverlässig.'
         : 'Die PageSpeed-Insights-API hat nicht geantwortet (Timeout oder Fehler ' + (lastStatus ?? '–') + '). Häufigste Ursache: die Seite ist von Googles Servern aus nicht erreichbar.');
     return null;
   }
@@ -1030,7 +1030,7 @@ async function analyzePerformance(pageUrl, strategy, C){
   C.add('perf','Best Practices', bpScore >= 90 ? 'ok' : bpScore >= 70 ? 'warn' : 'fail', bpScore / 100 * 2, 2, `${bpScore} / 100`,
     'Prüft u. a. HTTPS, Konsolenfehler, veraltete Bibliotheken und Bildauflösungen.', bpScore >= 90 ? 0 : 4);
   C.add('perf','Barrierefreiheit', a11yScore >= 90 ? 'ok' : a11yScore >= 70 ? 'warn' : 'fail', a11yScore / 100 * 2, 2, `${a11yScore} / 100`,
-    'Barrierefreiheit korreliert stark mit sauberem, SEO-freundlichem Markup – und ist seit Juni 2025 (BFSG) für viele Unternehmen ohnehin Pflicht.',
+    'Barrierefreiheit korreliert stark mit sauberem, SEO-freundlichem Markup und ist seit Juni 2025 (BFSG) für viele Unternehmen ohnehin Pflicht.',
     a11yScore >= 90 ? 0 : 5);
 
   /* Core Web Vitals: echte Nutzerdaten (CrUX) bevorzugt, sonst Labormessung */
@@ -1057,7 +1057,7 @@ async function analyzePerformance(pageUrl, strategy, C){
   push('TTFB', audits['server-response-time']?.numericValue, 600, 1500, 'Labor');
 
   if (!data.loadingExperience?.metrics)
-    C.info('perf','Hinweis zu den Messwerten','Für diese URL liegen Google keine echten Nutzerdaten (CrUX) vor – meist wegen zu wenig Traffic. Angezeigt werden dann Labormessungen, die real oft etwas abweichen.');
+    C.info('perf','Hinweis zu den Messwerten','Für diese URL liegen Google keine echten Nutzerdaten (CrUX) vor, meist wegen zu wenig Traffic. Angezeigt werden dann Labormessungen, die real oft etwas abweichen.');
 
   const opportunities = Object.values(audits)
     .filter(a => (a.details?.type === 'opportunity' || a.details?.overallSavingsMs) && a.numericValue > 150 && a.score != null && a.score < 0.9)
@@ -1121,7 +1121,7 @@ function render(checks, vitals, pageUrl, meta, perfAvailable){
   const verdict =
     total >= 90 ? ['Sehr stark 🚀','Diese Seite ist technisch und inhaltlich hervorragend aufgestellt. Der Feinschliff bei den verbliebenen Warnungen holt die letzten Punkte.'] :
     total >= 75 ? ['Gut aufgestellt','Solide Basis mit klarem Potenzial. Die markierten Warnungen sind meist schnell behoben und bringen spürbar Punkte.'] :
-    total >= 50 ? ['Ausbaufähig','Es gibt mehrere relevante Baustellen. Arbeite die roten Punkte zuerst ab – dort liegt der größte Hebel.'] :
+    total >= 50 ? ['Ausbaufähig','Es gibt mehrere relevante Baustellen. Arbeite die roten Punkte zuerst ab, dort liegt der größte Hebel.'] :
                   ['Kritisch','Die Seite verschenkt massiv Ranking-Potenzial. Die rot markierten Grundlagen sollten zuerst behoben werden.'];
   $('#verdicttitle').textContent = verdict[0];
   $('#verdicttext').textContent = verdict[1];
@@ -1160,7 +1160,7 @@ function render(checks, vitals, pageUrl, meta, perfAvailable){
        <em>${t.tip || t.detail}</em></div></li>`).join('');
     todoBox.style.display = '';
   } else {
-    $('#todolist').innerHTML = '<li><div><b>Keine offenen Punkte</b><em>Alle geprüften Kriterien sind erfüllt – sehr sauber.</em></div></li>';
+    $('#todolist').innerHTML = '<li><div><b>Keine offenen Punkte</b><em>Alle geprüften Kriterien sind erfüllt. Sehr sauber.</em></div></li>';
     todoBox.style.display = '';
   }
 
@@ -1239,7 +1239,7 @@ const KEY_STORE = 'mre-seo-psi-key';
 function refreshKeyState(){
   const has = !!$('#apikey').value.trim();
   const el = $('#keystate');
-  el.textContent = has ? '✓ hinterlegt' : '– nicht hinterlegt';
+  el.textContent = has ? '✓ hinterlegt' : 'nicht hinterlegt';
   el.className = 'keystate ' + (has ? 'on' : 'off');
 }
 try {
@@ -1323,7 +1323,7 @@ $('#form').addEventListener('submit', async e => {
   } catch(err){
     prog.classList.remove('on');
     errbox.innerHTML = '<b>Analyse fehlgeschlagen:</b> ' + escapeHtml(err.message || String(err)) +
-      '<br><br>Mögliche Ursachen: die Seite blockiert Bots und Proxys (z. B. Cloudflare-Schutz), ein Tippfehler in der URL, oder der CORS-Proxy ist gerade überlastet – dann hilft ein zweiter Versuch in ein paar Sekunden.';
+      '<br><br>Mögliche Ursachen: die Seite blockiert Bots und Proxys (z. B. Cloudflare-Schutz), ein Tippfehler in der URL, oder der CORS-Proxy ist gerade überlastet. Dann hilft ein zweiter Versuch in ein paar Sekunden.';
     errbox.classList.add('on');
   } finally {
     go.disabled = false; go.textContent = 'Analyse starten';
