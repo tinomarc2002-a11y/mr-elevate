@@ -10,7 +10,7 @@
     },
     {
       "source": "/ratgeber/e-rechnungspflicht",
-      "destination": "/ratgeber",
+      "destination": "/ratgeber/registrierkassenpflicht",
       "permanent": true
     }
   ],
