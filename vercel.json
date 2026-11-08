@@ -4,6 +4,11 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/",
+      "destination": "https://www.marketingmitmarc.de/",
+      "permanent": true
+    },
+    {
       "source": "/leitfaden",
       "destination": "https://www.marketingmitmarc.de/guide",
       "permanent": true
