@@ -4,13 +4,23 @@
   "trailingSlash": false,
   "redirects": [
     {
+      "source": "/leitfaden",
+      "destination": "https://www.marketingmitmarc.de/guide",
+      "permanent": true
+    },
+    {
       "source": "/neukundengewinnung-solarbetriebe",
-      "destination": "/solar-leads",
+      "destination": "https://www.marketingmitmarc.de/solar-leads",
       "permanent": true
     },
     {
       "source": "/ratgeber/e-rechnungspflicht",
-      "destination": "/ratgeber/registrierkassenpflicht",
+      "destination": "https://www.marketingmitmarc.de/ratgeber/registrierkassenpflicht",
+      "permanent": true
+    },
+    {
+      "source": "/:path*",
+      "destination": "https://www.marketingmitmarc.de/:path*",
       "permanent": true
     }
   ],
